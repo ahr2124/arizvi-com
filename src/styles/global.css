@@ -62,7 +62,8 @@ a:focus-visible { outline: 2px solid #000; outline-offset: 3px; }
 
 /* Header */
 .site-header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 12px 32px; padding: 24px 0; border-bottom: 2px solid #000; }
-.wordmark { font-weight: 700; font-size: 15px; text-transform: uppercase; letter-spacing: 0.14em; text-decoration: none; }
+.wordmark { display: inline-flex; align-items: center; gap: 12px; font-weight: 700; font-size: 15px; text-transform: uppercase; letter-spacing: 0.14em; text-decoration: none; }
+.wordmark .mark { width: 28px; height: 28px; flex: none; }
 .site-header nav { display: flex; flex-wrap: wrap; gap: 8px 28px; }
 .site-header nav a { text-decoration: none; }
 .site-header nav a:hover { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.35em; }

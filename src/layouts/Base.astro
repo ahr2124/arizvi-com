@@ -31,7 +31,7 @@ const current = (href: string) =>
   <body>
     <div class="container">
       <header class="site-header">
-        <a class="wordmark" href="/">Ali Rizvi</a>
+        <a class="wordmark" href="/"><img class="mark" src="/media/mark.svg" alt="" width="28" height="28" />Ali Rizvi</a>
         <nav class="label" aria-label="Primary">
           {nav.map(([href, label]) => <a href={href} aria-current={current(href)}>{label}</a>)}
         </nav>
