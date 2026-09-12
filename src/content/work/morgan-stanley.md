@@ -1,8 +1,8 @@
 ---
 title: Morgan Stanley
-role: (Title)
-years: 20XX–20XX
+role: Director, Global Head of Solutions, Legal and Compliance
+years: 2015–2017
 kind: industry
-order: 8
-summary: (One line.)
+order: 9
+summary: Built the team and products that put data science and AI models in front of front-line compliance users; represented the firm with seven regulators.
 ---

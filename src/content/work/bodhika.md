@@ -1,22 +1,17 @@
 ---
 title: Bodhika Labs
-role: Founder
-years: 20XX–
+role: Co-founder, product and research
+years: 2025–
 kind: venture
 order: 2
-summary: Psychometric assessment and measurement science for Indian K-12 schools.
 featured: true
-outcome: Pre-pilot; teacher dashboard and parent report designed.
+link: https://bodhikalabs.com
+summary: "Measurement science for Indian schools: psychometric assessment and wellbeing reporting built for the classroom."
+outcome: First school partner in Hyderabad; a published paper on stigma-aware parent dashboards.
 ---
 
-## The problem
+Indian schools assess constantly and measure almost nothing. Most tools are content businesses dressed up as assessment, with no calibration, no local norms, and reports that parents either ignore or misread.
 
-(Two or three paragraphs. Who had the problem, why existing answers fell short.)
+Bodhika treats assessment as a measurement problem first. Items are calibrated with item response theory, normed on Indian students, and delivered through dashboards designed so that a wellbeing flag reads as part of a whole picture of the child rather than a label. That design question became a paper of its own, "Embed, don't isolate", at ACM Interactive Health 2026.
 
-## What I did
-
-(Your role, the key decisions, what you built or led. Screenshots go in `public/work/` and are referenced as `![caption](/work/filename.jpg)`.)
-
-## What came of it
-
-(Outcomes, numbers if you have them, what's next.)
+I lead product and research alongside two co-founders who cover psychometrics and school relationships. We are in pilot with our first school in Hyderabad and in conversation with state education authorities.

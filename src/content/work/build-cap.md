@@ -1,8 +1,8 @@
 ---
-title: Build-Cap
+title: BuildCap
 role: Co-founder
-years: 20XX–2026
+years: 2024–
 kind: venture
-order: 4
-summary: Lower-middle-market acquisition search, now an operator-content trust platform.
+order: 8
+summary: Operator-led community for small-business acquisition; began as a lower-middle-market search.
 ---

@@ -1,7 +1,7 @@
 ---
-title: Why this site exists
-date: 2026-09-10
-summary: A short note on what I plan to put here.
+title: What this site is for
+date: 2026-09-12
+summary: A portfolio first, a notebook second.
 ---
 
-This is where the articles go. Delete this file once there's a real one.
+The Work and Research pages are the record. This page is where I'll put the rest: notes from flying, things I learn building small companies, and the occasional argument with myself about product management. Expect short pieces, infrequently.

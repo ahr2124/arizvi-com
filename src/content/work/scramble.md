@@ -1,22 +1,16 @@
 ---
-title: Scramble
-role: Founder
-years: 20XX–
+title: Scramble Deck
+role: Founder and inventor
+years: 2023–
 kind: venture
 order: 1
-summary: A reconfigurable e-ink playing card platform.
 featured: true
-outcome: Two patents filed; seed deck in circulation; app in build.
+summary: A deck of physical playing cards whose faces are e-ink displays, so one deck can become any game.
+outcome: Three provisional patents, a CHI PLAY paper, and a seed round in progress.
 ---
 
-## The problem
+Card games are one of the oldest interfaces we have, and nobody has changed the hardware in a few hundred years. Every new game still means a new printed deck, and remote play means giving up the cards entirely.
 
-(Two or three paragraphs. Who had the problem, why existing answers fell short.)
+Scramble started as Proteus, a research project at the University of Waterloo. Each card carries a small e-ink display and a Bluetooth radio; an app decides what every card shows and when. The same 52 objects can be a poker deck, a language-learning set, or a game that mirrors a live broadcast. The hardware is deliberately commodity so the product can be built at scale; the interesting parts live in the software.
 
-## What I did
-
-(Your role, the key decisions, what you built or led. Screenshots go in `public/work/` and are referenced as `![caption](/work/filename.jpg)`.)
-
-## What came of it
-
-(Outcomes, numbers if you have them, what's next.)
+I invented the platform, wrote the patents, and published the research (a CHI PLAY 2024 workshop paper and a full CHI PLAY 2026 paper with Oliver Schneider and Mark Hancock). The company now has a CEO leading a seed raise while I hold the technical and IP side.
