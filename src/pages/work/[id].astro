@@ -27,7 +27,7 @@ const d = entry.data;
   </article>
   <nav class="next" aria-label="Next project">
     {next
-      ? <p><span class="label">Next project</span><a href={`/work/${next.id}/`}>{next.data.title}</a></p>
+      ? <p class="soft">Next project: <a href={`/work/${next.id}/`}>{next.data.title}</a></p>
       : <p><a href="/work/">All work</a></p>}
   </nav>
 </Base>

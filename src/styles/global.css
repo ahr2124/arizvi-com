@@ -46,15 +46,6 @@ ul { padding-left: 1.2em; max-width: var(--measure); }
 small, .soft { color: var(--text-2); }
 img { max-width: 100%; height: auto; display: block; }
 
-.label {
-  display: inline-block;
-  font-size: 0.8rem;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--accent);
-}
-
 .lede { font-size: 1.25rem; line-height: 1.5; max-width: 40ch; }
 
 .wrap {
@@ -100,10 +91,7 @@ footer.site p { margin: 0; max-width: none; }
 /* Hero */
 .hero h1 { margin-bottom: 0.4em; }
 .hero .now { margin: 0 0 0.4em; }
-.hero .now .label { margin-right: 0.6rem; }
-.hero + h2 { margin-top: 4.5rem; }
-
-/* Featured work grid */
+.hero .now /* Featured work grid */
 .featured {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -130,10 +118,7 @@ footer.site p { margin: 0; max-width: none; }
 }
 .logbook th {
   text-align: left;
-  font-weight: 600;
-  font-size: 0.8rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  font-weight: 400;
   color: var(--text-2);
   border-bottom: 1px solid var(--text);
   padding: 0 0.8rem 0.6rem 0;
@@ -169,7 +154,6 @@ footer.site p { margin: 0; max-width: none; }
 .case .outcome { border-left: 2px solid var(--accent); padding-left: 0.9rem; }
 .case .cover { width: 100%; margin: 2rem 0 2.5rem; }
 .next { margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid var(--rule); }
-.next .label { margin-right: 0.6rem; }
 
 @media (max-width: 640px) {
   header.site { flex-direction: column; gap: 0.8rem; }
