@@ -1,15 +1,17 @@
 ---
 import '../styles/global.css';
 interface Props { title: string; description?: string }
-const { title, description = 'Ali Rizvi — HCI researcher and product builder. PhD, University of Waterloo.' } = Astro.props;
+const { title, description = 'Ali Rizvi — human-computer interaction researcher. PhD, University of Waterloo. Research that becomes products.' } = Astro.props;
 const path = Astro.url.pathname;
 const scholar = 'https://scholar.google.com/citations?user=ngAHmhEAAAAJ&hl=en&oi=ao';
 const nav = [
-  ['/', 'Profile'],
-  ['/work/', 'Work'],
   ['/research/', 'Research'],
-  ['/blog/', 'Blog'],
+  ['/publications/', 'Publications'],
+  ['/teaching/', 'Teaching'],
+  ['/work/', 'Work'],
+  ['/about/', 'About'],
 ];
+const updated = new Date().toLocaleDateString('en-CA', { year: 'numeric', month: 'long' });
 const current = (href: string) =>
   (href === '/' ? path === '/' : path.startsWith(href)) ? 'page' : undefined;
 ---
@@ -37,7 +39,7 @@ const current = (href: string) =>
       <main><slot /></main>
       <footer class="site-footer">
         <p class="label">
-          Vancouver — <a href="mailto:hello@arizvi.com">Email</a> — <a href={scholar} target="_blank" rel="noopener">Google Scholar</a> — © {new Date().getFullYear()} Ali Rizvi
+          <a href="mailto:hello@arizvi.com">hello@arizvi.com</a> — <a href={scholar} target="_blank" rel="noopener">Google Scholar</a> — <a href="/cv.pdf">CV</a> — <a href="/blog/">Blog</a> — Updated {updated} — © {new Date().getFullYear()} Ali Rizvi
         </p>
       </footer>
     </div>

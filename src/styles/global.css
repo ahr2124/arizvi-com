@@ -146,3 +146,42 @@ a:focus-visible { outline: 2px solid #000; outline-offset: 3px; }
   .logbook td.title { margin-top: 4px; }
   .logbook td.summary { margin-top: 6px; }
 }
+
+/* Faculty layout additions */
+.intro-grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); align-items: start; }
+.intro-grid .text { grid-column: 1 / 9; }
+.intro-grid .photo { grid-column: 10 / 13; }
+.intro-grid .photo img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
+.intro .status { margin: 0 0 0.4rem; }
+.intro .tagline { font-weight: 600; font-size: 1.5rem; letter-spacing: -0.02em; line-height: 1.15; margin: 0 0 1.25rem; }
+.news { list-style: none; margin: 0; padding: 0; max-width: none; }
+.news li { display: grid; grid-template-columns: 8rem 1fr; column-gap: var(--gutter); border-bottom: 1px solid #000; padding: 12px 0; }
+.news li:first-child { border-top: 1px solid #000; }
+.news p { margin: 0; max-width: none; }
+.path { list-style: none; margin: 0; padding: 0; display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); column-gap: 16px; max-width: none; }
+.path li { border-top: 1px solid #000; padding-top: 8px; }
+.path li p { margin: 0; }
+.path li p + p { margin-top: 6px; font-size: 15px; }
+.path.compact { margin-top: 14px; }
+.path.compact .label { font-size: 11px; }
+.thread { border-top: 1px solid #000; padding-top: 16px; margin-top: 2.5rem; }
+.thread:first-of-type { margin-top: 0; }
+.thread h3 { margin-bottom: 0.5rem; }
+.pubs { list-style: none; margin: 0; padding: 0; max-width: none; }
+.pubs li { border-bottom: 1px solid #000; padding: 14px 0; max-width: 80ch; }
+.pubs li:first-child { border-top: 1px solid #000; }
+.pubs li p { margin: 0; max-width: none; }
+.pubs .venue { font-style: italic; }
+.pubs .links { font-size: 13px; text-transform: uppercase; letter-spacing: 0.14em; font-weight: 500; margin-top: 4px; }
+.pubs .links a { text-decoration: none; margin-right: 16px; }
+.pubs .links a:hover { text-decoration: underline; }
+.courses td.n { text-align: right; white-space: nowrap; }
+.kv { display: grid; grid-template-columns: 10rem 1fr; column-gap: var(--gutter); row-gap: 10px; max-width: 70ch; }
+.kv p { margin: 0; max-width: none; }
+@media (max-width: 720px) {
+  .intro-grid .text, .intro-grid .photo { grid-column: 1 / -1; }
+  .intro-grid .photo { order: -1; max-width: 12rem; margin-bottom: 1.5rem; }
+  .path { grid-auto-flow: row; row-gap: 12px; }
+  .news li { grid-template-columns: 1fr; row-gap: 2px; }
+  .kv { grid-template-columns: 1fr; }
+}

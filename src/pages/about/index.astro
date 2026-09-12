@@ -1,0 +1,52 @@
+---
+import Base from '../../layouts/Base.astro';
+import Section from '../../components/Section.astro';
+const scholar = 'https://scholar.google.com/citations?user=ngAHmhEAAAAJ&hl=en&oi=ao';
+---
+<Base title="About">
+  <header class="page-head">
+    <h1>About</h1>
+    <div class="grid"><div class="span-8">
+      <p>I'm an industrial engineer by training who went into consulting, banking, and big-tech product, then back to school for a doctorate in human-computer interaction. I live in Vancouver and spend part of the year in Hyderabad, where one of my field sites is.</p>
+    </div></div>
+  </header>
+
+  <Section label="Education">
+    <div class="kv">
+      <p class="label">2019–2025</p><p>PhD, Human-Computer Interaction (Management Sciences), University of Waterloo. Thesis: <em>Towards Design of Interaction Systems for Constrained Spaces</em>. Supervisor: Mark Hancock.</p>
+      <p class="label">2010–2012</p><p>MS, Management Science and Engineering, Columbia University. Graduate student speaker at Columbia Engineering commencement.</p>
+      <p class="label">2006–2010</p><p>BTech, Industrial Engineering, National Institute of Technology, Jalandhar.</p>
+    </div>
+  </Section>
+
+  <Section label="Awards and funding">
+    <div class="kv">
+      <p class="label">2025</p><p>Queen Elizabeth II Graduate Scholarship in Science and Technology</p>
+      <p class="label">2024</p><p>Aapoolcoyuz Biman Memorial Graduate Scholarship in Engineering</p>
+      <p class="label">2023–24</p><p>Ontario Graduate Scholarship</p>
+      <p class="label">2022–25</p><p>President's Graduate Scholarship, University of Waterloo</p>
+      <p class="label">Ongoing</p><p>Outstanding reviewer recognition, CHI, CSCW, and CUI</p>
+    </div>
+  </Section>
+
+  <Section label="Service">
+    <div class="kv">
+      <p class="label">2023</p><p>Local Arrangements Chair, CHI PLAY 2023</p>
+      <p class="label">2023</p><p>Programme Committee, Understanding and Evaluating UX Outcomes at Scale, CSCW 2024 workshop</p>
+      <p class="label">2021–2022</p><p>Elected member, Accessibility, Diversity and Inclusion Committee, Waterloo Games Institute</p>
+      <p class="label">2021–</p><p>Board member, a venture fund; formerly treasurer of a non-profit sailing club</p>
+    </div>
+  </Section>
+
+  <Section label="Licences">
+    <div class="grid"><div class="span-8">
+      <p>Commercial pilot, Transport Canada and FAA; FAA instrument rating and ground instructor; PADI rescue diver. The flying is where the constrained-spaces work goes next.</p>
+    </div></div>
+  </Section>
+
+  <Section label="Contact">
+    <div class="grid"><div class="span-8">
+      <p><a href="mailto:hello@arizvi.com">hello@arizvi.com</a><br /><a href={scholar} target="_blank" rel="noopener">Google Scholar</a><br /><a href="/cv.pdf">CV (PDF)</a></p>
+    </div></div>
+  </Section>
+</Base>

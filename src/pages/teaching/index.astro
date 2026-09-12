@@ -1,0 +1,53 @@
+---
+import Base from '../../layouts/Base.astro';
+import Section from '../../components/Section.astro';
+const courses = [
+  ['Spring 2024', 'GBDA 310', 'Advanced User Experience Design and Research', 'Three sections', '179'],
+  ['Fall 2023', 'GBDA 310', 'Advanced User Experience Design and Research', '', '43'],
+  ['Fall 2023', 'GBDA 410', 'Seminar in User Experience Research (Virtual Reality)', 'Two sections', '91'],
+  ['Spring 2023', 'MSCI 543', 'Analytics and User Experience', 'Graduate', '87'],
+  ['Winter 2023', 'MSCI 630', 'Human-Computer Interaction', 'Graduate', '47'],
+  ['Winter 2023', 'GBDA 402', 'Undergraduate Capstone Seminar', '12-credit', '46'],
+  ['Winter 2022', 'MSCI 630', 'Human-Computer Interaction', 'Graduate', '39'],
+  ['Winter 2022', 'GBDA 402', 'Undergraduate Capstone Seminar', 'Online and in person', '141'],
+  ['Fall 2021', 'GBDA 210', 'Introduction to UX', '', '54'],
+];
+---
+<Base title="Teaching">
+  <header class="page-head">
+    <h1>Teaching</h1>
+    <div class="grid"><div class="span-8">
+      <p>Nine courses at the University of Waterloo between 2021 and 2024, across two departments and three programmes, undergraduate and graduate, in classes of 40 to 180. Students came from nine departments.</p>
+    </div></div>
+  </header>
+
+  <Section label="Approach">
+    <div class="grid"><div class="span-8">
+      <p>I teach the way I worked. In the UX sequence students run real studies on real people from the first week, because contextual inquiry and task analysis only make sense once you've been surprised by a participant. In the capstone, teams build functional prototypes for external clients and present to them, so scoping, trade-offs, and saying no become part of the course rather than something they meet later. In analytics, I teach experimentation from the funnels and instrumentation I used at Amazon, with the failure modes included.</p>
+      <p>I've found that students who have been through this sequence interview differently: they have a story about a participant, a client, and a metric that moved, and they can explain what they'd do differently.</p>
+    </div></div>
+  </Section>
+
+  <Section label="Courses taught">
+    <table class="logbook courses">
+      <thead><tr><th>Term</th><th>Code</th><th>Course</th><th>Notes</th><th class="n">Students</th></tr></thead>
+      <tbody>
+        {courses.map(([t, c, n, note, s]) => (
+          <tr><td class="years">{t}</td><td class="kind">{c}</td><td class="title">{n}</td><td>{note}</td><td class="n">{s}</td></tr>
+        ))}
+      </tbody>
+    </table>
+  </Section>
+
+  <Section label="Ready to teach">
+    <div class="grid"><div class="span-8">
+      <p>Introduction to HCI; UX research methods; interaction design studio; experimentation and product analytics; product management for engineers; human factors and human-systems integration; a client-facing capstone. Happy to develop a graduate seminar on technology in constrained and improvised environments.</p>
+    </div></div>
+  </Section>
+
+  <Section label="Mentoring">
+    <div class="grid"><div class="span-8">
+      <p>Capstone teams delivered working prototypes to external partners in every term I ran the course. I supervise the way I was supervised: weekly, with the student's question at the centre, and with the expectation that the work ends in something that runs.</p>
+    </div></div>
+  </Section>
+</Base>

@@ -18,6 +18,10 @@ const work = defineCollection({
     role: z.string(),
     years: z.string(),
     kind: z.enum(['venture', 'industry', 'research']),
+    track: z.enum(['research-to-company', 'research', 'industry']).default('research'),
+    // Path from question to company: rendered as a stepper on tiles and case studies
+    path: z.array(z.object({ stage: z.string(), detail: z.string(), year: z.string().optional() })).optional(),
+    papers: z.array(z.object({ title: z.string(), venue: z.string(), href: z.string().optional() })).optional(),
     summary: z.string(),
     order: z.number(),
     link: z.string().url().optional(),   // live product / company site
