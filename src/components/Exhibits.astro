@@ -1,0 +1,25 @@
+---
+import { getCollection } from 'astro:content';
+import Cover from './Cover.astro';
+interface Props { all?: boolean }
+const { all = false } = Astro.props;
+const items = (await getCollection('work', ({ data, body }) => (all ? !!body?.trim() : data.featured)))
+  .sort((a, b) => a.data.order - b.data.order);
+const kind = { venture: 'Venture', industry: 'Industry', research: 'Research' };
+---
+<div class="exhibits">
+  {items.map((e, i) => (
+    <article class="exhibit grid">
+      <div class="media">
+        <a href={`/work/${e.id}/`} aria-label={e.data.title} tabindex="-1"><Cover entry={e} index={i + 1} /></a>
+      </div>
+      <div class="text">
+        <p class="label">{String(i + 1).padStart(2, '0')} / {kind[e.data.kind]}</p>
+        <h3><a href={`/work/${e.id}/`}>{e.data.title}</a></h3>
+        <p>{e.data.summary}</p>
+        {e.data.outcome && <p class="outcome">{e.data.outcome}</p>}
+        <a class="view" href={`/work/${e.id}/`}>View →</a>
+      </div>
+    </article>
+  ))}
+</div>

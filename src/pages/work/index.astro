@@ -1,19 +1,33 @@
 ---
+import fs from 'node:fs';
 import Base from '../../layouts/Base.astro';
-import Featured from '../../components/Featured.astro';
+import Exhibits from '../../components/Exhibits.astro';
 import Logbook from '../../components/Logbook.astro';
+import SectionHead from '../../components/SectionHead.astro';
+const hasVideo = fs.existsSync(new URL('../../../public/media/work.mp4', import.meta.url));
+const hasPoster = fs.existsSync(new URL('../../../public/media/work.jpg', import.meta.url));
 ---
-<Base title="Work">
-  <h1>Work</h1>
-  <p class="lede">The pieces I'd show first, then the whole record.</p>
-  <Featured />
+<Base title="Work" over>
+  <header class:list={['page-head', 'dark', { video: hasVideo }]}>
+    {hasVideo && (
+      <video class="hero-media" autoplay muted loop playsinline preload="none" poster={hasPoster ? '/media/work.jpg' : undefined} aria-hidden="true">
+        <source src="/media/work.mp4" type="video/mp4" />
+      </video>
+    )}
+    {hasVideo && hasPoster && <img class="hero-poster" src="/media/work.jpg" alt="" aria-hidden="true" />}
+    <div class="container">
+      <p class="label">02 / Work</p>
+      <h1 class="page-title">Work</h1>
+    </div>
+  </header>
 
-  <h2>Logbook</h2>
-  <Logbook />
+  <section class="section container">
+    <SectionHead label="01 / Exhibition" title="Case studies" />
+    <Exhibits all />
+  </section>
 
-  <h2>About</h2>
-  <div class="prose">
-    <p>I live in Vancouver's West End, having moved from Hyderabad in 2026. My path runs through management consulting, Morgan Stanley, Affinity, and Amazon Alexa, then a mid-career PhD in Management Science and Engineering at Waterloo with an HCI thesis. I hold an MS in Engineering Management Systems from Columbia.</p>
-    <p>Outside work I hold a Commercial Pilot Licence (Transport Canada and FAA, since 2019), race triathlon, and take photographs when I travel.</p>
-  </div>
+  <section class="section container">
+    <SectionHead label="02 / Record" title="Logbook" />
+    <Logbook />
+  </section>
 </Base>

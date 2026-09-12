@@ -1,0 +1,21 @@
+---
+import type { CollectionEntry } from 'astro:content';
+interface Props { entry: CollectionEntry<'work'>; index: number; eager?: boolean; wide?: boolean }
+const { entry, index, eager = false, wide = false } = Astro.props;
+const [w, h] = wide ? [1600, 900] : [800, 600];
+const pad = 48;
+const kind = { venture: 'Venture', industry: 'Industry', research: 'Research' }[entry.data.kind];
+const num = String(index).padStart(2, '0');
+---
+{entry.data.image ? (
+  <img class="cover" src={entry.data.image} alt={entry.data.title} width="1200" height="900" loading={eager ? 'eager' : 'lazy'} />
+) : (
+  <svg class="cover placeholder" viewBox={`0 0 ${w} ${h}`} role="img" aria-label={`${entry.data.title} (placeholder cover)`}>
+    <foreignObject x={pad} y={pad} width={w - 2 * pad} height={h - 2 * pad}>
+      <div xmlns="http://www.w3.org/1999/xhtml" class:list={['ph', { wide }]}>
+        <span class="label">{num} / {kind}</span>
+        <span class="ph-title">{entry.data.title}</span>
+      </div>
+    </foreignObject>
+  </svg>
+)}

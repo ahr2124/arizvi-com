@@ -24,10 +24,11 @@ Astro site hosted on GitHub Pages. Content lives in `src/content/`; interactive 
 Profile (home) · Work · Research · Tools · Resources · Blog
 
 ## Add things
+- Media: all images and video live in `public/media/` (`media/work/`, `media/blog/`). Home hero uses `public/media/hero.mp4` + `hero.jpg`; the Work page uses `media/work.mp4` + `work.jpg` if present.
 - Blog post: new `.md` in `src/content/blog/` with `title`, `date`, `summary` (and `draft: true` to hide).
 - Work: each `.md` in `src/content/work/` is one logbook row. Give it a body (markdown) and it gets its own
   case-study page at `/work/<slug>/`; set `featured: true` to show it on Profile and at the top of Work.
-  Add `image: /work/<file>.jpg` (file in `public/work/`) for a cover image and `outcome:` for the one-line result.
+  Add `image: /media/work/<file>.jpg` (file in `public/media/work/`) for a cover image and `outcome:` for the one-line result.
 - Resource: new `.md` in `src/content/resources/` with `title`, `href`, `group`, `note`.
 - Tool (AI-generated page): drop the `.html` into `public/tools/`, then add a `.md` in `src/content/tools/` with `title`, `href`, `useCase`, `date`.
 - CV: put `cv.pdf` in `public/`.

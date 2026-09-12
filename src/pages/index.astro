@@ -1,14 +1,46 @@
 ---
 import Base from '../layouts/Base.astro';
-import Featured from '../components/Featured.astro';
+import Exhibits from '../components/Exhibits.astro';
+import Logbook from '../components/Logbook.astro';
+import SectionHead from '../components/SectionHead.astro';
 ---
-<Base title="Ali Rizvi">
-  <section class="hero">
-    <h1>Ali Rizvi</h1>
-    <p class="lede">Product leader and HCI researcher. I build things and study how people use them.</p>
-    <p class="now">Now: Scramble, Bodhika Labs, applied HCI research.</p>
+<Base title="Ali Rizvi" over>
+  <section class="hero dark">
+    <video class="hero-media" autoplay muted loop playsinline preload="metadata" poster="/media/hero.jpg" aria-hidden="true">
+      <source src="/media/hero.mp4" type="video/mp4" />
+    </video>
+    <img class="hero-poster" src="/media/hero.jpg" alt="" aria-hidden="true" />
+    <div class="container grid">
+      <div class="hero-text">
+        <p class="label">Ali Rizvi — Vancouver — YVR</p>
+        <h1 class="hero-title">Products, research, and the occasional landing.</h1>
+      </div>
+      <dl class="readout">
+        <dt>Building</dt><dd>Scramble · Bodhika Labs</dd>
+        <dt>Research</dt><dd>Applied HCI</dd>
+        <dt>Open to</dt><dd>Principal PM · Faculty</dd>
+      </dl>
+    </div>
   </section>
 
-  <Featured />
-  <p class="more"><a href="/work/">All work</a></p>
+  <section class="section container">
+    <SectionHead label="01 / Exhibition" title="Selected work" />
+    <Exhibits />
+  </section>
+
+  <section class="section container">
+    <SectionHead label="02 / Record" title="Logbook" />
+    <Logbook />
+  </section>
+
+  <section class="section container about">
+    <SectionHead label="03 / Biography" title="About" />
+    <div class="grid">
+      <p class="label">Pilot · CPL 2019 · TC &amp; FAA</p>
+      <div class="prose">
+        <p>I live in Vancouver's West End, having moved from Hyderabad in 2026. My path runs through management consulting, Morgan Stanley, Affinity, and Amazon Alexa, then a mid-career PhD in Management Science and Engineering at Waterloo with an HCI thesis. I hold an MS in Engineering Management Systems from Columbia.</p>
+        <p>Outside work I hold a Commercial Pilot Licence (Transport Canada and FAA, since 2019), race triathlon, and take photographs when I travel.</p>
+      </div>
+    </div>
+  </section>
 </Base>

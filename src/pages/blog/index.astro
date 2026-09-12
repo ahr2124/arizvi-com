@@ -1,19 +1,24 @@
 ---
 import Base from '../../layouts/Base.astro';
+import PageHead from '../../components/PageHead.astro';
 import { getCollection } from 'astro:content';
 const posts = (await getCollection('blog', ({ data }) => !data.draft))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
-const fmt = (d: Date) => d.toLocaleDateString('en-CA', { year: 'numeric', month: 'long', day: 'numeric' });
+const fmt = (d: Date) => d.toISOString().slice(0, 10);
 ---
 <Base title="Blog">
-  <h1>Blog</h1>
-  <ul class="entries">
-    {posts.map((p) => (
-      <li>
-        <a href={`/blog/${p.id}/`}>{p.data.title}</a>
-        <time datetime={p.data.date.toISOString()}>{fmt(p.data.date)}</time>
-        <p>{p.data.summary}</p>
-      </li>
-    ))}
-  </ul>
+  <PageHead label="06 / Blog" title="Blog" />
+  <section class="section container">
+    <ul class="rows">
+      {posts.map((p) => (
+        <li class="grid">
+          <p class="label"><time datetime={p.data.date.toISOString()}>{fmt(p.data.date)}</time></p>
+          <div class="body">
+            <a class="title" href={`/blog/${p.id}/`}>{p.data.title}</a>
+            <p>{p.data.summary}</p>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </section>
 </Base>

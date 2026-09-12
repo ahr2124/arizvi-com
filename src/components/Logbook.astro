@@ -5,11 +5,11 @@ const { kinds, limit } = Astro.props;
 let entries = (await getCollection('work')).sort((a, b) => a.data.order - b.data.order);
 if (kinds) entries = entries.filter((e) => kinds.includes(e.data.kind));
 if (limit) entries = entries.slice(0, limit);
-const label = { venture: 'Venture', industry: 'Industry', research: 'Research' };
+const code = { venture: 'VN', industry: 'IN', research: 'RS' };
 ---
 <table class="logbook">
   <thead>
-    <tr><th>Years</th><th>Role</th><th>Type</th><th>What it was</th></tr>
+    <tr><th class="years">Years</th><th>Role</th><th>Type</th><th>What it was</th></tr>
   </thead>
   <tbody>
     {entries.map((e) => (
@@ -17,11 +17,12 @@ const label = { venture: 'Venture', industry: 'Industry', research: 'Research' }
         <td class="years">{e.data.years}</td>
         <td class="title">
           {e.body?.trim() ? <a href={`/work/${e.id}/`}>{e.data.title}</a> : e.data.title}
-          <br /><small>{e.data.role}</small>
+          <small>{e.data.role}</small>
         </td>
-        <td class="kind">{label[e.data.kind]}</td>
+        <td class="code">{code[e.data.kind]}</td>
         <td class="summary">{e.data.summary}</td>
       </tr>
     ))}
   </tbody>
 </table>
+<p class="label legend">VN Venture · IN Industry · RS Research</p>
