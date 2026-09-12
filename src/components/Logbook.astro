@@ -9,7 +9,7 @@ const kind = { venture: 'Venture', industry: 'Industry', research: 'Research' };
 ---
 <table class="logbook">
   <thead>
-    <tr><th class="years">Years</th><th>Role</th><th>Kind</th><th>What it was</th></tr>
+    <tr><th class="years">Years</th><th>Role</th><th>Kind</th></tr>
   </thead>
   <tbody>
     {entries.map((e) => (
@@ -20,7 +20,6 @@ const kind = { venture: 'Venture', industry: 'Industry', research: 'Research' };
           <small>{e.data.role}</small>
         </td>
         <td class="kind">{kind[e.data.kind]}</td>
-        <td class="summary">{e.data.summary}</td>
       </tr>
     ))}
   </tbody>
