@@ -1,17 +1,19 @@
 ---
 import Base from '../../layouts/Base.astro';
-import PageHead from '../../components/PageHead.astro';
 import { getCollection } from 'astro:content';
 const tools = (await getCollection('tools')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 const fmt = (d: Date) => d.toISOString().slice(0, 10);
 ---
 <Base title="Tools">
-  <PageHead label="04 / Tools" title="Tools" lede="Single-purpose pages I've had an AI build for one specific job. Each is a standalone HTML file; open it, use it, close it." />
-  <section class="section container">
+  <header class="page-head">
+    <h1>Tools</h1>
+    <div class="grid"><p class="span-8">Single-purpose pages I've had an AI build for one specific job. Each is a standalone HTML file; open it, use it, close it.</p></div>
+  </header>
+  <section class="section">
     <ul class="rows">
-      {tools.map((t, i) => (
+      {tools.map((t) => (
         <li class="grid">
-          <p class="label">{String(i + 1).padStart(2, '0')} · {fmt(t.data.date)}</p>
+          <p class="label">{fmt(t.data.date)}</p>
           <div class="body">
             <a class="title" href={t.data.href}>{t.data.title}</a>
             <p>{t.data.useCase}</p>

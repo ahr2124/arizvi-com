@@ -24,7 +24,6 @@ const work = defineCollection({
     featured: z.boolean().default(false), // shows on the Profile page
     image: z.string().optional(),         // path under /public, e.g. /media/work/scramble.jpg
     outcome: z.string().optional(),       // one line: what it produced
-    status: z.string().optional(),        // specimen label; defaults to Active/Complete from years
   }),
 });
 

@@ -1,6 +1,5 @@
 ---
 import Base from '../../layouts/Base.astro';
-import PageHead from '../../components/PageHead.astro';
 import { getCollection, render } from 'astro:content';
 export async function getStaticPaths() {
   const posts = await getCollection('blog', ({ data }) => !data.draft);
@@ -11,8 +10,11 @@ const { Content } = await render(post);
 const fmt = (d: Date) => d.toISOString().slice(0, 10);
 ---
 <Base title={post.data.title} description={post.data.summary}>
-  <PageHead label={`Blog · ${fmt(post.data.date)}`} title={post.data.title} />
-  <article class="section container">
-    <div class="grid"><div class="col prose" style="grid-column: 1 / 9"><Content /></div></div>
+  <article>
+    <header class="case-head">
+      <p class="label"><time datetime={post.data.date.toISOString()}>{fmt(post.data.date)}</time></p>
+      <h1>{post.data.title}</h1>
+    </header>
+    <div class="grid"><div class="span-8 prose"><Content /></div></div>
   </article>
 </Base>

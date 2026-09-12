@@ -1,7 +1,7 @@
 ---
 import '../styles/global.css';
-interface Props { title: string; description?: string; over?: boolean }
-const { title, description = 'Ali Rizvi — products, research, and the occasional landing.', over = false } = Astro.props;
+interface Props { title: string; description?: string }
+const { title, description = 'Ali Rizvi builds products and studies how people use them.' } = Astro.props;
 const path = Astro.url.pathname;
 const scholar = 'https://scholar.google.com/citations?user=ngAHmhEAAAAJ&hl=en&oi=ao';
 const nav = [
@@ -24,32 +24,24 @@ const current = (href: string) =>
     <meta name="description" content={description} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="canonical" href={new URL(path, Astro.site)} />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" />
+    <link rel="preload" href="/fonts/CooperHewitt-Book.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/CooperHewitt-Semibold.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/CooperHewitt-Medium.woff2" as="font" type="font/woff2" crossorigin />
   </head>
   <body>
-    <div class="grain" aria-hidden="true"></div>
-    <header class:list={['site-header', { over }]}>
-      <div class="container">
+    <div class="container">
+      <header class="site-header">
         <a class="wordmark" href="/">Ali Rizvi</a>
         <nav class="label" aria-label="Primary">
           {nav.map(([href, label]) => <a href={href} aria-current={current(href)}>{label}</a>)}
         </nav>
-      </div>
-    </header>
-    <main><slot /></main>
-    <footer class="site-footer dark">
-      <div class="container">
-        <a class="wordmark" href="/">Ali Rizvi</a>
-        <nav aria-label="Footer">
-          <span>Vancouver · YVR</span>
-          <a href="mailto:hello@arizvi.com">hello@arizvi.com</a>
-          <a href="/cv.pdf">CV (PDF)</a>
-          <a href={scholar} target="_blank" rel="noopener">Google Scholar</a>
-          <span>© {new Date().getFullYear()}</span>
-        </nav>
-      </div>
-    </footer>
+      </header>
+      <main><slot /></main>
+      <footer class="site-footer">
+        <p class="label">
+          Vancouver — <a href="mailto:hello@arizvi.com">Email</a> — <a href="/cv.pdf">CV (PDF)</a> — <a href={scholar} target="_blank" rel="noopener">Google Scholar</a> — © {new Date().getFullYear()} Ali Rizvi
+        </p>
+      </footer>
+    </div>
   </body>
 </html>

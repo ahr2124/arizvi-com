@@ -1,33 +1,20 @@
 ---
-import fs from 'node:fs';
 import Base from '../../layouts/Base.astro';
 import Exhibits from '../../components/Exhibits.astro';
 import Logbook from '../../components/Logbook.astro';
-import SectionHead from '../../components/SectionHead.astro';
-const hasVideo = fs.existsSync(new URL('../../../public/media/work.mp4', import.meta.url));
-const hasPoster = fs.existsSync(new URL('../../../public/media/work.jpg', import.meta.url));
+import Section from '../../components/Section.astro';
 ---
-<Base title="Work" over>
-  <header class:list={['page-head', 'dark', { video: hasVideo }]}>
-    {hasVideo && (
-      <video class="hero-media" autoplay muted loop playsinline preload="none" poster={hasPoster ? '/media/work.jpg' : undefined} aria-hidden="true">
-        <source src="/media/work.mp4" type="video/mp4" />
-      </video>
-    )}
-    {hasVideo && hasPoster && <img class="hero-poster" src="/media/work.jpg" alt="" aria-hidden="true" />}
-    <div class="container">
-      <p class="label">02 / Work</p>
-      <h1 class="page-title">Work</h1>
-    </div>
+<Base title="Work">
+  <header class="page-head">
+    <h1>Work</h1>
+    <div class="grid"><p class="span-8">The pieces I'd show first, then the whole record.</p></div>
   </header>
 
-  <section class="section container">
-    <SectionHead label="01 / Exhibition" title="Case studies" />
+  <Section label="Case studies">
     <Exhibits all />
-  </section>
+  </Section>
 
-  <section class="section container">
-    <SectionHead label="02 / Record" title="Logbook" />
+  <Section label="Logbook">
     <Logbook />
-  </section>
+  </Section>
 </Base>

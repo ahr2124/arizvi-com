@@ -5,38 +5,42 @@ import { getCollection, render } from 'astro:content';
 export async function getStaticPaths() {
   const entries = (await getCollection('work')).filter((e) => e.body?.trim()).sort((a, b) => a.data.order - b.data.order);
   const featured = entries.filter((e) => e.data.featured);
-  return entries.map((entry, i) => {
+  return entries.map((entry) => {
     const f = featured.findIndex((x) => x.id === entry.id);
-    const next = f === -1 ? undefined : featured[(f + 1) % featured.length];
-    return { params: { id: entry.id }, props: { entry, index: i + 1, next: next && next.id !== entry.id ? next : undefined } };
+    const next = f === -1 ? featured[0] : featured[(f + 1) % featured.length];
+    return { params: { id: entry.id }, props: { entry, next: next && next.id !== entry.id ? next : undefined } };
   });
 }
-const { entry, index, next } = Astro.props;
+const { entry, next } = Astro.props;
 const { Content } = await render(entry);
 const d = entry.data;
 const kind = { venture: 'Venture', industry: 'Industry', research: 'Research' }[d.kind];
-const status = d.status ?? (/[–-]\s*$/.test(d.years) ? 'Active' : 'Complete');
 ---
-<Base title={d.title} description={d.summary} over>
-  <header class="page-head dark">
-    <div class="container">
-      <p class="label accent">{String(index).padStart(2, '0')} / {kind}</p>
-      <h1 class="page-title">{d.title}</h1>
-      <p class="label specimen"><span>{d.years}</span><span>{d.role}</span><span>{status}</span></p>
-    </div>
-  </header>
-  <div class="bleed"><Cover entry={entry} index={index} eager wide /></div>
-  <article class="case container">
+<Base title={d.title} description={d.summary}>
+  <article>
+    <header class="case-head">
+      <p class="label">{d.years} · {d.role} · {kind}</p>
+      <h1>{d.title}</h1>
+      <div class="grid"><p class="span-8">{d.summary}</p></div>
+    </header>
+    <div class="case-cover"><Cover entry={entry} eager /></div>
+    {d.outcome && (
+      <div class="outcome grid">
+        <p class="label">Outcome</p>
+        <p>{d.outcome}</p>
+      </div>
+    )}
     <div class="grid">
-      <div class="col prose">
-        <p class="lede">{d.summary}</p>
-        {d.outcome && <p class="outcome">{d.outcome}</p>}
+      <div class="span-8 prose">
         {d.link && <p><a href={d.link} target="_blank" rel="noopener">Visit {d.title}</a></p>}
         <Content />
-        <p class="next label">
-          {next ? <a href={`/work/${next.id}/`}>Next → {next.data.title}</a> : <a href="/work/">All work</a>}
-        </p>
       </div>
     </div>
+    {next && (
+      <nav class="next" aria-label="Next project">
+        <p class="label">Next</p>
+        <a href={`/work/${next.id}/`}>{next.data.title}</a>
+      </nav>
+    )}
   </article>
 </Base>

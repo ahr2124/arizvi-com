@@ -1,14 +1,15 @@
 ---
 import Base from '../../layouts/Base.astro';
-import PageHead from '../../components/PageHead.astro';
 import { getCollection } from 'astro:content';
 const posts = (await getCollection('blog', ({ data }) => !data.draft))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 const fmt = (d: Date) => d.toISOString().slice(0, 10);
 ---
 <Base title="Blog">
-  <PageHead label="06 / Blog" title="Blog" />
-  <section class="section container">
+  <header class="page-head">
+    <h1>Blog</h1>
+  </header>
+  <section class="section">
     <ul class="rows">
       {posts.map((p) => (
         <li class="grid">

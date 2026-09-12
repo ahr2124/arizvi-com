@@ -1,35 +1,38 @@
 ---
 import Base from '../../layouts/Base.astro';
-import PageHead from '../../components/PageHead.astro';
-import SectionHead from '../../components/SectionHead.astro';
+import Section from '../../components/Section.astro';
 const scholar = 'https://scholar.google.com/citations?user=ngAHmhEAAAAJ&hl=en&oi=ao';
 ---
 <Base title="Research">
-  <PageHead label="03 / Research" title="Research" lede="Applied HCI: how designed systems land in real institutions — schools, care homes, field sites — and what that means for method." />
+  <header class="page-head">
+    <h1>Research</h1>
+    <div class="grid"><p class="span-8">Applied HCI: how designed systems land in real institutions — schools, care homes, field sites — and what that means for method.</p></div>
+  </header>
 
-  <section class="section container">
-    <SectionHead label="01" title="Papers in flight" />
+  <Section label="Current" title="Papers in flight">
     <ul>
       <li>Access strategies compounding and transferring across field sites — qualitative methods paper, GI 2026.</li>
       <li>Stigma-aware dashboards and child-wellbeing communication in Indian schools.</li>
       <li>Two touchscreen games built for Pravasi Bharatiya Divas 2025 — targeting ACM ISS 2026.</li>
     </ul>
-  </section>
+  </Section>
 
-  <section class="section container">
-    <SectionHead label="02" title="Doctoral work" />
+  <Section label="Doctorate" title="Doctoral work">
     <p>PhD in Management Science and Engineering, University of Waterloo. (Two or three sentences on the thesis and its contribution.)</p>
-  </section>
+  </Section>
 
-  <section class="section container">
-    <SectionHead label="03" title="Service" />
+  <Section label="Community" title="Service">
     <ul>
       <li>Reviewer, ACM CUI 2026.</li>
     </ul>
-  </section>
+  </Section>
 
-  <section class="section container">
-    <SectionHead label="04" title="Publications" />
-    <p><a href={scholar} target="_blank" rel="noopener">Full publication list on Google Scholar</a></p>
+  <section class="section">
+    <ul class="rows">
+      <li class="grid">
+        <p class="label">Publications</p>
+        <div class="body"><a class="title" href={scholar} target="_blank" rel="noopener">Full list on Google Scholar</a></div>
+      </li>
+    </ul>
   </section>
 </Base>
