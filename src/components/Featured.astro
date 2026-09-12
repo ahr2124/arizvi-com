@@ -1,11 +1,12 @@
 ---
 import { getCollection } from 'astro:content';
+import { cover } from '../lib/cover';
 const items = (await getCollection('work', ({ data }) => data.featured)).sort((a, b) => a.data.order - b.data.order);
 ---
 <div class="featured">
   {items.map((e) => (
     <a class="feature" href={`/work/${e.id}/`}>
-      {e.data.image && <img src={e.data.image} alt="" loading="lazy" />}
+      <img src={cover(e)} alt="" width="800" height="600" loading="lazy" />
       <h3>{e.data.title}</h3>
       <p>{e.data.summary}</p>
       {e.data.outcome && <p class="soft">{e.data.outcome}</p>}

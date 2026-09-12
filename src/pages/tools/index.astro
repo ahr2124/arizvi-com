@@ -10,7 +10,7 @@ const tools = (await getCollection('tools')).sort((a, b) => b.data.date.valueOf(
     {tools.map((t) => (
       <li>
         <a href={t.data.href}>{t.data.title}</a>
-        <p>{t.data.useCase} <small>Made with {t.data.madeWith}.</small></p>
+        <p>{t.data.useCase}</p>
       </li>
     ))}
   </ul>

@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+const scholar = 'https://scholar.google.com/citations?user=ngAHmhEAAAAJ&hl=en&oi=ao';
 ---
 <Base title="Research">
   <h1>Research</h1>
@@ -21,5 +22,5 @@ import Base from '../../layouts/Base.astro';
   </ul>
 
   <h2>Publications</h2>
-  <p>(Full list, most recent first, with links to PDFs. Google Scholar and ORCID links here.)</p>
+  <p><a href={scholar} target="_blank" rel="noopener">Full publication list on Google Scholar</a></p>
 </Base>

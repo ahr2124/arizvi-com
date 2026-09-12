@@ -4,7 +4,7 @@ role: Founder
 years: 20XX–
 kind: venture
 order: 2
-summary: Psychometric assessment and measurement science for Indian K-12 schools — pilots, teacher dashboards, parent reports.
+summary: Psychometric assessment and measurement science for Indian K-12 schools.
 featured: true
 outcome: Pre-pilot; teacher dashboard and parent report designed.
 ---

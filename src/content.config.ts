@@ -47,7 +47,6 @@ const tools = defineCollection({
     href: z.string(),
     useCase: z.string(),       // one line: who it's for and what it does
     date: z.coerce.date(),
-    madeWith: z.string().default('Claude'),
   }),
 });
 

@@ -4,7 +4,7 @@ role: Founder
 years: 20XX–
 kind: venture
 order: 1
-summary: A reconfigurable e-ink playing card platform. Patents filed, seed deck, app in build.
+summary: A reconfigurable e-ink playing card platform.
 featured: true
 outcome: Two patents filed; seed deck in circulation; app in build.
 ---

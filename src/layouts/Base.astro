@@ -1,8 +1,9 @@
 ---
 import '../styles/global.css';
 interface Props { title: string; description?: string }
-const { title, description = 'Ali Rizvi — product leader, HCI researcher, pilot.' } = Astro.props;
+const { title, description = 'Ali Rizvi — product leader and HCI researcher.' } = Astro.props;
 const path = Astro.url.pathname;
+const scholar = 'https://scholar.google.com/citations?user=ngAHmhEAAAAJ&hl=en&oi=ao';
 const nav = [
   ['/', 'Profile'],
   ['/work/', 'Work'],
@@ -34,10 +35,9 @@ const current = (href: string) =>
       </header>
       <main><slot /></main>
       <footer class="site">
-        <span>Vancouver, BC</span>
-        <a href="mailto:hello@arizvi.com">hello@arizvi.com</a>
-        <a href="/cv.pdf">CV (PDF)</a>
-        <span>© {new Date().getFullYear()} Ali Rizvi</span>
+        <p>
+          Vancouver, BC · <a href="mailto:hello@arizvi.com">hello@arizvi.com</a> · <a href="/cv.pdf">CV (PDF)</a> · <a href={scholar} target="_blank" rel="noopener">Google Scholar</a> · © {new Date().getFullYear()} Ali Rizvi
+        </p>
       </footer>
     </div>
   </body>
