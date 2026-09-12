@@ -1,0 +1,23 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection, render } from 'astro:content';
+export async function getStaticPaths() {
+  const entries = (await getCollection('work')).filter((e) => e.body?.trim());
+  return entries.map((entry) => ({ params: { id: entry.id }, props: { entry } }));
+}
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const d = entry.data;
+---
+<Base title={d.title} description={d.summary}>
+  <article class="prose case">
+    <p class="soft">{d.years} · {d.role}</p>
+    <h1>{d.title}</h1>
+    <p class="lede">{d.summary}</p>
+    {d.outcome && <p class="outcome">{d.outcome}</p>}
+    {d.link && <p><a href={d.link}>Visit {d.title}</a></p>}
+    {d.image && <img src={d.image} alt="" />}
+    <Content />
+  </article>
+  <p style="margin-top:3rem"><a href="/work/">All work</a></p>
+</Base>

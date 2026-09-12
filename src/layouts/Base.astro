@@ -1,0 +1,44 @@
+---
+import '../styles/global.css';
+interface Props { title: string; description?: string }
+const { title, description = 'Ali Rizvi — product leader, HCI researcher, pilot.' } = Astro.props;
+const path = Astro.url.pathname;
+const nav = [
+  ['/', 'Profile'],
+  ['/work/', 'Work'],
+  ['/research/', 'Research'],
+  ['/tools/', 'Tools'],
+  ['/resources/', 'Resources'],
+  ['/blog/', 'Blog'],
+];
+const current = (href: string) =>
+  (href === '/' ? path === '/' : path.startsWith(href)) ? 'page' : undefined;
+---
+<!doctype html>
+<html lang="en-CA">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title === 'Ali Rizvi' ? title : `${title} — Ali Rizvi`}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="canonical" href={new URL(path, Astro.site)} />
+  </head>
+  <body>
+    <div class="wrap">
+      <header class="site">
+        <a class="wordmark" href="/">Ali Rizvi</a>
+        <nav aria-label="Primary">
+          {nav.map(([href, label]) => <a href={href} aria-current={current(href)}>{label}</a>)}
+        </nav>
+      </header>
+      <main><slot /></main>
+      <footer class="site">
+        <span>Vancouver, BC</span>
+        <a href="mailto:hello@arizvi.com">hello@arizvi.com</a>
+        <a href="/cv.pdf">CV (PDF)</a>
+        <span>© {new Date().getFullYear()} Ali Rizvi</span>
+      </footer>
+    </div>
+  </body>
+</html>
