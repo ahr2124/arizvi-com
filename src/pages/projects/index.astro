@@ -1,0 +1,75 @@
+---
+import Base from '../../layouts/Base.astro';
+import Section from '../../components/Section.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import { getCollection } from 'astro:content';
+const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+const scholar = 'https://scholar.google.com/citations?user=ngAHmhEAAAAJ&hl=en&oi=ao';
+const me = 'Rizvi, A. H.';
+type Pub = { authors: string; title: string; venue: string; year: string; doi?: string; note?: string };
+const refereed: Pub[] = [
+  { authors: 'Rizvi, A. H.', title: "Embed, don't isolate: designing holistic dashboards for stigma-sensitive parent communication", venue: 'Proceedings of the 2026 ACM Interactive Health Conference (IH \'26)', year: '2026', doi: '10.1145/3786579.3804955' },
+  { authors: 'Rizvi, A. H., & Hancock, M.', title: 'Small spaces, many places: a phenomenological analysis of technology-mediated placemaking in small spaces', venue: 'Proceedings of Graphics Interface 2024 (GI \'24)', year: '2024', doi: '10.1145/3670947.3670966' },
+  { authors: 'Rizvi, A. H., Morayko, K., Hancock, M., & Song, A.', title: 'Provocations from #vanlife: investigating life and work in a community extensively using technology not designed for them', venue: 'Proceedings of the 2021 CHI Conference on Human Factors in Computing Systems', year: '2021' },
+  { authors: 'Rizvi, A. H., Singh, L. P., & Bhardwaj, A.', title: 'Human integration matrix: an adaptive framework to enhance human systems integration in new product development', venue: 'PICMET \'09, IEEE', year: '2009' },
+  { authors: 'Rizvi, A. H., & Sachdeva, A.', title: 'Optimization of retail clusters by improving individual store performance', venue: 'PICMET \'09, IEEE', year: '2009' },
+];
+const review: Pub[] = [
+  { authors: 'Rizvi, A. H., Schneider, O., & Hancock, M.', title: 'Proteus Card Deck: affordable, scalable, and familiar deck of electronic cards', venue: 'CHI PLAY 2026', year: '2026', note: 'Accepted' },
+  { authors: 'Prakash, M., Sehl, S. G., Li, Y., Pawar, T. S., Rizvi, A. H., & MacArthur, C.', title: 'Designing supportive haptic technologies for NICU mothers: an auto-ethnographic exploration', venue: 'DIS 2027', year: '2027', note: 'In revision' },
+];
+const workshop: Pub[] = [
+  { authors: 'Rizvi, A. H., Schneider, O., & Hancock, M.', title: 'Proteus Card Deck: enabling remote play with a physical card deck', venue: 'CHI PLAY Companion \'24', year: '2024', doi: '10.1145/3665463.3678842' },
+  { authors: 'Rizvi, A. H., & Hancock, M.', title: 'Considerations for experimental design within funnels', venue: 'CSCW 2023 workshop', year: '2023' },
+  { authors: 'Rizvi, A. H., & Hancock, M.', title: 'Building an extensible ontology for voice user interfaces (VUIs)', venue: 'CHI 2021 workshop', year: '2021' },
+];
+const other: Pub[] = [
+  { authors: 'Rizvi, A. H.', title: 'A/B Testing IRL', venue: 'Textbook chapter, Springer', year: '2026', note: 'Forthcoming' },
+  { authors: 'Rizvi, A. H.', title: 'Towards design of interaction systems for constrained spaces', venue: 'PhD thesis, University of Waterloo', year: '2025' },
+];
+---
+<Base title="Projects">
+  <header class="page-head">
+    <p class="label">Research statement</p>
+    <h1>Technology in the places it was not designed for</h1>
+    <div class="grid"><div class="span-8">
+      <p>Technology is designed in large, stable rooms and used in small, moving, improvised ones. My research follows it there. I ask what the design assumed, what the setting does to that assumption, and what a system built for the setting would look like. The answer is usually an artefact, so I build it, put it back in the field, and study it again. Twice that loop has produced a company, which I treat as the most durable kind of field site: a place where the questions come from teachers, parents, and players rather than from the literature.</p>
+      <p>Methodologically I move between qualitative field work, phenomenological analysis, design studies, and quantitative evaluation at scale, the last of which I learned in industry and now teach.</p>
+    </div></div>
+  </header>
+
+  <Section label="Projects" title="What I have worked on">
+    <div class="cards">
+      {projects.map((p) => <ProjectCard project={p} />)}
+    </div>
+  </Section>
+
+  <Section label="Companies and research" title="How the two relate">
+    <div class="grid"><div class="span-8">
+      <p>Scramble Deck and Bodhika Labs came out of the research and I hold founder positions in both. I keep them in the open: studies involving people run under research ethics review, the companies are disclosed in the papers, and the research questions are the ones I'd pursue whether or not the companies existed. What the companies add is access, scale, and a reason for the artefact to keep existing after the paper is published.</p>
+    </div></div>
+  </Section>
+
+  <Section label="Publications" title="Full list" id="publications">
+    <div class="grid"><p class="span-8">Also on <a href={scholar} target="_blank" rel="noopener">Google Scholar</a>. Three provisional patents on the Proteus deck are on file.</p></div>
+    {[['Refereed papers', refereed], ['Accepted and under review', review], ['Workshop papers', workshop], ['Thesis and chapters', other]].map(([label, list]) => (
+      <div class="pub-group">
+        <p class="label">{label as string}</p>
+        <ul class="pubs">
+          {(list as Pub[]).map((p) => (
+            <li>
+              <p><Fragment set:html={p.authors.replaceAll(me, `<strong>${me}</strong>`)} /> ({p.year}). {p.title}. <span class="venue">{p.venue}</span>.{p.note && ` ${p.note}.`}</p>
+              {p.doi && <p class="links"><a href={`https://doi.org/${p.doi}`} target="_blank" rel="noopener">DOI</a></p>}
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))}
+  </Section>
+
+  <Section label="Documents">
+    <div class="grid"><div class="span-8">
+      <p><a href="/cv.pdf">Academic CV (PDF)</a>. Research, teaching, and contribution statements available on request.</p>
+    </div></div>
+  </Section>
+</Base>
