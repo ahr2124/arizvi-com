@@ -27,6 +27,7 @@ const work = defineCollection({
     link: z.string().url().optional(),   // live product / company site
     featured: z.boolean().default(false), // shows on the Profile page
     image: z.string().optional(),         // path under /public, e.g. /media/work/scramble.jpg
+    video: z.string().optional(),         // optional cover video for the case-study page, e.g. /media/work/scramble.mp4
     outcome: z.string().optional(),       // one line: what it produced
   }),
 });

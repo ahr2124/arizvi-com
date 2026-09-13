@@ -6,6 +6,8 @@ kind: research
 track: research-to-company
 order: 1
 featured: true
+image: /media/work/scramble.jpg
+video: /media/work/scramble.mp4
 summary: A deck of physical cards with e-ink faces, so one deck can be any game. Started as a thesis artefact; now a company.
 outcome: Three provisional patents, two CHI PLAY papers, a company with its own CEO.
 path:
