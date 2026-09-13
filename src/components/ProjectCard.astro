@@ -13,8 +13,9 @@ const outputs = d.output.split(',').map((s) => s.trim()).filter(Boolean);
     <p class="card-summary">{d.summary}</p>
     <dl class="card-facts">
       <dt>Role</dt><dd>{d.role}</dd>
-      <dt>Impact</dt><dd>{d.impact}</dd>
-      <dt>Methods</dt><dd>{d.methods}</dd>
+      <dt>Design</dt><dd>{d.process.design}</dd>
+      <dt>Evaluate</dt><dd>{d.process.evaluate}</dd>
+      <dt>Implement</dt><dd>{d.process.implement}</dd>
     </dl>
     <ul class="pills small" aria-label="Output">
       {outputs.map((o) => <li>{o}</li>)}

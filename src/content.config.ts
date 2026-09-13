@@ -63,9 +63,12 @@ const projects = defineCollection({
     summary: z.string(),          // one short line under the title
     years: z.string(),
     role: z.string(),             // a few words, e.g. "Inventor · Founder"
-    impact: z.string(),           // a few words with numbers, e.g. "3 patents · 2 papers · A company"
     output: z.string(),           // comma-separated types, rendered as pills: "Artefact, Papers, Patents"
-    methods: z.string(),          // a few words, e.g. "Field study · Phenomenological analysis"
+    process: z.object({           // the arc every project follows; one short line per step
+      design: z.string(),
+      evaluate: z.string(),
+      implement: z.string(),
+    }),
     venues: z.array(z.string()).default([]), // short venue tags, e.g. ["CHI 2021", "GI 2024"]
     image: z.string().optional(), // blurred card background, e.g. /media/projects/<slug>.jpg
     link: z.string().optional(),  // case-study page or external link
