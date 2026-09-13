@@ -171,7 +171,7 @@ a:focus-visible { outline: 2px solid #000; outline-offset: 3px; }
 .path li p { margin: 0; }
 .path li p + p { margin-top: 6px; font-size: 15px; }
 .path.compact { margin-top: 14px; }
-.path.compact .label { font-size: 11px; }
+.path.compact .label { font-size: 12px; }
 .thread { border-top: 1px solid #000; padding-top: 16px; margin-top: 2.5rem; }
 .thread:first-of-type { margin-top: 0; }
 .thread h3 { margin-bottom: 0.5rem; }
@@ -186,10 +186,16 @@ a:focus-visible { outline: 2px solid #000; outline-offset: 3px; }
 .courses td.n { text-align: right; white-space: nowrap; }
 .kv { display: grid; grid-template-columns: 10rem 1fr; column-gap: var(--gutter); row-gap: 10px; max-width: 70ch; }
 .kv p { margin: 0; max-width: none; }
-@media (max-width: 720px) {
+@media (max-width: 1023px) {
+  .intro-grid .text { grid-column: 1 / 8; }
+  .intro-grid .photo { grid-column: 9 / 13; }
+}
+@media (max-width: 767px) {
   .intro-grid .text, .intro-grid .photo { grid-column: 1 / -1; }
   .intro-grid .photo { order: -1; max-width: 12rem; margin-bottom: 1.5rem; }
   .path { grid-auto-flow: row; row-gap: 12px; }
+  .path.compact { display: flex; flex-wrap: wrap; gap: 6px 18px; border-top: 1px solid #000; padding-top: 8px; }
+  .path.compact li { border-top: 0; padding-top: 0; }
   .news li { grid-template-columns: 1fr; row-gap: 2px; }
   .kv { grid-template-columns: 1fr; }
 }
