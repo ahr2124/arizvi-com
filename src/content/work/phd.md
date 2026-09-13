@@ -19,4 +19,6 @@ papers:
   - { title: "Provocations from #vanlife: investigating life and work in a community extensively using technology not designed for them", venue: "CHI 2021" }
 ---
 
-I went back to school after Amazon because the gap between how products are designed and how people live with them had become the most interesting thing about the job. The thesis, "Towards Design of Interaction Systems for Constrained Spaces", follows technology into the places it was never designed for and asks what the design assumed, what the setting does to that assumption, and what a system built for the setting would look like. Supervised by Mark Hancock; funded by the Ontario Graduate Scholarship, QEII-GSST, and the President's Graduate Scholarship.
+- I went back to school after Amazon because the gap between how products are designed and how people live with them had become the most interesting thing about the job.
+- The thesis, "Towards Design of Interaction Systems for Constrained Spaces", follows technology into the places it was never designed for and asks what the design assumed, what the setting does to that assumption, and what a system built for the setting would look like.
+- Supervised by Mark Hancock. Funded by the Ontario Graduate Scholarship, QEII-GSST, and the President's Graduate Scholarship.
