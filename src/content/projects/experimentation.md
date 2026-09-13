@@ -5,6 +5,7 @@ years: 2023–2026
 role: Author · Instructor
 output: Chapter, Workshop paper, Course
 venues: ["Springer 2026", "CSCW 2023"]
+link: /work/experimentation/
 image: /media/projects/experimentation.jpg
 process:
   design: "Funnel experiments on a live store"
