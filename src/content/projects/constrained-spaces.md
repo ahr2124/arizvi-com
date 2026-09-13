@@ -8,5 +8,6 @@ output: Field study, Thesis
 methods: Field study · Phenomenological analysis
 venues: ["CHI 2021", "GI 2024"]
 link: /work/phd/
+image: /media/projects/constrained-spaces.jpg
 order: 3
 ---

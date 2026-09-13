@@ -7,5 +7,6 @@ impact: Textbook chapter · Workshop paper · A course
 output: Chapter, Workshop paper, Course
 methods: Quantitative evaluation at scale
 venues: ["Springer 2026", "CSCW 2023"]
+image: /media/projects/experimentation.jpg
 order: 4
 ---

@@ -6,6 +6,7 @@ kind: research
 track: research
 order: 3
 featured: true
+image: /media/work/phd.jpg
 summary: A thesis on what happens to technology designed for large, stable rooms when it is used in small, moving, improvised ones.
 outcome: Papers at CHI and Graphics Interface; the Proteus deck; nine courses taught along the way.
 path:
