@@ -1,47 +1,65 @@
 ---
 import Base from '../../layouts/Base.astro';
 import Section from '../../components/Section.astro';
+// One entry per course; terms, sections and students are the quantity, the line is the quality.
 const courses = [
-  ['Spring 2024', 'GBDA 310', 'Advanced User Experience Design and Research', 'Three sections', '179'],
-  ['Fall 2023', 'GBDA 310', 'Advanced User Experience Design and Research', '', '43'],
-  ['Fall 2023', 'GBDA 410', 'Seminar in User Experience Research (Virtual Reality)', 'Two sections', '91'],
-  ['Spring 2023', 'MSCI 543', 'Analytics and User Experience', 'Graduate', '87'],
-  ['Winter 2023', 'MSCI 630', 'Human-Computer Interaction', 'Graduate', '47'],
-  ['Winter 2023', 'GBDA 402', 'Undergraduate Capstone Seminar', '12-credit', '46'],
-  ['Winter 2022', 'MSCI 630', 'Human-Computer Interaction', 'Graduate', '39'],
-  ['Winter 2022', 'GBDA 402', 'Undergraduate Capstone Seminar', 'Online and in person', '141'],
-  ['Fall 2021', 'GBDA 210', 'Introduction to UX', '', '54'],
+  { code: 'GBDA 310', title: 'Advanced User Experience Design and Research', terms: 'Fall 2023 · Spring 2024', meta: '4 sections · 222 students', line: 'Students run real studies on real people from the first week.' },
+  { code: 'GBDA 402', title: 'Undergraduate Capstone Seminar', terms: 'Winter 2022 · Winter 2023', meta: '12-credit · 187 students · online and in person', line: 'Teams build functional prototypes for external clients and present to them. Every term shipped something that ran.' },
+  { code: 'GBDA 410', title: 'Seminar in User Experience Research (Virtual Reality)', terms: 'Fall 2023', meta: '2 sections · 91 students', line: 'The UX research seminar, that year in headsets.' },
+  { code: 'MSCI 543', title: 'Analytics and User Experience', terms: 'Spring 2023', meta: 'Graduate · 87 students', line: 'Experimentation taught from the funnels and instrumentation I used at Amazon, failure modes included.' },
+  { code: 'MSCI 630', title: 'Human-Computer Interaction', terms: 'Winter 2022 · Winter 2023', meta: 'Graduate · 86 students', line: 'Graduate HCI, taught through the students\' own research projects.' },
+  { code: 'GBDA 210', title: 'Introduction to UX', terms: 'Fall 2021', meta: '54 students', line: 'The start of the UX sequence, and the first course I taught.' },
+];
+const ready = [
+  'Introduction to HCI',
+  'UX research methods',
+  'Interaction design studio',
+  'Experimentation and product analytics',
+  'Product management for engineers',
+  'Human factors and human-systems integration',
+  'A client-facing capstone',
+  'A graduate seminar on technology in constrained and improvised environments',
 ];
 ---
 <Base title="Teaching">
   <header class="page-head">
     <h1>Teaching</h1>
     <div class="grid"><div class="span-8">
-      <p>Nine courses at the University of Waterloo between 2021 and 2024, across two departments and three programmes, undergraduate and graduate, in classes of 40 to 180. Students came from nine departments.</p>
+      <p>Nine course runs at the University of Waterloo between 2021 and 2024, across two departments and three programmes, undergraduate and graduate, in classes of 40 to 180. About 700 students from nine departments.</p>
     </div></div>
   </header>
 
   <Section label="Approach">
     <div class="grid"><div class="span-8">
-      <p>I teach the way I worked. In the UX sequence students run real studies on real people from the first week, because contextual inquiry and task analysis only make sense once you've been surprised by a participant. In the capstone, teams build functional prototypes for external clients and present to them, so scoping, trade-offs, and saying no become part of the course rather than something they meet later. In analytics, I teach experimentation from the funnels and instrumentation I used at Amazon, with the failure modes included.</p>
-      <p>I've found that students who have been through this sequence interview differently: they have a story about a participant, a client, and a metric that moved, and they can explain what they'd do differently.</p>
+      <p>I teach the way I worked.</p>
+      <ul>
+        <li><strong>UX sequence.</strong> Students run real studies on real people from the first week, because contextual inquiry and task analysis only make sense once you've been surprised by a participant.</li>
+        <li><strong>Capstone.</strong> Teams build functional prototypes for external clients and present to them, so scoping, trade-offs, and saying no become part of the course rather than something they meet later.</li>
+        <li><strong>Analytics.</strong> Experimentation taught from the funnels and instrumentation I used at Amazon, with the failure modes included.</li>
+      </ul>
+      <p>Students who have been through this sequence interview differently: they have a story about a participant, a client, and a metric that moved, and they can explain what they'd do differently.</p>
     </div></div>
   </Section>
 
   <Section label="Courses taught">
-    <table class="logbook courses">
-      <thead><tr><th class="years">Term</th><th class="kind">Code</th><th>Course</th><th>Notes</th><th class="n">Students</th></tr></thead>
-      <tbody>
-        {courses.map(([t, c, n, note, s]) => (
-          <tr><td class="years">{t}</td><td class="kind">{c}</td><td class="title">{n}</td><td>{note}</td><td class="n">{s}</td></tr>
-        ))}
-      </tbody>
-    </table>
+    <ul class="rows">
+      {courses.map((c) => (
+        <li class="grid">
+          <div class="label">{c.code}<br />{c.terms}<br />{c.meta}</div>
+          <div class="body">
+            <span class="title">{c.title}</span>
+            <p>{c.line}</p>
+          </div>
+        </li>
+      ))}
+    </ul>
   </Section>
 
   <Section label="Ready to teach">
     <div class="grid"><div class="span-8">
-      <p>Introduction to HCI; UX research methods; interaction design studio; experimentation and product analytics; product management for engineers; human factors and human-systems integration; a client-facing capstone. Happy to develop a graduate seminar on technology in constrained and improvised environments.</p>
+      <ul>
+        {ready.map((r) => <li>{r}</li>)}
+      </ul>
     </div></div>
   </Section>
 
