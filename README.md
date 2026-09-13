@@ -2,6 +2,8 @@
 
 Astro site, hosted on GitHub Pages from `ahr2124/arizvi-com`. Every push to `main` builds and deploys via `.github/workflows/deploy.yml`. `public/CNAME` holds the custom domain so it survives redeploys.
 
+Before writing or editing copy, read `VOICE.md`.
+
 ## Run locally
     npm install
     npm run dev        # dev server
