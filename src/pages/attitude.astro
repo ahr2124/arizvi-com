@@ -7,9 +7,8 @@ import Base from '../layouts/Base.astro';
 const videos = [
   { title: 'Sunset landing', note: 'Landing at Friday Harbor into a sunset. The video is sped up 4X.', url: '/media/flying/sunset-landing.mp4' },
   { title: 'Water landing', note: 'Water landing in Winter Haven, FL. Sea planes are some of the most fun vehicles in the world!', url: '/media/flying/water-landing.mp4' },
-  { title: 'VIDEO TITLE', note: 'One line.', url: 'https://www.youtube.com/watch?v=' },
 ];
-const channel = 'https://www.youtube.com/@';
+const channel = ''; // YouTube channel URL; the "All of the videos" link appears once this is set
 
 const HEX = 'M92 50 L71 86.4 L29 86.4 L8 50 L29 13.6 L71 13.6 Z';
 ---
@@ -100,7 +99,7 @@ const HEX = 'M92 50 L71 86.4 L29 86.4 L8 50 L29 13.6 L71 13.6 Z';
           </li>
         ))}
       </ul>
-      <p><a href={channel} rel="noopener">All of the videos</a></p>
+      {channel && <p><a href={channel} rel="noopener">All of the videos</a></p>}
     </section>
 
   </div>
