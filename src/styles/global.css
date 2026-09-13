@@ -80,13 +80,13 @@ a:focus-visible { outline: 2px solid #000; outline-offset: 3px; }
 .intro h1 { margin: 0.6rem 0 2rem; max-width: 28ch; }
 
 /* Work grid */
-.exhibits { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 48px var(--gutter); }
+.exhibits { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px var(--gutter); }
 .item { display: block; text-decoration: none; }
 .cover { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; }
 .placeholder { border: 2px solid #000; background: #fff; }
 .placeholder .ph { width: 100%; height: 100%; display: flex; align-items: flex-end; padding: 20px; }
 .item .label { margin-top: 16px; }
-.item h3 { margin: 6px 0 6px; }
+.item h3 { margin: 6px 0 6px; font-size: 1.35rem; }
 .item:hover h3 { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 0.12em; }
 .item p { margin: 0; }
 
@@ -129,6 +129,10 @@ a:focus-visible { outline: 2px solid #000; outline-offset: 3px; }
 /* Page header */
 .page-head { padding-top: 4rem; }
 .page-head h1 { margin-bottom: 1.5rem; }
+
+@media (max-width: 1023px) {
+  .exhibits { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
 
 @media (max-width: 767px) {
   .span-8, .rows .label, .rows .body, .outcome .label, .outcome p { grid-column: 1 / -1; }
