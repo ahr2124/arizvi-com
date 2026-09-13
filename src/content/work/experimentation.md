@@ -50,4 +50,3 @@ papers:
 
 - MSCI 543, Analytics and User Experience, University of Waterloo, Spring 2023. Graduate. 87 students.
 - Experimentation taught from the funnels and instrumentation I used in industry, with the failure modes included.
-- Syllabus to follow.
