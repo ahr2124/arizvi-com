@@ -41,7 +41,7 @@ const ready = [
     </div></div>
   </Section>
 
-  <Section label="Courses taught">
+  <Section label="Courses taught" id="courses">
     <ul class="rows">
       {courses.map((c) => (
         <li class="grid">
@@ -55,7 +55,7 @@ const ready = [
     </ul>
   </Section>
 
-  <Section label="Ready to teach">
+  <Section label="Ready to teach" id="ready">
     <div class="grid"><div class="span-8">
       <ul>
         {ready.map((r) => <li>{r}</li>)}
@@ -63,7 +63,7 @@ const ready = [
     </div></div>
   </Section>
 
-  <Section label="Mentoring">
+  <Section label="Mentoring" id="mentoring">
     <div class="grid"><div class="span-8">
       <ul>
         <li>Capstone teams delivered working prototypes to external partners in every term I ran the course.</li>
