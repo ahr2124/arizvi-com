@@ -247,6 +247,10 @@ a.card:hover h3 { text-decoration: underline; text-decoration-thickness: 2px; te
 .courses th.n, .courses td.n { text-align: right; white-space: nowrap; }
 .kv { display: grid; grid-template-columns: 10rem 1fr; column-gap: var(--gutter); row-gap: 10px; max-width: 70ch; }
 .kv p { margin: 0; max-width: none; }
+.kv.ready { row-gap: 22px; max-width: none; }
+.kv.ready .label { padding-top: 4px; }
+.ready-courses { list-style: none; margin: 0; padding: 0; max-width: none; }
+.ready-courses li + li { margin-top: 4px; }
 @media (max-width: 1023px) {
   .intro-grid .text { grid-column: 1 / 8; }
   .intro-grid .photo { grid-column: 9 / 13; }
