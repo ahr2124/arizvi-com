@@ -4,12 +4,13 @@ interface Props { project: CollectionEntry<'projects'> }
 const { data: d } = Astro.props.project;
 const bg = d.image ?? '/media/mark.svg';
 const outputs = d.output.split(',').map((s) => s.trim()).filter(Boolean);
+const Tag = d.link ? 'a' : 'article';
 ---
-<article class:list={['card', { 'card-fallback': !d.image }]}>
+<Tag class:list={['card', { 'card-fallback': !d.image }]} href={d.link}>
   <div class="card-bg" style={`background-image:url('${bg}')`} aria-hidden="true"></div>
   <div class="card-body">
     <p class="label">{[d.years, ...d.venues].join(' · ')}</p>
-    <h3>{d.link ? <a href={d.link}>{d.title}</a> : d.title}</h3>
+    <h3>{d.title}</h3>
     <p class="card-summary">{d.summary}</p>
     <dl class="card-facts">
       <dt>Role</dt><dd>{d.role}</dd>
@@ -21,4 +22,4 @@ const outputs = d.output.split(',').map((s) => s.trim()).filter(Boolean);
       {outputs.map((o) => <li>{o}</li>)}
     </ul>
   </div>
-</article>
+</Tag>
