@@ -160,7 +160,9 @@ a:focus-visible { outline: 2px solid #000; outline-offset: 3px; }
 .intro-grid .text { grid-column: 1 / 9; }
 .intro-grid .photo { grid-column: 10 / 13; }
 .intro-grid .photo img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
-.intro .status { margin: 0 0 0.4rem; }
+.pills { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; max-width: none; }
+.pills li { border: 1px solid #000; border-radius: 999px; padding: 5px 14px; font-weight: 500; font-size: 13px; text-transform: uppercase; letter-spacing: 0.14em; line-height: 1.4; white-space: nowrap; }
+.intro .status { margin: 0 0 1rem; }
 .intro .tagline { font-weight: 600; font-size: 1.5rem; letter-spacing: -0.02em; line-height: 1.15; margin: 0 0 1.25rem; }
 .news { list-style: none; margin: 0; padding: 0; max-width: none; }
 .news li { display: grid; grid-template-columns: 8rem 1fr; column-gap: var(--gutter); border-bottom: 1px solid #000; padding: 12px 0; }
