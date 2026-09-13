@@ -40,18 +40,20 @@ const HEX = 'M92 50 L71 86.4 L29 86.4 L8 50 L29 13.6 L71 13.6 Z';
         <path d={HEX} fill="none" stroke="#000" stroke-width="4" stroke-linejoin="miter" />
       </svg>
       <h1>The curious are rewarded</h1>
-      <p>The mark on this site is an attitude indicator. Here is what it is doing and why it looks the way it does.</p>
+      <p>The mark on this site is an attitude indicator. Here is what it is doing and why it looks the way it does. Every piece of it leads somewhere in the research; the link at the end of each section is the trail.</p>
     </section>
 
     <section>
       <h2>It shows an attitude</h2>
       <p>An attitude indicator is the instrument in the middle of every panel. It draws the horizon as the aircraft sees it: sky above, ground below, and a fixed symbol for the aircraft itself. When the nose comes up, the horizon drops. When the wings bank, the horizon tilts. The mark is frozen at fifteen degrees nose-up with the wings level, which is what the instrument shows in the first seconds after the wheels leave the runway.</p>
+      <p>It is also the oldest answer to the question my thesis asks. Most interfaces assume the room holds still. A cockpit never does, so the instrument moves the world and holds the aircraft still. That inversion, designing for the space that moves, is the whole of the constrained-spaces work: a van, a small apartment, and the flight deck it is headed for next.</p>
+      <p class="label crumb"><a href="/work/phd/">Interaction systems for constrained spaces →</a></p>
     </section>
 
     <section>
       <h2>It is always day zero</h2>
       <p>Pilots call the moment the wheels leave the ground rotation. Nothing is proven yet, the aircraft has the least altitude it will have all flight, and the instrument shows exactly what you are doing. That is the attitude I try to keep at work. Every project on this site started there: a question, a field site, an artefact that did not exist yet. Proteus was a lab prototype before it was a company. Bodhika was a study with nine parents before it was a lab with a school in it. The climb is the part with the most to decide and the least room for error, and it is the part I have chosen to stay in. Day zero, every day.</p>
-      <p><a href="/projects/">The projects, at their current altitude.</a></p>
+      <p class="label crumb"><a href="/projects/">The projects, at their current altitude →</a></p>
     </section>
 
     <section>
@@ -63,7 +65,9 @@ const HEX = 'M92 50 L71 86.4 L29 86.4 L8 50 L29 13.6 L71 13.6 Z';
         </svg>
         <figcaption>A VOR, as drawn on an aeronautical chart.</figcaption>
       </figure>
-      <p>Aircraft instruments are round. Hexagons come from somewhere else: on aeronautical charts, a VOR, the ground beacon that aircraft navigate by, is drawn as a hexagon with a dot in the middle. Pilots fly from one to the next. It seemed like the right shape for a site whose status line ends "where good problems take me."</p>
+      <p>Aircraft instruments are round. Hexagons come from somewhere else: on aeronautical charts, a VOR, the ground beacon that aircraft navigate by, is drawn as a hexagon with a dot in the middle. Pilots fly from one to the next. A VOR only ever tells you where the next one is, and that has been enough to cross continents for seventy years.</p>
+      <p>The research has been flown the same way. The field sites came in order, a van, then small homes, then a card table, then a classroom in Hyderabad, and none of them was picked from a map of the whole route. Each was the next beacon in range from the last. The About page ends "where good problems take me" for the same reason.</p>
+      <p class="label crumb"><a href="/work/#paths">Where the research went →</a></p>
     </section>
 
     <section>
@@ -76,7 +80,9 @@ const HEX = 'M92 50 L71 86.4 L29 86.4 L8 50 L29 13.6 L71 13.6 Z';
         </svg>
         <figcaption>The aircraft symbol. Also a Fitts's law task.</figcaption>
       </figure>
-      <p>On many attitude indicators the aircraft is drawn as two short bars and a dot. The same three shapes are the oldest experiment in human-computer interaction: two targets and a pointer moving between them. Paul Fitts ran it in 1954 and the result, that the time to reach a target depends on its distance and its width, still decides how big the buttons on your phone are. Half of what I do is flying. The other half is that experiment, in one form or another.</p>
+      <p>On many attitude indicators the aircraft is drawn as two short bars and a dot. The same three shapes are the oldest experiment in human-computer interaction: two targets and a pointer moving between them. Paul Fitts ran it in 1954 and the result, that the time to reach a target depends on its distance and its width, still decides how big the buttons on your phone are.</p>
+      <p>Fitts measured the pointer and held the targets still. Proteus takes the target and makes it programmable: a playing card that can become any other card, on a table where people have been reaching for cards for a few hundred years. The question underneath the deck is how much an object can change before people stop treating it as the thing they know. It is a Fitts's law task with the target let loose.</p>
+      <p class="label crumb"><a href="/work/scramble/">The Proteus deck →</a></p>
     </section>
 
     <section>
@@ -91,11 +97,13 @@ const HEX = 'M92 50 L71 86.4 L29 86.4 L8 50 L29 13.6 L71 13.6 Z';
         <figcaption>Sixteen pixels of left bank.</figcaption>
       </figure>
       <p>In the browser tab the instrument is banked twenty degrees to the left with the symbol removed, because at sixteen pixels the bars and the dot stop being an aircraft and start being a face. The left turn is not arbitrary either: circuits at most airports are flown with left turns, so after takeoff, left is the way you go.</p>
+      <p>The face was a sixteen-pixel version of the problem the Bodhika study is about. Shrink a thing, or take it out of its context, and people read it as something else. A wellbeing screen shown on its own reads as a label on the child; the same result inside a whole picture of the child reads as information a parent can use. The favicon got redrawn for the same reason the dashboard did.</p>
+      <p class="label crumb"><a href="/work/bodhika/">The Bodhika dashboards →</a></p>
     </section>
 
     <section class="flying">
       <h2>Flying</h2>
-      <p>Some of it, on video.</p>
+      <p>The next field site. A flight deck is about as constrained as a space gets: a fixed seat, a room that moves, a hundred controls, and no option to put the task down. That is where the constrained-spaces work goes next, with the domain knowledge coming from the left seat. Some of the flying, on video.</p>
       <ul class="videos">
         {videos.map((v) => (
           <li>
@@ -106,6 +114,7 @@ const HEX = 'M92 50 L71 86.4 L29 86.4 L8 50 L29 13.6 L71 13.6 Z';
         ))}
       </ul>
       {channel && <p><a href={channel} rel="noopener">All of the videos</a></p>}
+      <p class="label crumb"><a href="/projects/">What comes next →</a></p>
     </section>
 
   </div>
@@ -121,6 +130,9 @@ const HEX = 'M92 50 L71 86.4 L29 86.4 L8 50 L29 13.6 L71 13.6 Z';
   .fig svg { width: 100%; height: auto; display: block; }
   .fig figcaption { font-size: 0.8rem; line-height: 1.3; margin-top: 0.5rem; }
   .attitude section::after { content: ''; display: block; clear: both; }
+  .crumb { margin-top: 1.25rem; }
+  .crumb a { text-decoration: none; }
+  .crumb a:hover { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.35em; }
   .videos { list-style: none; padding: 0; margin: 0 0 1.5rem; }
   .videos li { padding: 0.75rem 0; border-bottom: 1px solid #000; }
   .videos li:first-child { border-top: 1px solid #000; }
