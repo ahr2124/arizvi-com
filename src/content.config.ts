@@ -60,16 +60,16 @@ const projects = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/projects' }),
   schema: z.object({
     title: z.string(),
-    summary: z.string(),          // one line under the title
+    summary: z.string(),          // one short line under the title
     years: z.string(),
-    role: z.string(),
-    impact: z.string(),
-    output: z.string(),           // type of output: papers, artefact, patents, company...
-    methods: z.string(),          // methodology in one line
+    role: z.string(),             // a few words, e.g. "Inventor · Founder"
+    impact: z.string(),           // a few words with numbers, e.g. "3 patents · 2 papers · A company"
+    output: z.string(),           // comma-separated types, rendered as pills: "Artefact, Papers, Patents"
+    methods: z.string(),          // a few words, e.g. "Field study · Phenomenological analysis"
+    venues: z.array(z.string()).default([]), // short venue tags, e.g. ["CHI 2021", "GI 2024"]
     image: z.string().optional(), // blurred card background, e.g. /media/projects/<slug>.jpg
     link: z.string().optional(),  // case-study page or external link
     order: z.number(),
-    publications: z.array(z.object({ cite: z.string(), doi: z.string().optional(), note: z.string().optional() })).default([]),
   }),
 });
 
