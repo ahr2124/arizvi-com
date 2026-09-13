@@ -1,7 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
 import Cover from './Cover.astro';
-import Path from './Path.astro';
 interface Props { all?: boolean }
 const { all = false } = Astro.props;
 const items = (await getCollection('work', ({ data, body }) => (all ? !!body?.trim() : data.featured)))
@@ -15,7 +14,6 @@ const track = { 'research-to-company': 'Research → Company', research: 'Resear
       <p class="label">{e.data.years} · {track[e.data.track]}</p>
       <h3>{e.data.title}</h3>
       <p>{e.data.summary}</p>
-      {e.data.path && <Path path={e.data.path} compact />}
     </a>
   ))}
 </div>

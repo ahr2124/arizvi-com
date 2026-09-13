@@ -184,7 +184,7 @@ a:focus-visible { outline: 2px solid #000; outline-offset: 3px; }
 .card h3 a { text-decoration: none; }
 .card h3 a:hover { text-decoration: underline; }
 .card-summary { margin: 0 0 1.25rem; max-width: none; }
-.card-facts { display: grid; grid-template-columns: 5.5rem 1fr; gap: 6px var(--gutter); margin: 0; border-top: 1px solid #000; padding-top: 12px; }
+.card-facts { display: grid; grid-template-columns: 6.5rem 1fr; gap: 6px var(--gutter); margin: 0; border-top: 1px solid #000; padding-top: 12px; }
 .card-facts dt { font-weight: 500; font-size: 13px; text-transform: uppercase; letter-spacing: 0.14em; line-height: 1.6; }
 .card-facts dd { margin: 0; font-size: 16px; }
 .card .pills { margin-top: 16px; }
