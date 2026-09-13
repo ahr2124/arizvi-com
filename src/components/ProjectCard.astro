@@ -3,28 +3,21 @@ import type { CollectionEntry } from 'astro:content';
 interface Props { project: CollectionEntry<'projects'> }
 const { data: d } = Astro.props.project;
 const bg = d.image ?? '/media/mark.svg';
+const outputs = d.output.split(',').map((s) => s.trim()).filter(Boolean);
 ---
 <article class:list={['card', { 'card-fallback': !d.image }]}>
   <div class="card-bg" style={`background-image:url('${bg}')`} aria-hidden="true"></div>
   <div class="card-body">
-    <p class="label">{d.years}</p>
+    <p class="label">{[d.years, ...d.venues].join(' · ')}</p>
     <h3>{d.link ? <a href={d.link}>{d.title}</a> : d.title}</h3>
     <p class="card-summary">{d.summary}</p>
     <dl class="card-facts">
       <dt>Role</dt><dd>{d.role}</dd>
       <dt>Impact</dt><dd>{d.impact}</dd>
-      <dt>Output</dt><dd>{d.output}</dd>
       <dt>Methods</dt><dd>{d.methods}</dd>
     </dl>
-    {d.publications.length > 0 && (
-      <ul class="card-pubs">
-        {d.publications.map((p) => (
-          <li>
-            {p.cite}{p.note && ` ${p.note}.`}
-            {p.doi && <a class="label" href={`https://doi.org/${p.doi}`} target="_blank" rel="noopener">DOI</a>}
-          </li>
-        ))}
-      </ul>
-    )}
+    <ul class="pills small" aria-label="Output">
+      {outputs.map((o) => <li>{o}</li>)}
+    </ul>
   </div>
 </article>
