@@ -1,35 +1,37 @@
 # arizvi.com
 
-Astro site hosted on GitHub Pages. Content lives in `src/content/`; interactive pages live in `public/play/`.
+Astro site, hosted on GitHub Pages from `ahr2124/arizvi-com`. Every push to `main` builds and deploys via `.github/workflows/deploy.yml`. `public/CNAME` holds the custom domain so it survives redeploys.
 
 ## Run locally
     npm install
-    npm run dev
+    npm run dev        # dev server
+    npm run build      # static build into dist/
 
-## First deploy
-1. Create a GitHub repo (e.g. `arizvi-com`), push this folder to `main`.
-2. Repo → Settings → Pages → Source: **GitHub Actions**. The workflow in `.github/workflows/deploy.yml` builds and publishes on every push.
-3. Settings → Pages → Custom domain: enter `arizvi.com` and tick "Enforce HTTPS" once DNS resolves.
+## Pages
+- Nav: Research · Publications · Teaching · Work · About. Home is `src/pages/index.astro`.
+- Blog is linked from the footer only. Tools and Resources still build but are not linked anywhere.
+- `/attitude/` explains the mark and lists flying videos. Reached only by clicking the mark in the nav; sends `noindex`. Fill the `videos` array and `channel` at the top of `src/pages/attitude.astro`.
+
+## Content (`src/content/`)
+Fields for each collection are in `src/content.config.ts`.
+- `work/*.md`: one file per project. `featured: true` puts it in the home grid; a markdown body gives it a case-study page at `/work/<slug>/`; `order` sorts. `image:` is the cover (3:2), `video:` an optional cover video for the case-study page only.
+- `blog/*.md`: `title`, `date`, `summary`, optional `draft: true`.
+- `tools/*.md`, `resources/*.md`: rows on the unlinked Tools and Resources pages.
+- Research, Publications, Teaching and About are written directly in their page files.
+
+## Media (`public/media/`)
+- `work/` covers and case-study videos, `flying/` videos for /attitude, `blog/` for posts.
+- `headshot.jpg` (800×1000) on the home page; `mark.svg` is the nav mark.
+- Favicons: `public/favicon.svg` (primary) and `public/favicon.ico` (fallback).
+- Keep videos under about 25 MB (GitHub refuses files over 100 MB). A good default:
+      ffmpeg -i in.mp4 -vf scale=1280:-2 -c:v libx264 -crf 30 -pix_fmt yuv420p -movflags +faststart -c:a aac -b:a 96k out.mp4
+
+## Type
+Cooper Hewitt, self-hosted in `public/fonts/` (SIL OFL, licence alongside). `@font-face` rules are at the top of `src/styles/global.css`.
 
 ## DNS (at your registrar)
     A     @    185.199.108.153
     A     @    185.199.109.153
     A     @    185.199.110.153
     A     @    185.199.111.153
-    CNAME www  <your-github-username>.github.io
-
-`public/CNAME` already contains `arizvi.com` so the custom domain survives redeploys.
-
-## Sections
-Profile (home) · Work · Research · Tools · Resources · Blog
-
-## Add things
-- Media: all images and video live in `public/media/` (`media/work/`, `media/blog/`). Home hero uses `public/media/hero.mp4` + `hero.jpg`; the Work page uses `media/work.mp4` + `work.jpg` if present.
-- Blog post: new `.md` in `src/content/blog/` with `title`, `date`, `summary` (and `draft: true` to hide).
-- Work: each `.md` in `src/content/work/` is one logbook row. Give it a body (markdown) and it gets its own
-  case-study page at `/work/<slug>/`; set `featured: true` to show it on Profile and at the top of Work.
-  Add `image: /media/work/<file>.jpg` (file in `public/media/work/`) for a cover image and `outcome:` for the one-line result.
-- Resource: new `.md` in `src/content/resources/` with `title`, `href`, `group`, `note`.
-- Tool (AI-generated page): drop the `.html` into `public/tools/`, then add a `.md` in `src/content/tools/` with `title`, `href`, `useCase`, `date`.
-- CV: put `cv.pdf` in `public/`.
-Every section is driven by files in `src/content/`; nothing else needs editing.
+    CNAME www  ahr2124.github.io
