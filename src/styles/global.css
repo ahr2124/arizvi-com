@@ -131,6 +131,7 @@ a:focus-visible { outline: 2px solid #000; outline-offset: 3px; }
 
 /* Page header */
 .page-head { padding-top: 4rem; }
+.page-head .label { margin-bottom: 0.9rem; }
 .page-head h1 { margin-bottom: 1.5rem; }
 
 @media (max-width: 1023px) {
