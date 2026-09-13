@@ -5,5 +5,5 @@ years: 2021–2024
 kind: research
 track: research
 order: 7
-summary: Nine courses across UX, HCI, and UX analytics, undergraduate and graduate, classes of 40 to 180.
+summary: 9 courses across UX, HCI and UX analytics, undergrad and grad, classes of 40 to 180.
 ---

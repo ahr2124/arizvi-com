@@ -4,29 +4,23 @@ How arizvi.com is written and how it gets made. Read this before writing or edit
 
 ## The voice
 
-Drawn from Ali's own copy (About, Teaching, the case studies), the thesis and papers, and how he gives direction.
+Drawn from how Ali actually writes: his emails, his chat messages, and the lines on the site he wrote himself ("My teams and I build cool things", "Where good problems take me", "Logbook", "The curious are rewarded", "I love flying. Here's some of it on video."). Not from the papers, which are a different register. The earlier version of this file described a polished, literary voice (contrast pairs, lists of three, dry closers, a turn at the end of every paragraph). That voice read as AI-written to him. Don't write it.
 
-**Register.** First person, plain, declarative. Sentences carry a turn at the end rather than a flourish at the start. The last clause does the work:
+**Register.** First person, plain, direct, a bit informal. Says what he did, what he wants, and why, in that order. Contractions are fine. Sentences can be short and flat. A paragraph doesn't need a punchline.
 
-> The company exists because the answer turned out to be commercially interesting, and because the only way to study the deck at scale is to make a lot of them.
+**How he explains.** Mechanism in a plain causal chain: "As more students take our assessments, our item calibration improves, our Indian norming gets denser, and our measurement precision tightens." Then a one-line summary if it helps: "In other words, ..." / "Overall, ...". Numbered lists whenever there are 2+ points, even inside prose. "First, ... Second, ..." is normal.
 
-> Bodhika Labs is what it took to keep asking the question: a company that calibrates items properly, norms them on Indian students, and gives me a school where teachers and parents bring the research questions rather than the literature.
+**Punctuation and shorthand.** Spaced hyphen for asides ( - ), never an em-dash. Parentheses for specifics: "(back of the napkin: ~12,000 INR)", "(IRT, Indian norms)". Arrows for sequences and paths: "a van -> small homes -> a card table". Digits, not words: 9 courses, ~700 students, 3 patents, 80%. Abbreviations he uses: RQ, PM, HCI, vs., i.e., esp, etc.
 
-**Shape of a paragraph.** Claim, then mechanism, then consequence. Open with the situation in one sentence, say what was assumed or missing, say what was built. No throat-clearing, no "In this project I...".
+**Vocabulary.** PM and research words side by side without apology: shipped, ROI, go-to-market, flywheel, field site, RQ, artefact, validated instrument. Enthusiasm is allowed and plain: "really interesting", "very", "I love", and the occasional exclamation mark. Dry, self-deprecating humour once in a while ("My handwriting resembles a doctor's prescription"). Never "impactful", "passionate", "leverage", "innovative", "excited to", "thrilled".
 
-**Contrast pairs.** He sets ideas against each other in one sentence: "designed in large, stable rooms and used in small, moving, improvised ones"; "assess constantly and measure very little"; "an exposition, not a requisition". Use this when there is a real tension; do not manufacture one.
+**What to avoid because it reads as AI.** Em-dashes. Rhythmic lists of three for effect. Sentences built as "X, not Y" (his stated preference: phrase things positively). Aphoristic closers ("Day zero, every day" is his; don't add more of that kind). Extended metaphors carried across paragraphs. "It is" / "does not" where he'd say "it's" / "doesn't". Abstract nouns doing the work ("the assumptions underneath them", "what it took to keep asking the question") where a concrete sentence would do.
 
-**Lists of three, concrete.** "A van, a classroom, a card table." "Teachers, parents, and players." "A participant, a client, and a metric that moved." Places and people, not abstractions.
-
-**Numbers as facts, not boasts.** "Nine courses... classes of 40 to 180. Students came from nine departments." Impact is stated and left alone. Never "impactful", "passionate", "leverage", "innovative", "excited to", "thrilled".
-
-**Dry closers.** A short sentence at the end that undercuts or redirects: "I also fly." Use sparingly, once per page at most.
-
-**Spelling and vocabulary.** Canadian/British: artefact, programme, behaviour, licence, optimisation, wellbeing (one word). "The literature" as a place research questions come from, contrasted with the field. "Field site" for a school or company. "What the design assumed." "Where good problems take me."
+**Spelling.** Canadian/British: artefact, programme, behaviour, licence, optimisation, wellbeing (one word); -ize endings are fine (organize, realize), "centre", "learnt".
 
 **Titles.** Sentence case. Arrows for a path: "Proteus → Scramble Deck", "Research → Company". Pairs and imperatives for papers: "Embed, don't isolate".
 
-**Academic register** (papers, research statement) is more hedged and precise but keeps the same bones: a bold one-sentence finding, then the explanation. From the Interactive Health paper: "Framing precedes content in stigma-sensitive data communication." "Cultural and linguistic gatekeepers are essential, not optional."
+**Academic register** (papers, research statement) is more careful and precise but keeps the same bones: a bold one-sentence finding, then the explanation. From the Interactive Health paper: "Framing precedes content in stigma-sensitive data communication."
 
 **Facts to keep straight.** Flying is a hobby, never a research direction: no cockpits, flight decks, or "left seat" as the next field site, anywhere. Scramble Deck is the one company. Bodhika Labs is his research lab (with a partner school in Hyderabad), never a company or a commercial output. The research is applied; say so with outputs, not adjectives.
 

@@ -24,25 +24,25 @@ papers:
 
 - A mid-sized healthcare e-commerce retailer, about 10,000 transactions a year, with an analytics team of a product manager, a UX designer, and a data analyst.
 - Shopify, Amplitude, and LaunchDarkly for funnels, cohorts, and feature flags. The tools every small retailer has.
-- I was the product manager and a part-owner, so the account is auto-ethnographic: the experiments as they were run, not as they would be described afterwards.
+- I was the product manager and a part-owner, so the account is auto-ethnographic: the experiments as they were actually run, warts and all.
 
 ## The experiments
 
 - Five families: cohort-based retention, funnel friction reduction, device-specific optimisation, personalised engagement, and content and trust building.
 - Localised wins were real. Checkout abandonment fell 8–12% in the best cases.
-- Most of them did not move revenue or repeat purchase. A lot of A/B testing produced quick wins that never became long-term behaviour.
+- Most of them didn't move revenue or repeat purchase. A lot of A/B testing produced quick wins that never turned into long-term behaviour.
 
 ## Five tensions
 
-- Friction versus engagement: removing steps speeds people up; some steps are what make them trust you.
-- Short-term wins versus long-term impact: a better checkout number is not a better customer.
-- Personalisation versus experiment integrity: the recommender keeps learning while you are trying to hold it still.
-- Funnel-stage optimisation versus holistic gains: fixing one stage moves the drop-off to the next.
-- Experiment volume versus data reliability: with modest traffic, every extra concurrent test costs you statistical power.
+- Friction vs. engagement: removing steps speeds people up, and some of those steps are what make people trust you.
+- Short-term wins vs. long-term impact: a better checkout number isn't a better customer.
+- Personalisation vs. experiment integrity: the recommender keeps learning while you're trying to hold it still.
+- Funnel-stage optimisation vs. holistic gains: fixing one stage moves the drop-off to the next.
+- Experiment volume vs. data reliability: with modest traffic, every extra concurrent test costs you statistical power.
 
 ## What it argues
 
-- Customer paths are not linear, so funnel diagrams mislead; interventions have to be pathway-specific.
+- Customer paths aren't linear, so funnel diagrams mislead. Interventions have to be pathway-specific.
 - Structured experiment tracking, holdout groups, and adaptive funnel strategies make small-traffic experimentation trustworthy.
 - Experimentation is organisational learning, and should be taught that way.
 

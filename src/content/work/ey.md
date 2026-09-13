@@ -5,5 +5,5 @@ years: 2012–2013
 kind: industry
 track: industry
 order: 11
-summary: Compliance, strategy, and analytics engagements for US banks; built the tools the teams ran on.
+summary: Compliance, strategy and analytics engagements for US banks. Built the tools the teams ran on.
 ---

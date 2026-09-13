@@ -3,10 +3,10 @@ import Base from '../../layouts/Base.astro';
 import Section from '../../components/Section.astro';
 // One entry per course; terms, sections and students are the quantity, the line is the quality.
 const courses = [
-  { code: 'GBDA 310', title: 'Advanced User Experience Design and Research', terms: 'Fall 2023 · Spring 2024', meta: '4 sections · 222 students', line: 'Students run real studies on real people from the first week.' },
-  { code: 'GBDA 402', title: 'Undergraduate Capstone Seminar', terms: 'Winter 2022 · Winter 2023', meta: '12-credit · 187 students · online and in person', line: 'Teams build functional prototypes for external clients and present to them. Every term shipped something that ran.' },
-  { code: 'GBDA 410', title: 'Seminar in User Experience Research (Virtual Reality)', terms: 'Fall 2023', meta: '2 sections · 91 students', line: 'The UX research seminar, that year in headsets.' },
-  { code: 'MSCI 543', title: 'Analytics and User Experience', terms: 'Spring 2023', meta: 'Graduate · 87 students', line: 'Experimentation taught from the funnels and instrumentation I used at Amazon, failure modes included.' },
+  { code: 'GBDA 310', title: 'Advanced User Experience Design and Research', terms: 'Fall 2023 · Spring 2024', meta: '4 sections · 222 students', line: 'Real studies on real people from week one.' },
+  { code: 'GBDA 402', title: 'Undergraduate Capstone Seminar', terms: 'Winter 2022 · Winter 2023', meta: '12-credit · 187 students · online and in person', line: 'Teams build working prototypes for external clients and present to them. Every term shipped something that ran.' },
+  { code: 'GBDA 410', title: 'Seminar in User Experience Research (Virtual Reality)', terms: 'Fall 2023', meta: '2 sections · 91 students', line: 'The UX research seminar - that year, in VR headsets.' },
+  { code: 'MSCI 543', title: 'Analytics and User Experience', terms: 'Spring 2023', meta: 'Graduate · 87 students', line: 'Experimentation taught from the funnels and instrumentation I used at Amazon, including the failure modes.' },
   { code: 'MSCI 630', title: 'Human-Computer Interaction', terms: 'Winter 2022 · Winter 2023', meta: 'Graduate · 86 students', line: 'Graduate HCI, taught through the students\' own research projects.' },
   { code: 'GBDA 210', title: 'Introduction to UX', terms: 'Fall 2021', meta: '54 students', line: 'The start of the UX sequence, and the first course I taught.' },
 ];
@@ -52,19 +52,19 @@ const ready: [string, string[]][] = [
   <header class="page-head">
     <h1>Teaching</h1>
     <div class="grid"><div class="span-8">
-      <p>Nine course runs at the University of Waterloo between 2021 and 2024, across two departments and three programmes, undergraduate and graduate, in classes of 40 to 180. About 700 students from nine departments.</p>
+      <p>9 course runs at the University of Waterloo between 2021 and 2024, across 2 departments and 3 programmes, undergrad and grad, in classes of 40 to 180. ~700 students from 9 departments in total.</p>
     </div></div>
   </header>
 
   <Section label="Approach">
     <div class="grid"><div class="span-8">
-      <p>I teach the way I worked.</p>
+      <p>I teach the way I worked in industry.</p>
       <ul>
-        <li><strong>UX sequence.</strong> Students run real studies on real people from the first week, because contextual inquiry and task analysis only make sense once you've been surprised by a participant.</li>
-        <li><strong>Capstone.</strong> Teams build functional prototypes for external clients and present to them, so scoping, trade-offs, and saying no become part of the course rather than something they meet later.</li>
-        <li><strong>Analytics.</strong> Experimentation taught from the funnels and instrumentation I used at Amazon, with the failure modes included.</li>
+        <li><strong>UX sequence.</strong> Students run real studies on real people from week one, because contextual inquiry and task analysis only make sense once a participant has surprised you.</li>
+        <li><strong>Capstone.</strong> Teams build working prototypes for external clients and present to them, so scoping, trade-offs and saying no are part of the course, and they get to practise all three before it matters.</li>
+        <li><strong>Analytics.</strong> Experimentation taught from the funnels and instrumentation I used at Amazon, including the failure modes.</li>
       </ul>
-      <p>Students who have been through this sequence interview differently: they have a story about a participant, a client, and a metric that moved, and they can explain what they'd do differently.</p>
+      <p>Students who've been through this sequence interview differently. They have a story about a participant, a client and a metric that moved, and they can tell you what they'd do differently next time.</p>
     </div></div>
   </Section>
 
@@ -84,7 +84,7 @@ const ready: [string, string[]][] = [
 
   <Section label="Ready to teach" id="ready">
     <div class="grid"><div class="span-8">
-      <p>By department. The list above is what I have taught; this is what I can walk in and teach.</p>
+      <p>Grouped by department. The list above is what I've taught. This is what I can walk in and teach next term.</p>
       <div class="kv ready">
         {ready.map(([cat, list]) => (
           <>
@@ -102,7 +102,7 @@ const ready: [string, string[]][] = [
     <div class="grid"><div class="span-8">
       <ul>
         <li>Capstone teams delivered working prototypes to external partners in every term I ran the course.</li>
-        <li>I supervise the way I was supervised: weekly, with the student's question at the centre, and with the expectation that the work ends in something that runs.</li>
+        <li>I supervise the way I was supervised: weekly meetings, the student's question at the centre, and the expectation that the work ends in something that runs.</li>
       </ul>
     </div></div>
   </Section>
