@@ -7,5 +7,6 @@ impact: Paper in revision
 output: Paper
 methods: Auto-ethnography
 venues: ["DIS 2027"]
+image: /media/projects/nicu-haptics.jpg
 order: 5
 ---
