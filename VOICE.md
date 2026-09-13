@@ -28,6 +28,8 @@ Drawn from Ali's own copy (About, Teaching, the case studies), the thesis and pa
 
 **Academic register** (papers, research statement) is more hedged and precise but keeps the same bones: a bold one-sentence finding, then the explanation. From the Interactive Health paper: "Framing precedes content in stigma-sensitive data communication." "Cultural and linguistic gatekeepers are essential, not optional."
 
+**Facts to keep straight.** Scramble Deck is the one company. Bodhika Labs is his research lab (with a partner school in Hyderabad), never a company or a commercial output. The research is applied; say so with outputs, not adjectives.
+
 **What he rejects.** Generic template copy ("Claude-slop"), anything that reads as a job request on the site ("Open to..."), dense cards, uppercase tracked labels used decoratively, more text than a reader can grok in a glance. When in doubt, cut.
 
 ## Process
