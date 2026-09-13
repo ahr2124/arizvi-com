@@ -30,7 +30,7 @@ const courses = [
 
   <Section label="Courses taught">
     <table class="logbook courses">
-      <thead><tr><th>Term</th><th>Code</th><th>Course</th><th>Notes</th><th class="n">Students</th></tr></thead>
+      <thead><tr><th class="years">Term</th><th class="kind">Code</th><th>Course</th><th>Notes</th><th class="n">Students</th></tr></thead>
       <tbody>
         {courses.map(([t, c, n, note, s]) => (
           <tr><td class="years">{t}</td><td class="kind">{c}</td><td class="title">{n}</td><td>{note}</td><td class="n">{s}</td></tr>

@@ -203,7 +203,10 @@ a.card:hover h3 { text-decoration: underline; text-decoration-thickness: 2px; te
 .pubs .links { font-size: 13px; text-transform: uppercase; letter-spacing: 0.14em; font-weight: 500; margin-top: 4px; }
 .pubs .links a { text-decoration: none; margin-right: 16px; }
 .pubs .links a:hover { text-decoration: underline; }
-.courses td.n { text-align: right; white-space: nowrap; }
+.courses th.years, .courses td.years { text-align: left; width: 1%; white-space: nowrap; }
+.courses th.kind, .courses td.kind { width: 1%; white-space: nowrap; }
+.courses td.kind { padding-top: 18px; }
+.courses th.n, .courses td.n { text-align: right; white-space: nowrap; }
 .kv { display: grid; grid-template-columns: 10rem 1fr; column-gap: var(--gutter); row-gap: 10px; max-width: 70ch; }
 .kv p { margin: 0; max-width: none; }
 @media (max-width: 1023px) {
