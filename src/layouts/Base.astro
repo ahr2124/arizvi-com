@@ -1,18 +1,48 @@
 ---
 import '../styles/global.css';
 interface Props { title: string; description?: string; noindex?: boolean }
-const { title, noindex = false, description = 'Ali Rizvi — human-computer interaction researcher. PhD, University of Waterloo. Research that becomes products.' } = Astro.props;
+const { title, noindex = false, description = 'Ali Rizvi — human-computer interaction researcher. PhD, University of Waterloo. AI and interactive systems for the other eighty percent.' } = Astro.props;
 const path = Astro.url.pathname;
 const scholar = 'https://scholar.google.com/citations?user=ngAHmhEAAAAJ&hl=en&oi=ao';
+const email = 'ali.rizvi@uwaterloo.ca';
 const nav = [
   ['/projects/', 'Projects'],
   ['/teaching/', 'Teaching'],
   ['/work/', 'Work'],
   ['/about/', 'About'],
 ];
+const footerNav: [string, [string, string][]][] = [
+  ['Research', [
+    ['/projects/', 'Research statement'],
+    ['/projects/#projects', 'Projects'],
+    ['/publications/', 'Publications'],
+    [scholar, 'Google Scholar'],
+  ]],
+  ['Teaching', [
+    ['/teaching/', 'Teaching'],
+    ['/teaching/#courses', 'Courses taught'],
+    ['/teaching/#ready', 'Ready to teach'],
+    ['/teaching/#mentoring', 'Mentoring'],
+  ]],
+  ['Work', [
+    ['/work/', 'Work'],
+    ['/work/scramble/', 'Proteus → Scramble Deck'],
+    ['/work/bodhika/', 'Bodhika Labs'],
+    ['/work/phd/', 'Constrained spaces'],
+    ['/work/experimentation/', 'Experimentation at scale'],
+    ['/work/#logbook', 'Logbook'],
+  ]],
+  ['More', [
+    ['/about/', 'About'],
+    ['/cv.pdf', 'Academic CV (PDF)'],
+    ['/blog/', 'Blog'],
+    ['/attitude/', 'About the mark'],
+  ]],
+];
 const updated = new Date().toLocaleDateString('en-CA', { year: 'numeric', month: 'long' });
 const current = (href: string) =>
   (href === '/' ? path === '/' : path.startsWith(href)) ? 'page' : undefined;
+const ext = (href: string) => href.startsWith('http');
 ---
 <!doctype html>
 <html lang="en-CA">
@@ -41,11 +71,34 @@ const current = (href: string) =>
         </nav>
       </header>
       <main><slot /></main>
-      <footer class="site-footer">
-        <p class="label">
-          <a href="mailto:hello@arizvi.com">hello@arizvi.com</a> — <a href={scholar} target="_blank" rel="noopener">Google Scholar</a> — <a href="/cv.pdf">CV</a> — <a href="/blog/">Blog</a> — Updated {updated} — © {new Date().getFullYear()} Ali Rizvi
-        </p>
-      </footer>
     </div>
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <img class="mark" src="/media/mark-inverse.svg" alt="" width="36" height="36" />
+            <p class="wordmark">Ali Rizvi</p>
+            <p class="footer-line">Human-computer interaction. AI and interactive systems for the other eighty percent.</p>
+            <p class="footer-contact"><a href={`mailto:${email}`}>{email}</a></p>
+          </div>
+          {footerNav.map(([heading, links]) => (
+            <nav class="footer-col" aria-label={heading}>
+              <p class="label">{heading}</p>
+              <ul>
+                {links.map(([href, label]) => (
+                  <li>{ext(href)
+                    ? <a href={href} target="_blank" rel="noopener">{label}</a>
+                    : <a href={href}>{label}</a>}</li>
+                ))}
+              </ul>
+            </nav>
+          ))}
+        </div>
+        <div class="footer-base label">
+          <p>© {new Date().getFullYear()} Ali Rizvi</p>
+          <p>Updated {updated}</p>
+        </div>
+      </div>
+    </footer>
   </body>
 </html>
