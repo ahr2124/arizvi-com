@@ -5,7 +5,7 @@ import Base from '../layouts/Base.astro';
 
 // Fill these in. Each becomes one row in the Flying section.
 const videos = [
-  { title: 'VIDEO TITLE', note: 'One line on what it is — aircraft, where, why it is worth eight minutes.', url: 'https://www.youtube.com/watch?v=' },
+  { title: 'Sunset landing', note: 'One line.', url: '/media/flying/sunset-landing.mp4' },
   { title: 'VIDEO TITLE', note: 'One line.', url: 'https://www.youtube.com/watch?v=' },
   { title: 'VIDEO TITLE', note: 'One line.', url: 'https://www.youtube.com/watch?v=' },
 ];
@@ -96,6 +96,7 @@ const HEX = 'M92 50 L71 86.4 L29 86.4 L8 50 L29 13.6 L71 13.6 Z';
           <li>
             <a href={v.url} rel="noopener">{v.title}</a>
             <span>{v.note}</span>
+            {v.url.startsWith('/') && <video src={v.url} controls preload="metadata" playsinline></video>}
           </li>
         ))}
       </ul>
@@ -120,6 +121,7 @@ const HEX = 'M92 50 L71 86.4 L29 86.4 L8 50 L29 13.6 L71 13.6 Z';
   .videos li:first-child { border-top: 1px solid #000; }
   .videos a { display: block; }
   .videos span { display: block; font-size: 0.9rem; }
+  .videos video { display: block; width: 100%; margin-top: 0.75rem; background: #000; }
   @media (max-width: 30rem) { .fig { float: none; width: 5rem; margin: 0 0 1rem; } }
   @media (prefers-reduced-motion: reduce) {
     .ball { transform: translate(0, 18px); }
