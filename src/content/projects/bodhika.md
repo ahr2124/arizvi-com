@@ -8,5 +8,6 @@ output: Design study, Dashboards, Company
 methods: Design study · Dashboards in Indian schools
 venues: ["ACM Interactive Health 2026"]
 link: /work/bodhika/
+image: /media/projects/bodhika.jpg
 order: 2
 ---

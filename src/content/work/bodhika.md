@@ -6,6 +6,7 @@ kind: research
 track: research-to-company
 order: 2
 featured: true
+image: /media/work/bodhika.jpg
 link: https://bodhikalabs.com
 summary: How do you tell a parent their child may need help without the report becoming a label? A dashboard study that became a school assessment company.
 outcome: A published study (ACM Interactive Health 2026), a first partner school, and a live field site for the next studies.
