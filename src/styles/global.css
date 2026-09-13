@@ -62,8 +62,10 @@ a:focus-visible { outline: 2px solid #000; outline-offset: 3px; }
 
 /* Header */
 .site-header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 12px 32px; padding: 24px 0; border-bottom: 2px solid #000; }
-.wordmark { display: inline-flex; align-items: center; gap: 12px; font-weight: 700; font-size: 15px; text-transform: uppercase; letter-spacing: 0.14em; text-decoration: none; }
-.wordmark .mark { width: 28px; height: 28px; flex: none; }
+.brand { display: inline-flex; align-items: center; gap: 12px; }
+.brand .mark-link { display: block; line-height: 0; }
+.brand .mark { width: 28px; height: 28px; }
+.wordmark { font-weight: 700; font-size: 15px; text-transform: uppercase; letter-spacing: 0.14em; text-decoration: none; }
 .site-header nav { display: flex; flex-wrap: wrap; gap: 8px 28px; }
 .site-header nav a { text-decoration: none; }
 .site-header nav a:hover { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.35em; }
@@ -139,7 +141,7 @@ a:focus-visible { outline: 2px solid #000; outline-offset: 3px; }
   .span-8, .rows .label, .rows .body, .outcome .label, .outcome p { grid-column: 1 / -1; }
   .rows .body, .outcome p { margin-top: 8px; }
   .site-header { gap: 12px 0; }
-  .site-header .wordmark { flex: 1 0 100%; }
+  .site-header .brand { flex: 1 0 100%; }
   .exhibits { grid-template-columns: 1fr; gap: 40px; }
   .section { margin-top: 3.5rem; }
   .intro { padding-top: 2.5rem; }

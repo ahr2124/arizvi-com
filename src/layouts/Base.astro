@@ -1,7 +1,7 @@
 ---
 import '../styles/global.css';
-interface Props { title: string; description?: string }
-const { title, description = 'Ali Rizvi — human-computer interaction researcher. PhD, University of Waterloo. Research that becomes products.' } = Astro.props;
+interface Props { title: string; description?: string; noindex?: boolean }
+const { title, noindex = false, description = 'Ali Rizvi — human-computer interaction researcher. PhD, University of Waterloo. Research that becomes products.' } = Astro.props;
 const path = Astro.url.pathname;
 const scholar = 'https://scholar.google.com/citations?user=ngAHmhEAAAAJ&hl=en&oi=ao';
 const nav = [
@@ -22,6 +22,7 @@ const current = (href: string) =>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title === 'Ali Rizvi' ? title : `${title} — Ali Rizvi`}</title>
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex" />}
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="/favicon.ico" sizes="16x16" />
     <link rel="canonical" href={new URL(path, Astro.site)} />
@@ -32,7 +33,10 @@ const current = (href: string) =>
   <body>
     <div class="container">
       <header class="site-header">
-        <a class="wordmark" href="/"><img class="mark" src="/media/mark.svg" alt="" width="28" height="28" />Ali Rizvi</a>
+        <div class="brand">
+          <a class="mark-link" href="/attitude/" aria-label="About the mark"><img class="mark" src="/media/mark.svg" alt="" width="28" height="28" /></a>
+          <a class="wordmark" href="/">Ali Rizvi</a>
+        </div>
         <nav class="label" aria-label="Primary">
           {nav.map(([href, label]) => <a href={href} aria-current={current(href)}>{label}</a>)}
         </nav>
