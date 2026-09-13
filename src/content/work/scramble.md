@@ -21,4 +21,7 @@ papers:
   - { title: "Proteus Card Deck: enabling remote play with a physical card deck", venue: "CHI PLAY Companion 2024", href: "https://doi.org/10.1145/3665463.3678842" }
 ---
 
-Card games are one of the oldest interfaces there is, and the hardware has not changed in a few hundred years. Proteus asked what happens when it does. Each card carries a small e-ink display and a radio, and an app decides what every card shows and when, so the same 52 objects can be a poker deck, a language-learning set, or a game that mirrors a live broadcast. The research question was about familiarity: how much can you change about an object before people stop treating it as the thing they know. The company exists because the answer turned out to be commercially interesting, and because the only way to study the deck at scale is to make a lot of them.
+- Card games are one of the oldest interfaces there is, and the hardware has not changed in a few hundred years. Proteus asked what happens when it does.
+- Each card carries a small e-ink display and a radio. An app decides what every card shows and when, so the same 52 objects can be a poker deck, a language-learning set, or a game that mirrors a live broadcast.
+- The research question was about familiarity: how much can you change about an object before people stop treating it as the thing they know.
+- The company exists because the answer turned out to be commercially interesting, and because the only way to study the deck at scale is to make a lot of them.

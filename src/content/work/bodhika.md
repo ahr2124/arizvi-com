@@ -20,4 +20,6 @@ papers:
   - { title: "Embed, don't isolate: designing holistic dashboards for stigma-sensitive parent communication", venue: "ACM Interactive Health 2026", href: "https://doi.org/10.1145/3786579.3804955" }
 ---
 
-Indian schools assess constantly and measure very little, and the one thing they measure least well is wellbeing, because a flag on a report card carries stigma in most families. The study asked what a parent-facing report would look like if the wellbeing signal sat inside a whole picture of the child instead of standing alone. Bodhika Labs is what it took to keep asking the question: a research lab that calibrates items properly, norms them on Indian students, and gives me a school where teachers and parents bring the research questions rather than the literature.
+- Indian schools assess constantly and measure very little. The thing they measure least well is wellbeing, because a flag on a report card carries stigma in most families.
+- The study asked what a parent-facing report would look like if the wellbeing signal sat inside a whole picture of the child instead of standing alone.
+- Bodhika Labs is what it took to keep asking the question: a research lab that calibrates items properly, norms them on Indian students, and gives me a school where teachers and parents bring the research questions rather than the literature.
