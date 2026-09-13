@@ -55,4 +55,22 @@ const tools = defineCollection({
   }),
 });
 
-export const collections = { blog, work, resources, tools };
+// A project is one research thread: a card on /projects/ with role, impact, output, methods, and its publications.
+const projects = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/projects' }),
+  schema: z.object({
+    title: z.string(),
+    summary: z.string(),          // one line under the title
+    years: z.string(),
+    role: z.string(),
+    impact: z.string(),
+    output: z.string(),           // type of output: papers, artefact, patents, company...
+    methods: z.string(),          // methodology in one line
+    image: z.string().optional(), // blurred card background, e.g. /media/projects/<slug>.jpg
+    link: z.string().optional(),  // case-study page or external link
+    order: z.number(),
+    publications: z.array(z.object({ cite: z.string(), doi: z.string().optional(), note: z.string().optional() })).default([]),
+  }),
+});
+
+export const collections = { projects, blog, work, resources, tools };
