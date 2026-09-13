@@ -1,0 +1,24 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+const items = (await getCollection('resources')).sort((a, b) => a.data.order - b.data.order);
+---
+<Base title="Resources">
+  <header class="page-head">
+    <h1>Resources</h1>
+    <div class="grid"><p class="span-8">Things I keep pointing people to: reading, templates, checklists, and a few files of my own.</p></div>
+  </header>
+  <section class="section">
+    <ul class="rows">
+      {items.map((i) => (
+        <li class="grid">
+          <p class="label">{i.data.group}</p>
+          <div class="body">
+            <a class="title" href={i.data.href}>{i.data.title}</a>
+            <p>{i.data.note}</p>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </section>
+</Base>

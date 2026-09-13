@@ -1,0 +1,16 @@
+---
+import type { CollectionEntry } from 'astro:content';
+interface Props { entry: CollectionEntry<'work'>; eager?: boolean; video?: boolean }
+const { entry, eager = false, video = false } = Astro.props;
+---
+{video && entry.data.video ? (
+  <video class="cover cover-video" src={entry.data.video} poster={entry.data.image} controls autoplay muted loop playsinline preload="metadata"></video>
+) : entry.data.image ? (
+  <img class="cover" src={entry.data.image} alt={entry.data.title} width="1200" height="800" loading={eager ? 'eager' : 'lazy'} />
+) : (
+  <svg class="cover placeholder" role="img" aria-label={`${entry.data.title} (no cover image yet)`}>
+    <foreignObject width="100%" height="100%">
+      <div xmlns="http://www.w3.org/1999/xhtml" class="ph"><span class="label">{entry.data.title}</span></div>
+    </foreignObject>
+  </svg>
+)}
