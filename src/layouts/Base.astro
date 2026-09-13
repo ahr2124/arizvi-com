@@ -1,7 +1,7 @@
 ---
 import '../styles/global.css';
 interface Props { title: string; description?: string; noindex?: boolean }
-const { title, noindex = false, description = 'Ali Rizvi — human-computer interaction researcher. PhD, University of Waterloo. AI and interactive systems for the other eighty percent.' } = Astro.props;
+const { title, noindex = false, description = 'Ali Rizvi - HCI researcher. PhD, University of Waterloo. AI and interactive systems for the other 80%.' } = Astro.props;
 const path = Astro.url.pathname;
 const scholar = 'https://scholar.google.com/citations?user=ngAHmhEAAAAJ&hl=en&oi=ao';
 const email = 'ali.rizvi@uwaterloo.ca';
@@ -49,7 +49,7 @@ const ext = (href: string) => href.startsWith('http');
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{title === 'Ali Rizvi' ? title : `${title} — Ali Rizvi`}</title>
+    <title>{title === 'Ali Rizvi' ? title : `${title} - Ali Rizvi`}</title>
     <meta name="description" content={description} />
     {noindex && <meta name="robots" content="noindex" />}
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
@@ -78,7 +78,7 @@ const ext = (href: string) => href.startsWith('http');
           <div class="footer-brand">
             <img class="mark" src="/media/mark-inverse.svg" alt="" width="36" height="36" />
             <p class="wordmark">Ali Rizvi</p>
-            <p class="footer-line">Human-computer interaction. AI and interactive systems for the other eighty percent.</p>
+            <p class="footer-line">HCI researcher. AI and interactive systems for the other 80%.</p>
             <p class="footer-contact"><a href={`mailto:${email}`}>{email}</a></p>
           </div>
           {footerNav.map(([heading, links]) => (
