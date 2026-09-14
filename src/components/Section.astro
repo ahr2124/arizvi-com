@@ -1,10 +1,10 @@
 ---
-interface Props { label: string; title?: string; id?: string }
+interface Props { label?: string; title?: string; id?: string }
 const { label, title, id } = Astro.props;
 ---
 <section class="section" id={id}>
   <div class="section-head">
-    <p class="label">{label}</p>
+    {label && <p class="label">{label}</p>}
     {title && <h2>{title}</h2>}
   </div>
   <slot />
