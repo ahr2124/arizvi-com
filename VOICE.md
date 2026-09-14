@@ -22,7 +22,7 @@ Drawn from how Ali actually writes: his emails, his chat messages, and the lines
 
 **Academic register** (papers, research statement) is more careful and precise but keeps the same bones: a bold one-sentence finding, then the explanation. From the Interactive Health paper: "Framing precedes content in stigma-sensitive data communication."
 
-**Facts to keep straight.** Flying is a hobby, never a research direction: no cockpits, flight decks, or "left seat" as the next field site, anywhere. Scramble Deck is the one company. Bodhika Labs is his research lab (with a partner school in Hyderabad), never a company or a commercial output. The research is applied; say so with outputs, not adjectives.
+**Facts to keep straight.** Flying is part of who Ali is. Say "flying" and "pilot" plainly, and never explain, justify, or size it: no "hobby", no "just for fun", and equally no cockpits, flight decks, or "left seat" as a research direction or field site. It doesn't need a reason to be on the site. Scramble Deck is the one company. Bodhika Labs is his research lab (with a partner school in Hyderabad), never a company or a commercial output. The research is applied; say so with outputs, not adjectives.
 
 **What he rejects.** Generic template copy ("Claude-slop"), anything that reads as a job request on the site ("Open to..."), dense cards, uppercase tracked labels used decoratively, more text than a reader can grok in a glance. When in doubt, cut.
 
