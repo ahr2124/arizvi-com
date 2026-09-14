@@ -1,0 +1,42 @@
+---
+import Base from '../../layouts/Base.astro';
+import Section from '../../components/Section.astro';
+const cc = 'https://creativecommons.org/licenses/by-nd/4.0/';
+---
+<Base title="Licence" description="How the writing, images and videos on arizvi.com may be used.">
+  <header class="page-head">
+    <p class="label">Creative Commons BY-ND 4.0</p>
+    <h1>Licence</h1>
+    <div class="grid"><div class="span-8">
+      <p>Everything I wrote, photographed, or filmed for this site may be used as it is, with credit. Not changed.</p>
+    </div></div>
+  </header>
+
+  <Section label="Terms">
+    <div class="grid"><div class="span-8">
+      <ul>
+        <li><strong>Share it.</strong> Copy and redistribute the text, images, and videos on this site, in any medium, for any purpose, including commercially.</li>
+        <li><strong>Credit it.</strong> Name me and link back. Something like: <em>Ali Rizvi, arizvi.com, CC BY-ND 4.0</em>.</li>
+        <li><strong>Don't change it.</strong> No edits, crops, remixes, or translations without asking. Ask; I usually say yes.</li>
+        <li>The full terms are the <a href={cc} target="_blank" rel="noopener">Creative Commons Attribution-NoDerivatives 4.0 International licence</a>.</li>
+      </ul>
+    </div></div>
+  </Section>
+
+  <Section label="Not covered">
+    <div class="grid"><div class="span-8">
+      <ul>
+        <li><strong>Papers.</strong> Published papers belong to their publishers' terms. The site links to the DOI; use the version of record from there.</li>
+        <li><strong>Other people's work.</strong> Figures and photos credited to co-authors, students, or partners stay theirs.</li>
+        <li><strong>Marks and names.</strong> Scramble Deck, Bodhika Labs, the Proteus name, and the site mark are not licensed for reuse.</li>
+        <li><strong>The typeface.</strong> Cooper Hewitt, under the SIL Open Font License; the licence file is at <a href="/fonts/OFL.txt">/fonts/OFL.txt</a>.</li>
+      </ul>
+    </div></div>
+  </Section>
+
+  <Section label="Ask">
+    <div class="grid"><div class="span-8">
+      <p>For anything the licence doesn't cover, or to adapt something, write to <a href="mailto:hello@arizvi.com">hello@arizvi.com</a>.</p>
+    </div></div>
+  </Section>
+</Base>
