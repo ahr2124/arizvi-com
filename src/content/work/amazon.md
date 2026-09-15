@@ -4,7 +4,7 @@ role: Senior Product Manager, Technical
 years: 2017–2019
 kind: industry
 track: industry
-order: 5
+order: 6
 summary: Owned the orchestration layer that decides which of ~10,000 skills answers a request. Shipped to 100M+ users.
 ---
 
