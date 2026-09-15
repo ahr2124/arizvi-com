@@ -4,7 +4,7 @@ summary: E-ink playing cards. One deck, any game.
 years: 2023–
 role: Inventor · Founder
 output: Artefact, Papers, Patents, Company
-venues: ["CHI PLAY 2024", "CHI PLAY 2026"]
+venues: ["CHI PLAY 2024", "ISS 2027 (in revision)"]
 link: /work/scramble/
 image: /media/projects/scramble.jpg
 process:
