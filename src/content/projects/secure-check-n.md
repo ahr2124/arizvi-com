@@ -9,7 +9,7 @@ link: /work/secure-check-n/
 image: /media/projects/secure-check-n.jpg
 process:
   design: "An IR sensor on a stand; any tablet or phone as the screen"
-  evaluate: "Pass or fail in a colour; alert threshold set per facility"
+  evaluate: "Pass or fail in a colour; adopted by senior living chains"
   implement: "Shipped by Secure Tech, LLC, with visitor tracking and a user guide"
 order: 6
 ---
