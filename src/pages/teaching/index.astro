@@ -10,43 +10,6 @@ const courses = [
   { code: 'MSCI 630', title: 'Human-Computer Interaction', terms: 'Winter 2022 · Winter 2023', meta: 'Graduate · 86 students', line: 'Graduate HCI, taught through the students\' own research projects.' },
   { code: 'GBDA 210', title: 'Introduction to UX', terms: 'Fall 2021', meta: '54 students', line: 'The start of the UX sequence, and the first course I taught.' },
 ];
-// Grouped by the department that would ask. Backed by courses taught, graduate and undergraduate coursework, or years of doing it in industry.
-const ready: [string, string[]][] = [
-  ['Human-computer interaction', [
-    'Introduction to HCI',
-    'UX research methods',
-    'Interaction design studio',
-    'Human-AI interaction design',
-    'Technology in constrained and improvised environments (graduate seminar)',
-  ]],
-  ['Data, analytics and AI', [
-    'Applied machine learning',
-    'Data analytics for decision-making',
-    'Experimentation and product analytics',
-    'Statistics and design of experiments',
-    'Databases and SQL for analytics',
-  ]],
-  ['Software and product', [
-    'Introduction to programming in Python',
-    'Software project management',
-    'Mobile application development',
-    'Product management for engineers',
-    'Technology innovation and entrepreneurship',
-    'Client-facing capstone',
-  ]],
-  ['Industrial and systems engineering', [
-    'Human factors, ergonomics and human-systems integration',
-    'Engineering economics and decision analysis',
-    'Operations research and decision models',
-    'Quality control, measurement and reliability',
-    'Manufacturing systems and facilities planning',
-    'Simulation and modelling',
-  ]],
-  ['Aviation', [
-    'Human factors in aviation',
-    'Private and commercial pilot ground school',
-  ]],
-];
 ---
 <Base title="Teaching">
   <header class="page-head">
@@ -80,22 +43,6 @@ const ready: [string, string[]][] = [
         </li>
       ))}
     </ul>
-  </Section>
-
-  <Section label="Ready to teach" id="ready">
-    <div class="grid"><div class="span-8">
-      <p>Grouped by department. The list above is what I've taught. This is what I can walk in and teach next term.</p>
-      <div class="kv ready">
-        {ready.map(([cat, list]) => (
-          <>
-            <p class="label">{cat}</p>
-            <ul class="ready-courses">
-              {list.map((c) => <li>{c}</li>)}
-            </ul>
-          </>
-        ))}
-      </div>
-    </div></div>
   </Section>
 
   <Section label="Mentoring" id="mentoring">
