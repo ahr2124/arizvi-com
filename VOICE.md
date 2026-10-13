@@ -10,7 +10,7 @@ Drawn from how Ali actually writes: his emails, his chat messages, and the lines
 
 **How he explains.** Mechanism in a plain causal chain: "As more students take our assessments, our item calibration improves, our Indian norming gets denser, and our measurement precision tightens." Then a one-line summary if it helps: "In other words, ..." / "Overall, ...". Numbered lists whenever there are 2+ points, even inside prose. "First, ... Second, ..." is normal.
 
-**Punctuation and shorthand.** Spaced hyphen for asides ( - ), never an em-dash. Parentheses for specifics: "(back of the napkin: ~12,000 INR)", "(IRT, Indian norms)". Arrows for sequences and paths: "a van -> small homes -> a card table". Digits, not words: 9 courses, ~700 students, 3 patents, 80%. Abbreviations he uses: RQ, PM, HCI, vs., i.e., esp, etc.
+**Punctuation and shorthand.** Spaced hyphen for asides ( - ), never an em-dash. Parentheses for specifics: "(back of the napkin: ~12,000 INR)", "(IRT, Indian norms)". Arrows for sequences and paths: "a van -> small homes -> a card table". Digits, not words: 14 courses, ~700 students, 3 patents, 80%. Abbreviations he uses: RQ, PM, HCI, vs., i.e., esp, etc.
 
 **Vocabulary.** PM and research words side by side without apology: shipped, ROI, go-to-market, flywheel, field site, RQ, artefact, validated instrument. Enthusiasm is allowed and plain: "really interesting", "very", "I love", and the occasional exclamation mark. Dry, self-deprecating humour once in a while ("My handwriting resembles a doctor's prescription"). Never "impactful", "passionate", "leverage", "innovative", "excited to", "thrilled".
 
