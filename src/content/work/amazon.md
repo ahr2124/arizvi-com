@@ -8,7 +8,7 @@ order: 6
 summary: Owned the orchestration layer that decides which of ~10,000 skills answers a request. Shipped to 100M+ users.
 ---
 
-Every Alexa request goes through a layer that decides which skill or domain gets to answer it. I owned that layer - and with it, a dependency on every other Alexa team and ~10,000 external developers.
+Every Alexa request goes through a layer that decides which skill or domain gets to answer it. I owned that layer - and with it, a dependency on every other Alexa team and ~10,000 developers.
 
 What shipped:
 
