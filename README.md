@@ -12,6 +12,8 @@ Before writing or editing copy, read `VOICE.md`.
 ## Pages
 - Nav: Research · Publications · Teaching · Work · About. Home is `src/pages/index.astro`.
 - Blog is linked from the footer only. Tools and Resources still build but are not linked anywhere.
+- `/atmri/` is the Sector ALPHA ATCO assistant prototype. Not linked from the nav, sends `noindex`, and password protected: `public/atmri/index.html` is the app encrypted in the browser-decryptable form `scripts/protect.mjs` writes. Keep the plain source out of this public repo. To update or change the password:
+      ATMRI_PASSWORD=... node scripts/protect.mjs path/to/source.html public/atmri/index.html "Sector ALPHA"
 - `/attitude/` explains the mark and lists flying videos. Reached only by clicking the mark in the nav; sends `noindex`. Fill the `videos` array and `channel` at the top of `src/pages/attitude.astro`.
 
 ## Content (`src/content/`)
