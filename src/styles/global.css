@@ -622,3 +622,32 @@ ol li + li { margin-top: 0.5em; }
 
 .unit-fig .bar { fill: #000; }
 .unit-fig .bar-lo { fill: rgba(0, 0, 0, 0.3); }
+
+/* Assignments and rubrics */
+.asg { border-top: 1px solid #000; padding-top: 20px; max-width: 860px; }
+.asg + .asg { margin-top: 3rem; }
+.asg-head h3 { margin: 6px 0 0; font-size: 1.5rem; letter-spacing: -0.02em; line-height: 1.1; }
+.asg-body { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 24px var(--gutter); margin-top: 18px; }
+.asg-prompt p, .asg-prompt li { font-size: 15px; }
+.asg-prompt p { margin: 0 0 10px; }
+.asg-prompt ol, .asg-prompt ul { margin: 8px 0 18px; padding-left: 1.2em; }
+.asg-prompt li + li { margin-top: 6px; }
+.asg-sub { margin-top: 18px; }
+.asg-rubric .asg-sub { margin-top: 0; }
+.rubric { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 14px; }
+.rubric th, .rubric td { border-bottom: 1px solid #000; padding: 10px 12px 10px 0; vertical-align: top; text-align: left; }
+.rubric td:last-child, .rubric th:last-child { padding-right: 0; }
+.rubric thead th { font-weight: 500; font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; padding-top: 0; }
+.rubric tbody th { font-weight: 600; width: 21%; }
+.rubric .pts { display: inline-block; font-weight: 600; margin-right: 8px; }
+.rubric .lv { display: none; }
+.asg-note { margin-top: 10px; font-size: 14px; }
+@media (max-width: 767px) {
+  .asg-body { grid-template-columns: 1fr; }
+  .rubric thead { display: none; }
+  .rubric tr, .rubric tbody th, .rubric td { display: block; width: auto; }
+  .rubric tbody th { border-bottom: 0; padding: 0 0 4px; }
+  .rubric td { border-bottom: 0; padding: 4px 0; }
+  .rubric tr { border-bottom: 1px solid #000; padding: 10px 0; }
+  .rubric .lv { display: inline; margin-right: 8px; }
+}

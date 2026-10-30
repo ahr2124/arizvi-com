@@ -8,6 +8,8 @@ import CourseNav from '../../components/CourseNav.astro';
 import ThresholdDemo from '../../components/ThresholdDemo.astro';
 import OverfitDemo from '../../components/OverfitDemo.astro';
 import TermFigure from '../../components/TermFigure.astro';
+import Assignment from '../../components/Assignment.astro';
+import { a330 } from '../../data/assignments';
 import { course } from '../../data/bucknell';
 
 const c = course('anop-330');
@@ -70,6 +72,13 @@ const weeks: { w: number; topic: string; build: string; try?: string }[] = [
         </ul>
       </div>
     ))}
+  </Section>
+
+  <Section label="Assignments" title="What is handed in, and how it is marked" id="assignments">
+    <div class="grid"><div class="span-8">
+      <p>Two of the assignments in full: the cross-validation lab from week 4, and the team project. Rubrics are published with the assignment, so students know what the marks are for before they start.</p>
+    </div></div>
+    {a330.map((a) => <Assignment {...a} />)}
   </Section>
 
   <Section label="Try a class · Week 8" title="The most accurate cutoff earns nothing" id="threshold">

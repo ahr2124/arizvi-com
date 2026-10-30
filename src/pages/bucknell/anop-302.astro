@@ -7,6 +7,8 @@ import CourseHeader from '../../components/CourseHeader.astro';
 import CourseNav from '../../components/CourseNav.astro';
 import OptionDemo from '../../components/OptionDemo.astro';
 import UnitFigure from '../../components/UnitFigure.astro';
+import Assignment from '../../components/Assignment.astro';
+import { a302 } from '../../data/assignments';
 import { course } from '../../data/bucknell';
 
 const c = course('anop-302');
@@ -128,6 +130,13 @@ const mark = (m: number) => (m === 1 ? '●' : m === 0.5 ? '○' : '');
     <div class="grid"><div class="span-8">
       <p class="muted" style="margin-top: 1rem;">Columns are the 5 outcomes above. ● assessed · ○ one of these, the team's choice. Every outcome is assessed at least twice.</p>
     </div></div>
+  </Section>
+
+  <Section label="Assignments" title="What is handed in, and how it is marked" id="assignments">
+    <div class="grid"><div class="span-8">
+      <p>One weekly lab in full, with the rubric it is marked on.</p>
+    </div></div>
+    {a302.map((a) => <Assignment {...a} />)}
   </Section>
 
   <Section label="How the class runs" id="policies">

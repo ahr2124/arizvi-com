@@ -11,6 +11,8 @@ import LLMDemo from '../../components/LLMDemo.astro';
 import RegressionDemo from '../../components/RegressionDemo.astro';
 import LPFigure from '../../components/LPFigure.astro';
 import TermFigure from '../../components/TermFigure.astro';
+import Assignment from '../../components/Assignment.astro';
+import { a102 } from '../../data/assignments';
 import { course } from '../../data/bucknell';
 
 const c = course('anop-102');
@@ -74,6 +76,13 @@ const weeks: { w: number; topic: string; build: string; try?: string }[] = [
         </ul>
       </div>
     ))}
+  </Section>
+
+  <Section label="Assignments" title="What is handed in, and how it is marked" id="assignments">
+    <div class="grid"><div class="span-8">
+      <p>Two of the assignments in full: a weekly lab, and the team project the term builds toward. Each one is marked on a rubric students see before they start, so the mark is never a surprise.</p>
+    </div></div>
+    {a102.map((a) => <Assignment {...a} />)}
   </Section>
 
   <Section label="Try a class · Week 3" title="Clean it before you count it" id="pivot">

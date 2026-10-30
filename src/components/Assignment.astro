@@ -1,0 +1,58 @@
+---
+// An assignment: the prompt, what to do, what to hand in, and the rubric it is marked on.
+// Each rubric row has 3 levels, best first, each with its points and a description.
+export interface Level { pts: number; text: string }
+export interface Criterion { name: string; levels: [Level, Level, Level] }
+interface Props {
+  title: string;
+  meta: string;             // weight and timing, e.g. "One of the weekly labs · week 3"
+  prompt: string[];         // paragraphs
+  steps?: string[];         // what to do, in order
+  stepsLabel?: string;
+  handIn?: string[];
+  rubric: Criterion[];
+  note?: string;            // a line under the rubric
+  rubricLabel?: string;     // replaces "How it's marked · N points"
+  heads?: [string, string, string];
+}
+const { title, meta, prompt, steps = [], stepsLabel = 'Do', handIn = [], rubric, note, rubricLabel, heads = ['Full marks', 'Part way', 'Not there'] } = Astro.props;
+const total = rubric.reduce((s, c) => s + c.levels[0].pts, 0);
+---
+<article class="asg">
+  <header class="asg-head">
+    <p class="label">{meta}</p>
+    <h3>{title}</h3>
+  </header>
+  <div class="asg-body">
+    <div class="asg-prompt">
+      {prompt.map((p) => <p>{p}</p>)}
+      {steps.length > 0 && (
+        <>
+          <p class="label asg-sub">{stepsLabel}</p>
+          <ol>{steps.map((s) => <li>{s}</li>)}</ol>
+        </>
+      )}
+      {handIn.length > 0 && (
+        <>
+          <p class="label asg-sub">Hand in</p>
+          <ul>{handIn.map((s) => <li>{s}</li>)}</ul>
+        </>
+      )}
+    </div>
+    <div class="asg-rubric">
+      <p class="label asg-sub">{rubricLabel ?? `How it's marked · ${total} points`}</p>
+      <table class="rubric">
+        <thead><tr><th scope="col"><span class="sr">Criterion</span></th>{heads.map((h) => <th scope="col">{h}</th>)}</tr></thead>
+        <tbody>
+          {rubric.map((c) => (
+            <tr>
+              <th scope="row">{c.name}</th>
+              {c.levels.map((l, i) => <td><span class="pts" aria-label={`${l.pts} points`}>{l.pts}</span><span class="lv label" aria-hidden="true">{heads[i]}</span>{l.text}</td>)}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      {note && <p class="muted asg-note">{note}</p>}
+    </div>
+  </div>
+</article>

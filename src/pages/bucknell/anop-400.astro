@@ -6,6 +6,8 @@ import Section from '../../components/Section.astro';
 import CourseHeader from '../../components/CourseHeader.astro';
 import CourseNav from '../../components/CourseNav.astro';
 import Gantt from '../../components/Gantt.astro';
+import Assignment from '../../components/Assignment.astro';
+import { a400 } from '../../data/assignments';
 import { course } from '../../data/bucknell';
 
 const c = course('anop-400');
@@ -76,6 +78,13 @@ const grading = [
         </li>
       ))}
     </ul>
+  </Section>
+
+  <Section label="Assignments" title="What is handed in, and how it is marked" id="assignments">
+    <div class="grid"><div class="span-8">
+      <p>The two pieces students ask about first: the charter that starts the term, and the peer evaluation that decides how a team mark is shared.</p>
+    </div></div>
+    {a400.map((a) => <Assignment {...a} />)}
   </Section>
 
   <Section label="When it goes wrong" title="The playbook" id="playbook">
