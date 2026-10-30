@@ -1,4 +1,4 @@
-// The four courses on the /bucknell pages. The hub, the course pages and the course nav all read from here.
+// The courses on the /bucknell pages. The hub, the course pages and the course nav all read from here.
 // Codes, titles and prerequisites are from Bucknell's 2026-27 catalogue.
 export const catalogue = 'https://coursecatalog.bucknell.edu/courses/anop/';
 
@@ -24,10 +24,10 @@ export const courses: Course[] = [
     line: 'Students leave with a model a manager could audit and a 1-page memo that says what to do. Every week adds one piece of that memo.',
     where: 'Freeman College core · offered every term',
     who: 'Every Freeman College student, usually in first year.',
-    seats: '3 sections in year 1, about 25 in each',
-    when: 'Fall 2027 (2 sections) and Spring 2028',
-    leadsTo: 'Every ANOP course after it',
-    sample: 'Sample class: which overtime is worth paying for?',
+    seats: '4 sections in year 1, about 25 in each',
+    when: 'Fall 2027 and Spring 2028, 2 sections each',
+    leadsTo: 'Most ANOP courses after it',
+    sample: '2 sample classes: an LLM\'s forecast in a decision, and which overtime to buy',
   },
   {
     code: 'ANOP 302',
@@ -40,19 +40,6 @@ export const courses: Course[] = [
     when: 'Fall 2027',
     prereqs: 'ACFM 124 or ACFM 203, and ANOP 102 (or equivalents)',
     sample: 'Full syllabus, and an option you can price by simulation',
-  },
-  {
-    code: 'ANOP 330',
-    slug: 'anop-330',
-    title: 'Predictive Analytics: Machine Learning Fundamentals for Business',
-    line: 'Every model is a decision tool, so we judge models by what their mistakes cost - and decide who stays in the loop.',
-    where: 'Required for the Business Analytics major and minor',
-    who: 'Business Analytics majors and minors, usually in sophomore spring or junior year.',
-    seats: '1 section, about 25 students',
-    when: 'Spring 2028',
-    prereqs: 'ANOP 102 (or a statistics course) and ANOP 203 (or CSCI 203)',
-    leadsTo: 'ANOP 400',
-    sample: 'Try 2 classes: accuracy vs. value, and an LLM inside a decision model',
   },
   {
     code: 'ANOP 400',

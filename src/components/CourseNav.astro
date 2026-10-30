@@ -1,11 +1,11 @@
 ---
-// The four courses, at the foot of every /bucknell page.
+// The courses, at the foot of every /bucknell page.
 import { courses } from '../data/bucknell';
 interface Props { current?: string }
 const { current } = Astro.props;
 ---
 <nav class="course-nav" aria-label="Courses I'd teach at Bucknell">
-  <p class="label">The 4 courses</p>
+  <p class="label">The {courses.length} courses</p>
   <ul>
     {courses.map((c) => (
       <li>

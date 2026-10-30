@@ -50,7 +50,7 @@ def arrow_down(x, y):
 COURSES = {
     '102': ('ANOP 102', 'Spreadsheet Modeling', True),
     '203': ('ANOP 203', 'Programming (Python)', False),
-    '330': ('ANOP 330', 'Machine Learning', True),
+    '330': ('ANOP 330', 'Machine Learning', False),
     '270': ('ANOP 270', 'Data Visualization', False),
     '350': ('ANOP 350 · 370', 'Forecast & Optimize', False),
     '400': ('ANOP 400', 'Practicum', True),
@@ -58,7 +58,7 @@ COURSES = {
     '242': ('ANOP 242', 'SQL, Cloud & GenAI', False),
 }
 
-LINKS = {'102': '/bucknell/anop-102/', '302': '/bucknell/anop-302/', '330': '/bucknell/anop-330/', '400': '/bucknell/anop-400/'}
+LINKS = {'102': '/bucknell/anop-102/', '302': '/bucknell/anop-302/', '400': '/bucknell/anop-400/'}
 
 def box(key, x, y, w, h, pad=14, max_title=15):
     code, title, mine = COURSES[key]
@@ -228,7 +228,7 @@ cw = curriculum_wide()
 ct = curriculum_tall()
 desc = ('ANOP 102 leads to ANOP 330 and then the ANOP 400 practicum; ANOP 203 also leads to 330, '
         'and ANOP 350 or 370 also leads to 400. Electives include ANOP 302 and 242. '
-        'The courses I would teach are 102, 330, 400 and 302.')
+        'The courses I would teach are 102, 302 and 400.')
 write('src/components/CurriculumMap.astro', f'''---
 {STYLE_NOTE}
 // Where the four courses sit in Bucknell's Business Analytics major (2026-27 catalogue).
