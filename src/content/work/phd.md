@@ -8,7 +8,7 @@ order: 3
 featured: true
 image: /media/work/phd.jpg
 summary: A thesis on what happens to technology designed for big, stable rooms when people use it in small, moving, improvised ones.
-outcome: Papers at CHI and Graphics Interface; the Proteus deck; nine courses taught along the way.
+outcome: Papers at CHI and Graphics Interface; the Proteus deck; 14 course sections taught along the way.
 path:
   - { year: "2019", stage: "Question", detail: "After Amazon: why do products designed so carefully land so differently in people's actual lives?" }
   - { year: "2021", stage: "Field", detail: "The #vanlife community, living and working full time in vehicles with technology built for houses. CHI 2021." }
