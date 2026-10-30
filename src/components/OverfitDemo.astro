@@ -1,0 +1,83 @@
+---
+// Week 8 of ANOP 330: the model that memorised the past.
+// Fit a curve to 16 days of an ice-cream stand's sales by temperature, pick the degree by the training error,
+// then reveal the 8 days the model never saw. Fits are precomputed in src/data/overfit.ts.
+import { train, test, grid, fits } from '../data/overfit';
+const X = [14, 34], Y = [100, 600];
+const left = (t: number) => ((t - X[0]) / (X[1] - X[0])) * 100;
+const top = (y: number) => ((Y[1] - y) / (Y[1] - Y[0])) * 100;
+const D0 = 1;
+const path = (d: number) => fits[d].curve.map((y, i) => `${i ? 'L' : 'M'}${(left(grid.from + i * grid.step) * 10).toFixed(1)},${top(y).toFixed(2)}`).join(' ');
+---
+<div class="demo odemo" data-odemo>
+  <div class="demo-controls odemo-controls">
+    <div>
+      <label class="label" for="odemo-d">Degree of the curve <output data-out="d" for="odemo-d">{D0}</output></label>
+      <input type="range" id="odemo-d" min="1" max="10" step="1" value={D0} />
+      <div class="demo-scale label" aria-hidden="true"><span>1 · a straight line</span><span>10 · bends 9 times</span></div>
+    </div>
+    <div>
+      <p class="label" id="odemo-r">The test</p>
+      <div class="demo-pills" role="group" aria-labelledby="odemo-r">
+        <button type="button" data-reveal aria-pressed="false">Reveal the 8 held-out days</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="demo-chart">
+    <p class="label">Daily sales by temperature · 16 days to fit, 8 held out</p>
+    <div class="odemo-plot" aria-hidden="true">
+      <svg viewBox="0 0 1000 100" preserveAspectRatio="none"><path data-curve d={path(D0)} /></svg>
+      {train.map(([t, y]) => <span class="odemo-pt" style={`left: ${left(t)}%; top: ${top(y)}%`} />)}
+      {test.map(([t, y]) => <span class="odemo-pt held" hidden style={`left: ${left(t)}%; top: ${top(y)}%`} />)}
+      <span class="demo-y label" style="top: 0">$600</span>
+      <span class="demo-y label" style={`top: ${top(350)}%`}>$350</span>
+      <span class="demo-y label" style="top: 100%">$100</span>
+    </div>
+    <div class="demo-x label" aria-hidden="true"><span>14 °C</span><span class="mid" style="left: 50%;">24 °C</span><span class="end">34 °C</span></div>
+  </div>
+
+  <dl class="demo-readout odemo-readout">
+    <div><dt class="label">Degree</dt><dd data-out="deg">{D0}</dd></div>
+    <div><dt class="label">Error on the 16 days</dt><dd data-out="tr">${fits[D0].train}</dd></div>
+    <div><dt class="label">Error on the 8 held out</dt><dd data-out="te">?</dd></div>
+  </dl>
+  <p class="demo-note" aria-live="polite" data-note></p>
+
+  <p class="demo-coda">The score that counts is on data the model never saw. In the lab, cross-validation does this 5 times with a different fifth held out each time, and the project's model is graded on a term's worth of data the team never gets to see.</p>
+</div>
+
+<script>
+  import { fits } from '../data/overfit';
+  document.querySelectorAll<HTMLElement>('[data-odemo]').forEach((root) => {
+    const $ = <T extends Element>(s: string) => root.querySelector<T>(s)!;
+    const slider = $<HTMLInputElement>('#odemo-d');
+    const btn = $<HTMLButtonElement>('[data-reveal]');
+    const held = [...root.querySelectorAll<HTMLElement>('.odemo-pt.held')];
+    const X = [14, 34], Y = [100, 600];
+    const left = (t: number) => ((t - X[0]) / (X[1] - X[0])) * 100;
+    const top = (y: number) => ((Y[1] - y) / (Y[1] - Y[0])) * 100;
+
+    function update() {
+      const d = Number(slider.value);
+      const f = fits[d];
+      const shown = btn.getAttribute('aria-pressed') === 'true';
+      $('[data-curve]').setAttribute('d', f.curve.map((y, i) => `${i ? 'L' : 'M'}${(left(14 + i * 0.5) * 10).toFixed(1)},${top(y).toFixed(2)}`).join(' '));
+      held.forEach((el) => { el.hidden = !shown; });
+      $('[data-out=d]').textContent = String(d);
+      $('[data-out=deg]').textContent = String(d);
+      $('[data-out=tr]').textContent = '$' + f.train;
+      $('[data-out=te]').textContent = shown ? '$' + f.test.toLocaleString('en-CA') : '?';
+      const verdict = d === 1 ? "Too simple: a straight line can't bend, so it misses both sets."
+        : d <= 4 ? 'This is the one to ship. It follows the shape, and it holds on days it never saw.'
+        : d <= 8 ? 'It has started fitting the noise. The error on new days is climbing while the training error keeps falling.'
+        : 'It memorised the 16 days and has nothing useful to say about any other.';
+      $('[data-note]').textContent = shown
+        ? `Degree ${d}: $${f.train} off on the days it trained on, $${f.test.toLocaleString('en-CA')} on the 8 it never saw. ${verdict}`
+        : `Degree ${d}: the curve misses the 16 days by $${f.train} a day on average. Raise the degree and the error keeps falling. Pick the degree you'd ship, then reveal the held-out days.`;
+    }
+    slider.addEventListener('input', update);
+    btn.addEventListener('click', () => { btn.setAttribute('aria-pressed', String(btn.getAttribute('aria-pressed') !== 'true')); update(); });
+    update();
+  });
+</script>

@@ -1,0 +1,73 @@
+---
+// src/pages/bucknell/anop-330.astro  →  arizvi.com/bucknell/anop-330
+// ANOP 330: the term week by week and 2 classes to try. Not linked from the nav; sends noindex.
+import Base from '../../layouts/Base.astro';
+import Section from '../../components/Section.astro';
+import CourseHeader from '../../components/CourseHeader.astro';
+import CourseNav from '../../components/CourseNav.astro';
+import ThresholdDemo from '../../components/ThresholdDemo.astro';
+import OverfitDemo from '../../components/OverfitDemo.astro';
+import { course } from '../../data/bucknell';
+
+const c = course('anop-330');
+
+// The term. Each week: the method, the business question it answers, and the class to try where there is one.
+const weeks: { w: number; topic: string; build: string; try?: string }[] = [
+  { w: 1, topic: 'Framing a prediction', build: 'What exactly are we predicting, could we know it in time, and what would we do differently? Python and pandas refresher, a first train/test split.' },
+  { w: 2, topic: 'Data preparation and leakage', build: 'Features that would not exist at decision time. The lab hides a leak and the class finds it.' },
+  { w: 3, topic: 'Regression, revisited', build: 'Linear regression with many features: reading it and predicting with it are different jobs.' },
+  { w: 4, topic: 'Logistic regression', build: 'Probabilities instead of labels, and the confusion matrix.' },
+  { w: 5, topic: 'Decision trees', build: 'How a tree splits, and why it is the model a manager can read.' },
+  { w: 6, topic: 'Ensembles', build: 'Random forests and gradient boosting: why many weak trees beat one strong one.' },
+  { w: 7, topic: 'Evaluation and thresholds', build: 'Precision, recall and the cost of each kind of mistake. Is this model worth acting on?', try: 'threshold' },
+  { w: 8, topic: 'Overfitting and cross-validation', build: 'Will it work next quarter? Holding data out, and holding it out 5 times.', try: 'overfit' },
+  { w: 9, topic: 'Clustering', build: 'k-means segmentation, choosing k, and groups we did not define.' },
+  { w: 10, topic: 'Fairness and the loop', build: 'Who is harmed when it is wrong, and what a person signs off on before it ships.' },
+  { w: 11, topic: 'LLMs in the workflow', build: "Embeddings and zero-shot classification as features. Where a model drafts and a person decides, picking up ANOP 102's week 8." },
+  { w: 12, topic: 'Deployment and monitoring', build: 'Drift, and how we know when a model stops working. Every project ships with a model card.' },
+  { w: 13, topic: 'Project work', build: "Each team's model, scored on a term of data the team never saw." },
+  { w: 14, topic: 'Project presentations', build: 'Pitch a model to a decision-maker: what it predicts, what acting on it costs, and when to stop trusting it.' },
+];
+---
+<Base title="ANOP 330" description="ANOP 330, Machine Learning Fundamentals for Business, as Ali Rizvi would teach a section at Bucknell - the term week by week, with 2 classes you can try." noindex>
+  <CourseHeader course={c} facts={[
+    ['Format', '1 credit · 14 weeks · 2 classes of 75 minutes a week'],
+    ['Tools', 'Python in Jupyter: pandas and scikit-learn. ANOP 203 is the prerequisite, so code from week 1.'],
+    ['Grading', 'Weekly labs 30% (lowest dropped) · midterm 20% · team project 30% · final 15% · model card 5%'],
+  ]}>
+    <p>ANOP 330 already runs in the department. I'd teach a section in step with the existing one - same outline, same project - and bring the 2 classes below to mine. The catalogue's course is classification, prediction and clustering. What I add is the decision each model feeds, and the person who signs off on it.</p>
+  </CourseHeader>
+
+  <Section label="The term" title="Week by week" id="term">
+    <ul class="rows compact bk-wide term">
+      {weeks.map((x) => (
+        <li class="grid">
+          <div class="label">Week {x.w}</div>
+          <div class="body">
+            <span class="title">{x.topic}</span>
+            <p>{x.build}{x.try && <> <a href={`#${x.try}`}>Try it below.</a></>}</p>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </Section>
+
+  <Section label="Try a class · Week 7" title="The most accurate cutoff earns nothing" id="threshold">
+    <div class="grid"><div class="span-8">
+      <p>Your subscription business has 1,000 customers. Next month 100 of them will cancel - you just don't know which 100. A model gives every customer a risk score.</p>
+      <p>You can send a retention offer. It costs $20, and each customer it keeps is worth $200. To keep the arithmetic simple, say it keeps everyone it reaches who was about to cancel. How many of your riskiest customers should get it?</p>
+      <p>Start at nobody - that's the most accurate cutoff. Then slide right and watch the money.</p>
+    </div></div>
+    <ThresholdDemo />
+  </Section>
+
+  <Section label="Try a class · Week 8" title="The model that memorised the past" id="overfit">
+    <div class="grid"><div class="span-8">
+      <p>An ice-cream stand logged 24 days of sales and the day's temperature. 16 days are on the chart. The other 8 are in a drawer.</p>
+      <p>Fit a curve to the 16. A straight line misses; a curve that bends can follow every bump. Pick the degree you'd ship by the error on the days you can see. Then open the drawer.</p>
+    </div></div>
+    <OverfitDemo />
+  </Section>
+
+  <CourseNav current={c.slug} />
+</Base>

@@ -5,7 +5,5 @@ export default defineConfig({
   redirects: {
     '/research/': '/projects/',
     '/publications/': '/projects/#publications',
-    '/bucknell/anop-330/': '/bucknell/',
-    '/bucknell/anop-400/': '/bucknell/',
   },
 });
