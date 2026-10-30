@@ -7,11 +7,18 @@ import CourseHeader from '../../components/CourseHeader.astro';
 import CourseNav from '../../components/CourseNav.astro';
 import ThresholdDemo from '../../components/ThresholdDemo.astro';
 import OverfitDemo from '../../components/OverfitDemo.astro';
+import TermFigure from '../../components/TermFigure.astro';
 import { course } from '../../data/bucknell';
 
 const c = course('anop-330');
 
 // The term. Each week: the method, the business question it answers, and the class to try where there is one.
+// Three units, each with a figure in the margin.
+const units = [
+  { n: 1, from: 1, to: 6, weeks: 'Weeks 1-6', name: 'Models', line: 'From framing the prediction to trees and ensembles' },
+  { n: 2, from: 7, to: 8, weeks: 'Weeks 7-8', name: 'Judging a model', line: 'Thresholds, the cost of mistakes, and data the model never saw' },
+  { n: 3, from: 9, to: 14, weeks: 'Weeks 9-14', name: 'In the world', line: 'Clusters, fairness, LLMs, monitoring, and the project' },
+];
 const weeks: { w: number; topic: string; build: string; try?: string }[] = [
   { w: 1, topic: 'Framing a prediction', build: 'What exactly are we predicting, could we know it in time, and what would we do differently? Python and pandas refresher, a first train/test split.' },
   { w: 2, topic: 'Data preparation and leakage', build: 'Features that would not exist at decision time. The lab hides a leak and the class finds it.' },
@@ -41,17 +48,27 @@ const weeks: { w: number; topic: string; build: string; try?: string }[] = [
   </CourseHeader>
 
   <Section label="A term, as I'd plan it" title="Week by week" id="term">
-    <ul class="rows compact bk-wide term">
-      {weeks.map((x) => (
-        <li class="grid">
-          <div class="label">Week {x.w}</div>
-          <div class="body">
-            <span class="title">{x.topic}</span>
-            <p>{x.build}{x.try && <> <a href={`#${x.try}`}>Try it below.</a></>}</p>
-          </div>
-        </li>
-      ))}
-    </ul>
+    {units.map((u) => (
+      <div class="unit grid">
+        <div class="unit-side">
+          <TermFigure course="330" unit={u.n} />
+          <p class="label">{u.weeks}</p>
+          <h3>{u.name}</h3>
+          <p class="unit-line">{u.line}</p>
+        </div>
+        <ul class="rows compact unit-weeks">
+          {weeks.filter((x) => x.w >= u.from && x.w <= u.to).map((x) => (
+            <li class="grid">
+              <div class="label">Week {x.w}</div>
+              <div class="body">
+                <span class="title">{x.topic}</span>
+                <p>{x.build}{x.try && <> <a href={`#${x.try}`}>{x.try === 'overtime' ? 'Read the class below.' : 'Try it below.'}</a></>}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))}
   </Section>
 
   <Section label="Try a class · Week 7" title="The most accurate cutoff earns nothing" id="threshold">

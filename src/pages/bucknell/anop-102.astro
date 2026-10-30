@@ -10,11 +10,19 @@ import BreakevenDemo from '../../components/BreakevenDemo.astro';
 import LLMDemo from '../../components/LLMDemo.astro';
 import RegressionDemo from '../../components/RegressionDemo.astro';
 import LPFigure from '../../components/LPFigure.astro';
+import TermFigure from '../../components/TermFigure.astro';
 import { course } from '../../data/bucknell';
 
 const c = course('anop-102');
 
 // The term. Each week: the topic, what the class builds, and the class to try where there is one.
+// Four units, each with a figure in the margin.
+const units = [
+  { n: 1, from: 1, to: 4, weeks: 'Weeks 1-4', name: 'Data you can trust', line: 'Spreadsheets a manager can audit, a cleaned export, and the first brief' },
+  { n: 2, from: 5, to: 7, weeks: 'Weeks 5-7', name: 'Models and what-ifs', line: 'Breakeven, Data Tables and Goal Seek, then the midterm' },
+  { n: 3, from: 8, to: 10, weeks: 'Weeks 8-10', name: 'Uncertainty', line: 'Expected value, samples, and how a test is run' },
+  { n: 4, from: 11, to: 14, weeks: 'Weeks 11-14', name: 'Decisions', line: 'Regression, optimisation, random draws, and the memo' },
+];
 const weeks: { w: number; topic: string; build: string; try?: string }[] = [
   { w: 1, topic: 'A spreadsheet someone else can read', build: 'Inputs, formulas and outputs kept apart, named inputs, no numbers typed into formulas. A 1-tab model of a pricing decision.' },
   { w: 2, topic: 'Lookups and cleaning', build: 'Sorting, filtering, XLOOKUP and tidy tables. A sales export, cleaned.' },
@@ -40,21 +48,31 @@ const weeks: { w: number; topic: string; build: string; try?: string }[] = [
     ['AI tools', 'Allowed for checking a formula or explaining an error. Hand in the chat with the lab. You stay responsible for every cell.'],
   ]}>
     <p>ANOP 102 is the first analytics course every Freeman student takes, and it runs in several sections a term. Where the department has a shared outline and exams, those come first. Below is a term as I'd plan it if asked, and 5 classes I'd bring to my sections whichever outline they run on. Every week adds a piece of the decision memo students hand in at the end.</p>
-    <p class="practice"><span class="label">From practice</span>At Amazon I worked on A/B tests for Alexa. Week 9 is their first question: how many customers before a real difference shows through the noise. At AMJ Capital, where I'm research lead, I sit close to a medical device company's first clinical trial. Week 10 is its discipline: a control group, and the success measure fixed in advance so you can't fool yourself afterwards.</p>
+    <p class="practice"><span class="label">From practice</span>Week 9 comes from a year of A/B tests I ran inside a healthcare e-commerce retailer, about 10,000 transactions a year, as its product manager and part-owner, and wrote up as a textbook chapter: with that little traffic, how many customers before a real difference shows through the noise? Week 10 is the discipline a clinical trial adds, and I sit close to one at AMJ Capital, where I'm research lead: a control group, and the success measure fixed in advance so you can't fool yourself afterwards.</p>
   </CourseHeader>
 
   <Section label="A term, as I'd plan it" title="Week by week" id="term">
-    <ul class="rows compact bk-wide term">
-      {weeks.map((x) => (
-        <li class="grid">
-          <div class="label">Week {x.w}</div>
-          <div class="body">
-            <span class="title">{x.topic}</span>
-            <p>{x.build}{x.try && <> <a href={`#${x.try}`}>{x.try === 'overtime' ? 'Read the class below.' : 'Try it below.'}</a></>}</p>
-          </div>
-        </li>
-      ))}
-    </ul>
+    {units.map((u) => (
+      <div class="unit grid">
+        <div class="unit-side">
+          <TermFigure course="102" unit={u.n} />
+          <p class="label">{u.weeks}</p>
+          <h3>{u.name}</h3>
+          <p class="unit-line">{u.line}</p>
+        </div>
+        <ul class="rows compact unit-weeks">
+          {weeks.filter((x) => x.w >= u.from && x.w <= u.to).map((x) => (
+            <li class="grid">
+              <div class="label">Week {x.w}</div>
+              <div class="body">
+                <span class="title">{x.topic}</span>
+                <p>{x.build}{x.try && <> <a href={`#${x.try}`}>{x.try === 'overtime' ? 'Read the class below.' : 'Try it below.'}</a></>}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))}
   </Section>
 
   <Section label="Try a class · Week 3" title="Clean it before you count it" id="pivot">

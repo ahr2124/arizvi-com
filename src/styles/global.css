@@ -619,3 +619,6 @@ ol li + li { margin-top: 0.5em; }
 
 .course-head .practice { margin-top: 1rem; }
 .course-head .practice .label { display: inline; margin-right: 10px; }
+
+.unit-fig .bar { fill: #000; }
+.unit-fig .bar-lo { fill: rgba(0, 0, 0, 0.3); }
