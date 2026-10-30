@@ -4,6 +4,8 @@
 import Base from '../../layouts/Base.astro';
 import Section from '../../components/Section.astro';
 import OptionDemo from '../../components/OptionDemo.astro';
+import UnitFigures from '../../components/UnitFigures.astro';
+import Gantt from '../../components/Gantt.astro';
 
 const facts = [
   ['Course', 'ANOP 302 · 1 credit · 3 lecture hours a week for 14 weeks'],
@@ -21,10 +23,15 @@ const outcomes = [
   ['Recommend', 'Write a recommendation a manager can act on, including what would change it.'],
 ];
 
-const units = [
-  { weeks: 'Weeks 1-7', name: 'Optimisation', line: 'Linear and integer models for cash, bonds, capital budgets and product mix' },
-  { weeks: 'Weeks 8-10', name: 'Portfolios and risk', line: 'Markowitz, the efficient frontier and value at risk' },
-  { weeks: 'Weeks 11-14', name: 'Simulation', line: 'Monte Carlo, option pricing and hedging' },
+// When work is due, week by week. Slot 15 is exam week.
+const term = [
+  { label: 'Optimisation', bars: [[1, 7]] as [number, number][] },
+  { label: 'Portfolios and risk', bars: [[8, 10]] as [number, number][] },
+  { label: 'Simulation', bars: [[11, 14]] as [number, number][] },
+  { label: 'Weekly labs', ticks: Array.from({ length: 13 }, (_, i) => i + 1) },
+  { label: 'Midterm', marks: [{ w: 7 }] },
+  { label: 'Team project', bars: [[4, 14]] as [number, number][], thin: true, marks: [{ w: 4, open: true }, { w: 6, open: true }, { w: 14 }] },
+  { label: 'Final exam', marks: [{ w: 15 }] },
 ];
 
 // Each week: a model the class builds together, then a lab students finish on their own.
@@ -49,7 +56,7 @@ const weeks = [
 const grading = [
   { item: 'Weekly labs', weight: '25%', note: 'Small, frequent, low stakes. Each ends with a 3-sentence recommendation. The lowest one is dropped.', marks: [1, 1, 1, 1, 1] },
   { item: 'Midterm', weight: '20%', note: 'Optimisation: formulate, solve, interpret.', marks: [1, 1, 0, 0, 0] },
-  { item: 'Team project', weight: '30%', note: 'A real financial decision for a real organization, modelled and written up as a 2-page memo with the model attached.', marks: [1, 0.5, 0.5, 0.5, 1] },
+  { item: 'Team project', weight: '30%', note: 'A real financial decision for a real organization. Teams form in week 4, present in week 14, and hand in a 2-page memo with the model attached.', marks: [1, 0.5, 0.5, 0.5, 1] },
   { item: 'Final exam', weight: '15%', note: 'Portfolios, risk and simulation.', marks: [0, 0, 1, 1, 0] },
   { item: 'Exit tickets', weight: '10%', note: '2 sentences at the end of each class. Graded for completion.', marks: [0, 0, 0, 0, 1] },
 ];
@@ -78,14 +85,7 @@ const mark = (m: number) => (m === 1 ? '●' : m === 0.5 ? '○' : '');
   </Section>
 
   <Section label="Schedule" id="schedule">
-    <ul class="path unit-path bk-wide">
-      {units.map((u) => (
-        <li>
-          <p class="label">{u.weeks}</p>
-          <p><strong>{u.name}</strong><br />{u.line}</p>
-        </li>
-      ))}
-    </ul>
+    <UnitFigures />
     <ul class="rows compact bk-wide">
       {weeks.map((x) => (
         <li class="grid">
@@ -107,6 +107,9 @@ const mark = (m: number) => (m === 1 ? '●' : m === 0.5 ? '○' : '');
   </Section>
 
   <Section label="Grading" id="grading">
+    <Gantt title="When work is due in ANOP 302" weeks={14} extra="Exam" rows={term}
+      caption="A lab every week but the last. Teams form in week 4, pick their decision by week 6 and present in week 14. The final exam sits in exam week." />
+    <h3 class="matrix-head">What each piece assesses</h3>
     <table class="matrix">
       <thead>
         <tr>

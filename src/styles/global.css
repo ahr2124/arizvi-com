@@ -367,3 +367,65 @@ ol li + li { margin-top: 0.5em; }
   .matrix td p { font-size: 15px; }
   .demo-controls > [data-after] { margin-left: 0; }
 }
+
+/* Figures: inline SVG drawn at 1:1, so labels stay at their real size. */
+.fig { margin: 0; max-width: 860px; }
+.fig svg, .unit-figs svg { display: block; max-width: 100%; height: auto; overflow: visible; }
+.fig svg text { font-family: var(--font); fill: #000; }
+.fig .t-lbl { font-size: 13px; font-weight: 500; letter-spacing: 0.14em; }
+.fig .inv { fill: #fff; }
+.fig figcaption { margin-top: 12px; font-size: 15px; max-width: 62ch; }
+.fig rect.mine { fill: #000; stroke: #000; }
+.fig rect.other { fill: #fff; stroke: #000; stroke-width: 1; }
+.fig .spine { fill: none; stroke: #000; stroke-width: 2; }
+.fig .link, .fig .cline, .fig .axis, .unit-figs .cline, .unit-figs .axis { fill: none; stroke: #000; stroke-width: 1; }
+.fig .head, .fig .opt, .unit-figs .opt { fill: #000; }
+.fig .sep { stroke: #000; stroke-width: 1; stroke-dasharray: 3 4; }
+.fig .region, .unit-figs .region { fill: rgba(0, 0, 0, 0.08); }
+.fig .iso, .unit-figs .iso, .unit-figs .strike { fill: none; stroke: #000; stroke-width: 1; stroke-dasharray: 5 4; }
+.unit-figs .curve, .unit-figs .path-hi { fill: none; stroke: #000; stroke-width: 2; }
+.unit-figs .path { fill: none; stroke: rgba(0, 0, 0, 0.3); stroke-width: 1; }
+.unit-figs .asset { fill: #fff; stroke: #000; stroke-width: 1.5; }
+.fig svg.fig-tall { display: none; }
+.fig.lp svg { width: 100%; max-width: 340px; }
+.curriculum { margin-bottom: 2.5rem; }
+.row-fig { margin-top: 20px; }
+.unit-figs { list-style: none; margin: 0 0 2.5rem; padding: 0; max-width: 860px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+.unit-figs li { border-top: 1px solid #000; padding-top: 14px; margin: 0; }
+.unit-figs li + li { margin-top: 0; }
+.unit-figs svg { width: 100%; margin-bottom: 14px; }
+.unit-figs p { margin: 6px 0 0; font-size: 15px; }
+.unit-figs p.label { font-size: 13px; }
+
+/* Week-by-week timelines */
+.gantt { margin: 0; max-width: 860px; }
+.g-row { display: grid; grid-template-columns: 11rem minmax(0, 1fr); column-gap: 16px; align-items: center; border-top: 1px solid #000; }
+.g-head { border-top: 0; }
+.g-label { font-size: 15px; line-height: 1.25; padding: 9px 0; }
+.g-head .g-label { padding: 0; }
+.g-track { position: relative; height: 38px; background-image: linear-gradient(to right, rgba(0, 0, 0, 0.12) 1px, transparent 1px); background-size: calc(100% / var(--slots)) 100%; border-right: 1px solid rgba(0, 0, 0, 0.12); }
+.g-head .g-track { height: 26px; background: none; border: 0; container-type: inline-size; }
+.g-wk.hide { display: none; }
+@container (max-width: 360px) { .g-wk.narrow-hide { display: none; } }
+.g-wk { position: absolute; top: 4px; transform: translateX(-50%); }
+.g-wk.g-extra { left: auto !important; right: 0; transform: none; }
+.g-bar { position: absolute; top: 12px; height: 14px; background: #000; }
+.g-bar.thin { top: 17px; height: 4px; }
+.g-tick { position: absolute; top: 13px; width: 3px; height: 12px; margin-left: -1.5px; background: #000; }
+.g-mark { position: absolute; top: 50%; width: 12px; height: 12px; margin: -6px 0 0 -6px; background: #000; }
+.g-mark.open { background: #fff; border: 2px solid #000; }
+.gantt figcaption { border-top: 1px solid #000; padding-top: 10px; font-size: 15px; max-width: 62ch; }
+@media (max-width: 959px) {
+  .fig svg.fig-wide { display: none; }
+  .fig svg.fig-tall { display: block; width: 100%; max-width: 340px; }
+}
+@media (max-width: 767px) {
+  .unit-figs { grid-template-columns: 1fr; }
+  .unit-figs svg { max-width: 360px; }
+  .g-row { grid-template-columns: 7rem minmax(0, 1fr); column-gap: 10px; }
+  .g-label { font-size: 14px; }
+}
+.matrix-head { font-size: 1.15rem; margin: 3rem 0 1rem; }
+.page-head .intro-grid .text h1 { margin-bottom: 1.5rem; }
+.gantt .label { grid-column: auto; }
+.gantt figcaption { max-width: none; }

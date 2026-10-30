@@ -4,6 +4,9 @@
 import Base from '../../layouts/Base.astro';
 import Section from '../../components/Section.astro';
 import ThresholdDemo from '../../components/ThresholdDemo.astro';
+import CurriculumMap from '../../components/CurriculumMap.astro';
+import LPFigure from '../../components/LPFigure.astro';
+import Gantt from '../../components/Gantt.astro';
 
 const catalogue = 'https://coursecatalog.bucknell.edu/courses/anop/';
 
@@ -16,6 +19,7 @@ const courses = [
     title: 'Spreadsheet Modeling & Data Analysis',
     line: 'Students leave with a model a manager could audit and a 1-page memo that says what to do. Every week adds one piece of that memo.',
     sample: 'Which overtime is worth paying for? A bike shop\'s product mix -> its shadow prices -> a staffing call.',
+    figure: 'lp',
   },
   {
     id: 'anop-302',
@@ -43,6 +47,7 @@ const courses = [
     title: 'Business Analytics Practicum',
     line: 'Scope -> data -> model -> recommendation -> delivery. A signed project charter by week 3, and the client in the room at the end.',
     sample: 'I ran the Undergraduate Capstone Seminar at Waterloo this way. Teams delivered working prototypes to external partners every term.',
+    figure: 'capstone',
   },
 ];
 
@@ -51,6 +56,17 @@ const plan = [
   { term: 'Fall 2027', load: ['ANOP 102 (2 sections)', 'ANOP 302'] },
   { term: 'Spring 2028', load: ['ANOP 102', 'ANOP 330', 'ANOP 400'] },
   { term: 'Year 2', load: ['The same core', 'A new elective: human-in-the-loop AI for business decisions'] },
+];
+
+// The ANOP 400 term, week by week.
+const capstone = [
+  { label: 'Scope', bars: [[1, 3]] as [number, number][] },
+  { label: 'Data and discovery', bars: [[4, 6]] as [number, number][] },
+  { label: 'Modelling', bars: [[7, 10]] as [number, number][] },
+  { label: 'Recommendation', bars: [[11, 13]] as [number, number][] },
+  { label: 'Delivery', bars: [[14, 14]] as [number, number][] },
+  { label: 'With the client', marks: [{ w: 1 }, { w: 3 }, { w: 8 }, { w: 14 }] },
+  { label: 'Team stand-ups', ticks: Array.from({ length: 14 }, (_, i) => i + 1) },
 ];
 
 const jump = [
@@ -63,15 +79,21 @@ const jump = [
 ---
 <Base title="Bucknell" description="The courses Ali Rizvi would teach in Bucknell's Analytics & Operations Management department, with a draft ANOP 302 syllabus." noindex>
   <header class="page-head">
-    <p class="label">Bucknell · Analytics &amp; Operations Management</p>
-    <h1>Teaching analytics at Bucknell</h1>
-    <p class="tagline">I teach analytics the way I used it in industry: decision -> model -> recommendation.</p>
-    <ul class="pills jump" aria-label="On this page">
-      {jump.map(([href, label]) => <li><a href={href}>{label}</a></li>)}
-    </ul>
+    <div class="intro-grid">
+      <div class="text">
+        <p class="label">Bucknell · Analytics &amp; Operations Management</p>
+        <h1>Teaching analytics at Bucknell</h1>
+        <p class="tagline">I teach analytics the way I used it in industry: decision -> model -> recommendation.</p>
+        <ul class="pills jump" aria-label="On this page">
+          {jump.map(([href, label]) => <li><a href={href}>{label}</a></li>)}
+        </ul>
+      </div>
+      <div class="photo"><img src="/media/headshot.jpg" alt="Ali Rizvi" width="400" height="500" /></div>
+    </div>
   </header>
 
   <Section label="Courses" id="courses">
+    <CurriculumMap />
     <ul class="rows bk-wide">
       {courses.map((c) => (
         <li class="grid" id={c.id}>
@@ -83,6 +105,13 @@ const jump = [
             <p>{c.line}</p>
             <p class="sample"><span class="label">{c.code === 'ANOP 400' ? 'Track record' : 'Sample class'}</span>
               {c.sampleHref ? <a href={c.sampleHref}>{c.sample}</a> : c.sample}</p>
+            {c.figure === 'lp' && <div class="row-fig"><LPFigure /></div>}
+            {c.figure === 'capstone' && (
+              <div class="row-fig">
+                <Gantt title="The ANOP 400 term, week by week" weeks={14} rows={capstone}
+                  caption="With the client: kick-off (week 1), signed charter (3), check-in (8), final presentation (14). Every team gets a 15-minute stand-up each week." />
+              </div>
+            )}
           </div>
         </li>
       ))}
