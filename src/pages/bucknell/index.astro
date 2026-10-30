@@ -5,7 +5,7 @@
 import Base from '../../layouts/Base.astro';
 import Section from '../../components/Section.astro';
 import CurriculumMap from '../../components/CurriculumMap.astro';
-import { courses, catalogue } from '../../data/bucknell';
+import { arrows, courses, catalogue, students } from '../../data/bucknell';
 
 const principles = [
   ['Build the course backwards from the outcome.', 'Each course ends in work a manager could use, and every week builds toward it.'],
@@ -20,7 +20,7 @@ const principles = [
       <div class="text">
         <p class="label">Bucknell · Analytics &amp; Operations Management</p>
         <h1>Teaching analytics at Bucknell</h1>
-        <p class="tagline">I teach analytics the way I used it in industry: decision -> model -> recommendation.</p>
+        <p class="tagline">I teach analytics the way I used it in industry: {arrows('decision -> model -> recommendation.')}</p>
       </div>
       <div class="photo"><img src="/media/headshot.jpg" alt="Ali Rizvi" width="400" height="500" /></div>
     </div>
@@ -41,14 +41,15 @@ const principles = [
           <div class="label">{c.code}<br />{c.when}</div>
           <div class="body">
             <a class="title" href={`/bucknell/${c.slug}/`}>{c.title} →</a>
-            <p>{c.line}</p>
+            <p>{arrows(c.line)}</p>
+            <p class="who"><span class="label">Students</span>{students(c)}</p>
             <p class="sample"><a href={`/bucknell/${c.slug}/`}>{c.sample}</a></p>
           </div>
         </li>
       ))}
     </ul>
     <div class="grid"><div class="span-8">
-      <p class="muted" style="margin-top: 1.5rem;">That's 6 courses in year 1 (ANOP 102 three times, then 302, 330 and 400), about 25 students in each. Year 2 keeps the core and adds a new elective on human-in-the-loop AI for business decisions. I can also take sections of ANOP 203 (Python) and ANOP 270 (Data Visualization). It's a starting point - I'll fit it to what the department needs. Codes and prerequisites are from the <a href={catalogue} target="_blank" rel="noopener">2026-27 catalogue</a>.</p>
+      <p class="muted" style="margin-top: 1.5rem;">That's 6 courses and about 150 students in year 1. Year 2 keeps the core and adds a new elective on human-in-the-loop AI for business decisions. I can also take sections of ANOP 203 (Python) and ANOP 270 (Data Visualization). It's a starting point - I'll fit it to what the department needs. Codes and prerequisites are from the <a href={catalogue} target="_blank" rel="noopener">2026-27 catalogue</a>.</p>
     </div></div>
   </Section>
 

@@ -8,6 +8,8 @@ export interface Course {
   title: string;
   line: string;       // what students leave with
   where: string;      // where it sits in the major
+  who: string;        // who takes it, from the catalogue
+  seats: string;      // how many students in year 1
   when: string;       // when I'd teach it in year 1
   prereqs?: string;
   leadsTo?: string;
@@ -20,7 +22,9 @@ export const courses: Course[] = [
     slug: 'anop-102',
     title: 'Spreadsheet Modeling & Data Analysis',
     line: 'Students leave with a model a manager could audit and a 1-page memo that says what to do. Every week adds one piece of that memo.',
-    where: 'Core · offered every term',
+    where: 'Freeman College core · offered every term',
+    who: 'Every Freeman College student, usually in first year.',
+    seats: '3 sections in year 1, about 25 in each',
     when: 'Fall 2027 (2 sections) and Spring 2028',
     leadsTo: 'Every ANOP course after it',
     sample: 'Sample class: which overtime is worth paying for?',
@@ -30,7 +34,9 @@ export const courses: Course[] = [
     slug: 'anop-302',
     title: 'Financial Decision Modeling using Spreadsheets',
     line: 'Optimisation -> portfolios -> simulation, built on the decision models course I took at Columbia.',
-    where: 'Elective',
+    where: 'Elective · counts toward the Business Analytics minor',
+    who: 'Anyone past corporate finance and ANOP 102.',
+    seats: '1 section, about 25 students',
     when: 'Fall 2027',
     prereqs: 'ACFM 124 or ACFM 203, and ANOP 102 (or equivalents)',
     sample: 'Full syllabus, and an option you can price by simulation',
@@ -40,7 +46,9 @@ export const courses: Course[] = [
     slug: 'anop-330',
     title: 'Predictive Analytics: Machine Learning Fundamentals for Business',
     line: 'Every model is a decision tool, so we judge models by what their mistakes cost - and decide who stays in the loop.',
-    where: 'Business Analytics major requirement',
+    where: 'Required for the Business Analytics major and minor',
+    who: 'Business Analytics majors and minors, usually in sophomore spring or junior year.',
+    seats: '1 section, about 25 students',
     when: 'Spring 2028',
     prereqs: 'ANOP 102 (or a statistics course) and ANOP 203 (or CSCI 203)',
     leadsTo: 'ANOP 400',
@@ -52,6 +60,8 @@ export const courses: Course[] = [
     title: 'Business Analytics Practicum',
     line: 'Scope -> data -> model -> recommendation -> delivery. A signed project charter by week 3, and the client in the room at the end.',
     where: 'Capstone for Business Analytics majors',
+    who: 'Junior and senior Business Analytics majors. Others by permission.',
+    seats: '1 section, about 25 students in 5 client teams',
     when: 'Spring 2028',
     prereqs: 'ANOP 330, and ANOP 350 or 370 (or MATH 358)',
     sample: 'The term, week by week',
@@ -59,3 +69,7 @@ export const courses: Course[] = [
 ];
 
 export const course = (slug: string) => courses.find((c) => c.slug === slug)!;
+// Keeps a text arrow (->) in one piece when a line wraps.
+export const arrows = (s: string) => s.replace(/->/g, '-\u2060>');
+// Who takes it, then how many. Numbers and course codes stay on the same line as the word after them.
+export const students = (c: Course) => `${c.who} ${c.seats}.`.replace(/(\d|[A-Z]{4}) (?=\w)/g, '$1\u00a0');

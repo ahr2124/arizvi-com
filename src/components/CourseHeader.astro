@@ -1,10 +1,11 @@
 ---
 // Header for a /bucknell course page: breadcrumb, title, what students leave with, then the facts.
-import type { Course } from '../data/bucknell';
+import { arrows, students, type Course } from '../data/bucknell';
 interface Props { course: Course; crumb?: string; facts?: [string, string][] }
 const { course, crumb, facts = [] } = Astro.props;
 const rows: [string, string][] = [
   ['Where it sits', course.where],
+  ['Students', students(course)],
   ["When I'd teach it", course.when],
   ...(course.prereqs ? [['Prerequisites', course.prereqs] as [string, string]] : []),
   ...(course.leadsTo ? [['Leads to', course.leadsTo] as [string, string]] : []),
@@ -14,7 +15,7 @@ const rows: [string, string][] = [
 <header class="page-head course-head">
   <p class="label"><a href="/bucknell/">Bucknell</a> · {course.code}{crumb && ` · ${crumb}`}</p>
   <h1>{course.title}</h1>
-  <p class="tagline">{course.line}</p>
+  <p class="tagline">{arrows(course.line)}</p>
   <div class="grid"><div class="span-8"><slot /></div></div>
   <div class="kv course-kv">
     {rows.map(([k, v]) => (<><p class="label">{k}</p><p>{v}</p></>))}

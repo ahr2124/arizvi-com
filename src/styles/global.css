@@ -290,6 +290,8 @@ ol li + li { margin-top: 0.5em; }
 .pills.jump li:hover { background: #000; color: #fff; }
 .rows .sample { margin-top: 10px; }
 .rows .sample .label { display: inline; margin-right: 10px; }
+.rows .who { color: rgba(0, 0, 0, 0.6); }
+.rows .who .label { display: inline; margin-right: 10px; color: #000; }
 .unit-path { margin-bottom: 2rem; }
 .bk-wide { max-width: 860px; }
 .rows.compact li { padding: 14px 0; }
@@ -433,6 +435,11 @@ ol li + li { margin-top: 0.5em; }
 /* Bucknell hub + course pages */
 .course-head h1 { font-size: clamp(2.2rem, 4.6vw, 3.8rem); max-width: 22ch; }
 .course-kv { margin-top: 2rem; }
+@media (max-width: 767px) {
+  .course-kv { row-gap: 4px; }
+  .page-head .course-kv .label { margin-bottom: 0; }
+  .page-head .course-kv .label:not(:first-child) { margin-top: 18px; }
+}
 .principles { list-style: none; margin: 0; padding: 0; max-width: 860px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--gutter); counter-reset: p; }
 .principles li { border-top: 1px solid #000; padding: 14px 0 18px; margin: 0; counter-increment: p; }
 .principles li + li { margin-top: 0; }
