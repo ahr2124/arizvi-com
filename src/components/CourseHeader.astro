@@ -15,7 +15,7 @@ const rows: [string, string][] = [
 <header class="page-head course-head">
   <p class="label"><a href="/bucknell/">Bucknell</a> · {course.code}{crumb && ` · ${crumb}`}</p>
   <h1>{course.title}</h1>
-  <p class="tagline">{arrows(course.line)}</p>
+  <p class="tagline">{arrows(course.line, true)}</p>
   <div class="grid"><div class="span-8"><slot /></div></div>
   <div class="kv course-kv">
     {rows.map(([k, v]) => (<><p class="label">{k}</p><p>{v}</p></>))}

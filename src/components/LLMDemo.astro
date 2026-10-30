@@ -1,9 +1,9 @@
 ---
 // Week 11 of ANOP 330: how an LLM works inside a decision model.
-// The model's odds for its next word (at temperature 1): low 20%, medium 45%, high 35%.
+// The model's probabilities for its next word (at temperature 1): low 20%, medium 45%, high 35%.
 // Temperature reshapes them (p ^ 1/T, renormalised); at 0 it always picks the favourite.
 // The café bakes 40 / 80 / 120 croissants for low / medium / high. Cost $1, price $5.
-// If the odds are honest, expected profit is $160 / $280 / $310 for each bake, so the best bake is 120.
+// If the probabilities are honest, expected profit is $160 / $280 / $310 for each bake, so the best bake is 120.
 const answers = [
   { key: 'low', label: 'Low' },
   { key: 'medium', label: 'Medium' },
@@ -12,7 +12,7 @@ const answers = [
 const strategies = [
   { key: 'once', label: 'Ask it once, bake what it says' },
   { key: 'top', label: 'Always bake for its top answer' },
-  { key: 'odds', label: 'Bake for its odds' },
+  { key: 'weigh', label: 'Weigh its probabilities' },
 ];
 ---
 <div class="ldemo" data-ldemo>
@@ -22,7 +22,7 @@ const strategies = [
   </div>
 
   <div class="ldemo-step">
-    <p class="label">1 · The model's odds for its next word</p>
+    <p class="label">1 · How likely each next word is</p>
     <div class="ldemo-bars">
       {answers.map((a) => (
         <div class="ldemo-bar">
@@ -48,7 +48,7 @@ const strategies = [
 
   <div class="ldemo-step">
     <p class="label">3 · Put it in the decision model</p>
-    <p>The café bakes 40, 80 or 120 croissants for low, medium or high. Each costs $1 to bake and sells for $5, so running out costs $4 a croissant and a leftover costs $1. Expected profit a day, if the model's odds are honest:</p>
+    <p>The café bakes 40, 80 or 120 croissants for low, medium or high. Each costs $1 to bake and sells for $5, so running out costs $4 a croissant and a leftover costs $1. Expected profit a day, if the model's probabilities are honest:</p>
     <div class="ldemo-strats">
       {strategies.map((s) => (
         <div class="ldemo-strat" data-strat={s.key}>
@@ -60,7 +60,7 @@ const strategies = [
     </div>
   </div>
 
-  <p class="demo-coda">The model's single most likely answer is medium. But running out costs 4 times as much as a leftover, so the best plan bakes for high. That's the decision model's job: take the LLM's odds and the costs, and pick the move with the best expected outcome. It only works if the odds are honest. Real LLMs can be overconfident, so in the course we check their odds against what actually happened - and decide where a person signs off.</p>
+  <p class="demo-coda">The model's single most likely answer is medium. But a missed sale costs $4 and a leftover $1, so it pays to bake past 80 as long as demand beats 80 more than 1 time in 5 - the critical ratio, 4 / (4 + 1) = 0.8. Here demand beats 80 35% of the time, so bake 120. That's the newsvendor model, fed by an LLM. It only works if the probabilities are honest, and real LLMs can be overconfident. So in the course we score their probabilities against what actually happened and against a forecast built from the café's own sales. Then we decide where a person signs off.</p>
 </div>
 
 <script>
@@ -89,7 +89,7 @@ const strategies = [
         $(`[data-pct=${k}]`).textContent = `${Math.round(p[i] * 100)}%`;
       });
       const once = p.reduce((sum, q, i) => sum + q * PROFIT[i], 0);
-      const vals: Record<string, number> = { once, top: PROFIT[1], odds: PROFIT[2] };
+      const vals: Record<string, number> = { once, top: PROFIT[1], weigh: PROFIT[2] };
       Object.entries(vals).forEach(([k, v]) => {
         $<HTMLElement>(`[data-sbar=${k}]`).style.width = `${(v / best) * 100}%`;
         $(`[data-sval=${k}]`).textContent = money(v) + (v === best ? ' · best' : '');

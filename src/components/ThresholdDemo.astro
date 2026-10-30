@@ -27,7 +27,7 @@ const cancels = Array.from({ length: 1000 }, (_, i) => caught(i + 1) > caught(i)
 
   <div class="cdemo-main">
     <div>
-      <p class="label">What happens next month · 1 square = 1 customer, riskiest first</p>
+      <p class="label">Next month, in made-up data · 1 square = 1 customer, riskiest first</p>
       <div class="cdemo-grid" aria-hidden="true">
         {cancels.map((c) => <span class={c ? 'lost' : 'alone'} data-c={c ? '1' : '0'} />)}
       </div>
@@ -38,7 +38,7 @@ const cancels = Array.from({ length: 1000 }, (_, i) => caught(i + 1) > caught(i)
       <div><dt><span class="sw lost" />Cancelled anyway</dt><dd data-out="lost">100</dd></div>
       <div><dt><span class="sw alone" />Left alone</dt><dd data-out="alone">900</dd></div>
       <div class="total"><dt>Net value</dt><dd data-out="value">$0</dd><dd class="calc" data-out="calc">0 kept × $200 − 0 offers × $20</dd></div>
-      <div class="total"><dt>Accuracy</dt><dd data-out="acc">90.0%</dd><dd class="calc">customers the model called right</dd></div>
+      <div class="total"><dt>Accuracy</dt><dd data-out="acc">90.0%</dd><dd class="calc">customers called right at this cutoff</dd></div>
     </dl>
   </div>
 
@@ -74,7 +74,7 @@ const cancels = Array.from({ length: 1000 }, (_, i) => caught(i + 1) > caught(i)
     </div>
   </div>
 
-  <p class="demo-coda">Accuracy is the same at every price. The most valuable number of offers moves from everyone ($2) to nobody ($100). So the threshold is a business call, and a manager has to own it.</p>
+  <p class="demo-coda">Accuracy is the same at every price. The most valuable number of offers moves from everyone ($2) to nobody ($100). So the threshold is a business call, and a manager has to own it. One catch: real offers keep only some of the customers they reach, and the riskiest are often the hardest to keep. So later in the course we rank customers by how much the offer would change what they do (uplift), instead of by risk.</p>
 </div>
 
 <script>
@@ -145,7 +145,7 @@ const cancels = Array.from({ length: 1000 }, (_, i) => caught(i + 1) > caught(i)
       slider.setAttribute('aria-valuetext', `${n} offers, ${k} kept, net ${money(v)}, accuracy ${pct(accuracy(n))}`);
       plot.querySelectorAll<HTMLElement>('[data-rule], [data-dot]').forEach((el) => place(el, n, yOf(v)));
       $('[data-note]').textContent = n === 0
-        ? 'Offer nobody and the model is 90% accurate - it\'s right about all 900 customers who stay. It also earns nothing: all 100 cancellations walk out the door.'
+        ? 'Offer nobody and you\'re 90% accurate - right about all 900 customers who stay. You also earn nothing: all 100 cancellations walk out the door.'
         : `Offering ${who(n)}: ${fmt(k)} kept, ${fmt(wasted)} offers wasted on people who'd have stayed. Net ${money(v)} at ${pct(accuracy(n))} accuracy${n === best ? ' - the most valuable setting at this price.' : '.'}`;
     }
 

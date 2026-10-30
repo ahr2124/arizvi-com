@@ -69,7 +69,7 @@ export const courses: Course[] = [
 ];
 
 export const course = (slug: string) => courses.find((c) => c.slug === slug)!;
-// Keeps a text arrow (->) in one piece when a line wraps.
-export const arrows = (s: string) => s.replace(/->/g, '-\u2060>');
+// Text arrows: → in display type (as in titles), and -> kept in one piece in body text.
+export const arrows = (s: string, display = false) => s.replace(/->/g, display ? '→' : '-\u2060>');
 // Who takes it, then how many. Numbers and course codes stay on the same line as the word after them.
 export const students = (c: Course) => `${c.who} ${c.seats}.`.replace(/(\d|[A-Z]{4}) (?=\w)/g, '$1\u00a0');

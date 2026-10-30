@@ -25,7 +25,7 @@ const units: { n: 1 | 2 | 3; weeks: string; name: string; line: string; items: {
   {
     n: 1, weeks: 'Weeks 1-7', name: 'Optimisation', line: 'Linear and integer models for cash, bonds, capital budgets and product mix',
     items: [
-      { w: '1', topic: 'What a decision model is for', build: 'Model hygiene: inputs, decisions, outputs. A first linear program for a financial plan.' },
+      { w: '1', topic: 'From ANOP 102 to finance', build: 'A quick refresher on ANOP 102\'s linear programs, straight onto a financial plan. Model hygiene: inputs, decisions, outputs.' },
       { w: '2', topic: 'Short-term financing', build: 'Multi-period cash management: borrow, invest or hold, month by month.' },
       { w: '3', topic: 'Sensitivity analysis', build: 'Shadow prices and allowable ranges - what an extra dollar of credit line is worth.' },
       { w: '4', topic: 'Multi-period models', build: 'Bond portfolio dedication: meet a stream of liabilities at the lowest cost.' },
@@ -35,17 +35,17 @@ const units: { n: 1 | 2 | 3; weeks: string; name: string; line: string; items: {
     ],
   },
   {
-    n: 2, weeks: 'Weeks 8-10', name: 'Portfolios and risk', line: 'Markowitz, the efficient frontier and value at risk',
+    n: 2, weeks: 'Weeks 8-9', name: 'Portfolios', line: 'Markowitz and the efficient frontier, with the limits real investors face',
     items: [
       { w: '8', topic: 'Nonlinear models', build: 'Mean-variance portfolio optimisation (Markowitz).' },
       { w: '9', topic: 'The efficient frontier', build: 'The frontier, the constraints real investors face, and index tracking.' },
-      { w: '10', topic: 'Risk management', build: 'Simulating portfolio losses and estimating value at risk.' },
     ],
   },
   {
-    n: 3, weeks: 'Weeks 11-14', name: 'Simulation', line: 'Monte Carlo, option pricing and hedging',
+    n: 3, weeks: 'Weeks 10-14', name: 'Simulation and risk', line: 'Monte Carlo methods, from value at risk to pricing and hedging options',
     items: [
-      { w: '11', topic: 'Monte Carlo fundamentals', build: 'Random draws, distributions, sample size and how fast the answer settles.' },
+      { w: '10', topic: 'Monte Carlo fundamentals', build: 'Random draws, distributions, sample size and how fast the answer settles.' },
+      { w: '11', topic: 'Risk management', build: 'Simulating portfolio losses and estimating value at risk.' },
       { w: '12', topic: 'Pricing derivatives', build: 'A European call by simulation, checked against Black-Scholes, then a path-dependent option.', try: true },
       { w: '13', topic: 'Hedging', build: 'Foreign exchange exposure hedged with forwards vs. options, compared by simulation.' },
       { w: '14', topic: 'Project presentations', build: 'Teams present their decision and the model behind it.' },
@@ -57,16 +57,16 @@ const units: { n: 1 | 2 | 3; weeks: string; name: string; line: string; items: {
 const grading = [
   { item: 'Weekly labs', weight: '25%', when: 'Weeks 1-13', note: 'Small, frequent, low stakes. Each ends with a 3-sentence recommendation. The lowest one is dropped.', marks: [1, 1, 1, 1, 1] },
   { item: 'Midterm', weight: '20%', when: 'Week 7', note: 'Optimisation: formulate, solve, interpret.', marks: [1, 1, 0, 0, 0] },
-  { item: 'Team project', weight: '30%', when: 'Weeks 4-14', note: 'A real financial decision for a real organization. Teams form in week 4, pick their decision by week 6 and present in week 14, with a 2-page memo and the model attached.', marks: [1, 0.5, 0.5, 0.5, 1] },
+  { item: 'Team project', weight: '30%', when: 'Weeks 4-14', note: 'A financial decision a real organization faces, built from its public filings, or with the organization itself where we can arrange it. Teams form in week 4, pick their decision by week 6, review their model with me in week 10 and present in week 14, with a 2-page memo and the model attached. Peer evaluation adjusts each member\'s mark.', marks: [1, 0.5, 0.5, 0.5, 1] },
   { item: 'Final exam', weight: '15%', when: 'Exam week', note: 'Portfolios, risk and simulation.', marks: [0, 0, 1, 1, 0] },
-  { item: 'Exit tickets', weight: '10%', when: 'Every class', note: '2 sentences at the end of each class. Graded for completion.', marks: [0, 0, 0, 0, 1] },
+  { item: 'Exit tickets', weight: '10%', when: 'Every class', note: '2 sentences at the end of each class: what to do, and what would change it. Marked 0, 1 or 2 for whether a manager could act on it.', marks: [0, 0, 0, 0, 1] },
 ];
 const mark = (m: number) => (m === 1 ? '●' : m === 0.5 ? '○' : '');
 ---
 <Base title="ANOP 302 syllabus" description="Draft syllabus for Bucknell's ANOP 302, Financial Decision Modeling using Spreadsheets, by Ali Rizvi." noindex>
   <CourseHeader course={c} crumb="Draft syllabus" facts={[
     ['Format', '1 credit · 3 lecture hours a week for 14 weeks'],
-    ['Tools', 'Excel with Solver. Laptops in every class.'],
+    ['Tools', 'Excel with Solver. Laptops open while we build, closed for the debrief.'],
     ['Instructor', 'Ali Rizvi, PhD'],
   ]}>
     <p>The catalogue describes ANOP 302 as linear and nonlinear optimisation in finance and accounting, portfolio and risk management, and Monte Carlo pricing of derivatives. I built it on Decision Models and Applications (IEOR E4611), the course I took for my MS at Columbia, and it follows the same arc. Every week ends with a decision written up for a manager.</p>
@@ -143,7 +143,7 @@ const mark = (m: number) => (m === 1 ? '●' : m === 0.5 ? '○' : '');
 
   <Section label="Try week 12" title="Price an option by simulation" id="try">
     <div class="grid"><div class="span-8">
-      <p>A call option on a $100 stock: strike $100, 1 year to expiry, 20% volatility, 5% interest. Black-Scholes prices it exactly. Simulate stock paths, average the payoffs, and watch the estimate close in.</p>
+      <p>A call option on a $100 stock: strike $100, 1 year to expiry, 20% volatility, 5% interest. Under these assumptions Black-Scholes gives the exact price, so it can check the simulation before we trust simulation with options no formula can price. Simulate stock paths, average the payoffs, and watch the estimate close in.</p>
     </div></div>
     <OptionDemo />
   </Section>

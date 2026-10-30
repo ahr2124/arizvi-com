@@ -236,7 +236,7 @@ write('src/components/CurriculumMap.astro', f'''---
 <figure class="fig curriculum">
   {svg(*cw, 'Where these courses sit in the Business Analytics major', desc, 'fig-wide')}
   {svg(*ct, 'Where these courses sit in the Business Analytics major', desc, 'fig-tall')}
-  <figcaption class="muted">Black: the courses I'd teach - each one opens its page. ANOP 102 comes before every course here, and ANOP 203 (Python) before 330, 350 and 370. Prerequisites from the 2026-27 catalogue.</figcaption>
+  <figcaption class="muted">Black: the courses I'd teach - each one opens its page. Arrows are prerequisites from the 2026-27 catalogue. ANOP 330, 350 and 370 each need ANOP 203 (Python) and either ANOP 102 or a statistics course.</figcaption>
 </figure>
 ''')
 
@@ -247,7 +247,7 @@ write('src/components/LPFigure.astro', f'''---
 ---
 <figure class="fig lp">
   {svg(340, 290, lp, 'The bike shop product-mix problem', 'Feasible plans are bounded by assembly hours, painting hours and Trail demand. The best plan is 48 Commuters and 24 Trails for $10,080 a week, where assembly and painting both run out.')}
-  <figcaption class="muted">The best plan sits where assembly and painting both run out, so those are the hours worth buying: $36 for an extra assembly hour, $12 for a painting hour. Dashed: every plan worth $10,080.</figcaption>
+  <figcaption class="muted">The best plan sits where assembly and painting both run out. An extra assembly hour adds $36 (for up to 120 more hours), so the $30 assembler pays. An extra painting hour adds only $12, so turn down the $25 painter. Dashed: every plan worth $10,080.</figcaption>
 </figure>
 ''')
 

@@ -14,18 +14,18 @@ const c = course('anop-330');
 <Base title="ANOP 330" description="ANOP 330, Machine Learning Fundamentals for Business, as Ali Rizvi would teach it at Bucknell - with 2 classes you can try." noindex>
   <CourseHeader course={c} />
 
-  <Section label="Try a class · Week 7" title="The most accurate model earns nothing" id="try">
+  <Section label="Try a class · Week 7" title="The most accurate cutoff earns nothing" id="try">
     <div class="grid"><div class="span-8">
       <p>Your subscription business has 1,000 customers. Next month 100 of them will cancel - you just don't know which 100. A model gives every customer a risk score.</p>
-      <p>You can send a retention offer. It costs $20 and keeps anyone who was about to cancel, and each customer kept is worth $200. How many of your riskiest customers should get it?</p>
-      <p>Start at nobody - that's the most accurate model. Then slide right and watch the money.</p>
+      <p>You can send a retention offer. It costs $20, and each customer it keeps is worth $200. To keep the arithmetic simple, say it keeps everyone it reaches who was about to cancel. How many of your riskiest customers should get it?</p>
+      <p>Start at nobody - that's the most accurate cutoff. Then slide right and watch the money.</p>
     </div></div>
     <ThresholdDemo />
   </Section>
 
-  <Section label="Try a class · Week 11" title="An LLM gives you odds" id="llm">
+  <Section label="Try a class · Week 11" title="An LLM gives you probabilities" id="llm">
     <div class="grid"><div class="span-8">
-      <p>An LLM doesn't look an answer up. It scores every word it could say next, turns the scores into odds, and picks one at random by those odds. Temperature sets how much it gambles: at 0 it always picks the favourite.</p>
+      <p>An LLM doesn't look an answer up. It scores every word it could say next, turns the scores into probabilities, and picks one at random, weighted by those probabilities. Temperature sets how much it gambles: at 0 it always picks the favourite.</p>
       <p>Here a café asks one for tomorrow's croissant demand, then has to decide how many to bake.</p>
     </div></div>
     <LLMDemo />
