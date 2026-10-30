@@ -34,18 +34,18 @@ const grading = [
   ['Charter', '10%', 'Week 3. Signed by the client.'],
   ['Mid-term check-in', '15%', 'Week 8. The data audit and first findings, presented to the client.'],
   ['Final presentation and report', '45%', 'Week 14. The client in the room, and the model attached.'],
-  ['Stand-ups and peer evaluation', '20%', 'Every week. Peer evaluation at week 7 and week 14 moves a team mark up or down for each member.'],
+  ['Stand-ups and peer evaluation', '20%', 'Every week. Peer evaluation at week 7 and week 14 moves each member\'s share of the team marks up or down by up to 10 points out of 100.'],
   ['Reflection', '10%', 'Week 14. 2 pages: what you would do differently, and what you would tell next year\'s team.'],
 ];
 ---
 <Base title="ANOP 400" description="ANOP 400, the Business Analytics Practicum, as Ali Rizvi would run it at Bucknell: the term, the clients, the grading, and what happens when a project goes wrong." noindex>
   <CourseHeader course={c} facts={[
     ['Format', '1 credit · 14 weeks · teams of 4 or 5, a client each'],
-    ['Grading', 'Charter 10% · mid-term check-in 15% · final presentation and report 45% · stand-ups and peer evaluation 20% · reflection 10%'],
+    ['Grading', 'Charter 10% · mid-term check-in 15% · final presentation and report 45% · stand-ups and peer evaluation 20% · reflection 10%. Peer evaluation moves a member\'s share up or down by up to 10 points.'],
     ['AI tools', 'Allowed on public data and on your own writing. Nothing from a client file goes into a chatbot unless the data agreement says it can.'],
     ['Track record', "I ran Waterloo's Undergraduate Capstone Seminar the same way, with external partners every term. There the teams built working prototypes. Here the deliverable is a model and a recommendation the client can act on."],
   ]}>
-    <p>ANOP 400 has a client pipeline and an instructor who runs it, and I'd learn it before I touched it: sit in on the spring 2028 run, take a team if that helps, and teach a section when the department asks. Below is how I ran a capstone at Waterloo, translated to this one.</p>
+    <p>ANOP 400 has a client pipeline and an instructor who runs it, and I'd learn it before I touched it: sit in on the spring 2028 run, help where asked, and teach a section when the department asks. Below is how I ran a capstone at Waterloo, translated to this one.</p>
     <p class="practice"><span class="label">From practice</span>A clinical trial is a capstone with higher stakes: the protocol is written before the first patient, the success measure is named in advance, and nobody moves it. The A/B tests I ran inside an e-commerce retailer worked the same way, with the metric and the stopping rule agreed before launch, and the ones that skipped that step produced quick wins that never showed up in revenue. The charter above is that discipline, scaled to 14 weeks.</p>
   </CourseHeader>
 
@@ -56,8 +56,8 @@ const grading = [
 
   <Section label="Clients" title="Where the projects come from" id="clients">
     <div class="grid"><div class="span-8">
-      <p>Sourcing starts the term before, so every team has a client in week 1 and a signed charter by week 3. The pool: businesses within an hour of campus, the small businesses that come through Bucknell's SBDC, alumni-run companies, and regional non-profits with data they have never looked at. A company I or AMJ Capital hold a stake in is never a client of a team I grade.</p>
-      <p>Each client signs the 1-page charter and a data agreement with it: what the team gets, who may see it, and that the client keeps the data and the model. Customer and member IDs are replaced before a file reaches students, and students sign an NDA where the client asks for one.</p>
+      <p>The course has a client pipeline already. If the department wants more clients than it has, this is where I'd look: businesses within an hour of campus, the small businesses that come through Bucknell's SBDC, alumni-run companies, and regional non-profits with data they have never looked at. I'd start the term before, so every team has a client in week 1 and a signed charter by week 3. A company I or AMJ Capital hold a stake in is never a client of a team I grade.</p>
+      <p>Each client signs the 1-page charter and a data agreement with it: what the team gets, who may see it, and what the team may keep and show afterwards - the method and the memo with the numbers replaced, unless the client agrees to more. Customer and member IDs are replaced before a file reaches students, and students sign an NDA where the client asks for one.</p>
     </div></div>
     <div class="grid" style="margin-top: 2rem;"><div class="span-8">
       <p class="label">A sample brief · fictional</p>
@@ -78,13 +78,16 @@ const grading = [
     </ul>
   </Section>
 
-  <Section label="When it goes wrong" title="The week 9 playbook" id="playbook">
+  <Section label="When it goes wrong" title="The playbook" id="playbook">
     <div class="grid"><div class="span-8">
       <ol>
+        <li><strong>The client hasn't signed by week 3.</strong> The charter is marked on the team's draft, and the team starts on the plan B dataset while I chase the signature.</li>
         <li><strong>The client goes quiet.</strong> It happens, and usually around week 9. The charter names a plan B dataset in the same domain, and the team switches at that week's stand-up without losing the week.</li>
         <li><strong>The data is late.</strong> The week 4 deadline is in the charter. The team starts on a public stand-in the same day, and the client's file replaces it when it lands.</li>
         <li><strong>A teammate disappears.</strong> Stand-up records and the week 7 peer evaluation make it visible early. I have the conversation in week 7, and the grade follows the record.</li>
+        <li><strong>The client changes the question.</strong> The charter is re-signed, and the report keeps the week 3 version as what changed and why.</li>
         <li><strong>The model says nothing useful.</strong> That is a finding. The memo says what the data can and cannot support, and what to collect next year.</li>
+        <li><strong>The client can't make week 14.</strong> The presentation goes ahead with me in the client's chair, the client gets the recording and the report, and the 45% is unchanged.</li>
       </ol>
     </div></div>
   </Section>

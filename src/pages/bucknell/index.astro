@@ -10,8 +10,8 @@ import { arrows, courses, catalogue, students } from '../../data/bucknell';
 const principles = [
   ['Build the course backwards from the outcome.', 'Each course ends in work a manager could use, and every week builds toward it.'],
   ['Personalize within a defined structure.', 'Everyone learns the same methods. Each student picks the decision or dataset they apply them to.'],
-  ['Learn by situational immersion.', 'Real clients and real constraints wherever I can get them.'],
-  ['Test the teaching itself.', 'Mid-term feedback in every course, with changes made before the term ends.'],
+  ['Learn on real problems.', 'Real clients and real constraints wherever I can get them.'],
+  ['Test the teaching itself.', 'Mid-term feedback in every course, with changes made before the term ends. In MSCI 543 it moved the exams to paper.'],
 ];
 ---
 <Base title="Bucknell" description="The courses Ali Rizvi would teach in Bucknell's Analytics & Operations Management department, and how he teaches them." noindex>
@@ -30,7 +30,7 @@ const principles = [
     <ol class="principles">
       {principles.map(([head, line]) => <li><strong>{head}</strong> {line}</li>)}
     </ol>
-    <p class="muted principles-note">9 course runs at Waterloo between 2021 and 2024, ~700 students, classes of 40 to 180. The examples on the course pages come from the work: Alexa at Amazon, the A/B tests I ran inside an e-commerce retailer, compliance models at Morgan Stanley, and a clinical trial I sit close to at AMJ Capital. More on the <a href="/teaching/">Teaching</a> page.</p>
+    <p class="muted principles-note">9 course runs at Waterloo between 2021 and 2024, ~700 students, classes of 40 to 180. The classes on the course pages are small invented businesses, so the numbers can be checked. The stories beside them are from the work: Alexa at Amazon, the A/B tests I ran inside an e-commerce retailer, compliance models at Morgan Stanley, and a clinical trial I sit close to at AMJ Capital. More on the <a href="/teaching/">Teaching</a> page.</p>
   </Section>
 
   <Section label="The courses" id="courses">
@@ -49,7 +49,7 @@ const principles = [
       ))}
     </ul>
     <div class="grid"><div class="span-8">
-      <p class="muted" style="margin-top: 1.5rem;">That's 5 sections of my own in year 1 (ANOP 102 four times and ANOP 330 once, about 125 students), with ANOP 400 alongside its instructor. The sixth course is the department's call: another ANOP 102, or ANOP 302. Year 2 adds a new elective on human-in-the-loop AI for business decisions. It's a starting point - I'll fit it to what the department needs. Codes and prerequisites are from the <a href={catalogue} target="_blank" rel="noopener">2026-27 catalogue</a>.</p>
+      <p class="muted" style="margin-top: 1.5rem;">What I can cover, in a sentence: 2 sections of ANOP 102 and 1 of ANOP 330 a term, and ANOP 400 when asked - about 150 students a year. The sections are the chair's call, and ANOP 302 can take a slot in either year. It's a starting point - I'll fit it to what the department needs. Codes and prerequisites are from the <a href={catalogue} target="_blank" rel="noopener">2026-27 catalogue</a>.</p>
     </div></div>
   </Section>
 
@@ -84,14 +84,14 @@ const principles = [
         </div>
       </li>
       <li class="grid">
-        <div class="label">ANOP 330<br />Week 7</div>
+        <div class="label">ANOP 330<br />Week 8</div>
         <div class="body">
           <a class="title" href="/bucknell/anop-330/#threshold">The most accurate cutoff earns nothing →</a>
           <p>1,000 customers, 100 about to cancel, and a retention offer. Watch accuracy and money pull in opposite directions.</p>
         </div>
       </li>
       <li class="grid">
-        <div class="label">ANOP 330<br />Week 8</div>
+        <div class="label">ANOP 330<br />Week 4</div>
         <div class="body">
           <a class="title" href="/bucknell/anop-330/#overfit">The model that memorised the past →</a>
           <p>Fit a curve to 16 days of sales, pick the degree you'd ship, then reveal the 8 days it never saw.</p>

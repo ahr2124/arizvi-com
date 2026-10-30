@@ -15,19 +15,19 @@ const c = course('anop-330');
 // The term. Each week: the method, the business question it answers, and the class to try where there is one.
 // Three units, each with a figure in the margin.
 const units = [
-  { n: 1, from: 1, to: 6, weeks: 'Weeks 1-6', name: 'Models', line: 'From framing the prediction to trees and ensembles' },
-  { n: 2, from: 7, to: 8, weeks: 'Weeks 7-8', name: 'Judging a model', line: 'Thresholds, the cost of mistakes, and data the model never saw' },
+  { n: 1, from: 1, to: 4, weeks: 'Weeks 1-4', name: 'Predicting, honestly', line: 'Framing, leakage, regression, and data the model never saw' },
+  { n: 2, from: 5, to: 8, weeks: 'Weeks 5-8', name: 'Classifiers and their costs', line: 'Logistic regression, trees, ensembles, and the cutoff as a business call' },
   { n: 3, from: 9, to: 14, weeks: 'Weeks 9-14', name: 'In the world', line: 'Clusters, fairness, LLMs, monitoring, and the project' },
 ];
 const weeks: { w: number; topic: string; build: string; try?: string }[] = [
   { w: 1, topic: 'Framing a prediction', build: 'What exactly are we predicting, could we know it in time, and what would we do differently? Python and pandas refresher, a first train/test split.' },
   { w: 2, topic: 'Data preparation and leakage', build: 'Features that would not exist at decision time. The lab hides a leak and the class finds it.' },
   { w: 3, topic: 'Regression, revisited', build: 'Linear regression with many features: reading it and predicting with it are different jobs.' },
-  { w: 4, topic: 'Logistic regression', build: 'Probabilities instead of labels, and the confusion matrix.' },
-  { w: 5, topic: 'Decision trees', build: 'How a tree splits, and why it is the model a manager can read.' },
-  { w: 6, topic: 'Ensembles', build: 'Random forests average many trees to steady the prediction; gradient boosting adds small trees one at a time to fix what the last ones missed.' },
-  { w: 7, topic: 'Evaluation and thresholds', build: 'Precision, recall and the cost of each kind of mistake. Is this model worth acting on?', try: 'threshold' },
-  { w: 8, topic: 'Overfitting and cross-validation', build: 'Will it work next quarter? Holding data out, and holding it out 5 times.', try: 'overfit' },
+  { w: 4, topic: 'Overfitting and cross-validation', build: 'Will it work next quarter? Holding data out, and holding it out 5 times, before any model gets trusted.', try: 'overfit' },
+  { w: 5, topic: 'Logistic regression', build: 'Probabilities instead of labels, and the confusion matrix.' },
+  { w: 6, topic: 'Decision trees', build: 'How a tree splits, and why it is the model a manager can read.' },
+  { w: 7, topic: 'Ensembles', build: 'Random forests average many trees to steady the prediction; gradient boosting adds small trees one at a time to fix what the last ones missed.' },
+  { w: 8, topic: 'Evaluation and thresholds', build: 'Precision, recall and the cost of each kind of mistake, with the cutoff chosen on held-out data. Then uplift: ranking customers by how much the offer would change what they do.', try: 'threshold' },
   { w: 9, topic: 'Clustering', build: 'k-means segmentation, choosing k, and groups we did not define.' },
   { w: 10, topic: 'Fairness and the loop', build: 'Who is harmed when it is wrong, and what a person signs off on before it ships.' },
   { w: 11, topic: 'LLMs in the workflow', build: "Embeddings and zero-shot classification as features. Where a model drafts and a person decides, picking up ANOP 102's week 8." },
@@ -40,7 +40,8 @@ const weeks: { w: number; topic: string; build: string; try?: string }[] = [
   <CourseHeader course={c} facts={[
     ['Format', '1 credit · 14 weeks · 2 classes of 75 minutes a week'],
     ['Tools', 'Python in Jupyter: pandas and scikit-learn. ANOP 203 is the prerequisite, so code from week 1.'],
-    ['Grading', 'Weekly labs 30% (lowest dropped) · midterm 20% · team project 30% · final 15% · model card 5%'],
+    ['Grading', 'Weekly labs 30% (lowest dropped) · midterm 20% (a timed notebook on a new dataset) · team project 30% · final 15% (on paper: read a model\'s output and decide) · model card 5%'],
+    ['The project', 'Teams of 3 or 4. Data from a real organisation where we can get it, public data otherwise. A notebook, a model card and a 2-page memo, scored on a held-out term of data. It goes on GitHub, with the organisation\'s say-so where there is one.'],
     ['AI tools', 'Allowed for code and debugging. Hand in the prompts with the notebook, and say in the model card where AI was used.'],
   ]}>
     <p>ANOP 330 already runs in the department, and whatever outline it runs on comes first. Below is a term as I'd plan it if asked, and 2 classes I'd bring to a section whichever outline it follows. What I'd emphasise: the decision each model feeds, what its mistakes cost, and who signs off before it ships.</p>
@@ -71,7 +72,7 @@ const weeks: { w: number; topic: string; build: string; try?: string }[] = [
     ))}
   </Section>
 
-  <Section label="Try a class · Week 7" title="The most accurate cutoff earns nothing" id="threshold">
+  <Section label="Try a class · Week 8" title="The most accurate cutoff earns nothing" id="threshold">
     <div class="grid"><div class="span-8">
       <p>Your subscription business has 1,000 customers. Next month 100 of them will cancel - you just don't know which 100. A model gives every customer a risk score.</p>
       <p>You can send a retention offer. It costs $20, and each customer it keeps is worth $200. To keep the arithmetic simple, say it keeps everyone it reaches who was about to cancel. How many of your riskiest customers should get it?</p>
@@ -80,7 +81,7 @@ const weeks: { w: number; topic: string; build: string; try?: string }[] = [
     <ThresholdDemo />
   </Section>
 
-  <Section label="Try a class · Week 8" title="The model that memorised the past" id="overfit">
+  <Section label="Try a class · Week 4" title="The model that memorised the past" id="overfit">
     <div class="grid"><div class="span-8">
       <p>An ice-cream stand logged 24 days of sales and the day's temperature. 16 days are on the chart. The other 8 are in a drawer.</p>
       <p>Fit a curve to the 16. A straight line misses; a curve that bends can follow every bump. Pick the degree you'd ship by the error on the days you can see. Then open the drawer.</p>

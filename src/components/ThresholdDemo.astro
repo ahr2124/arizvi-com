@@ -1,5 +1,5 @@
 ---
-// Week 7 of ANOP 330: accuracy vs. what a model's mistakes cost.
+// Week 8 of ANOP 330: accuracy vs. what a model's mistakes cost.
 // 1,000 customers ranked by a model's risk score, 100 of whom will cancel. The reader picks how many of the riskiest get an offer.
 // The chance of cancelling falls smoothly down the ranking, from 42% at the top to 2% at the bottom (0.4 e^(-rank/200) + 0.02),
 // and the 100 cancellations sit where that curve's running total crosses each whole number. No prefix of the ranking is ever
@@ -79,7 +79,7 @@ const pct = (a: number) => (a * 100).toFixed(1) + '%';
     </div>
   </div>
 
-  <p class="demo-coda">Accuracy is the same at every price. The most valuable number of offers moves from everyone ($2) to nobody ($100). So the threshold is a business call, and a manager has to own it. One catch: real offers keep only some of the customers they reach, and the riskiest are often the hardest to keep. So later in the course we rank customers by how much the offer would change what they do (uplift), instead of by risk.</p>
+  <p class="demo-coda">Accuracy is the same at every price. The most valuable number of offers moves from everyone ($2) to nobody ($100). So the threshold is a business call, and a manager has to own it. One catch: real offers keep only some of the customers they reach, and the riskiest are often the hardest to keep. So the second half of the week ranks customers by how much the offer would change what they do (uplift), instead of by risk.</p>
 </div>
 
 <script>

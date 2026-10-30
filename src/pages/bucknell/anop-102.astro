@@ -21,34 +21,35 @@ const units = [
   { n: 1, from: 1, to: 4, weeks: 'Weeks 1-4', name: 'Data you can trust', line: 'Spreadsheets a manager can audit, a cleaned export, and the first brief' },
   { n: 2, from: 5, to: 7, weeks: 'Weeks 5-7', name: 'Models and what-ifs', line: 'Breakeven, Data Tables and Goal Seek, then the midterm' },
   { n: 3, from: 8, to: 10, weeks: 'Weeks 8-10', name: 'Uncertainty', line: 'Expected value, samples, and how a test is run' },
-  { n: 4, from: 11, to: 14, weeks: 'Weeks 11-14', name: 'Decisions', line: 'Regression, optimisation, random draws, and the memo' },
+  { n: 4, from: 11, to: 14, weeks: 'Weeks 11-14', name: 'Decisions', line: 'Regression, optimisation, and the memo' },
 ];
 const weeks: { w: number; topic: string; build: string; try?: string }[] = [
   { w: 1, topic: 'A spreadsheet someone else can read', build: 'Inputs, formulas and outputs kept apart, named inputs, no numbers typed into formulas. A 1-tab model of a pricing decision.' },
   { w: 2, topic: 'Lookups and cleaning', build: 'Sorting, filtering, XLOOKUP and tidy tables. A sales export, cleaned.' },
   { w: 3, topic: 'Pivot tables and summaries', build: 'Averages, spread and totals by segment, and a 1-page "what happened" brief.', try: 'pivot' },
   { w: 4, topic: 'Charts that answer a question', build: 'Choosing the chart for the claim. 2 charts with a headline each.' },
-  { w: 5, topic: 'Breakeven and cost-volume-profit', build: 'The model built from a case, with its assumptions in one place.' },
+  { w: 5, topic: 'Breakeven', build: 'How many you have to sell to cover the costs. The model built from a case, with its assumptions in one place.' },
   { w: 6, topic: 'What-if analysis', build: 'Data Tables, scenarios and Goal Seek on the week 5 model.', try: 'breakeven' },
   { w: 7, topic: 'Review and midterm', build: 'A practice case, then the midterm.' },
   { w: 8, topic: 'Expected value', build: 'A forecast that comes with odds, and what to do with it. The class with the chatbot.', try: 'llm' },
   { w: 9, topic: 'Samples and confidence', build: 'An A/B test: how many customers before a real difference shows through the noise, and how sure that leaves you.' },
   { w: 10, topic: 'Testing a claim', build: 'How a trial runs: a control group, the success measure fixed before the data arrives, and the result written up in plain words.' },
   { w: 11, topic: 'Regression', build: 'A line through the data: fitting it, reading the slope and knowing when to doubt it.', try: 'regression' },
-  { w: 12, topic: 'Linear optimisation and sensitivity', build: 'A product-mix decision formulated and solved with Solver, then the overtime question read from the sensitivity report.', try: 'overtime' },
-  { w: 13, topic: 'What-if with random draws', build: 'Profit under uncertain demand, run 1,000 times, as a range with a recommendation.' },
+  { w: 12, topic: 'Optimisation', build: 'The best mix of products within the hours you have, solved with Solver (Excel\'s optimiser), then what one more hour is worth, read from the sensitivity report.', try: 'overtime' },
+  { w: 13, topic: 'Project workshop', build: 'Teams finish the model and the memo with me at each table. Random draws for the teams whose decision needs them.' },
   { w: 14, topic: 'Team presentations', build: 'The decision memo and the model behind it.' },
 ];
 ---
 <Base title="ANOP 102" description="ANOP 102, Spreadsheet Modeling & Data Analysis, as Ali Rizvi would teach it at Bucknell - the term week by week, with 4 classes you can try." noindex>
   <CourseHeader course={c} facts={[
-    ['Format', '1 credit · 14 weeks · 2 classes of 75 minutes a week'],
-    ['Tools', 'Excel. Laptops open while we build, closed for the debrief.'],
+    ['Format', '1 credit · 14 weeks · 2 classes of 75 minutes a week · about 2 hours of lab a week'],
+    ['Tools', 'Excel. On day one you need sums, averages and copying a formula down; everything else is taught. Laptops open while we build, closed for the debrief.'],
     ['Grading', 'Weekly labs 30% (lowest dropped) · midterm 20% · team project and memo 30% · final 15% · reflection 5%'],
-    ['AI tools', 'Allowed for checking a formula or explaining an error. Hand in the chat with the lab. You stay responsible for every cell.'],
+    ['AI tools', 'Allowed: "explain this error", "check this formula", "what does XLOOKUP do". Hand in the chat with the lab. Off limits: having it build the model or write the memo. You stay responsible for every cell.'],
+    ['The memo', 'Built in pieces: the decision (week 1), the data behind it (3), the model (6), how sure you are (10), what would change the answer (12), the recommendation (14).'],
   ]}>
-    <p>ANOP 102 is the first analytics course every Freeman student takes, and it runs in several sections a term. Where the department has a shared outline and exams, those come first. Below is a term as I'd plan it if asked, and 5 classes I'd bring to my sections whichever outline they run on. Every week adds a piece of the decision memo students hand in at the end.</p>
-    <p class="practice"><span class="label">From practice</span>Week 9 comes from a year of A/B tests I ran inside a healthcare e-commerce retailer, about 10,000 transactions a year, as its product manager and part-owner, and wrote up as a textbook chapter: with that little traffic, how many customers before a real difference shows through the noise? Week 10 is the discipline a clinical trial adds, and I sit close to one at AMJ Capital, where I'm research lead: a control group, and the success measure fixed in advance so you can't fool yourself afterwards.</p>
+    <p>ANOP 102 is the first analytics course every Freeman student takes, and it runs in several sections a term. Where the department has a shared outline and exams, those come first and set the pace. Below is a term as I'd plan it if asked, and 4 classes to try and 1 to read that drop into whichever weeks cover the same topic. Every week adds a piece of the decision memo students hand in at the end.</p>
+    <p class="practice"><span class="label">From practice</span>Week 9 comes from a year of A/B tests I ran inside a healthcare e-commerce retailer, about 10,000 transactions a year, as its product manager and part-owner, and <a href="/work/experimentation/">wrote up as a textbook chapter</a>: with that little traffic, how many customers before a real difference shows through the noise? Week 10 is the discipline a clinical trial adds, and I sit close to one at AMJ Capital, where I'm research lead: a control group, and the success measure fixed in advance so you can't fool yourself afterwards.</p>
   </CourseHeader>
 
   <Section label="A term, as I'd plan it" title="Week by week" id="term">
@@ -95,7 +96,7 @@ const weeks: { w: number; topic: string; build: string; try?: string }[] = [
     <div class="grid"><div class="span-8">
       <p>Students already ask chatbots for answers. This class shows them what comes back, and how to use it in a spreadsheet decision.</p>
       <p>An LLM doesn't look an answer up. It scores every word it could say next, turns the scores into probabilities, and picks one at random, weighted by those probabilities. Temperature sets how much it gambles: at 0 it always picks the favourite.</p>
-      <p>Here a café asks one for tomorrow's croissant demand, then has to decide how many to bake. In the spreadsheet, each bake's expected profit is one SUMPRODUCT. In class the temperature slider waits until someone asks.</p>
+      <p>Here a café asks one for tomorrow's croissant demand, then has to decide how many to bake. In the spreadsheet, each bake's expected profit is one formula (a SUMPRODUCT). The chatbot is the hook; expected value is the lesson.</p>
     </div></div>
     <LLMDemo />
   </Section>
@@ -103,7 +104,7 @@ const weeks: { w: number; topic: string; build: string; try?: string }[] = [
   <Section label="Try a class · Week 11" title="One weekend flips the slope" id="regression">
     <div class="grid"><div class="span-8">
       <p>A bike shop spent between $0 and $280 a week on Instagram ads for 12 weeks and logged its sales. Does the spend work? The shop keeps 40 cents of every sales dollar, so an ad pays for itself when $1 of ads brings in more than $2.50 of sales.</p>
-      <p>Fit the line and read the slope. Then take out the one weekend that was different.</p>
+      <p>Fit the line and read the slope. Then take out the one weekend that was different. One more catch the class names: the shop chose its own ad spend, and may have spent more in weeks it expected to be busy. That's why weeks 9 and 10 come first: a test where you choose who gets the ad.</p>
     </div></div>
     <RegressionDemo />
   </Section>

@@ -52,7 +52,7 @@ COURSES = {
     '203': ('ANOP 203', 'Programming (Python)', False),
     '330': ('ANOP 330', 'Machine Learning', True),
     '270': ('ANOP 270', 'Data Visualization', False),
-    '350': ('ANOP 350 · 370', 'Forecast & Optimize', False),
+    '350': ('ANOP 350 · 370', 'Predict & Prescribe', False),
     '400': ('ANOP 400', 'Practicum', True),
     '302': ('ANOP 302', 'Financial Modeling', True),
     '242': ('ANOP 242', 'SQL, Cloud & GenAI', False),
@@ -361,8 +361,8 @@ term = {
         ('A fitted line', 'Twelve points and the regression line through them.', mini_regression()),
     ],
     '330': [
-        ('A decision tree', 'A root, two splits and four leaves; the black leaves predict yes.', mini_tree()),
         ('Training and held-out error', 'Error by model complexity: the light line keeps falling on training data, the bold line turns up on held-out data; the square marks the best degree.', mini_errors()),
+        ('A decision tree', 'A root, two splits and four leaves; the black leaves predict yes.', mini_tree()),
         ('Clusters', 'Three groups of points with their centres in black.', mini_clusters()),
     ],
 }

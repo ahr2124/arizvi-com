@@ -50,6 +50,15 @@ const { course, unit } = Astro.props;
 </svg>
 )}
 {course === '330' && unit === 1 && (
+  <svg class="unit-fig" viewBox="0 0 260 170" width="260" height="170" role="img" aria-label="Training and held-out error. Error by model complexity: the light line keeps falling on training data, the bold line turns up on held-out data; the square marks the best degree.">
+<path class="axis" d="M10,12 V158 H250" />
+<polyline class="path" points="10.0,106.5 44.3,124.9 78.6,128.6 112.9,130.4 147.1,130.4 181.4,130.4 215.7,134.1 250.0,134.1" />
+<polyline class="curve" points="10.0,98.2 44.3,131.3 78.6,128.6 112.9,129.5 147.1,125.8 181.4,122.1 215.7,63.2 250.0,28.3" />
+<path class="strike" d="M44.3,12 V158" />
+<rect class="opt" x="39.3" y="126.3" width="10" height="10" />
+</svg>
+)}
+{course === '330' && unit === 2 && (
   <svg class="unit-fig" viewBox="0 0 260 170" width="260" height="170" role="img" aria-label="A decision tree. A root, two splits and four leaves; the black leaves predict yes.">
 <path class="cline" d="M130.0,34.0 L68.0,68.0" />
 <path class="cline" d="M130.0,34.0 L192.0,68.0" />
@@ -64,15 +73,6 @@ const { course, unit } = Astro.props;
 <rect class="opt" x="78.0" y="126.0" width="46" height="22" />
 <rect class="asset" x="136.0" y="126.0" width="46" height="22" />
 <rect class="opt" x="202.0" y="126.0" width="46" height="22" />
-</svg>
-)}
-{course === '330' && unit === 2 && (
-  <svg class="unit-fig" viewBox="0 0 260 170" width="260" height="170" role="img" aria-label="Training and held-out error. Error by model complexity: the light line keeps falling on training data, the bold line turns up on held-out data; the square marks the best degree.">
-<path class="axis" d="M10,12 V158 H250" />
-<polyline class="path" points="10.0,106.5 44.3,124.9 78.6,128.6 112.9,130.4 147.1,130.4 181.4,130.4 215.7,134.1 250.0,134.1" />
-<polyline class="curve" points="10.0,98.2 44.3,131.3 78.6,128.6 112.9,129.5 147.1,125.8 181.4,122.1 215.7,63.2 250.0,28.3" />
-<path class="strike" d="M44.3,12 V158" />
-<rect class="opt" x="39.3" y="126.3" width="10" height="10" />
 </svg>
 )}
 {course === '330' && unit === 3 && (

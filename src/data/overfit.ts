@@ -1,4 +1,4 @@
-// Week 8 of ANOP 330: an ice-cream stand's daily sales by temperature, 16 training days and 8 held out.
+// Week 4 of ANOP 330: an ice-cream stand's daily sales by temperature, 16 training days and 8 held out.
 // Polynomial fits of degree 1 to 10, least squares on (t - 24) / 10, computed once with numpy so the page carries no solver.
 // Each fit: the curve sampled every 0.5 °C from 14 to 34, and the root-mean-square error on the training and held-out days.
 export const train: [number, number][] = [[14, 170], [16, 200], [17, 210], [19, 240], [20, 330], [21, 400], [22, 390], [23, 420], [24, 450], [25, 410], [26, 520], [27, 430], [28, 470], [29, 530], [31, 450], [33, 440]];

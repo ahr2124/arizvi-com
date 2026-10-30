@@ -25,7 +25,7 @@ const units: { n: 1 | 2 | 3; weeks: string; name: string; line: string; items: {
   {
     n: 1, weeks: 'Weeks 1-7', name: 'Optimisation', line: 'Linear and integer models for cash, bonds, capital budgets and product mix',
     items: [
-      { w: '1', topic: 'From ANOP 102 to finance', build: 'A quick refresher on ANOP 102\'s linear programs, straight onto a financial plan. Model hygiene: inputs, decisions, outputs.' },
+      { w: '1', topic: 'From spreadsheets to finance', build: 'Linear programs from the start, for anyone who has not met them, straight onto a financial plan. Model hygiene: inputs, decisions, outputs.' },
       { w: '2', topic: 'Short-term financing', build: 'Multi-period cash management: borrow, invest or hold, month by month.' },
       { w: '3', topic: 'Sensitivity analysis', build: 'Shadow prices and allowable ranges - what an extra dollar of credit line is worth.' },
       { w: '4', topic: 'Multi-period models', build: 'Bond portfolio dedication: meet a stream of liabilities at the lowest cost.' },
@@ -65,11 +65,11 @@ const mark = (m: number) => (m === 1 ? '●' : m === 0.5 ? '○' : '');
 ---
 <Base title="ANOP 302 syllabus" description="Draft syllabus for Bucknell's ANOP 302, Financial Decision Modeling using Spreadsheets, by Ali Rizvi." noindex>
   <CourseHeader course={c} crumb="Draft syllabus" facts={[
-    ['Format', '1 credit · 3 lecture hours a week for 14 weeks'],
+    ['Format', '1 credit · 14 weeks · 2 classes of 75 minutes a week'],
     ['Tools', 'Excel with Solver. Laptops open while we build, closed for the debrief.'],
     ['AI tools', 'Allowed for checking formulas and debugging. Submit the prompts with the lab. You stay responsible for every cell.'],
   ]}>
-    <p>The catalogue describes ANOP 302 as linear and nonlinear optimisation in finance and accounting, portfolio and risk management, and Monte Carlo pricing of derivatives. The arc below is the one that course needs: formulate, then risk, then simulation, with every week ending in a decision written up for a manager. Weeks 10 to 13 hand off to ANOP 350, where simulation gets a full term.</p>
+    <p>The catalogue describes ANOP 302 as linear and nonlinear optimisation in finance and accounting, portfolio and risk management, and Monte Carlo pricing of derivatives. The arc below is the one that course needs: formulate, then risk, then simulation, with every week ending in a decision written up for a manager. ANOP 350 goes deeper on simulation; weeks 10 to 13 here are the finance applications.</p>
     <p class="practice"><span class="label">From practice</span>At Morgan Stanley I built the team and the products that put data science and AI models in front of compliance staff, and was the firm's voice to 7 regulators on the topic. The deliverable was always a decision someone could defend, with the model behind it. Every week here ends with that memo.</p>
   </CourseHeader>
 

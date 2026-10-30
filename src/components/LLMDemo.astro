@@ -1,13 +1,13 @@
 ---
 // Week 8 of ANOP 102: how an LLM works inside a decision model.
-// The model's probabilities for its next word (at temperature 1): low 20%, medium 45%, high 35%.
-// Temperature reshapes them (p ^ 1/T, renormalised); at 0 it always picks the favourite.
+// The model's probabilities for its next word: low 20%, medium 45%, high 35%. Those are what the café should believe.
+// Temperature only changes which single answer comes back when you ask (p ^ 1/T, renormalised; at 0 it always picks the favourite).
 // The café bakes 40 / 80 / 120 croissants for low / medium / high. Cost $1, price $5.
 // If the probabilities are honest, expected profit is $160 / $280 / $310 for each bake, so the best bake is 120.
 const answers = [
-  { key: 'low', label: 'Low' },
-  { key: 'medium', label: 'Medium' },
-  { key: 'high', label: 'High' },
+  { key: 'low', label: 'Low', p: 20 },
+  { key: 'medium', label: 'Medium', p: 45 },
+  { key: 'high', label: 'High', p: 35 },
 ];
 const strategies = [
   { key: 'once', label: 'Ask it once, bake what it says' },
@@ -22,25 +22,27 @@ const strategies = [
   </div>
 
   <div class="ldemo-step">
-    <p class="label">1 · How likely each next word is</p>
+    <p class="label">1 · How likely the model thinks each answer is</p>
     <div class="ldemo-bars">
       {answers.map((a) => (
         <div class="ldemo-bar">
           <span class="ldemo-name">{a.label}</span>
-          <span class="ldemo-track"><span class={`ldemo-fill ${a.key}`} data-bar={a.key} /></span>
-          <span class="ldemo-pct" data-pct={a.key}></span>
+          <span class="ldemo-track"><span class={`ldemo-fill ${a.key}`} style={`width: ${a.p}%`} /></span>
+          <span class="ldemo-pct">{a.p}%</span>
         </div>
       ))}
     </div>
+    <p class="ldemo-sub">These are the model's probabilities, and they don't move. What moves is which one it says out loud.</p>
+  </div>
+
+  <div class="ldemo-step">
+    <p class="label">2 · Ask it the same question 20 times</p>
     <div class="ldemo-temp">
       <label class="label" for="ldemo-t">Temperature <output data-out="t" for="ldemo-t">1.0</output></label>
       <input type="range" id="ldemo-t" min="0" max="1.5" step="0.1" value="1" />
       <div class="demo-scale label" aria-hidden="true"><span>0 · always the favourite</span><span>1.5 · spread the bets</span></div>
     </div>
-  </div>
-
-  <div class="ldemo-step">
-    <p class="label">2 · Ask it the same question 20 times</p>
+    <p class="ldemo-sub" data-draw-odds>At temperature 1.0 it answers low 20%, medium 45% and high 35% of the time.</p>
     <div class="demo-buttons"><button type="button" class="demo-btn solid" data-ask>Ask 20 times</button></div>
     <div class="ldemo-chips" data-chips aria-live="polite"></div>
     <p class="ldemo-tally" data-tally></p>
@@ -60,20 +62,21 @@ const strategies = [
     </div>
   </div>
 
-  <p class="demo-coda">The model's single most likely answer is medium. But a missed sale costs $4 and a leftover $1, so the extra 40 croissants pay for themselves as long as the chance of high demand is above 1 in 5. Here it's 35%, so bake 120. That's the newsvendor model, fed by an LLM. It only works if the probabilities are honest, and real LLMs can be overconfident. So in the course we score their probabilities against what actually happened and against a forecast built from the café's own sales. Then we decide where a person signs off.</p>
+  <p class="demo-coda">The model's single most likely answer is medium. But a missed sale costs $4 and a leftover $1, so the extra 40 croissants pay for themselves as long as the chance of high demand is above 1 in 5. Here it's 35%, so bake 120. That's the newsvendor problem (how much to stock when you don't know demand), fed by an LLM. Asking once and baking what it says is a coin toss weighted by its mood; the probabilities are the part worth having. They only help if they're honest, and real LLMs can be overconfident. So the lab scores its probabilities against what actually happened and against a forecast built from the café's own sales. Then we decide where a person signs off.</p>
 </div>
 
 <script>
   const KEYS = ['low', 'medium', 'high'] as const;
   const BASE = [0.2, 0.45, 0.35];
-  const PROFIT = [160, 280, 310]; // expected profit a day for baking 40 / 80 / 120, if the odds are honest
-  const odds = (t: number) => {
+  const PROFIT = [160, 280, 310]; // expected profit a day for baking 40 / 80 / 120, if the probabilities are honest
+  const draws = (t: number) => {
     if (t < 0.05) { const top = BASE.indexOf(Math.max(...BASE)); return BASE.map((_, i) => (i === top ? 1 : 0)); }
     const w = BASE.map((p) => Math.pow(p, 1 / t));
     const s = w.reduce((a, b) => a + b, 0);
     return w.map((x) => x / s);
   };
   const money = (v: number) => '$' + Math.round(v).toLocaleString('en-CA');
+  const pc = (p: number) => `${Math.round(p * 100)}%`;
 
   document.querySelectorAll<HTMLElement>('[data-ldemo]').forEach((root) => {
     const $ = <T extends Element>(s: string) => root.querySelector<T>(s)!;
@@ -82,32 +85,31 @@ const strategies = [
 
     function update() {
       const t = Number(slider.value);
-      const p = odds(t);
+      const q = draws(t);
       $('[data-out=t]').textContent = t.toFixed(1);
-      KEYS.forEach((k, i) => {
-        $<HTMLElement>(`[data-bar=${k}]`).style.width = `${p[i] * 100}%`;
-        $(`[data-pct=${k}]`).textContent = `${Math.round(p[i] * 100)}%`;
-      });
-      const once = p.reduce((sum, q, i) => sum + q * PROFIT[i], 0);
+      $('[data-draw-odds]').textContent = t < 0.05
+        ? 'At temperature 0 it answers medium every time, because medium is its favourite.'
+        : `At temperature ${t.toFixed(1)} it answers low ${pc(q[0])}, medium ${pc(q[1])} and high ${pc(q[2])} of the time.`;
+      const once = q.reduce((sum, p, i) => sum + p * PROFIT[i], 0);
       const vals: Record<string, number> = { once, top: PROFIT[1], weigh: PROFIT[2] };
       Object.entries(vals).forEach(([k, v]) => {
         $<HTMLElement>(`[data-sbar=${k}]`).style.width = `${(v / best) * 100}%`;
         $(`[data-sval=${k}]`).textContent = money(v) + (v === best ? ' · best' : '');
         $(`[data-strat=${k}]`).classList.toggle('is-best', v === best);
       });
-      slider.setAttribute('aria-valuetext', `temperature ${t.toFixed(1)}: low ${Math.round(p[0] * 100)}%, medium ${Math.round(p[1] * 100)}%, high ${Math.round(p[2] * 100)}%`);
+      slider.setAttribute('aria-valuetext', `temperature ${t.toFixed(1)}: answers low ${pc(q[0])}, medium ${pc(q[1])}, high ${pc(q[2])} of the time`);
     }
 
     $('[data-ask]').addEventListener('click', () => {
-      const p = odds(Number(slider.value));
+      const q = draws(Number(slider.value));
       const picks = Array.from({ length: 20 }, () => {
         let r = Math.random(), i = 0;
-        while (i < 2 && r >= p[i]) { r -= p[i]; i++; }
+        while (i < 2 && r >= q[i]) { r -= q[i]; i++; }
         return i;
       });
       $('[data-chips]').innerHTML = picks.map((i) => `<span class="chip ${KEYS[i]}">${KEYS[i]}</span>`).join('');
       const count = KEYS.map((_, i) => picks.filter((x) => x === i).length);
-      $('[data-tally]').textContent = `Same question, same model: ${count[2]} high, ${count[1]} medium, ${count[0]} low.`;
+      $('[data-tally]').textContent = `Same question, same model: ${count[2]} high, ${count[1]} medium, ${count[0]} low. Ask again and the count changes; the bars don't. 20 asks is a small sample, which is week 9's lesson.`;
     });
 
     slider.addEventListener('input', update);
