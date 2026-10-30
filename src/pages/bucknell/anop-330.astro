@@ -42,12 +42,13 @@ const weeks: { w: number; topic: string; build: string; try?: string }[] = [
   <CourseHeader course={c} facts={[
     ['Format', '1 credit · 14 weeks · 2 classes of 75 minutes a week'],
     ['Tools', 'Python in Jupyter: pandas and scikit-learn. ANOP 203 is the prerequisite, so code from week 1.'],
-    ['Grading', 'Weekly labs 30% (lowest dropped) · midterm 20% (a timed notebook on a new dataset) · team project 30% · final 15% (on paper: read a model\'s output and decide) · model card 5%'],
+    ['Grading', 'Weekly labs 30% (pass or redo, with 5 late days) · midterm 20% (a timed notebook on a new dataset) · team project 30% · final 15% (on paper: read a model\'s output and decide) · model card 5%'],
     ['The project', 'Teams of 3 or 4. Data from a real organisation where we can get it, public data otherwise. A notebook, a model card and a 2-page memo, scored on a held-out term of data. It goes on GitHub, with the organisation\'s say-so where there is one.'],
     ['AI tools', 'Allowed for code and debugging. Hand in the prompts with the notebook, and say in the model card where AI was used.'],
   ]}>
     <p>ANOP 330 already runs in the department, and whatever outline it runs on comes first. Below is a term as I'd plan it if asked, and 2 classes I'd bring to a section whichever outline it follows. What I'd emphasise: the decision each model feeds, what its mistakes cost, and who signs off before it ships.</p>
     <p class="practice"><span class="label">From practice</span>At Amazon I owned Alexa Orchestration. The German word weiter means continue, and Fire TV understood it one way and Echo devices another: each mode had its own idea of what the word meant. I built a generic tool that disambiguates words like that across languages, automatically. Week 4 is where it starts: a model returns probabilities, and the system around it decides what to do with them.</p>
+    <p class="label pack-link"><a href="/bucknell/anop-330/pack/">The full course pack: syllabus, every week, every lab, the rubrics and a sample final →</a></p>
   </CourseHeader>
 
   <Section label="A term, as I'd plan it" title="Week by week" id="term">
@@ -76,7 +77,7 @@ const weeks: { w: number; topic: string; build: string; try?: string }[] = [
 
   <Section label="Assignments" title="What is handed in, and how it is marked" id="assignments">
     <div class="grid"><div class="span-8">
-      <p>Two of the assignments in full: the cross-validation lab from week 4, and the team project. Rubrics are published with the assignment, so students know what the marks are for before they start.</p>
+      <p>Two of the assignments in full: the cross-validation lab from week 4, and the team project. Rubrics are published with the assignment, so students know what the marks are for before they start. The pitch video, the midterm, the model card, the paper report, all 10 labs and a sample final are in the <a href="/bucknell/anop-330/pack/">full pack</a>.</p>
     </div></div>
     {a330.map((a) => <Assignment {...a} />)}
   </Section>

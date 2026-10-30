@@ -25,7 +25,7 @@ export const a102: Assignment[] = [
       { name: 'The brief', levels: L([2, 'Says what happened in a sentence a manager could act on, names the fixes, and one thing to check.'], [1, 'Describes the table instead of the week, or skips the fixes.'], [0, 'Missing, or longer than a page.']) },
       { name: 'Spreadsheet hygiene', levels: L([2, 'Inputs, formulas and outputs kept apart; no numbers typed over formulas; someone else could follow it.'], [1, 'Mostly, with a few numbers typed into formulas.'], [0, 'A sheet only its author can read.']) },
     ],
-    note: 'Every weekly lab is marked on 4 rows like these, out of 8, within a week. The lowest lab is dropped.',
+    note: 'Every weekly lab is marked on 4 rows like these, out of 8, within a week, and passes at 6 with no row at 0. A lab that does not pass comes back with feedback, and you resubmit until it does.',
   },
   {
     title: 'The decision memo',
@@ -46,7 +46,7 @@ export const a102: Assignment[] = [
     rubric: [
       { name: 'The decision', levels: L([4, 'One sentence: who decides, between which options, by when.'], [2, 'Stated, but vague, or several decisions at once.'], [0, 'Not stated.']) },
       { name: 'The model', levels: L([4, 'The right method for the decision; assumptions in one place; someone else could audit it.'], [2, 'The right method, hard to follow, or an assumption hidden in a formula.'], [0, 'The method does not fit the decision, or the model cannot be checked.']) },
-      { name: 'How sure', levels: L([4, 'A what-if or a sample that says how wrong the inputs can be before the answer changes.'], [2, 'Some sensitivity, not tied to the answer.'], [0, 'None.']) },
+      { name: 'How sure', levels: L([4, 'A what-if or a sample that says how wrong the inputs can be before the answer changes.'], [2, 'Some sensitivity, with no link to the answer.'], [0, 'None.']) },
       { name: 'The recommendation', levels: L([4, 'What to do, by when, and what would change it; the numbers support the words.'], [2, 'What to do without what would change it, or numbers and words that disagree.'], [0, 'No recommendation.']) },
       { name: 'Writing and presentation', levels: L([4, '2 pages a manager reads in 5 minutes; charts carry the numbers; 8 minutes, on time.'], [2, 'Over length, or charts that decorate instead of inform.'], [0, 'Hard to follow.']) },
     ],
@@ -76,7 +76,7 @@ export const a330: Assignment[] = [
       { name: 'The code', levels: L([2, 'Runs top to bottom; named steps; nothing hard-coded that should be a variable.'], [1, 'Runs with fixes, or a wall of cells.'], [0, 'Does not run.']) },
       { name: 'The paragraph', levels: L([2, 'A manager could read it: which model, how far off, what would change it.'], [1, 'Technical but complete.'], [0, 'Missing.']) },
     ],
-    note: 'Every weekly lab is marked on 4 rows like these, out of 8, within a week. The lowest lab is dropped.',
+    note: 'Every weekly lab is marked on 4 rows like these, out of 8, within a week, and passes at 6 with no row at 0. A lab that does not pass comes back with feedback, and you resubmit until it does.',
   },
   {
     title: 'The model card and the memo',
@@ -170,6 +170,6 @@ export const a302: Assignment[] = [
       { name: 'The check', levels: L([2, 'Re-solved at $125,000; the gain compared with shadow price × $25,000, and any difference explained.'], [1, 'Re-solved, no comparison.'], [0, 'Not done.']) },
       { name: 'The decision', levels: L([2, 'Take or leave, with the number that decides it and what would flip it.'], [1, 'A decision without the number.'], [0, 'Missing.']) },
     ],
-    note: "Every weekly lab is marked on 4 rows like these, out of 8, within a week. The lowest lab is dropped. The team project is marked on the same 5 rows as ANOP 102's decision memo.",
+    note: "Every weekly lab is marked on 4 rows like these, out of 8, within a week, and passes at 6 with no row at 0. A lab that does not pass comes back with feedback, and you resubmit until it does. The team project is marked on its own 5 rows, in the full pack.",
   },
 ];

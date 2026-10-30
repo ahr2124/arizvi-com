@@ -651,3 +651,46 @@ ol li + li { margin-top: 0.5em; }
   .rubric tr { border-bottom: 1px solid #000; padding: 10px 0; }
   .rubric .lv { display: inline; margin-right: 8px; }
 }
+
+/* Course packs */
+.pack-contents { margin-top: 2rem; max-width: 860px; }
+.pack-contents ol { list-style: none; padding: 0; margin: 10px 0 0; max-width: none; display: flex; flex-wrap: wrap; gap: 6px 20px; border-top: 1px solid #000; padding-top: 10px; }
+.pack-contents li, .pack-contents li + li { margin: 0; }
+.pack-contents a { text-decoration: none; font-weight: 600; }
+.pack-contents a:hover { text-decoration: underline; }
+.outcomes { list-style: none; padding: 0; margin: 10px 0 0; }
+.outcomes li { display: grid; grid-template-columns: 3rem 1fr; column-gap: 12px; border-top: 1px solid #000; padding: 8px 0; }
+.outcomes li + li { margin-top: 0; }
+.outcomes .label { padding-top: 3px; }
+.pack-sub { margin-top: 2.5rem; margin-bottom: 10px; }
+.policies { margin-top: 2.5rem; row-gap: 2rem; max-width: 860px; }
+.policy { grid-column: span 6; }
+.policy h3 { font-size: 1.15rem; margin: 0 0 8px; border-top: 1px solid #000; padding-top: 10px; }
+.policy p { font-size: 15px; margin: 0 0 8px; }
+.pack-weeks { list-style: none; padding: 0; margin: 2rem 0 0; max-width: 860px; }
+.pack-week { border-top: 1px solid #000; padding: 20px 0 24px; display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 9fr); column-gap: var(--gutter); }
+.pack-week + .pack-week { margin-top: 0; }
+.pack-week-head h3 { font-size: 1.15rem; margin: 4px 0 0; line-height: 1.2; }
+.pack-week-body { display: grid; grid-template-columns: 6.5rem 1fr; column-gap: 16px; row-gap: 10px; margin: 0; }
+.pack-week-body dt { font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 500; padding-top: 3px; }
+.pack-week-body dd { margin: 0; font-size: 15px; }
+.pack-labs .inl { display: inline; margin-right: 10px; }
+.exam { list-style: none; padding: 0; margin: 2rem 0 0; max-width: 860px; counter-reset: q; }
+.exam > li { border-top: 1px solid #000; padding: 16px 0 20px; counter-increment: q; }
+.exam > li + li { margin-top: 0; }
+.exam > li > p { margin: 6px 0 0; max-width: 70ch; }
+.exam > li > p.label::before { content: counter(q) '. '; }
+.exam ol { margin: 10px 0 0; padding-left: 1.6em; max-width: 70ch; }
+.exam ol li { font-size: 15px; }
+.exam .marks { font-weight: 600; white-space: nowrap; }
+@media (max-width: 767px) {
+  .policy { grid-column: 1 / -1; }
+  .pack-week { grid-template-columns: 1fr; row-gap: 12px; }
+  .pack-week-body { grid-template-columns: 1fr; row-gap: 2px; }
+  .pack-week-body dd { margin-bottom: 8px; }
+  .outcomes li { grid-template-columns: 2.4rem 1fr; }
+}
+.exam-note.practice .label, .section .practice .label { display: inline; margin-right: 10px; }
+.course-head .pack-link { margin-top: 1.25rem; }
+.course-head .pack-link a { text-decoration: none; }
+.course-head .pack-link a:hover { text-decoration: underline; }

@@ -1,0 +1,10 @@
+---
+// src/pages/bucknell/anop-400/pack.astro  →  arizvi.com/bucknell/anop-400/pack
+// The full ANOP 400 course pack: syllabus, every week, every lab, the big assignments and a sample exam. Not linked from the nav; sends noindex.
+import Base from '../../../layouts/Base.astro';
+import CoursePack from '../../../components/CoursePack.astro';
+import { pack } from '../../../data/packs/anop-400';
+---
+<Base title={`${pack.code} course pack`} description={`The full ANOP 400 course pack as Ali Rizvi would run it at Bucknell: syllabus, every week, every lab, the assignments and a sample exam.`} noindex>
+  <CoursePack pack={pack} />
+</Base>

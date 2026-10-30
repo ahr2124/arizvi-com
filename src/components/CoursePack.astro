@@ -1,0 +1,137 @@
+---
+// A course pack page: syllabus, week by week, labs, assignments, sample exam. Data from src/data/packs/.
+import Section from './Section.astro';
+import CourseNav from './CourseNav.astro';
+import Assignment from './Assignment.astro';
+import { arrows, course } from '../data/bucknell';
+import type { Pack } from '../data/packs/types';
+interface Props { pack: Pack }
+const { pack } = Astro.props;
+const c = course(pack.slug);
+const contents: [string, string][] = [
+  ['syllabus', 'Syllabus'],
+  ['weeks', 'Week by week'],
+  ...(pack.labs.length ? [['labs', 'The labs'] as [string, string]] : []),
+  ['assignments', 'Assignments'],
+  ...(pack.exam ? [['exam', pack.exam.title] as [string, string]] : []),
+  ...(pack.extras ?? []).map((e) => [e.label.toLowerCase().replace(/[^a-z0-9]+/g, '-'), e.title] as [string, string]),
+];
+const marks = (q: { parts: { marks: number }[] }) => q.parts.reduce((s, p) => s + p.marks, 0);
+---
+<header class="page-head course-head">
+  <p class="label"><a href="/bucknell/">Bucknell</a> · <a href={`/bucknell/${pack.slug}/`}>{pack.code}</a> · Course pack</p>
+  <h1>{pack.title}</h1>
+  <p class="tagline">{arrows(c.line, true)}</p>
+  <div class="grid"><div class="span-8">
+    <p>{pack.standing}</p>
+    {pack.description.map((p) => <p>{p}</p>)}
+  </div></div>
+  <nav class="pack-contents" aria-label="On this page">
+    <p class="label">On this page</p>
+    <ol>{contents.map(([id, t]) => <li><a href={`#${id}`}>{t}</a></li>)}</ol>
+  </nav>
+</header>
+
+<Section label="Syllabus" title="How the course runs" id="syllabus">
+  <div class="grid"><div class="span-8">
+    <p class="label">By the end of the course you will be able to</p>
+    <ol class="outcomes">{pack.outcomes.map((o) => <li id={`${pack.slug}-${o.id}`}><span class="label">{o.id}</span>{o.text}</li>)}</ol>
+  </div></div>
+  <div class="kv course-kv">
+    {pack.runs.map(([k, v]) => (<><p class="label">{k}</p><p>{v}</p></>))}
+  </div>
+  <p class="label pack-sub">Grading</p>
+  <ul class="rows compact bk-wide">
+    {pack.grading.map(([item, weight, how]) => (
+      <li class="grid">
+        <div class="label">{weight}</div>
+        <div class="body"><span class="title">{item}</span><p>{how}</p></div>
+      </li>
+    ))}
+  </ul>
+  <div class="policies grid">
+    {pack.policies.map((p) => (
+      <div class="policy">
+        <h3>{p.title}</h3>
+        {p.body.map((b) => <p>{b}</p>)}
+      </div>
+    ))}
+  </div>
+</Section>
+
+<Section label="Week by week" title="Every class and every lab" id="weeks">
+  <div class="grid"><div class="span-8">
+    <p>{pack.weeksNote ?? "Each week has the same shape: something short before class, 2 classes of 75 minutes, and a lab. The timings in brackets are the plan for the room; they slip, and that's fine."}</p>
+  </div></div>
+  <ol class="pack-weeks">
+    {pack.weeks.map((wk) => (
+      <li class="pack-week" id={`week-${wk.w}`}>
+        <div class="pack-week-head">
+          <p class="label">Week {wk.w}</p>
+          <h3>{wk.topic}</h3>
+        </div>
+        <dl class="pack-week-body">
+          <dt>Before class</dt><dd>{wk.before}</dd>
+          <dt>Class 1</dt><dd>{wk.c1}</dd>
+          <dt>Class 2</dt><dd>{wk.c2}</dd>
+          <dt>{pack.labLabel ?? 'Lab'}</dt><dd>{wk.lab}</dd>
+          {wk.memo && <><dt>The project</dt><dd>{wk.memo}</dd></>}
+        </dl>
+      </li>
+    ))}
+  </ol>
+</Section>
+
+{pack.labs.length > 0 && (
+  <Section label="The labs" title="What each lab asks, and what passes" id="labs">
+    {pack.labsNote && <div class="grid"><div class="span-8"><p>{pack.labsNote}</p></div></div>}
+    <ul class="rows compact bk-wide pack-labs">
+      {pack.labs.map((l) => (
+        <li class="grid">
+          <div class="label">Lab {l.n} · {l.due}</div>
+          <div class="body">
+            <span class="title">{l.title}</span>
+            <p>{l.prompt}</p>
+            <p><span class="label inl">Hand in</span>{l.handIn}</p>
+            <p><span class="label inl">Passes when</span>{l.passes}</p>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </Section>
+)}
+
+<Section label="Assignments" title="The big pieces, with their rubrics" id="assignments">
+  {pack.assignments.map((a) => <Assignment {...a} />)}
+</Section>
+
+{pack.exam && (
+  <Section label="Sample exam" title={pack.exam.title} id="exam">
+    <div class="grid"><div class="span-8">
+      <p class="label">{pack.exam.meta}</p>
+      <p class="label pack-sub">Instructions on the paper</p>
+      <ol>{pack.exam.rules.map((r) => <li>{r}</li>)}</ol>
+      {pack.exam.note && <p class="practice"><span class="label">Before the exam</span>{pack.exam.note}</p>}
+    </div></div>
+    <ol class="exam">
+      {pack.exam.questions.map((q) => (
+        <li>
+          <p class="label">{q.tag} · {marks(q)} {marks(q) === 1 ? 'mark' : 'marks'}</p>
+          <p>{q.text}</p>
+          <ol type="a">{q.parts.map((p) => <li>{p.text} <span class="marks">({p.marks})</span></li>)}</ol>
+        </li>
+      ))}
+    </ol>
+  </Section>
+)}
+
+{(pack.extras ?? []).map((e) => (
+  <Section label={e.label} title={e.title} id={e.label.toLowerCase().replace(/[^a-z0-9]+/g, '-')}>
+    <div class="grid"><div class="span-8">
+      {e.body.map((b) => <p>{b}</p>)}
+      {e.list && (<>{e.listLabel && <p class="label pack-sub">{e.listLabel}</p>}<ol>{e.list.map((x) => <li>{x}</li>)}</ol></>)}
+    </div></div>
+  </Section>
+))}
+
+<CourseNav current={pack.slug} />

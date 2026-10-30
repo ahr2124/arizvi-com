@@ -14,6 +14,7 @@ export interface Course {
   prereqs?: string;
   leadsTo?: string;
   sample: string;     // the class or artefact its page shows
+  pack: string;       // what the full course pack holds
 }
 
 export const courses: Course[] = [
@@ -28,6 +29,7 @@ export const courses: Course[] = [
     when: 'Fall 2027 and Spring 2028',
     leadsTo: 'Most ANOP courses after it',
     sample: 'The term week by week, 4 classes to try and a 5th to read',
+    pack: 'The full pack: syllabus, 14 weeks, 12 labs, the rubrics and a sample final',
   },
   {
     code: 'ANOP 330',
@@ -41,6 +43,7 @@ export const courses: Course[] = [
     prereqs: 'ANOP 102 (or a statistics course) and ANOP 203 (or CSCI 203)',
     leadsTo: 'ANOP 400',
     sample: 'The term week by week, and 2 classes to try',
+    pack: 'The full pack: syllabus, 14 weeks, 10 labs, the project in pieces and a sample final',
   },
   {
     code: 'ANOP 400',
@@ -53,6 +56,7 @@ export const courses: Course[] = [
     when: 'When asked. Spring 2028: sit in',
     prereqs: 'ANOP 330, and ANOP 350 or 370 (or MATH 358)',
     sample: 'The term, the clients, the grading, and the week 9 playbook',
+    pack: 'The full pack: 14 weeks, every deliverable with its rubric, and the forms the course runs on',
   },
   {
     code: 'ANOP 302',
@@ -64,7 +68,8 @@ export const courses: Course[] = [
     seats: '1 section, about 25 students',
     when: 'Year 1 or 2, the department\'s call',
     prereqs: 'ACFM 124 or ACFM 203, and ANOP 102 (or equivalents)',
-    sample: 'The full syllabus, and an option you can price by simulation',
+    sample: 'The draft syllabus, and an option you can price by simulation',
+    pack: 'The full pack: 14 weeks, 12 labs, the midterm, the project and a sample final',
   },
 ];
 

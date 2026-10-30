@@ -57,7 +57,7 @@ const units: { n: 1 | 2 | 3; weeks: string; name: string; line: string; items: {
 
 // Marks per outcome, in the order above: 1 = assessed, 0.5 = one of these, the team's choice, 0 = not assessed.
 const grading = [
-  { item: 'Weekly labs', weight: '25%', when: 'Weeks 1-13', note: 'Small, frequent, low stakes. Each ends with a 3-sentence recommendation. The lowest one is dropped.', marks: [1, 1, 1, 1, 1] },
+  { item: 'Weekly labs', weight: '25%', when: 'Weeks 1-13', note: 'Small, frequent, pass or redo: a lab that doesn\'t pass comes back with feedback and you resubmit until it does. Each ends with a 3-sentence recommendation.', marks: [1, 1, 1, 1, 1] },
   { item: 'Midterm', weight: '20%', when: 'Week 7', note: 'Optimisation: formulate, solve, interpret.', marks: [1, 1, 0, 0, 0] },
   { item: 'Team project', weight: '30%', when: 'Weeks 4-14', note: 'A financial decision a real organization faces, built from its public filings, or with the organization itself where we can arrange it. Teams form in week 4, pick their decision by week 6, review their model with me in week 10 and present in week 14, with a 2-page memo and the model attached. Peer evaluation adjusts each member\'s mark.', marks: [1, 0.5, 0.5, 0.5, 1] },
   { item: 'Final exam', weight: '15%', when: 'Exam week', note: 'Portfolios, risk and simulation.', marks: [0, 0, 1, 1, 0] },
@@ -73,6 +73,7 @@ const mark = (m: number) => (m === 1 ? '●' : m === 0.5 ? '○' : '');
   ]}>
     <p>The catalogue describes ANOP 302 as linear and nonlinear optimisation in finance and accounting, portfolio and risk management, and Monte Carlo pricing of derivatives. The arc below is the one that course needs: formulate, then risk, then simulation, with every week ending in a decision written up for a manager. ANOP 350 goes deeper on simulation; weeks 10 to 13 here are the finance applications.</p>
     <p class="practice"><span class="label">From practice</span>At Morgan Stanley I built the team and the products that put data science and AI models in front of compliance staff, and was the firm's voice to 7 regulators on the topic. The deliverable was always a decision someone could defend, with the model behind it. Every week here ends with that memo.</p>
+    <p class="label pack-link"><a href="/bucknell/anop-302/pack/">The full course pack: syllabus, every week, every lab, the rubrics and a sample final →</a></p>
   </CourseHeader>
 
   <Section label="What you'll be able to do" id="outcomes">
@@ -134,7 +135,7 @@ const mark = (m: number) => (m === 1 ? '●' : m === 0.5 ? '○' : '');
 
   <Section label="Assignments" title="What is handed in, and how it is marked" id="assignments">
     <div class="grid"><div class="span-8">
-      <p>One weekly lab in full, with the rubric it is marked on.</p>
+      <p>One weekly lab in full, with the rubric it is marked on. The midterm, the project, all 12 labs and a sample final are in the <a href="/bucknell/anop-302/pack/">full pack</a>.</p>
     </div></div>
     {a302.map((a) => <Assignment {...a} />)}
   </Section>
