@@ -26,7 +26,7 @@ const contract: Assignment = {
     { name: 'Amended in week 7', levels: L([2, 'Rewritten against what happened, and signed again.'], [1, 'Re-signed without changes a stand-up record would support.'], [0, 'Not revisited.']) },
   ],
   rubricLabel: 'Marked complete, half or not done, like a stand-up',
-  note: 'This is the piece of the practicum I borrowed most directly from Waterloo, where every capstone team signed one in week 1 and amended it at mid-term.',
+  note: 'Teams that skip this page end up writing it in week 9, under worse conditions.',
 };
 
 const checkin: Assignment = {
@@ -104,7 +104,7 @@ export const pack: Pack = {
   slug: 'anop-400',
   code: 'ANOP 400',
   title: 'ANOP 400, in full',
-  standing: "ANOP 400 has a client pipeline and an instructor who runs it, and I'd learn it before I touched it: sit in on the spring 2028 run, help where asked, and teach a section when the department asks. This is the section as I'd run it, with every week, every deliverable and every rubric, translated from the capstone I taught at Waterloo.",
+  standing: "ANOP 400 has a client pipeline and an instructor who runs it, and I'd learn it before I touched it: sit in on the spring 2028 run, help where asked, and teach a section when the department asks. This is the section as I'd run it, with every week, every deliverable and every rubric.",
   description: [
     'The practicum is one project, start to finish, for a client: scope it into a decision and a question, audit the data, build the model, backtest it on a period the client has lived through, and hand over a recommendation the client can act on the week after. 5 teams, 5 clients, 14 weeks.',
     "What's in the pack: the syllabus, all 14 weeks (the skills session, the workshop and the stand-up), the charter and the team contract, the mid-term check-in, the final report and presentation, the peer evaluation, the reflection, and the forms the course runs on: the stand-up sheet, the data agreement and the client's feedback form.",
