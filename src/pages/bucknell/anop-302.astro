@@ -3,55 +3,65 @@
 // Draft syllabus for Bucknell's ANOP 302. Not linked from the nav; sends noindex.
 import Base from '../../layouts/Base.astro';
 import Section from '../../components/Section.astro';
+import OptionDemo from '../../components/OptionDemo.astro';
 
 const facts = [
-  ['Course', 'ANOP 302 · Financial Decision Modeling using Spreadsheets · 1 credit'],
+  ['Course', 'ANOP 302 · 1 credit · 3 lecture hours a week for 14 weeks'],
   ['Prerequisites', 'ACFM 124 or ACFM 203, and ANOP 102 (or equivalents)'],
-  ['Format', '2 sessions a week, 14 weeks, laptops with Excel and Solver in every class'],
+  ['Tools', 'Excel with Solver. Laptops in every class.'],
   ['Instructor', 'Ali Rizvi, PhD'],
 ];
 
+// The short names double as the columns of the grading table.
 const outcomes = [
-  'Turn a finance or accounting decision into a spreadsheet model with clear inputs, decisions, constraints and an objective.',
-  'Solve linear, integer and nonlinear optimization models, and read the sensitivity output to say what a constraint is worth.',
-  'Build and defend a mean-variance portfolio, and measure its risk with value at risk.',
-  'Price options with Monte Carlo simulation, and check the answer against a closed-form price.',
-  'Write a recommendation a manager can act on, including what would change it.',
+  ['Formulate', 'Turn a finance or accounting decision into a spreadsheet model with clear inputs, decisions, constraints and an objective.'],
+  ['Optimise', 'Solve linear, integer and nonlinear models, and read the sensitivity output to say what a constraint is worth.'],
+  ['Manage risk', 'Build and defend a mean-variance portfolio, and measure its risk with value at risk.'],
+  ['Simulate', 'Price options with Monte Carlo simulation, and check the answer against a closed-form price.'],
+  ['Recommend', 'Write a recommendation a manager can act on, including what would change it.'],
 ];
 
-// Week by week. Each week has a model the class builds together and a lab students finish on their own.
+const units = [
+  { weeks: 'Weeks 1-7', name: 'Optimisation', line: 'Linear and integer models for cash, bonds, capital budgets and product mix' },
+  { weeks: 'Weeks 8-10', name: 'Portfolios and risk', line: 'Markowitz, the efficient frontier and value at risk' },
+  { weeks: 'Weeks 11-14', name: 'Simulation', line: 'Monte Carlo, option pricing and hedging' },
+];
+
+// Each week: a model the class builds together, then a lab students finish on their own.
 const weeks = [
-  { w: '1', topic: 'What a decision model is for', build: 'Model hygiene: inputs, decisions, outputs. A first linear program for a financial plan' },
-  { w: '2', topic: 'Short-term financing', build: 'Multi-period cash management: borrow, invest or hold, month by month' },
-  { w: '3', topic: 'Sensitivity analysis', build: 'Shadow prices and allowable ranges - what an extra dollar of credit line is worth' },
-  { w: '4', topic: 'Multi-period models', build: 'Bond portfolio dedication: meet a stream of liabilities at the lowest cost' },
-  { w: '5', topic: 'Integer models', build: 'Capital budgeting and project selection under a budget' },
-  { w: '6', topic: 'Accounting applications', build: 'Product mix with contribution margins, and how allocated costs can mislead a decision' },
-  { w: '7', topic: 'Review and midterm', build: 'Practice case, then the midterm' },
-  { w: '8', topic: 'Nonlinear models', build: 'Mean-variance portfolio optimization (Markowitz)' },
-  { w: '9', topic: 'The efficient frontier', build: 'Frontier, constraints that real investors face, and index tracking' },
-  { w: '10', topic: 'Risk management', build: 'Simulating portfolio losses and estimating value at risk' },
-  { w: '11', topic: 'Monte Carlo fundamentals', build: 'Random draws, distributions, sample size and how fast the answer settles' },
-  { w: '12', topic: 'Pricing derivatives', build: 'A European call by simulation, checked against Black-Scholes, then a path-dependent option' },
-  { w: '13', topic: 'Hedging', build: 'Foreign exchange exposure hedged with forwards vs. options, compared by simulation' },
-  { w: '14', topic: 'Project presentations', build: 'Teams present their decision and the model behind it' },
+  { w: '1', topic: 'What a decision model is for', build: 'Model hygiene: inputs, decisions, outputs. A first linear program for a financial plan.' },
+  { w: '2', topic: 'Short-term financing', build: 'Multi-period cash management: borrow, invest or hold, month by month.' },
+  { w: '3', topic: 'Sensitivity analysis', build: 'Shadow prices and allowable ranges - what an extra dollar of credit line is worth.' },
+  { w: '4', topic: 'Multi-period models', build: 'Bond portfolio dedication: meet a stream of liabilities at the lowest cost.' },
+  { w: '5', topic: 'Integer models', build: 'Capital budgeting and project selection under a budget.' },
+  { w: '6', topic: 'Accounting applications', build: 'Product mix with contribution margins, and how allocated costs can mislead a decision.' },
+  { w: '7', topic: 'Review and midterm', build: 'A practice case, then the midterm.' },
+  { w: '8', topic: 'Nonlinear models', build: 'Mean-variance portfolio optimisation (Markowitz).' },
+  { w: '9', topic: 'The efficient frontier', build: 'The frontier, the constraints real investors face, and index tracking.' },
+  { w: '10', topic: 'Risk management', build: 'Simulating portfolio losses and estimating value at risk.' },
+  { w: '11', topic: 'Monte Carlo fundamentals', build: 'Random draws, distributions, sample size and how fast the answer settles.' },
+  { w: '12', topic: 'Pricing derivatives', build: 'A European call by simulation, checked against Black-Scholes, then a path-dependent option.', try: true },
+  { w: '13', topic: 'Hedging', build: 'Foreign exchange exposure hedged with forwards vs. options, compared by simulation.' },
+  { w: '14', topic: 'Project presentations', build: 'Teams present their decision and the model behind it.' },
 ];
 
+// Marks per outcome, in the order above: 1 = assessed, 0.5 = one of these, the team's choice, 0 = not assessed.
 const grading = [
-  ['Weekly labs', '25%', 'Small, frequent, low stakes. The lowest one is dropped.'],
-  ['Midterm', '20%', 'Optimization: formulate, solve, interpret.'],
-  ['Team project', '30%', 'A real financial decision for an organization, modelled and written up as a 2-page memo with the model attached.'],
-  ['Final exam', '15%', 'Portfolio, risk and simulation.'],
-  ['Exit tickets', '10%', '2 sentences at the end of each class. Graded for completion.'],
+  { item: 'Weekly labs', weight: '25%', note: 'Small, frequent, low stakes. Each ends with a 3-sentence recommendation. The lowest one is dropped.', marks: [1, 1, 1, 1, 1] },
+  { item: 'Midterm', weight: '20%', note: 'Optimisation: formulate, solve, interpret.', marks: [1, 1, 0, 0, 0] },
+  { item: 'Team project', weight: '30%', note: 'A real financial decision for a real organization, modelled and written up as a 2-page memo with the model attached.', marks: [1, 0.5, 0.5, 0.5, 1] },
+  { item: 'Final exam', weight: '15%', note: 'Portfolios, risk and simulation.', marks: [0, 0, 1, 1, 0] },
+  { item: 'Exit tickets', weight: '10%', note: '2 sentences at the end of each class. Graded for completion.', marks: [0, 0, 0, 0, 1] },
 ];
+const mark = (m: number) => (m === 1 ? '●' : m === 0.5 ? '○' : '');
 ---
-<Base title="ANOP 302 syllabus" description="Draft syllabus for ANOP 302, Financial Decision Modeling using Spreadsheets." noindex>
+<Base title="ANOP 302 syllabus" description="Draft syllabus for Bucknell's ANOP 302, Financial Decision Modeling using Spreadsheets, by Ali Rizvi." noindex>
   <header class="page-head">
-    <p class="label"><a href="/bucknell/">Bucknell</a> · Draft syllabus</p>
+    <p class="label"><a href="/bucknell/">Bucknell</a> · ANOP 302 · Draft syllabus</p>
     <h1>Financial Decision Modeling using Spreadsheets</h1>
+    <p class="tagline">Optimisation -> portfolios -> simulation, with a decision for a manager at the end of every week.</p>
     <div class="grid"><div class="span-8">
-      <p>ANOP 302 asks students to make financial decisions with models: linear and nonlinear optimization in finance and accounting, portfolio and risk management, and Monte Carlo pricing of derivatives.</p>
-      <p>I've built it on the structure of Decision Models and Applications (IEOR E4611), which I took for my MS at Columbia. It runs in the same order: optimization first, then nonlinear models for portfolios, then simulation for risk and pricing. Each week ends with a decision written up for a manager.</p>
+      <p>The catalogue describes ANOP 302 as linear and nonlinear optimisation in finance and accounting, portfolio and risk management, and Monte Carlo pricing of derivatives. I built it on Decision Models and Applications (IEOR E4611), the course I took for my MS at Columbia, and it follows the same arc.</p>
     </div></div>
   </header>
 
@@ -63,39 +73,70 @@ const grading = [
 
   <Section label="What you'll be able to do" id="outcomes">
     <div class="grid"><div class="span-8">
-      <ol>{outcomes.map((o) => <li>{o}</li>)}</ol>
+      <ol>{outcomes.map(([k, v]) => <li><strong>{k}.</strong> {v}</li>)}</ol>
     </div></div>
   </Section>
 
   <Section label="Schedule" id="schedule">
-    <ul class="rows">
+    <ul class="path unit-path bk-wide">
+      {units.map((u) => (
+        <li>
+          <p class="label">{u.weeks}</p>
+          <p><strong>{u.name}</strong><br />{u.line}</p>
+        </li>
+      ))}
+    </ul>
+    <ul class="rows compact bk-wide">
       {weeks.map((x) => (
         <li class="grid">
           <div class="label">Week {x.w}</div>
           <div class="body">
             <span class="title">{x.topic}</span>
-            <p>{x.build}</p>
+            <p>{x.build}{x.try && <> <a href="#try">Try it below.</a></>}</p>
           </div>
         </li>
       ))}
     </ul>
   </Section>
 
+  <Section label="Try week 12" title="Price an option by simulation" id="try">
+    <div class="grid"><div class="span-8">
+      <p>A call option on a $100 stock: strike $100, 1 year to expiry, 20% volatility, 5% interest. Black-Scholes prices it exactly. Simulate stock paths, average the payoffs, and watch the estimate close in.</p>
+    </div></div>
+    <OptionDemo />
+  </Section>
+
   <Section label="Grading" id="grading">
-    <ul class="rows">
-      {grading.map(([item, weight, note]) => (
-        <li class="grid">
-          <div class="label">{item}<br />{weight}</div>
-          <div class="body"><p>{note}</p></div>
-        </li>
-      ))}
-    </ul>
+    <table class="matrix">
+      <thead>
+        <tr>
+          <th class="label" scope="col">Assessment</th>
+          {outcomes.map(([k], i) => <th class="o label" scope="col"><span aria-hidden="true">{i + 1}</span><span class="sr">{k}</span></th>)}
+        </tr>
+      </thead>
+      <tbody>
+        {grading.map((g) => (
+          <tr>
+            <td><span class="name">{g.item} · {g.weight}</span><p>{g.note}</p></td>
+            {g.marks.map((m, i) => (
+              <td class="o">
+                <span aria-hidden="true">{mark(m)}</span>
+                <span class="sr">{m === 1 ? `${outcomes[i][0]}: assessed` : m === 0.5 ? `${outcomes[i][0]}: team's choice` : ''}</span>
+              </td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+    <div class="grid"><div class="span-8">
+      <p class="muted" style="margin-top: 1rem;">Columns are the 5 outcomes above. ● assessed · ○ one of these, the team's choice. Every outcome is assessed at least twice.</p>
+    </div></div>
   </Section>
 
   <Section label="How the class runs" id="policies">
     <div class="grid"><div class="span-8">
       <ol>
-        <li><strong>Predict first.</strong> Every case opens with a guess before any modelling, and we come back to it once the model is solved.</li>
+        <li><strong>Guess first.</strong> Every case opens with a guess before any modelling, and we come back to it once the model is solved.</li>
         <li><strong>Pairs, then the room.</strong> Each model is built in pairs before we debrief it together.</li>
         <li><strong>AI tools.</strong> Allowed for checking formulas and debugging. Submit the prompts with the lab - you stay responsible for every cell.</li>
         <li><strong>Readings.</strong> No required textbook. Recommended: Winston and Albright, <em>Practical Management Science</em>, and Benninga, <em>Financial Modeling</em>.</li>

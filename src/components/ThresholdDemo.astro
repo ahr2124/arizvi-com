@@ -1,0 +1,172 @@
+---
+// Week 7 of ANOP 330, as a 5-minute demo: accuracy vs. what a model's mistakes cost.
+// 1,000 customers, 100 of them will cancel. The model's ranking is fixed; the reader picks how many get the offer.
+// Churners sit in three bands of the ranking: 70 in the top 150, 20 in the next 150, 10 in the last 700.
+// No prefix of the ranking is ever half churners, so accuracy peaks at 90% with nobody offered.
+---
+<div class="demo" data-tdemo>
+  <div class="demo-controls">
+    <div>
+      <label class="label" for="tdemo-n">Customers offered</label>
+      <output class="demo-big" for="tdemo-n" data-out="n">0</output>
+      <input type="range" id="tdemo-n" min="0" max="1000" step="10" value="0" />
+      <div class="demo-scale label" aria-hidden="true"><span>Nobody</span><span>Everyone</span></div>
+    </div>
+    <div data-after hidden>
+      <p class="label" id="tdemo-cost">What an offer costs</p>
+      <div class="demo-pills" role="group" aria-labelledby="tdemo-cost">
+        <button type="button" data-cost="2" aria-pressed="false">$2</button>
+        <button type="button" data-cost="20" aria-pressed="true">$20</button>
+        <button type="button" data-cost="60" aria-pressed="false">$60</button>
+        <button type="button" data-cost="100" aria-pressed="false">$100</button>
+      </div>
+    </div>
+  </div>
+
+  <dl class="demo-readout">
+    <div><dt class="label">Cancellations caught</dt><dd data-out="caught">0 of 100</dd></div>
+    <div><dt class="label">False alarms</dt><dd data-out="fp">0</dd></div>
+    <div><dt class="label">Accuracy</dt><dd data-out="acc">90.0%</dd></div>
+    <div><dt class="label">Net value</dt><dd data-out="value">?</dd></div>
+  </dl>
+
+  <div class="demo-chart">
+    <p class="label">Accuracy</p>
+    <div class="demo-plot" aria-hidden="true" data-plot="acc">
+      <svg viewBox="0 0 1000 100" preserveAspectRatio="none"><path data-line /></svg>
+      <span class="demo-rule" data-rule></span>
+      <span class="demo-dot" data-dot></span>
+      <span class="demo-y top label">100%</span>
+      <span class="demo-y bottom label">0%</span>
+    </div>
+  </div>
+
+  <div class="demo-chart">
+    <p class="label">Net value</p>
+    <div class="demo-plot" data-plot="value">
+      <div aria-hidden="true" data-after hidden>
+        <svg viewBox="0 0 1000 100" preserveAspectRatio="none"><path data-line /></svg>
+        <span class="demo-hline" data-zero></span>
+        <span class="demo-rule" data-rule></span>
+        <span class="demo-best" data-best></span>
+        <span class="demo-tag label" data-best-tag>Best</span>
+        <span class="demo-dot" data-dot></span>
+        <span class="demo-y label" data-ymax></span>
+        <span class="demo-y label" data-y0>$0</span>
+        <span class="demo-y label" data-ymin></span>
+      </div>
+      <div class="demo-veil" data-veil>
+        <button type="button" class="demo-btn solid" data-reveal>Show what each setting is worth</button>
+      </div>
+    </div>
+  </div>
+  <div class="demo-x label" aria-hidden="true"><span>0</span><span class="mid" style="left: 50%;">500</span><span class="end">1,000</span></div>
+
+  <p class="demo-note" aria-live="polite" data-note></p>
+  <p class="demo-coda" data-after hidden>Accuracy is the same curve at every price. The best setting moves from everyone ($2) to nobody ($100). So the threshold is a business call, and a manager has to own it.</p>
+</div>
+
+<script>
+  const SAVED = 200; // value of a customer the offer keeps
+  const caught = (n: number) =>
+    n <= 150 ? Math.floor((7 * n) / 15)
+    : n <= 300 ? 70 + Math.floor(((n - 150) * 2) / 15)
+    : 90 + Math.floor((n - 300) / 70);
+  const accuracy = (n: number) => (900 - n + 2 * caught(n)) / 1000;
+  const value = (n: number, cost: number) => SAVED * caught(n) - cost * n;
+  const grid = Array.from({ length: 101 }, (_, i) => i * 10);
+  const money = (v: number) => (v < 0 ? '−' : '') + '$' + Math.abs(v).toLocaleString('en-CA');
+  const short = (v: number) => (v < 0 ? '−' : '') + '$' + (Math.abs(v) >= 1000 ? `${Math.round(Math.abs(v) / 1000)}k` : Math.abs(v));
+  const pct = (a: number) => (a * 100).toFixed(1) + '%';
+  const who = (n: number) => (n === 0 ? 'nobody' : n === 1000 ? 'everyone' : `${n} customers`);
+
+  document.querySelectorAll<HTMLElement>('[data-tdemo]').forEach((root) => {
+    const $ = <T extends Element>(s: string) => root.querySelector<T>(s)!;
+    const slider = $<HTMLInputElement>('input[type=range]');
+    const accPlot = $<HTMLElement>('[data-plot=acc]');
+    const valPlot = $<HTMLElement>('[data-plot=value]');
+    let cost = 20;
+    let revealed = false;
+
+    const pathFor = (ys: number[]) => ys.map((y, i) => `${i ? 'L' : 'M'}${grid[i]},${y.toFixed(2)}`).join(' ');
+    const place = (el: HTMLElement, n: number, y?: number) => {
+      el.style.left = `${n / 10}%`;
+      if (y !== undefined) el.style.top = `${y}%`;
+    };
+
+    // The accuracy curve never changes.
+    $<SVGPathElement>('[data-plot=acc] [data-line]').setAttribute('d', pathFor(grid.map((n) => 100 - accuracy(n) * 100)));
+
+    let lo = 0, hi = 0, best = 0;
+    const yOf = (v: number) => (100 * (hi - v)) / (hi - lo);
+
+    function drawValue() {
+      const vs = grid.map((n) => value(n, cost));
+      best = grid[vs.indexOf(Math.max(...vs))];
+      const max = Math.max(0, ...vs), min = Math.min(0, ...vs);
+      const pad = (max - min) * 0.08 || 1000;
+      hi = max + pad; lo = min - pad;
+      valPlot.querySelector('[data-line]')!.setAttribute('d', pathFor(vs.map(yOf)));
+      valPlot.querySelector<HTMLElement>('[data-zero]')!.style.top = `${yOf(0)}%`;
+      // Axis labels sit at the values they name; $0 only when it isn't already one of them or crowded.
+      const label = (sel: string, v: number, show = true) => {
+        const el = valPlot.querySelector<HTMLElement>(sel)!;
+        el.textContent = short(v);
+        el.style.top = `${yOf(v)}%`;
+        el.hidden = !show;
+      };
+      const h = valPlot.clientHeight || 150;
+      const apart = (a: number, b: number) => (Math.abs(yOf(a) - yOf(b)) * h) / 100 > 22;
+      label('[data-ymax]', max);
+      label('[data-ymin]', min, min !== max);
+      label('[data-y0]', 0, max > 0 && min < 0 && apart(0, max) && apart(0, min));
+      const b = valPlot.querySelector<HTMLElement>('[data-best]')!;
+      const tag = valPlot.querySelector<HTMLElement>('[data-best-tag]')!;
+      place(b, best, yOf(value(best, cost)));
+      place(tag, best, yOf(value(best, cost)));
+      tag.classList.toggle('flip', best > 700);
+    }
+
+    function update() {
+      const n = Number(slider.value);
+      const c = caught(n);
+      $('[data-out=n]').textContent = n.toLocaleString('en-CA');
+      $('[data-out=caught]').textContent = `${c} of 100`;
+      $('[data-out=fp]').textContent = (n - c).toLocaleString('en-CA');
+      $('[data-out=acc]').textContent = pct(accuracy(n));
+      slider.setAttribute('aria-valuetext', `${n} customers offered, accuracy ${pct(accuracy(n))}`);
+      accPlot.querySelectorAll<HTMLElement>('[data-rule], [data-dot]').forEach((el) => place(el, n, 100 - accuracy(n) * 100));
+      const note = $('[data-note]');
+      if (!revealed) {
+        $('[data-out=value]').textContent = '?';
+        note.textContent = n === 0
+          ? 'Nobody gets an offer, and accuracy is 90.0% - as high as it goes.'
+          : `Offering ${who(n)} drops accuracy to ${pct(accuracy(n))}. The most accurate setting is nobody, at 90.0%.`;
+        return;
+      }
+      const v = value(n, cost);
+      $('[data-out=value]').textContent = money(v);
+      valPlot.querySelectorAll<HTMLElement>('[data-rule], [data-dot]').forEach((el) => place(el, n, yOf(v)));
+      note.textContent = `At $${cost} an offer, the best setting offers ${who(best)} for ${money(value(best, cost))}, at ${pct(accuracy(best))} accuracy. Yours (${who(n)}) is worth ${money(v)}.`;
+    }
+
+    slider.addEventListener('input', update);
+    $('[data-reveal]').addEventListener('click', () => {
+      revealed = true;
+      $<HTMLElement>('[data-veil]').hidden = true;
+      root.querySelectorAll<HTMLElement>('[data-after]').forEach((el) => (el.hidden = false));
+      drawValue();
+      update();
+      slider.focus();
+    });
+    root.querySelectorAll<HTMLButtonElement>('[data-cost]').forEach((btn) =>
+      btn.addEventListener('click', () => {
+        cost = Number(btn.dataset.cost);
+        root.querySelectorAll('[data-cost]').forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
+        drawValue();
+        update();
+      }),
+    );
+    update();
+  });
+</script>

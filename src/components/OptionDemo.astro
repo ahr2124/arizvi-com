@@ -1,0 +1,119 @@
+---
+// Week 12 of ANOP 302, as a demo: price a European call by Monte Carlo and watch it converge on Black-Scholes.
+// Stock $100, strike $100, 1 year, 20% volatility, 5% rate. Payoffs are discounted; the band is a 95% interval.
+---
+<div class="demo" data-odemo>
+  <div class="demo-buttons">
+    <button type="button" class="demo-btn solid" data-add="1000">+1,000 paths</button>
+    <button type="button" class="demo-btn" data-add="10000">+10,000 paths</button>
+    <button type="button" class="demo-btn" data-reset>Reset</button>
+  </div>
+
+  <dl class="demo-readout">
+    <div><dt class="label">Paths</dt><dd data-out="n">0</dd></div>
+    <div><dt class="label">Estimate</dt><dd data-out="est">?</dd></div>
+    <div><dt class="label">95% range</dt><dd data-out="ci">?</dd></div>
+    <div><dt class="label">Black-Scholes</dt><dd data-out="bs">?</dd></div>
+  </dl>
+
+  <div class="demo-chart">
+    <p class="label">Estimated price, by number of paths</p>
+    <div class="demo-plot" aria-hidden="true">
+      <svg viewBox="0 0 1000 100" preserveAspectRatio="none"><polygon data-band /><polyline data-line /></svg>
+      <span class="demo-hline" data-bs-line></span>
+      <span class="demo-tag label" data-bs-tag>Black-Scholes</span>
+      <span class="demo-y top label">$15</span>
+      <span class="demo-y bottom label">$6</span>
+    </div>
+  </div>
+  <div class="demo-x label" aria-hidden="true">
+    <span>100</span>
+    <span class="mid" style="left: 33.33%;">1k</span>
+    <span class="mid" style="left: 66.67%;">10k</span>
+    <span class="end">100k</span>
+  </div>
+
+  <p class="demo-note" aria-live="polite" data-note>Press +1,000 to start.</p>
+  <details>
+    <summary class="label">Answer</summary>
+    <p>About 83,000. The range shrinks with the square root of the number of paths: 4x the paths -> half the range. So 1,000 paths gets you within about 90 cents, 10,000 within about 30, and getting from 30 cents down to 10 takes another 70,000 or so.</p>
+  </details>
+</div>
+
+<script>
+  const S0 = 100, K = 100, T = 1, SIGMA = 0.2, R = 0.05, MAX = 100_000, LO = 6, HI = 15;
+  const disc = Math.exp(-R * T);
+  const drift = (R - (SIGMA * SIGMA) / 2) * T, vol = SIGMA * Math.sqrt(T);
+
+  // Standard normal CDF (Abramowitz and Stegun 7.1.26).
+  function ncdf(x: number) {
+    const t = 1 / (1 + 0.3275911 * Math.abs(x) / Math.SQRT2);
+    const y = 1 - (((((1.061405429 * t - 1.453152027) * t) + 1.421413741) * t - 0.284496736) * t + 0.254829592) * t * Math.exp(-(x * x) / 2);
+    return x >= 0 ? (1 + y) / 2 : (1 - y) / 2;
+  }
+  const d1 = (Math.log(S0 / K) + (R + (SIGMA * SIGMA) / 2) * T) / vol;
+  const BS = S0 * ncdf(d1) - K * disc * ncdf(d1 - vol);
+
+  function normal() {
+    let u = 0;
+    while (u === 0) u = Math.random();
+    return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * Math.random());
+  }
+  const money = (v: number) => '$' + v.toFixed(2);
+  const xOf = (n: number) => ((Math.log10(n) - 2) / 3) * 1000;
+  const yOf = (v: number) => (100 * (HI - Math.min(HI, Math.max(LO, v)))) / (HI - LO);
+
+  document.querySelectorAll<HTMLElement>('[data-odemo]').forEach((root) => {
+    const $ = <T extends Element>(s: string) => root.querySelector<T>(s)!;
+    let n = 0, sum = 0, sumsq = 0;
+    let pts: [number, number, number][] = []; // [paths, estimate, half-width] every 100 paths
+
+    $('[data-out=bs]').textContent = money(BS);
+    const bsY = yOf(BS);
+    $<HTMLElement>('[data-bs-line]').style.top = `${bsY}%`;
+    const tag = $<HTMLElement>('[data-bs-tag]');
+    tag.style.top = `${bsY}%`;
+    tag.style.right = '0';
+    tag.style.transform = 'translate(0, -120%)';
+
+    function draw() {
+      const est = n ? sum / n : 0;
+      const half = n > 1 ? 1.96 * Math.sqrt((sumsq - n * est * est) / (n - 1) / n) : 0;
+      $('[data-out=n]').textContent = n.toLocaleString('en-CA');
+      $('[data-out=est]').textContent = n ? money(est) : '?';
+      $('[data-out=ci]').textContent = n ? `±${money(half)}` : '?';
+      $('[data-line]').setAttribute('points', pts.map(([p, e]) => `${xOf(p).toFixed(1)},${yOf(e).toFixed(2)}`).join(' '));
+      const upper = pts.map(([p, e, h]) => `${xOf(p).toFixed(1)},${yOf(e + h).toFixed(2)}`);
+      const lower = pts.map(([p, e, h]) => `${xOf(p).toFixed(1)},${yOf(e - h).toFixed(2)}`).reverse();
+      $('[data-band]').setAttribute('points', upper.concat(lower).join(' '));
+      root.querySelectorAll<HTMLButtonElement>('[data-add]').forEach((b) => (b.disabled = n >= MAX));
+      $('[data-note]').textContent = !n
+        ? 'Guess first: how many paths does it take to get within 10 cents of the right price?'
+        : n >= MAX
+          ? `That's the cap: 100,000 paths gives ${money(est)}, give or take ${money(half)}. Black-Scholes says ${money(BS)}.`
+          : `${n.toLocaleString('en-CA')} paths: ${money(est)}, give or take ${money(half)}. Black-Scholes says ${money(BS)}.`;
+    }
+
+    function add(k: number) {
+      const stop = Math.min(MAX, n + k);
+      while (n < stop) {
+        const payoff = disc * Math.max(S0 * Math.exp(drift + vol * normal()) - K, 0);
+        sum += payoff;
+        sumsq += payoff * payoff;
+        n++;
+        if (n % 100 === 0) {
+          const e = sum / n;
+          pts.push([n, e, 1.96 * Math.sqrt((sumsq - n * e * e) / (n - 1) / n)]);
+        }
+      }
+      draw();
+    }
+
+    root.querySelectorAll<HTMLButtonElement>('[data-add]').forEach((b) => b.addEventListener('click', () => add(Number(b.dataset.add))));
+    $('[data-reset]').addEventListener('click', () => {
+      n = 0; sum = 0; sumsq = 0; pts = [];
+      draw();
+    });
+    draw();
+  });
+</script>

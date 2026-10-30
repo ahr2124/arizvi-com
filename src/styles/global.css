@@ -279,3 +279,91 @@ a.card:hover h3 { text-decoration: underline; text-decoration-thickness: 2px; te
   .footer-brand, .footer-col { grid-column: 1 / -1; }
   .footer-base { margin-top: 36px; }
 }
+
+/* Bucknell pages + teaching demos. Black on white, square markers; pills stay the one rounded element. */
+ol { padding-left: 1.4em; max-width: var(--measure); }
+ol li + li { margin-top: 0.5em; }
+.page-head .tagline { font-weight: 600; font-size: 1.5rem; letter-spacing: -0.02em; line-height: 1.15; margin: 0 0 1.5rem; max-width: 42ch; }
+.pills.jump a { text-decoration: none; display: block; }
+.pills.jump li { padding: 0; }
+.pills.jump a { padding: 5px 14px; }
+.pills.jump li:hover { background: #000; color: #fff; }
+.rows .sample { margin-top: 10px; }
+.rows .sample .label { display: inline; margin-right: 10px; }
+.unit-path { margin-bottom: 2rem; }
+.bk-wide { max-width: 860px; }
+.rows.compact li { padding: 14px 0; }
+.rows.compact .title { font-size: 1.15rem; }
+.rows.compact .body p { margin-top: 4px; }
+.unit-path, .plan-path { max-width: 860px; }
+.unit-path li + li, .plan-path li + li { margin-top: 0; }
+
+.demo { border-top: 1px solid #000; padding-top: 20px; max-width: 860px; }
+.demo [hidden] { display: none !important; }
+.demo-controls { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 16px 0; align-items: end; }
+.demo-controls > [data-after] { margin-left: 40px; }
+.demo-big { display: block; font-weight: 600; font-size: 2.6rem; letter-spacing: -0.02em; line-height: 1; margin-top: 6px; }
+.demo input[type='range'] { -webkit-appearance: none; appearance: none; display: block; width: 100%; height: 32px; margin: 10px 0 0; background: transparent; cursor: pointer; }
+.demo input[type='range']::-webkit-slider-runnable-track { height: 2px; background: #000; }
+.demo input[type='range']::-webkit-slider-thumb { -webkit-appearance: none; width: 12px; height: 28px; margin-top: -13px; background: #000; border: 0; border-radius: 0; }
+.demo input[type='range']::-moz-range-track { height: 2px; background: #000; }
+.demo input[type='range']::-moz-range-thumb { width: 12px; height: 28px; background: #000; border: 0; border-radius: 0; }
+.demo input[type='range']:focus-visible { outline: 2px solid #000; outline-offset: 4px; }
+.demo-scale { display: flex; justify-content: space-between; margin-top: 4px; }
+.demo-pills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.demo-pills button, .demo-btn {
+  font: inherit; font-weight: 500; font-size: 13px; text-transform: uppercase; letter-spacing: 0.14em; line-height: 1.4;
+  color: #000; background: #fff; border: 1px solid #000; cursor: pointer;
+}
+.demo-pills button { border-radius: 999px; padding: 5px 14px; }
+.demo-pills button[aria-pressed='true'] { background: #000; color: #fff; }
+.demo-btn { padding: 10px 16px; }
+.demo-btn.solid { background: #000; color: #fff; }
+.demo-btn:disabled { opacity: 0.35; cursor: default; }
+.demo-pills button:focus-visible, .demo-btn:focus-visible, .demo summary:focus-visible { outline: 2px solid #000; outline-offset: 3px; }
+.demo-readout { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px var(--gutter); margin: 28px 0 0; padding: 14px 0; border-top: 1px solid #000; border-bottom: 1px solid #000; }
+.demo-readout div { min-width: 0; display: flex; flex-direction: column; }
+.demo-readout dd { margin-top: auto !important; padding-top: 4px; }
+.demo-readout dd { margin: 4px 0 0; font-weight: 600; font-size: 1.5rem; letter-spacing: -0.02em; line-height: 1.1; }
+.demo-chart { margin-top: 24px; }
+.demo-plot { position: relative; height: 150px; margin: 12px 0 0 3.5rem; border-left: 1px solid #000; border-bottom: 1px solid #000; }
+.demo-plot svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.demo-plot path, .demo-plot polyline { fill: none; stroke: #000; stroke-width: 2; vector-effect: non-scaling-stroke; }
+.demo-plot polygon { fill: rgba(0, 0, 0, 0.1); stroke: none; }
+.demo-rule { position: absolute; top: 0; bottom: 0; border-left: 1px solid #000; }
+.demo-hline { position: absolute; left: 0; right: 0; border-top: 1px dashed #000; }
+.demo-dot { position: absolute; width: 10px; height: 10px; margin: -5px 0 0 -5px; background: #000; }
+.demo-best { position: absolute; width: 18px; height: 18px; margin: -9px 0 0 -9px; border: 2px solid #000; }
+.demo-tag { position: absolute; white-space: nowrap; background: #fff; padding: 0 4px; transform: translate(10px, -50%); }
+.demo-tag.flip { transform: translate(calc(-100% - 10px), -50%); }
+.demo-y { position: absolute; right: calc(100% + 8px); transform: translateY(-50%); white-space: nowrap; }
+.demo-y.top { top: 0; }
+.demo-y.bottom { top: 100%; }
+.demo-x { position: relative; height: 1.4em; margin: 6px 0 0 3.5rem; }
+.demo-x span { position: absolute; top: 0; white-space: nowrap; }
+.demo-x .mid { transform: translateX(-50%); }
+.demo-x .end { right: 0; }
+.demo-veil { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: #fff; }
+.demo-note { margin: 20px 0 0; min-height: 3em; }
+.demo-coda { border-top: 1px solid #000; padding-top: 14px; margin-top: 8px; }
+.demo-buttons { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+.demo-buttons:first-child { margin-top: 0; }
+.demo details { margin-top: 20px; border-top: 1px solid #000; padding-top: 12px; }
+.demo summary { cursor: pointer; }
+.demo details p { margin: 10px 0 0; }
+.matrix { width: 100%; max-width: 860px; border-collapse: collapse; }
+.matrix th, .matrix td { border-bottom: 1px solid #000; padding: 14px 0; vertical-align: top; text-align: left; }
+.matrix thead th { padding-top: 0; vertical-align: bottom; }
+.matrix .o { width: 2.6rem; text-align: center; font-size: 1.1rem; }
+.matrix thead .o { font-size: 13px; }
+.matrix td p { margin: 4px 0 0; max-width: 52ch; }
+.matrix .name { font-weight: 600; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+@media (max-width: 767px) {
+  .demo-controls { grid-template-columns: 1fr; }
+  .demo-readout { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .demo-plot { height: 120px; }
+  .matrix .o { width: 1.9rem; }
+  .matrix td p { font-size: 15px; }
+  .demo-controls > [data-after] { margin-left: 0; }
+}
