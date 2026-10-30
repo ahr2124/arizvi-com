@@ -1,11 +1,16 @@
 ---
 // Week 7 of ANOP 330: accuracy vs. what a model's mistakes cost.
 // 1,000 customers ranked by a model's risk score, 100 of whom will cancel. The reader picks how many of the riskiest get an offer.
-// Cancellations sit in three bands of the ranking: 70 in the top 150, 20 in the next 150, 10 in the last 700.
-// No prefix of the ranking is ever half cancellations, so accuracy peaks at 90% with nobody offered.
-const caught = (n: number) =>
-  n <= 150 ? Math.floor((7 * n) / 15) : n <= 300 ? 70 + Math.floor(((n - 150) * 2) / 15) : 90 + Math.floor((n - 300) / 70);
-const cancels = Array.from({ length: 1000 }, (_, i) => caught(i + 1) > caught(i));
+// The chance of cancelling falls smoothly down the ranking, from 42% at the top to 2% at the bottom (0.4 e^(-rank/200) + 0.02),
+// and the 100 cancellations sit where that curve's running total crosses each whole number. No prefix of the ranking is ever
+// half cancellations, so accuracy peaks at 90% with nobody offered. At $20 an offer the best cutoff is 270; at $100 it is nobody.
+const positions = [3, 5, 8, 10, 13, 15, 18, 20, 23, 26, 28, 31, 34, 37, 39, 42, 45, 48, 51, 54, 57, 60, 63, 67, 70, 73, 77, 80, 83, 87, 91, 94, 98, 102, 106, 109, 113, 117, 122, 126, 130, 134, 139, 143, 148, 153, 158, 163, 168, 173, 178, 184, 189, 195, 201, 207, 213, 220, 226, 233, 240, 247, 254, 262, 270, 278, 287, 295, 304, 314, 324, 334, 344, 356, 367, 379, 392, 405, 419, 434, 450, 466, 483, 502, 521, 542, 564, 587, 612, 639, 667, 697, 729, 763, 798, 835, 874, 915, 957, 1000];
+const cancels = Array.from({ length: 1000 }, (_, i) => positions.includes(i + 1));
+const caughtBy = cancels.reduce<number[]>((acc, c) => (acc.push(acc[acc.length - 1] + (c ? 1 : 0)), acc), [0]);
+const accuracy = (n: number) => (900 - n + 2 * caughtBy[n]) / 1000;
+const value = (n: number, cost: number) => 200 * caughtBy[n] - cost * n;
+const best20 = Array.from({ length: 101 }, (_, i) => i * 10).reduce((b, n) => (value(n, 20) > value(b, 20) ? n : b), 0);
+const pct = (a: number) => (a * 100).toFixed(1) + '%';
 ---
 <div class="cdemo" data-cdemo>
   <div class="cdemo-controls">
@@ -46,7 +51,7 @@ const cancels = Array.from({ length: 1000 }, (_, i) => caught(i + 1) > caught(i)
 
   <div class="cdemo-compare">
     <div><p class="label">Most accurate</p><p class="big">Offer nobody</p><p data-out="acc-line">90.0% accurate · $0</p></div>
-    <div><p class="label">Most valuable</p><p class="big" data-out="best-who">Offer 300</p><p data-out="best-line">78.0% accurate · $12,000</p></div>
+    <div><p class="label">Most valuable</p><p class="big" data-out="best-who">Offer {best20}</p><p data-out="best-line">{pct(accuracy(best20))} accurate · ${value(best20, 20).toLocaleString('en-CA')}</p></div>
   </div>
 
   <div class="cdemo-cost">
@@ -79,8 +84,8 @@ const cancels = Array.from({ length: 1000 }, (_, i) => caught(i + 1) > caught(i)
 
 <script>
   const SAVED = 200;
-  const caught = (n: number) =>
-    n <= 150 ? Math.floor((7 * n) / 15) : n <= 300 ? 70 + Math.floor(((n - 150) * 2) / 15) : 90 + Math.floor((n - 300) / 70);
+  let caughtBy: number[] = [0];
+  const caught = (n: number) => caughtBy[n];
   const accuracy = (n: number) => (900 - n + 2 * caught(n)) / 1000;
   const value = (n: number, cost: number) => SAVED * caught(n) - cost * n;
   const grid = Array.from({ length: 101 }, (_, i) => i * 10);
@@ -96,7 +101,8 @@ const cancels = Array.from({ length: 1000 }, (_, i) => caught(i + 1) > caught(i)
     const plot = $<HTMLElement>('[data-plot]');
     const cells = [...root.querySelectorAll<HTMLElement>('.cdemo-grid span')];
     const cancels = cells.map((c) => c.dataset.c === '1');
-    let n = 0, painted = 0, cost = 20, best = 300, lo = 0, hi = 1;
+    caughtBy = cancels.reduce<number[]>((acc, c) => (acc.push(acc[acc.length - 1] + (c ? 1 : 0)), acc), [0]);
+    let n = 0, painted = 0, cost = 20, best = 0, lo = 0, hi = 1;
     const yOf = (v: number) => (100 * (hi - v)) / (hi - lo);
     const place = (el: HTMLElement, x: number, y: number) => { el.style.left = `${x / 10}%`; el.style.top = `${y}%`; };
 

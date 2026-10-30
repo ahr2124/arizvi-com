@@ -16,19 +16,19 @@ const c = course('anop-102');
 
 // The term. Each week: the topic, what the class builds, and the class to try where there is one.
 const weeks: { w: number; topic: string; build: string; try?: string }[] = [
-  { w: 1, topic: 'What a model is for', build: 'Inputs, decisions, outputs. Spreadsheet hygiene: layout, named inputs, no hard-coded numbers. A 1-tab model of a pricing decision.' },
-  { w: 2, topic: 'Cleaning and structuring data', build: 'Sorting, filtering, lookups and tidy tables. A sales export, cleaned.' },
-  { w: 3, topic: 'Descriptive statistics and pivot tables', build: 'Summaries by segment, and a 1-page "what happened" brief.', try: 'pivot' },
+  { w: 1, topic: 'A spreadsheet someone else can read', build: 'Inputs, formulas and outputs kept apart, named inputs, no numbers typed into formulas. A 1-tab model of a pricing decision.' },
+  { w: 2, topic: 'Lookups and cleaning', build: 'Sorting, filtering, XLOOKUP and tidy tables. A sales export, cleaned.' },
+  { w: 3, topic: 'Pivot tables and summaries', build: 'Averages, spread and totals by segment, and a 1-page "what happened" brief.', try: 'pivot' },
   { w: 4, topic: 'Charts that answer a question', build: 'Choosing the chart for the claim. 2 charts with a headline each.' },
   { w: 5, topic: 'Breakeven and cost-volume-profit', build: 'The model built from a case, with its assumptions in one place.' },
-  { w: 6, topic: 'What-if analysis', build: 'Data tables, scenarios and Goal Seek on the week 5 model.', try: 'breakeven' },
+  { w: 6, topic: 'What-if analysis', build: 'Data Tables, scenarios and Goal Seek on the week 5 model.', try: 'breakeven' },
   { w: 7, topic: 'Review and midterm', build: 'A practice case, then the midterm.' },
-  { w: 8, topic: 'Probability and expected value for managers', build: 'A forecast that comes with odds, and what to do with it.', try: 'llm' },
-  { w: 9, topic: 'Sampling and confidence', build: 'Confidence intervals, and a test on a business claim written up in plain words.' },
-  { w: 10, topic: 'Simple and multiple regression', build: 'A sales-driver model: fitting it, reading it and knowing when to doubt it.', try: 'regression' },
+  { w: 8, topic: 'Expected value', build: 'A forecast that comes with odds, and what to do with it. The class with the chatbot.', try: 'llm' },
+  { w: 9, topic: 'Samples and confidence', build: 'How sure a sample lets you be, written up in plain words for a business claim.' },
+  { w: 10, topic: 'Regression', build: 'A line through the data: fitting it, reading the slope and knowing when to doubt it.', try: 'regression' },
   { w: 11, topic: 'Linear optimisation', build: 'Formulating a product-mix decision and solving it with Solver.', try: 'overtime' },
   { w: 12, topic: 'Shadow prices and sensitivity', build: "The sensitivity report behind week 11's answer: which constraint to relax, and what it's worth." },
-  { w: 13, topic: 'Monte Carlo simulation and risk', build: 'Profit under uncertain demand, as a risk profile with a recommendation.' },
+  { w: 13, topic: 'What-if with random draws', build: 'Profit under uncertain demand, run 1,000 times, as a range with a recommendation.' },
   { w: 14, topic: 'Team presentations', build: 'The decision memo and the model behind it.' },
 ];
 ---
@@ -37,11 +37,13 @@ const weeks: { w: number; topic: string; build: string; try?: string }[] = [
     ['Format', '1 credit · 14 weeks · 2 classes of 75 minutes a week'],
     ['Tools', 'Excel. Laptops open while we build, closed for the debrief.'],
     ['Grading', 'Weekly labs 30% (lowest dropped) · midterm 20% · team project and memo 30% · final 15% · reflection 5%'],
+    ['AI tools', 'Allowed for checking a formula or explaining an error. Hand in the chat with the lab. You stay responsible for every cell.'],
   ]}>
-    <p>ANOP 102 is the first analytics course every Freeman student takes, and it runs in several sections a term. I'd keep my sections in step with the others - same topics, same exams - and bring the classes below to mine. Every week adds a piece of the decision memo students hand in at the end.</p>
+    <p>ANOP 102 is the first analytics course every Freeman student takes, and it runs in several sections a term. Where the department has a shared outline and exams, those come first. Below is a term as I'd plan it if asked, and 5 classes I'd bring to my sections whichever outline they run on. Every week adds a piece of the decision memo students hand in at the end.</p>
+    <p class="practice"><span class="label">From practice</span>Resurge Therapeutics, a company in the portfolio of AMJ Capital, where I'm research lead, is running a first-in-human trial of an implant for an enlarged prostate: 20 patients at 4 sites, followed for 180 days, with the endpoint written down before the first patient. 20 is enough to see harm and too few to prove benefit, which is why safety is the primary endpoint and the symptom scores come second. Week 9 is that arithmetic: what a sample of 20 can and cannot tell you.</p>
   </CourseHeader>
 
-  <Section label="The term" title="Week by week" id="term">
+  <Section label="A term, as I'd plan it" title="Week by week" id="term">
     <ul class="rows compact bk-wide term">
       {weeks.map((x) => (
         <li class="grid">
@@ -75,14 +77,14 @@ const weeks: { w: number; topic: string; build: string; try?: string }[] = [
     <div class="grid"><div class="span-8">
       <p>Students already ask chatbots for answers. This class shows them what comes back, and how to use it in a spreadsheet decision.</p>
       <p>An LLM doesn't look an answer up. It scores every word it could say next, turns the scores into probabilities, and picks one at random, weighted by those probabilities. Temperature sets how much it gambles: at 0 it always picks the favourite.</p>
-      <p>Here a café asks one for tomorrow's croissant demand, then has to decide how many to bake. In the spreadsheet, each bake's expected profit is one SUMPRODUCT.</p>
+      <p>Here a café asks one for tomorrow's croissant demand, then has to decide how many to bake. In the spreadsheet, each bake's expected profit is one SUMPRODUCT. In class the temperature slider waits until someone asks.</p>
     </div></div>
     <LLMDemo />
   </Section>
 
   <Section label="Try a class · Week 10" title="One weekend flips the slope" id="regression">
     <div class="grid"><div class="span-8">
-      <p>The bike shop from week 11 spent between $0 and $280 a week on Instagram ads for 12 weeks and logged its sales. Does the spend work? The shop keeps 40 cents of every sales dollar, so an ad pays for itself when $1 of ads brings in more than $2.50 of sales.</p>
+      <p>A bike shop spent between $0 and $280 a week on Instagram ads for 12 weeks and logged its sales. Does the spend work? The shop keeps 40 cents of every sales dollar, so an ad pays for itself when $1 of ads brings in more than $2.50 of sales.</p>
       <p>Fit the line and read the slope. Then take out the one weekend that was different.</p>
     </div></div>
     <RegressionDemo />

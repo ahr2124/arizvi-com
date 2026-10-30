@@ -18,7 +18,7 @@ const weeks: { w: number; topic: string; build: string; try?: string }[] = [
   { w: 3, topic: 'Regression, revisited', build: 'Linear regression with many features: reading it and predicting with it are different jobs.' },
   { w: 4, topic: 'Logistic regression', build: 'Probabilities instead of labels, and the confusion matrix.' },
   { w: 5, topic: 'Decision trees', build: 'How a tree splits, and why it is the model a manager can read.' },
-  { w: 6, topic: 'Ensembles', build: 'Random forests and gradient boosting: why many weak trees beat one strong one.' },
+  { w: 6, topic: 'Ensembles', build: 'Random forests average many trees to steady the prediction; gradient boosting adds small trees one at a time to fix what the last ones missed.' },
   { w: 7, topic: 'Evaluation and thresholds', build: 'Precision, recall and the cost of each kind of mistake. Is this model worth acting on?', try: 'threshold' },
   { w: 8, topic: 'Overfitting and cross-validation', build: 'Will it work next quarter? Holding data out, and holding it out 5 times.', try: 'overfit' },
   { w: 9, topic: 'Clustering', build: 'k-means segmentation, choosing k, and groups we did not define.' },
@@ -34,11 +34,13 @@ const weeks: { w: number; topic: string; build: string; try?: string }[] = [
     ['Format', '1 credit · 14 weeks · 2 classes of 75 minutes a week'],
     ['Tools', 'Python in Jupyter: pandas and scikit-learn. ANOP 203 is the prerequisite, so code from week 1.'],
     ['Grading', 'Weekly labs 30% (lowest dropped) · midterm 20% · team project 30% · final 15% · model card 5%'],
+    ['AI tools', 'Allowed for code and debugging. Hand in the prompts with the notebook, and say in the model card where AI was used.'],
   ]}>
-    <p>ANOP 330 already runs in the department. I'd teach a section in step with the existing one - same outline, same project - and bring the 2 classes below to mine. The catalogue's course is classification, prediction and clustering. What I add is the decision each model feeds, and the person who signs off on it.</p>
+    <p>ANOP 330 already runs in the department, and whatever outline it runs on comes first. Below is a term as I'd plan it if asked, and 2 classes I'd bring to a section whichever outline it follows. What I'd emphasise: the decision each model feeds, what its mistakes cost, and who signs off before it ships.</p>
+    <p class="practice"><span class="label">From practice</span>At Amazon I owned Alexa Orchestration. The German word weiter means continue, and Fire TV understood it one way and Echo devices another: each mode had its own idea of what the word meant. I built a generic tool that disambiguates words like that across languages, automatically. Week 4 is where it starts: a model returns probabilities, and the system around it decides what to do with them.</p>
   </CourseHeader>
 
-  <Section label="The term" title="Week by week" id="term">
+  <Section label="A term, as I'd plan it" title="Week by week" id="term">
     <ul class="rows compact bk-wide term">
       {weeks.map((x) => (
         <li class="grid">

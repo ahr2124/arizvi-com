@@ -26,8 +26,8 @@ const brief = [
   ['The decision', 'Which members to call in the month before their car loan ends, so they refinance here.'],
   ['The data', '3 years of auto loans, about 40,000 rows. Member IDs replaced before the file reaches the team.'],
   ['The deliverable', 'A ranked call list for one month, and a 2-page memo on what a call is worth and where the cutoff sits.'],
-  ['Success', 'Renewals among the members called, against a held-out group the client does not call.'],
-  ['The client gives', '4 meetings (weeks 1, 3, 8 and 14), a named contact, and the data by week 4.'],
+  ['Success', 'A backtest on the last 6 months: how many of the members who refinanced elsewhere the list would have flagged in time.'],
+  ['The client gives', '5 meetings (weeks 1, 3, 8, 11 and 14), a named contact, and the data by week 4.'],
 ];
 
 const grading = [
@@ -42,9 +42,11 @@ const grading = [
   <CourseHeader course={c} facts={[
     ['Format', '1 credit · 14 weeks · teams of 4 or 5, a client each'],
     ['Grading', 'Charter 10% · mid-term check-in 15% · final presentation and report 45% · stand-ups and peer evaluation 20% · reflection 10%'],
+    ['AI tools', 'Allowed on public data and on your own writing. Nothing from a client file goes into a chatbot unless the data agreement says it can.'],
     ['Track record', "I ran Waterloo's Undergraduate Capstone Seminar the same way, with external partners every term. There the teams built working prototypes. Here the deliverable is a model and a recommendation the client can act on."],
   ]}>
-    <p>ANOP 400 has a client pipeline and an instructor who runs it. In year 1 I'd join the current instructor: take half the teams, learn how the clients are found and kept, and bring the structure below. From year 2 we rotate, or run 2 sections as the major grows.</p>
+    <p>ANOP 400 has a client pipeline and an instructor who runs it, and I'd learn it before I touched it: sit in on the spring 2028 run, take a team if that helps, and teach a section when the department asks. Below is how I ran a capstone at Waterloo, translated to this one.</p>
+    <p class="practice"><span class="label">From practice</span>A clinical trial is a capstone with higher stakes, and it runs the way this one does. Resurge Therapeutics, a company in AMJ Capital's portfolio, fixed the protocol of its first-in-human trial before the first patient: who qualifies, what gets measured, and what counts as success (no unanticipated adverse events by day 180). The charter above is that protocol, scaled to 14 weeks. The success measure is named in week 3, and nobody moves it in week 12.</p>
   </CourseHeader>
 
   <Section label="The term" title="Week by week" id="term">
@@ -54,7 +56,7 @@ const grading = [
 
   <Section label="Clients" title="Where the projects come from" id="clients">
     <div class="grid"><div class="span-8">
-      <p>Sourcing starts the term before, so every team has a client in week 1 and a signed charter by week 3. The pool: businesses within an hour of campus, the small businesses that come through Bucknell's SBDC, alumni-run companies, and regional non-profits with data they have never looked at. A company I have a stake in is never a client of a team I grade.</p>
+      <p>Sourcing starts the term before, so every team has a client in week 1 and a signed charter by week 3. The pool: businesses within an hour of campus, the small businesses that come through Bucknell's SBDC, alumni-run companies, and regional non-profits with data they have never looked at. A company I or AMJ Capital hold a stake in is never a client of a team I grade.</p>
       <p>Each client signs the 1-page charter and a data agreement with it: what the team gets, who may see it, and that the client keeps the data and the model. Customer and member IDs are replaced before a file reaches students, and students sign an NDA where the client asks for one.</p>
     </div></div>
     <div class="grid" style="margin-top: 2rem;"><div class="span-8">

@@ -60,7 +60,7 @@ const strategies = [
     </div>
   </div>
 
-  <p class="demo-coda">The model's single most likely answer is medium. But a missed sale costs $4 and a leftover $1, so it pays to bake past 80 as long as demand beats 80 more than 1 time in 5 - the critical ratio, 4 / (4 + 1) = 0.8. Here demand beats 80 35% of the time, so bake 120. That's the newsvendor model, fed by an LLM. It only works if the probabilities are honest, and real LLMs can be overconfident. So in the course we score their probabilities against what actually happened and against a forecast built from the café's own sales. Then we decide where a person signs off.</p>
+  <p class="demo-coda">The model's single most likely answer is medium. But a missed sale costs $4 and a leftover $1, so the extra 40 croissants pay for themselves as long as the chance of high demand is above 1 in 5. Here it's 35%, so bake 120. That's the newsvendor model, fed by an LLM. It only works if the probabilities are honest, and real LLMs can be overconfident. So in the course we score their probabilities against what actually happened and against a forecast built from the café's own sales. Then we decide where a person signs off.</p>
 </div>
 
 <script>

@@ -616,3 +616,6 @@ ol li + li { margin-top: 0.5em; }
   .odemo-controls { grid-template-columns: 1fr; }
   .odemo-readout { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
+
+.course-head .practice { margin-top: 1rem; }
+.course-head .practice .label { display: inline; margin-right: 10px; }

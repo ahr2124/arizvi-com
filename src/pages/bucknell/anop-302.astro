@@ -67,9 +67,10 @@ const mark = (m: number) => (m === 1 ? '●' : m === 0.5 ? '○' : '');
   <CourseHeader course={c} crumb="Draft syllabus" facts={[
     ['Format', '1 credit · 3 lecture hours a week for 14 weeks'],
     ['Tools', 'Excel with Solver. Laptops open while we build, closed for the debrief.'],
-    ['Instructor', 'Ali Rizvi, PhD'],
+    ['AI tools', 'Allowed for checking formulas and debugging. Submit the prompts with the lab. You stay responsible for every cell.'],
   ]}>
-    <p>The catalogue describes ANOP 302 as linear and nonlinear optimisation in finance and accounting, portfolio and risk management, and Monte Carlo pricing of derivatives. I built it on Decision Models and Applications (IEOR E4611), the course I took for my MS at Columbia, and it follows the same arc. Every week ends with a decision written up for a manager.</p>
+    <p>The catalogue describes ANOP 302 as linear and nonlinear optimisation in finance and accounting, portfolio and risk management, and Monte Carlo pricing of derivatives. The arc below is the one that course needs: formulate, then risk, then simulation, with every week ending in a decision written up for a manager. Weeks 10 to 13 hand off to ANOP 350, where simulation gets a full term.</p>
+    <p class="practice"><span class="label">From practice</span>Resurge Therapeutics, a company in AMJ Capital's portfolio, is planning a placebo-controlled trial after its first-in-human study, and the first question is how many patients it needs. The answer comes the way the option demo's does: simulate the trial, and watch the interval shrink with the square root of the sample. Week 10 is that lab.</p>
   </CourseHeader>
 
   <Section label="What you'll be able to do" id="outcomes">
@@ -134,7 +135,6 @@ const mark = (m: number) => (m === 1 ? '●' : m === 0.5 ? '○' : '');
       <ol>
         <li><strong>Guess first.</strong> Every case opens with a guess before any modelling, and we come back to it once the model is solved.</li>
         <li><strong>Pairs, then the room.</strong> Each model is built in pairs before we debrief it together.</li>
-        <li><strong>AI tools.</strong> Allowed for checking formulas and debugging. Submit the prompts with the lab - you stay responsible for every cell.</li>
         <li><strong>Readings.</strong> No required textbook. Recommended: Winston and Albright, <em>Practical Management Science</em>, and Benninga, <em>Financial Modeling</em>.</li>
         <li><strong>Office hours.</strong> 2 slots a week, plus time by appointment. Come with a half-built model - that's the best time to talk.</li>
       </ol>
