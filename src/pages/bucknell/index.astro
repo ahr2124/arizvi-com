@@ -1,0 +1,98 @@
+---
+// src/pages/bucknell/index.astro  →  arizvi.com/bucknell
+// For the Bucknell business analytics search. Not linked from the nav; sends noindex.
+import Base from '../../layouts/Base.astro';
+import Section from '../../components/Section.astro';
+
+const catalogue = 'https://coursecatalog.bucknell.edu/courses/anop/';
+
+// The courses I'd teach. `syllabus` links a full syllabus page when there is one.
+const courses = [
+  {
+    code: 'ANOP 102',
+    title: 'Spreadsheet Modeling & Data Analysis',
+    meta: 'Core · every term',
+    line: 'The front door to the major. Students leave with a model a manager could audit and a 1-page decision memo to go with it. Each week adds one piece of that memo.',
+  },
+  {
+    code: 'ANOP 302',
+    title: 'Financial Decision Modeling using Spreadsheets',
+    meta: 'Elective · full syllabus',
+    line: 'Optimization, portfolio risk and Monte Carlo pricing, built on the decision models course I took at Columbia.',
+    syllabus: '/bucknell/anop-302/',
+  },
+  {
+    code: 'ANOP 330',
+    title: 'Predictive Analytics: Machine Learning Fundamentals for Business',
+    meta: 'Major requirement',
+    line: 'Every model is a decision tool, so the class judges a model by what its errors cost - and who stays in the loop when it makes the call.',
+  },
+  {
+    code: 'ANOP 400',
+    title: 'Business Analytics Practicum',
+    meta: 'Capstone · external clients',
+    line: 'Scope -> data -> model -> recommendation -> delivery, with a signed project charter in week 3 and the client in the room at the end. I ran the Undergraduate Capstone Seminar at Waterloo the same way.',
+  },
+];
+
+// A first-year load of 6, as a starting point. Happy to fit whatever the department needs.
+const plan = [
+  { term: 'Fall 2027', load: 'ANOP 102 (2 sections) · ANOP 302' },
+  { term: 'Spring 2028', load: 'ANOP 102 · ANOP 330 · ANOP 400' },
+  { term: 'Year 2', load: 'Same core, plus a new elective on human-in-the-loop AI for business decisions' },
+];
+---
+<Base title="Bucknell" description="What Ali Rizvi would teach in Bucknell's business analytics department." noindex>
+  <header class="page-head">
+    <p class="label">Bucknell · Analytics &amp; Operations Management</p>
+    <h1>Teaching analytics at Bucknell</h1>
+    <div class="grid"><div class="span-8">
+      <p>Here's what I'd teach, and how I'd fill a first year. The course codes and titles come straight from the <a href={catalogue} target="_blank" rel="noopener">2026-27 catalogue</a>.</p>
+    </div></div>
+  </header>
+
+  <Section label="Courses" id="courses">
+    <ul class="rows">
+      {courses.map((c) => (
+        <li class="grid">
+          <div class="label">{c.code}<br />{c.meta}</div>
+          <div class="body">
+            {c.syllabus
+              ? <a class="title" href={c.syllabus}>{c.title} →</a>
+              : <span class="title">{c.title}</span>}
+            <p>{c.line}</p>
+          </div>
+        </li>
+      ))}
+    </ul>
+    <div class="grid"><div class="span-8">
+      <p class="muted">I can also take sections of ANOP 203 (Python) and ANOP 270 (Data Visualization).</p>
+    </div></div>
+  </Section>
+
+  <Section label="A first year" id="plan">
+    <ul class="rows">
+      {plan.map((p) => (
+        <li class="grid">
+          <div class="label">{p.term}</div>
+          <div class="body"><p>{p.load}</p></div>
+        </li>
+      ))}
+    </ul>
+    <div class="grid"><div class="span-8">
+      <p class="muted">A starting point. The core courses come first, and I'll fit the rest around what the department needs.</p>
+    </div></div>
+  </Section>
+
+  <Section label="How I teach" id="approach">
+    <div class="grid"><div class="span-8">
+      <ol>
+        <li>Build the course backwards from what students should be able to do at the end.</li>
+        <li>Fixed structure, student-chosen problems.</li>
+        <li>Real clients and real constraints wherever I can get them.</li>
+        <li>Test the teaching itself, and change it mid-term when the evidence says so.</li>
+      </ol>
+      <p>More on the courses I've taught at Waterloo is on the <a href="/teaching/">Teaching</a> page.</p>
+    </div></div>
+  </Section>
+</Base>
