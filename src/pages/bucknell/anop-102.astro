@@ -1,0 +1,30 @@
+---
+// src/pages/bucknell/anop-102.astro  →  arizvi.com/bucknell/anop-102
+// ANOP 102 and its sample class. Not linked from the nav; sends noindex.
+import Base from '../../layouts/Base.astro';
+import Section from '../../components/Section.astro';
+import CourseHeader from '../../components/CourseHeader.astro';
+import CourseNav from '../../components/CourseNav.astro';
+import LPFigure from '../../components/LPFigure.astro';
+import { course } from '../../data/bucknell';
+
+const c = course('anop-102');
+---
+<Base title="ANOP 102" description="ANOP 102, Spreadsheet Modeling & Data Analysis, as Ali Rizvi would teach it at Bucknell." noindex>
+  <CourseHeader course={c} />
+
+  <Section label="Sample class" title="Which overtime is worth paying for?" id="sample">
+    <div class="grid"><div class="span-8">
+      <p>Week 11, 75 minutes. A small shop builds 2 bikes. A Commuter makes $120 and takes 3 hours of assembly and 1 of painting. A Trail makes $180 and takes 4 and 3. The shop has 240 assembly hours and 120 painting hours a week, and only 30 Trails sell.</p>
+      <ol>
+        <li><strong>Guess first.</strong> Which bike do you build more of? Most students pick the Trail, the higher-margin bike.</li>
+        <li><strong>Pairs, then the room.</strong> Pairs write the decision variables, objective and constraints on paper, then build and solve the model.</li>
+        <li><strong>The real decision.</strong> The owner can buy overtime: an assembler at $30 an hour or a painter at $25. Which is worth it?</li>
+        <li><strong>Exit ticket.</strong> Tell the owner what to do in 2 sentences, and what would change your answer.</li>
+      </ol>
+    </div></div>
+    <div class="row-fig"><LPFigure /></div>
+  </Section>
+
+  <CourseNav current={c.slug} />
+</Base>

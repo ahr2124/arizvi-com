@@ -59,6 +59,8 @@ COURSES = {
     '311': ('ANOP 311', 'Supply Chain Analytics', False),
 }
 
+LINKS = {'102': '/bucknell/anop-102/', '302': '/bucknell/anop-302/', '330': '/bucknell/anop-330/', '400': '/bucknell/anop-400/'}
+
 def box(key, x, y, w, h, pad=14, max_title=15):
     code, title, mine = COURSES[key]
     size = max_title
@@ -68,8 +70,11 @@ def box(key, x, y, w, h, pad=14, max_title=15):
     assert width(code.upper(), **LBL) <= w - 2 * pad, (code, w)
     rect = (f'<rect class="{"mine" if mine else "other"}" x="{x+0.5:.1f}" y="{y+0.5:.1f}" '
             f'width="{w-1:.1f}" height="{h-1:.1f}" />')
-    return (rect + lbl(x + pad, y + 24, code, inv=mine)
-            + txt(x + pad, y + 45, title, size=size, weight='Semibold', inv=mine))
+    inner = (rect + lbl(x + pad, y + 24, code, inv=mine)
+             + txt(x + pad, y + 45, title, size=size, weight='Semibold', inv=mine))
+    if key in LINKS:
+        return f'<a href="{LINKS[key]}" aria-label="{esc(code)}: {esc(title)}">{inner}</a>'
+    return inner
 
 def curriculum_wide():
     W, g = 860, 24
@@ -233,7 +238,7 @@ write('src/components/CurriculumMap.astro', f'''---
 <figure class="fig curriculum">
   {svg(*cw, 'Where these courses sit in the Business Analytics major', desc, 'fig-wide')}
   {svg(*ct, 'Where these courses sit in the Business Analytics major', desc, 'fig-tall')}
-  <figcaption class="muted">Black: the courses I'd teach. ANOP 102 comes before every course here, and ANOP 203 (Python) before 330, 350 and 370. Prerequisites from the 2026-27 catalogue.</figcaption>
+  <figcaption class="muted">Black: the courses I'd teach - each one opens its page. ANOP 102 comes before every course here, and ANOP 203 (Python) before 330, 350 and 370. Prerequisites from the 2026-27 catalogue.</figcaption>
 </figure>
 ''')
 
@@ -252,26 +257,20 @@ f_body, (s0, r0) = mini_frontier()
 p_body, above = mini_paths()
 lp_mini = lp_figure(260, 170, mini=True)
 print('min-variance point', round(s0, 4), round(r0, 4), 'paths above strike', above)
-write('src/components/UnitFigures.astro', f'''---
+write('src/components/UnitFigure.astro', f'''---
 {STYLE_NOTE}
 // One small figure per unit of ANOP 302. Illustrative data: the frontier mixes 4 made-up stocks; the paths are 20 simulated years of a $100 stock.
+interface Props {{ unit: 1 | 2 | 3 }}
+const {{ unit }} = Astro.props;
 ---
-<ul class="unit-figs">
-  <li>
-    {svg(260, 170, lp_mini, 'A linear program', 'The shaded region holds the feasible plans; the square marks the best one.')}
-    <p class="label">Weeks 1-7</p>
-    <p><strong>Optimisation</strong><br />Linear and integer models for cash, bonds, capital budgets and product mix</p>
-  </li>
-  <li>
-    {svg(260, 170, f_body, 'An efficient frontier', 'Squares are individual stocks; the curve is the best return for each level of risk from mixing them; the larger square is the lowest-risk mix.')}
-    <p class="label">Weeks 8-10</p>
-    <p><strong>Portfolios and risk</strong><br />Markowitz, the efficient frontier and value at risk</p>
-  </li>
-  <li>
-    {svg(260, 170, p_body, 'Simulated stock paths', 'Twenty simulated one-year paths for a $100 stock, with the $100 strike as a dashed line.')}
-    <p class="label">Weeks 11-14</p>
-    <p><strong>Simulation</strong><br />Monte Carlo, option pricing and hedging</p>
-  </li>
-</ul>
+{{unit === 1 && (
+  {svg(260, 170, lp_mini, 'A linear program', 'The shaded region holds the feasible plans; the square marks the best one.', 'unit-fig')}
+)}}
+{{unit === 2 && (
+  {svg(260, 170, f_body, 'An efficient frontier', 'Squares are individual stocks; the curve is the best return for each level of risk from mixing them; the larger square is the lowest-risk mix.', 'unit-fig')}
+)}}
+{{unit === 3 && (
+  {svg(260, 170, p_body, 'Simulated stock paths', 'Twenty simulated one-year paths for a $100 stock, with the $100 strike as a dashed line.', 'unit-fig')}
+)}}
 ''')
 print('wide', cw[:2], 'tall', ct[:2])

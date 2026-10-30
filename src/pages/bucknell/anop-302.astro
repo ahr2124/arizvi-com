@@ -3,16 +3,13 @@
 // Draft syllabus for Bucknell's ANOP 302. Not linked from the nav; sends noindex.
 import Base from '../../layouts/Base.astro';
 import Section from '../../components/Section.astro';
+import CourseHeader from '../../components/CourseHeader.astro';
+import CourseNav from '../../components/CourseNav.astro';
 import OptionDemo from '../../components/OptionDemo.astro';
-import UnitFigures from '../../components/UnitFigures.astro';
-import Gantt from '../../components/Gantt.astro';
+import UnitFigure from '../../components/UnitFigure.astro';
+import { course } from '../../data/bucknell';
 
-const facts = [
-  ['Course', 'ANOP 302 · 1 credit · 3 lecture hours a week for 14 weeks'],
-  ['Prerequisites', 'ACFM 124 or ACFM 203, and ANOP 102 (or equivalents)'],
-  ['Tools', 'Excel with Solver. Laptops in every class.'],
-  ['Instructor', 'Ali Rizvi, PhD'],
-];
+const c = course('anop-302');
 
 // The short names double as the columns of the grading table.
 const outcomes = [
@@ -23,60 +20,57 @@ const outcomes = [
   ['Recommend', 'Write a recommendation a manager can act on, including what would change it.'],
 ];
 
-// When work is due, week by week. Slot 15 is exam week.
-const term = [
-  { label: 'Optimisation', bars: [[1, 7]] as [number, number][] },
-  { label: 'Portfolios and risk', bars: [[8, 10]] as [number, number][] },
-  { label: 'Simulation', bars: [[11, 14]] as [number, number][] },
-  { label: 'Weekly labs', ticks: Array.from({ length: 13 }, (_, i) => i + 1) },
-  { label: 'Midterm', marks: [{ w: 7 }] },
-  { label: 'Team project', bars: [[4, 14]] as [number, number][], thin: true, marks: [{ w: 4, open: true }, { w: 6, open: true }, { w: 14 }] },
-  { label: 'Final exam', marks: [{ w: 15 }] },
-];
-
-// Each week: a model the class builds together, then a lab students finish on their own.
-const weeks = [
-  { w: '1', topic: 'What a decision model is for', build: 'Model hygiene: inputs, decisions, outputs. A first linear program for a financial plan.' },
-  { w: '2', topic: 'Short-term financing', build: 'Multi-period cash management: borrow, invest or hold, month by month.' },
-  { w: '3', topic: 'Sensitivity analysis', build: 'Shadow prices and allowable ranges - what an extra dollar of credit line is worth.' },
-  { w: '4', topic: 'Multi-period models', build: 'Bond portfolio dedication: meet a stream of liabilities at the lowest cost.' },
-  { w: '5', topic: 'Integer models', build: 'Capital budgeting and project selection under a budget.' },
-  { w: '6', topic: 'Accounting applications', build: 'Product mix with contribution margins, and how allocated costs can mislead a decision.' },
-  { w: '7', topic: 'Review and midterm', build: 'A practice case, then the midterm.' },
-  { w: '8', topic: 'Nonlinear models', build: 'Mean-variance portfolio optimisation (Markowitz).' },
-  { w: '9', topic: 'The efficient frontier', build: 'The frontier, the constraints real investors face, and index tracking.' },
-  { w: '10', topic: 'Risk management', build: 'Simulating portfolio losses and estimating value at risk.' },
-  { w: '11', topic: 'Monte Carlo fundamentals', build: 'Random draws, distributions, sample size and how fast the answer settles.' },
-  { w: '12', topic: 'Pricing derivatives', build: 'A European call by simulation, checked against Black-Scholes, then a path-dependent option.', try: true },
-  { w: '13', topic: 'Hedging', build: 'Foreign exchange exposure hedged with forwards vs. options, compared by simulation.' },
-  { w: '14', topic: 'Project presentations', build: 'Teams present their decision and the model behind it.' },
+// Three units. Each week: a model the class builds together, then a lab students finish on their own.
+const units: { n: 1 | 2 | 3; weeks: string; name: string; line: string; items: { w: string; topic: string; build: string; try?: boolean }[] }[] = [
+  {
+    n: 1, weeks: 'Weeks 1-7', name: 'Optimisation', line: 'Linear and integer models for cash, bonds, capital budgets and product mix',
+    items: [
+      { w: '1', topic: 'What a decision model is for', build: 'Model hygiene: inputs, decisions, outputs. A first linear program for a financial plan.' },
+      { w: '2', topic: 'Short-term financing', build: 'Multi-period cash management: borrow, invest or hold, month by month.' },
+      { w: '3', topic: 'Sensitivity analysis', build: 'Shadow prices and allowable ranges - what an extra dollar of credit line is worth.' },
+      { w: '4', topic: 'Multi-period models', build: 'Bond portfolio dedication: meet a stream of liabilities at the lowest cost.' },
+      { w: '5', topic: 'Integer models', build: 'Capital budgeting and project selection under a budget.' },
+      { w: '6', topic: 'Accounting applications', build: 'Product mix with contribution margins, and how allocated costs can mislead a decision.' },
+      { w: '7', topic: 'Review and midterm', build: 'A practice case, then the midterm.' },
+    ],
+  },
+  {
+    n: 2, weeks: 'Weeks 8-10', name: 'Portfolios and risk', line: 'Markowitz, the efficient frontier and value at risk',
+    items: [
+      { w: '8', topic: 'Nonlinear models', build: 'Mean-variance portfolio optimisation (Markowitz).' },
+      { w: '9', topic: 'The efficient frontier', build: 'The frontier, the constraints real investors face, and index tracking.' },
+      { w: '10', topic: 'Risk management', build: 'Simulating portfolio losses and estimating value at risk.' },
+    ],
+  },
+  {
+    n: 3, weeks: 'Weeks 11-14', name: 'Simulation', line: 'Monte Carlo, option pricing and hedging',
+    items: [
+      { w: '11', topic: 'Monte Carlo fundamentals', build: 'Random draws, distributions, sample size and how fast the answer settles.' },
+      { w: '12', topic: 'Pricing derivatives', build: 'A European call by simulation, checked against Black-Scholes, then a path-dependent option.', try: true },
+      { w: '13', topic: 'Hedging', build: 'Foreign exchange exposure hedged with forwards vs. options, compared by simulation.' },
+      { w: '14', topic: 'Project presentations', build: 'Teams present their decision and the model behind it.' },
+    ],
+  },
 ];
 
 // Marks per outcome, in the order above: 1 = assessed, 0.5 = one of these, the team's choice, 0 = not assessed.
 const grading = [
-  { item: 'Weekly labs', weight: '25%', note: 'Small, frequent, low stakes. Each ends with a 3-sentence recommendation. The lowest one is dropped.', marks: [1, 1, 1, 1, 1] },
-  { item: 'Midterm', weight: '20%', note: 'Optimisation: formulate, solve, interpret.', marks: [1, 1, 0, 0, 0] },
-  { item: 'Team project', weight: '30%', note: 'A real financial decision for a real organization. Teams form in week 4, present in week 14, and hand in a 2-page memo with the model attached.', marks: [1, 0.5, 0.5, 0.5, 1] },
-  { item: 'Final exam', weight: '15%', note: 'Portfolios, risk and simulation.', marks: [0, 0, 1, 1, 0] },
-  { item: 'Exit tickets', weight: '10%', note: '2 sentences at the end of each class. Graded for completion.', marks: [0, 0, 0, 0, 1] },
+  { item: 'Weekly labs', weight: '25%', when: 'Weeks 1-13', note: 'Small, frequent, low stakes. Each ends with a 3-sentence recommendation. The lowest one is dropped.', marks: [1, 1, 1, 1, 1] },
+  { item: 'Midterm', weight: '20%', when: 'Week 7', note: 'Optimisation: formulate, solve, interpret.', marks: [1, 1, 0, 0, 0] },
+  { item: 'Team project', weight: '30%', when: 'Weeks 4-14', note: 'A real financial decision for a real organization. Teams form in week 4, pick their decision by week 6 and present in week 14, with a 2-page memo and the model attached.', marks: [1, 0.5, 0.5, 0.5, 1] },
+  { item: 'Final exam', weight: '15%', when: 'Exam week', note: 'Portfolios, risk and simulation.', marks: [0, 0, 1, 1, 0] },
+  { item: 'Exit tickets', weight: '10%', when: 'Every class', note: '2 sentences at the end of each class. Graded for completion.', marks: [0, 0, 0, 0, 1] },
 ];
 const mark = (m: number) => (m === 1 ? '●' : m === 0.5 ? '○' : '');
 ---
 <Base title="ANOP 302 syllabus" description="Draft syllabus for Bucknell's ANOP 302, Financial Decision Modeling using Spreadsheets, by Ali Rizvi." noindex>
-  <header class="page-head">
-    <p class="label"><a href="/bucknell/">Bucknell</a> · ANOP 302 · Draft syllabus</p>
-    <h1>Financial Decision Modeling using Spreadsheets</h1>
-    <p class="tagline">Optimisation -> portfolios -> simulation, with a decision for a manager at the end of every week.</p>
-    <div class="grid"><div class="span-8">
-      <p>The catalogue describes ANOP 302 as linear and nonlinear optimisation in finance and accounting, portfolio and risk management, and Monte Carlo pricing of derivatives. I built it on Decision Models and Applications (IEOR E4611), the course I took for my MS at Columbia, and it follows the same arc.</p>
-    </div></div>
-  </header>
-
-  <Section label="At a glance">
-    <div class="kv">
-      {facts.map(([k, v]) => (<><p class="label">{k}</p><p>{v}</p></>))}
-    </div>
-  </Section>
+  <CourseHeader course={c} crumb="Draft syllabus" facts={[
+    ['Format', '1 credit · 3 lecture hours a week for 14 weeks'],
+    ['Tools', 'Excel with Solver. Laptops in every class.'],
+    ['Instructor', 'Ali Rizvi, PhD'],
+  ]}>
+    <p>The catalogue describes ANOP 302 as linear and nonlinear optimisation in finance and accounting, portfolio and risk management, and Monte Carlo pricing of derivatives. I built it on Decision Models and Applications (IEOR E4611), the course I took for my MS at Columbia, and it follows the same arc. Every week ends with a decision written up for a manager.</p>
+  </CourseHeader>
 
   <Section label="What you'll be able to do" id="outcomes">
     <div class="grid"><div class="span-8">
@@ -85,31 +79,30 @@ const mark = (m: number) => (m === 1 ? '●' : m === 0.5 ? '○' : '');
   </Section>
 
   <Section label="Schedule" id="schedule">
-    <UnitFigures />
-    <ul class="rows compact bk-wide">
-      {weeks.map((x) => (
-        <li class="grid">
-          <div class="label">Week {x.w}</div>
-          <div class="body">
-            <span class="title">{x.topic}</span>
-            <p>{x.build}{x.try && <> <a href="#try">Try it below.</a></>}</p>
-          </div>
-        </li>
-      ))}
-    </ul>
-  </Section>
-
-  <Section label="Try week 12" title="Price an option by simulation" id="try">
-    <div class="grid"><div class="span-8">
-      <p>A call option on a $100 stock: strike $100, 1 year to expiry, 20% volatility, 5% interest. Black-Scholes prices it exactly. Simulate stock paths, average the payoffs, and watch the estimate close in.</p>
-    </div></div>
-    <OptionDemo />
+    {units.map((u) => (
+      <div class="unit grid">
+        <div class="unit-side">
+          <UnitFigure unit={u.n} />
+          <p class="label">{u.weeks}</p>
+          <h3>{u.name}</h3>
+          <p class="unit-line">{u.line}</p>
+        </div>
+        <ul class="rows compact unit-weeks">
+          {u.items.map((x) => (
+            <li class="grid">
+              <div class="label">Week {x.w}</div>
+              <div class="body">
+                <span class="title">{x.topic}</span>
+                <p>{x.build}{x.try && <> <a href="#try">Try it below.</a></>}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))}
   </Section>
 
   <Section label="Grading" id="grading">
-    <Gantt title="When work is due in ANOP 302" weeks={14} extra="Exam" rows={term}
-      caption="A lab every week but the last. Teams form in week 4, pick their decision by week 6 and present in week 14. The final exam sits in exam week." />
-    <h3 class="matrix-head">What each piece assesses</h3>
     <table class="matrix">
       <thead>
         <tr>
@@ -120,7 +113,7 @@ const mark = (m: number) => (m === 1 ? '●' : m === 0.5 ? '○' : '');
       <tbody>
         {grading.map((g) => (
           <tr>
-            <td><span class="name">{g.item} · {g.weight}</span><p>{g.note}</p></td>
+            <td><span class="name">{g.item} · {g.weight}</span><p><span class="label when">{g.when}</span> {g.note}</p></td>
             {g.marks.map((m, i) => (
               <td class="o">
                 <span aria-hidden="true">{mark(m)}</span>
@@ -148,8 +141,12 @@ const mark = (m: number) => (m === 1 ? '●' : m === 0.5 ? '○' : '');
     </div></div>
   </Section>
 
-  <div class="next">
-    <p class="label">Back to</p>
-    <a href="/bucknell/">Teaching analytics at Bucknell →</a>
-  </div>
+  <Section label="Try week 12" title="Price an option by simulation" id="try">
+    <div class="grid"><div class="span-8">
+      <p>A call option on a $100 stock: strike $100, 1 year to expiry, 20% volatility, 5% interest. Black-Scholes prices it exactly. Simulate stock paths, average the payoffs, and watch the estimate close in.</p>
+    </div></div>
+    <OptionDemo />
+  </Section>
+
+  <CourseNav current={c.slug} />
 </Base>

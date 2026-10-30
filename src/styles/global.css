@@ -429,3 +429,55 @@ ol li + li { margin-top: 0.5em; }
 .page-head .intro-grid .text h1 { margin-bottom: 1.5rem; }
 .gantt .label { grid-column: auto; }
 .gantt figcaption { max-width: none; }
+
+/* Bucknell hub + course pages */
+.course-head h1 { font-size: clamp(2.2rem, 4.6vw, 3.8rem); max-width: 22ch; }
+.course-kv { margin-top: 2rem; }
+.principles { list-style: none; margin: 0; padding: 0; max-width: 860px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--gutter); counter-reset: p; }
+.principles li { border-top: 1px solid #000; padding: 14px 0 18px; margin: 0; counter-increment: p; }
+.principles li + li { margin-top: 0; }
+.principles li::before { content: counter(p); display: block; font-weight: 500; font-size: 13px; letter-spacing: 0.14em; margin-bottom: 6px; }
+.principles strong { display: block; }
+.principles-note { margin-top: 1rem; }
+.cta { margin: 0.5rem 0 0; }
+.cta a { font-weight: 600; font-size: 1.5rem; letter-spacing: -0.02em; text-decoration: none; }
+.cta a:hover { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 0.12em; }
+.course-nav { margin-top: 5rem; border-top: 2px solid #000; padding-top: 12px; }
+.course-nav ul { list-style: none; margin: 1.25rem 0 0; padding: 0; max-width: none; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--gutter); }
+.course-nav li { margin: 0; }
+.course-nav li + li { margin-top: 0; }
+.course-nav a { display: block; text-decoration: none; border-top: 1px solid #000; padding-top: 10px; }
+.course-nav a .t { display: block; margin-top: 4px; font-weight: 600; line-height: 1.2; }
+.course-nav a:hover .t { text-decoration: underline; }
+.course-nav a[aria-current='page'] { border-top-width: 4px; padding-top: 7px; }
+.course-nav a[aria-current='page'] .t::after { content: ' (this page)'; font-weight: 400; color: rgba(0, 0, 0, 0.6); }
+.course-nav .back { margin-top: 2rem; }
+.course-nav .back a { border: 0; padding: 0; text-decoration: underline; display: inline; }
+.unit { align-items: start; }
+.unit + .unit { margin-top: 3rem; }
+.unit-side { grid-column: 1 / 5; }
+.unit-weeks { grid-column: 5 / 13; max-width: none; }
+.unit-side h3 { margin: 6px 0 6px; }
+.unit-side .unit-line { font-size: 15px; margin: 0; }
+.unit-fig { display: block; width: 100%; max-width: 260px; height: auto; overflow: visible; margin-bottom: 14px; }
+.unit-fig .cline, .unit-fig .axis { fill: none; stroke: #000; stroke-width: 1; }
+.unit-fig .opt { fill: #000; }
+.unit-fig .region { fill: rgba(0, 0, 0, 0.08); }
+.unit-fig .iso, .unit-fig .strike { fill: none; stroke: #000; stroke-width: 1; stroke-dasharray: 5 4; }
+.unit-fig .curve, .unit-fig .path-hi { fill: none; stroke: #000; stroke-width: 2; }
+.unit-fig .path { fill: none; stroke: rgba(0, 0, 0, 0.3); stroke-width: 1; }
+.unit-fig .asset { fill: #fff; stroke: #000; stroke-width: 1.5; }
+.unit-weeks .label { grid-column: 1 / 4; }
+.unit-weeks .body { grid-column: 4 / 13; }
+.matrix .when { display: inline; margin-right: 8px; }
+.fig a:hover rect.mine { fill: #333; stroke: #333; }
+@media (max-width: 1023px) {
+  .course-nav ul { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 767px) {
+  .principles { grid-template-columns: 1fr; }
+  .unit-side, .unit-weeks { grid-column: 1 / -1; }
+  .unit-weeks { margin-top: 1rem; }
+  .unit-weeks .label, .unit-weeks .body { grid-column: 1 / -1; }
+}
+@media (min-width: 768px) { .unit-side { position: sticky; top: 24px; } }

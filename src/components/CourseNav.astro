@@ -1,0 +1,20 @@
+---
+// The four courses, at the foot of every /bucknell page.
+import { courses } from '../data/bucknell';
+interface Props { current?: string }
+const { current } = Astro.props;
+---
+<nav class="course-nav" aria-label="Courses I'd teach at Bucknell">
+  <p class="label">The 4 courses</p>
+  <ul>
+    {courses.map((c) => (
+      <li>
+        <a href={`/bucknell/${c.slug}/`} aria-current={c.slug === current ? 'page' : undefined}>
+          <span class="label">{c.code}</span>
+          <span class="t">{c.title}</span>
+        </a>
+      </li>
+    ))}
+  </ul>
+  {current && <p class="label back"><a href="/bucknell/">All courses and how I teach →</a></p>}
+</nav>

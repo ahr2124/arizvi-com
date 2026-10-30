@@ -1,160 +1,61 @@
 ---
 // src/pages/bucknell/index.astro  →  arizvi.com/bucknell
-// For the Bucknell business analytics search. Not linked from the nav; sends noindex.
+// Hub for the Bucknell business analytics search: how I teach, the 4 courses, and a class to try.
+// Each course has its own page. Not linked from the nav; sends noindex.
 import Base from '../../layouts/Base.astro';
 import Section from '../../components/Section.astro';
-import ThresholdDemo from '../../components/ThresholdDemo.astro';
 import CurriculumMap from '../../components/CurriculumMap.astro';
-import LPFigure from '../../components/LPFigure.astro';
-import Gantt from '../../components/Gantt.astro';
+import { courses, catalogue } from '../../data/bucknell';
 
-const catalogue = 'https://coursecatalog.bucknell.edu/courses/anop/';
-
-// One row per course. `href` links the title; `sample` is a class from the course.
-const courses = [
-  {
-    id: 'anop-102',
-    code: 'ANOP 102',
-    meta: 'Core · every term',
-    title: 'Spreadsheet Modeling & Data Analysis',
-    line: 'Students leave with a model a manager could audit and a 1-page memo that says what to do. Every week adds one piece of that memo.',
-    sample: 'Which overtime is worth paying for? A bike shop\'s product mix -> its shadow prices -> a staffing call.',
-    figure: 'lp',
-  },
-  {
-    id: 'anop-302',
-    code: 'ANOP 302',
-    meta: 'Elective · full syllabus',
-    title: 'Financial Decision Modeling using Spreadsheets',
-    href: '/bucknell/anop-302/',
-    line: 'Optimisation -> portfolios -> simulation, built on the decision models course I took at Columbia.',
-    sample: 'Price an option by simulation and watch it close in on Black-Scholes.',
-    sampleHref: '/bucknell/anop-302/#try',
-  },
-  {
-    id: 'anop-330',
-    code: 'ANOP 330',
-    meta: 'Major requirement',
-    title: 'Predictive Analytics: Machine Learning Fundamentals for Business',
-    line: 'Every model is a decision tool, so we judge models by what their mistakes cost - and decide who stays in the loop.',
-    sample: 'The most accurate model earns nothing. Try it below.',
-    sampleHref: '#try',
-  },
-  {
-    id: 'anop-400',
-    code: 'ANOP 400',
-    meta: 'Capstone · external clients',
-    title: 'Business Analytics Practicum',
-    line: 'Scope -> data -> model -> recommendation -> delivery. A signed project charter by week 3, and the client in the room at the end.',
-    sample: 'I ran the Undergraduate Capstone Seminar at Waterloo this way. Teams delivered working prototypes to external partners every term.',
-    figure: 'capstone',
-  },
-];
-
-// A first-year load of 6, as a starting point.
-const plan = [
-  { term: 'Fall 2027', load: ['ANOP 102 (2 sections)', 'ANOP 302'] },
-  { term: 'Spring 2028', load: ['ANOP 102', 'ANOP 330', 'ANOP 400'] },
-  { term: 'Year 2', load: ['The same core', 'A new elective: human-in-the-loop AI for business decisions'] },
-];
-
-// The ANOP 400 term, week by week.
-const capstone = [
-  { label: 'Scope', bars: [[1, 3]] as [number, number][] },
-  { label: 'Data and discovery', bars: [[4, 6]] as [number, number][] },
-  { label: 'Modelling', bars: [[7, 10]] as [number, number][] },
-  { label: 'Recommendation', bars: [[11, 13]] as [number, number][] },
-  { label: 'Delivery', bars: [[14, 14]] as [number, number][] },
-  { label: 'With the client', marks: [{ w: 1 }, { w: 3 }, { w: 8 }, { w: 14 }] },
-  { label: 'Team stand-ups', ticks: Array.from({ length: 14 }, (_, i) => i + 1) },
-];
-
-const jump = [
-  ['#courses', 'Courses'],
-  ['#try', 'Try a class'],
-  ['/bucknell/anop-302/', 'ANOP 302 syllabus'],
-  ['#plan', 'A first year'],
-  ['#approach', 'How I teach'],
+const principles = [
+  ['Build the course backwards from the outcome.', 'Each course ends in work a manager could use, and every week builds toward it.'],
+  ['Personalize within a defined structure.', 'Everyone learns the same methods. Each student picks the decision or dataset they apply them to.'],
+  ['Learn by situational immersion.', 'Real clients and real constraints wherever I can get them.'],
+  ['Test the teaching itself.', 'Mid-term feedback in every course, with changes made before the term ends.'],
 ];
 ---
-<Base title="Bucknell" description="The courses Ali Rizvi would teach in Bucknell's Analytics & Operations Management department, with a draft ANOP 302 syllabus." noindex>
+<Base title="Bucknell" description="The courses Ali Rizvi would teach in Bucknell's Analytics & Operations Management department, and how he teaches them." noindex>
   <header class="page-head">
     <div class="intro-grid">
       <div class="text">
         <p class="label">Bucknell · Analytics &amp; Operations Management</p>
         <h1>Teaching analytics at Bucknell</h1>
         <p class="tagline">I teach analytics the way I used it in industry: decision -> model -> recommendation.</p>
-        <ul class="pills jump" aria-label="On this page">
-          {jump.map(([href, label]) => <li><a href={href}>{label}</a></li>)}
-        </ul>
       </div>
       <div class="photo"><img src="/media/headshot.jpg" alt="Ali Rizvi" width="400" height="500" /></div>
     </div>
   </header>
 
-  <Section label="Courses" id="courses">
+  <Section label="How I teach" id="approach">
+    <ol class="principles">
+      {principles.map(([head, line]) => <li><strong>{head}</strong> {line}</li>)}
+    </ol>
+    <p class="muted principles-note">9 course runs at Waterloo between 2021 and 2024, ~700 students, classes of 40 to 180. More on the <a href="/teaching/">Teaching</a> page.</p>
+  </Section>
+
+  <Section label="The courses" id="courses">
     <CurriculumMap />
     <ul class="rows bk-wide">
       {courses.map((c) => (
-        <li class="grid" id={c.id}>
-          <div class="label">{c.code}<br />{c.meta}</div>
+        <li class="grid">
+          <div class="label">{c.code}<br />{c.when}</div>
           <div class="body">
-            {c.href
-              ? <a class="title" href={c.href}>{c.title} →</a>
-              : <span class="title">{c.title}</span>}
+            <a class="title" href={`/bucknell/${c.slug}/`}>{c.title} →</a>
             <p>{c.line}</p>
-            <p class="sample"><span class="label">{c.code === 'ANOP 400' ? 'Track record' : 'Sample class'}</span>
-              {c.sampleHref ? <a href={c.sampleHref}>{c.sample}</a> : c.sample}</p>
-            {c.figure === 'lp' && <div class="row-fig"><LPFigure /></div>}
-            {c.figure === 'capstone' && (
-              <div class="row-fig">
-                <Gantt title="The ANOP 400 term, week by week" weeks={14} rows={capstone}
-                  caption="With the client: kick-off (week 1), signed charter (3), check-in (8), final presentation (14). Every team gets a 15-minute stand-up each week." />
-              </div>
-            )}
+            <p class="sample"><a href={`/bucknell/${c.slug}/`}>{c.sample}</a></p>
           </div>
         </li>
       ))}
     </ul>
     <div class="grid"><div class="span-8">
-      <p class="muted" style="margin-top: 1.5rem;">I can also take sections of ANOP 203 (Python) and ANOP 270 (Data Visualization). Codes and titles are from the <a href={catalogue} target="_blank" rel="noopener">2026-27 catalogue</a>.</p>
+      <p class="muted" style="margin-top: 1.5rem;">That's 6 courses in year 1 (ANOP 102 three times, then 302, 330 and 400), about 25 students in each. Year 2 keeps the core and adds a new elective on human-in-the-loop AI for business decisions. I can also take sections of ANOP 203 (Python) and ANOP 270 (Data Visualization). It's a starting point - I'll fit it to what the department needs. Codes and prerequisites are from the <a href={catalogue} target="_blank" rel="noopener">2026-27 catalogue</a>.</p>
     </div></div>
   </Section>
 
   <Section label="Try a class" title="The most accurate model earns nothing" id="try">
     <div class="grid"><div class="span-8">
-      <p>A 5-minute version of week 7 in ANOP 330. A subscription business has 1,000 customers, and 100 of them will cancel next month. A model ranks every customer by risk. A retention offer keeps anyone who'd cancel, and each customer kept is worth $200. You pick how many customers get the offer.</p>
-      <ol>
-        <li>Slide to the most accurate setting. Would you deploy it?</li>
-        <li>Then show what each setting is worth, and change what the offer costs.</li>
-      </ol>
+      <p>A 5-minute version of week 7 in ANOP 330. Slide to the most accurate model, then see what each setting is actually worth.</p>
     </div></div>
-    <ThresholdDemo />
-  </Section>
-
-  <Section label="A first year" id="plan">
-    <ul class="path plan-path bk-wide">
-      {plan.map((p) => (
-        <li>
-          <p class="label">{p.term}</p>
-          <p>{p.load.map((l, i) => <>{i > 0 && <br />}{l}</>)}</p>
-        </li>
-      ))}
-    </ul>
-    <div class="grid"><div class="span-8">
-      <p class="muted" style="margin-top: 1.5rem;">6 courses a year, about 25 students in each. This is a starting point - the core comes first, and I'll fit the rest to what the department needs.</p>
-    </div></div>
-  </Section>
-
-  <Section label="How I teach" id="approach">
-    <div class="grid"><div class="span-8">
-      <ol>
-        <li><strong>Build the course backwards from the outcome.</strong> Each course ends in work a manager could use, and every week builds toward it.</li>
-        <li><strong>Personalize within a defined structure.</strong> Everyone learns the same methods. Each student picks the decision or dataset they apply them to.</li>
-        <li><strong>Learn by situational immersion.</strong> Real clients and real constraints wherever I can get them.</li>
-        <li><strong>Test the teaching itself.</strong> Mid-term feedback in every course, with changes made before the term ends.</li>
-      </ol>
-      <p>9 course runs at Waterloo between 2021 and 2024, ~700 students, classes of 40 to 180. More on the <a href="/teaching/">Teaching</a> page.</p>
-    </div></div>
+    <p class="cta"><a href="/bucknell/anop-330/#try">Try it →</a></p>
   </Section>
 </Base>

@@ -1,0 +1,28 @@
+---
+// src/pages/bucknell/anop-330.astro  →  arizvi.com/bucknell/anop-330
+// ANOP 330 and its class to try. Not linked from the nav; sends noindex.
+import Base from '../../layouts/Base.astro';
+import Section from '../../components/Section.astro';
+import CourseHeader from '../../components/CourseHeader.astro';
+import CourseNav from '../../components/CourseNav.astro';
+import ThresholdDemo from '../../components/ThresholdDemo.astro';
+import { course } from '../../data/bucknell';
+
+const c = course('anop-330');
+---
+<Base title="ANOP 330" description="ANOP 330, Machine Learning Fundamentals for Business, as Ali Rizvi would teach it at Bucknell - with a class you can try." noindex>
+  <CourseHeader course={c} />
+
+  <Section label="Try a class" title="The most accurate model earns nothing" id="try">
+    <div class="grid"><div class="span-8">
+      <p>A 5-minute version of week 7. A subscription business has 1,000 customers, and 100 of them will cancel next month. A model ranks every customer by risk. A retention offer keeps anyone who'd cancel, and each customer kept is worth $200. You pick how many customers get the offer.</p>
+      <ol>
+        <li>Slide to the most accurate setting. Would you deploy it?</li>
+        <li>Then show what each setting is worth, and change what the offer costs.</li>
+      </ol>
+    </div></div>
+    <ThresholdDemo />
+  </Section>
+
+  <CourseNav current={c.slug} />
+</Base>
