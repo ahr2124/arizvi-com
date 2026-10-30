@@ -44,7 +44,7 @@ export const courses: Course[] = [
     when: 'Spring 2028',
     prereqs: 'ANOP 102 (or a statistics course) and ANOP 203 (or CSCI 203)',
     leadsTo: 'ANOP 400',
-    sample: 'Try a class: the most accurate model earns nothing',
+    sample: 'Try 2 classes: accuracy vs. value, and an LLM inside a decision model',
   },
   {
     code: 'ANOP 400',

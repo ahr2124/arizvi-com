@@ -33,4 +33,5 @@ Drawn from how Ali actually writes: his emails, his chat messages, and the lines
 - **Small changes ship; redesigns get a diff summary first.** Copy edits, media, and layout fixes are built, committed, and pushed straight away. A redesign or structural change is built and committed, then summarised for approval before pushing.
 - **Every change is checked at 375, 768 and 1440.** Nothing may scroll horizontally, images keep their ratio, no text under 12px. Ali reviews on a 13-inch MacBook.
 - **One typeface, black on white, no colour.** Cooper Hewitt, self-hosted. Rules are 2px above sections and 1px between rows. Pills are the one rounded element.
+- **Colour only where it carries data.** The /bucknell class demos use colour to encode categories and magnitudes (the dataviz reference palette, checked for colour-blind separation). Everything else stays black on white.
 - **Content stays file-driven.** New work, projects, blog posts and videos are files in `src/content/` or arrays at the top of a page. Templates should not need editing to add content.

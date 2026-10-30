@@ -1,164 +1,158 @@
 ---
-// Week 7 of ANOP 330, as a 5-minute demo: accuracy vs. what a model's mistakes cost.
-// 1,000 customers, 100 of them will cancel. The model's ranking is fixed; the reader picks how many get the offer.
-// Churners sit in three bands of the ranking: 70 in the top 150, 20 in the next 150, 10 in the last 700.
-// No prefix of the ranking is ever half churners, so accuracy peaks at 90% with nobody offered.
+// Week 7 of ANOP 330: accuracy vs. what a model's mistakes cost.
+// 1,000 customers ranked by a model's risk score, 100 of whom will cancel. The reader picks how many of the riskiest get an offer.
+// Cancellations sit in three bands of the ranking: 70 in the top 150, 20 in the next 150, 10 in the last 700.
+// No prefix of the ranking is ever half cancellations, so accuracy peaks at 90% with nobody offered.
+const caught = (n: number) =>
+  n <= 150 ? Math.floor((7 * n) / 15) : n <= 300 ? 70 + Math.floor(((n - 150) * 2) / 15) : 90 + Math.floor((n - 300) / 70);
+const cancels = Array.from({ length: 1000 }, (_, i) => caught(i + 1) > caught(i));
 ---
-<div class="demo" data-tdemo>
-  <div class="demo-controls">
+<div class="cdemo" data-cdemo>
+  <div class="cdemo-controls">
     <div>
-      <label class="label" for="tdemo-n">Customers offered</label>
-      <output class="demo-big" for="tdemo-n" data-out="n">0</output>
-      <input type="range" id="tdemo-n" min="0" max="1000" step="10" value="0" />
+      <label class="label" for="cdemo-n">Offers sent, riskiest customers first</label>
+      <output class="demo-big" for="cdemo-n" data-out="n">0</output>
+      <input type="range" id="cdemo-n" min="0" max="1000" step="10" value="0" />
       <div class="demo-scale label" aria-hidden="true"><span>Nobody</span><span>Everyone</span></div>
     </div>
-    <div data-after hidden>
-      <p class="label" id="tdemo-cost">What an offer costs</p>
-      <div class="demo-pills" role="group" aria-labelledby="tdemo-cost">
-        <button type="button" data-cost="2" aria-pressed="false">$2</button>
-        <button type="button" data-cost="20" aria-pressed="true">$20</button>
-        <button type="button" data-cost="60" aria-pressed="false">$60</button>
-        <button type="button" data-cost="100" aria-pressed="false">$100</button>
+    <div>
+      <p class="label" id="cdemo-jump">Jump to</p>
+      <div class="demo-pills" role="group" aria-labelledby="cdemo-jump">
+        <button type="button" data-preset="acc">Most accurate</button>
+        <button type="button" data-preset="best">Most valuable</button>
+        <button type="button" data-preset="all">Everyone</button>
       </div>
     </div>
   </div>
 
-  <dl class="demo-readout">
-    <div><dt class="label">Cancellations caught</dt><dd data-out="caught">0 of 100</dd></div>
-    <div><dt class="label">False alarms</dt><dd data-out="fp">0</dd></div>
-    <div><dt class="label">Accuracy</dt><dd data-out="acc">90.0%</dd></div>
-    <div><dt class="label">Net value</dt><dd data-out="value">?</dd></div>
-  </dl>
-
-  <div class="demo-chart">
-    <p class="label">Accuracy</p>
-    <div class="demo-plot" aria-hidden="true" data-plot="acc">
-      <svg viewBox="0 0 1000 100" preserveAspectRatio="none"><path data-line /></svg>
-      <span class="demo-rule" data-rule></span>
-      <span class="demo-dot" data-dot></span>
-      <span class="demo-y top label">100%</span>
-      <span class="demo-y bottom label">0%</span>
+  <div class="cdemo-main">
+    <div>
+      <p class="label">What happens next month · 1 square = 1 customer, riskiest first</p>
+      <div class="cdemo-grid" aria-hidden="true">
+        {cancels.map((c) => <span class={c ? 'lost' : 'alone'} data-c={c ? '1' : '0'} />)}
+      </div>
     </div>
+    <dl class="cdemo-ledger">
+      <div><dt><span class="sw kept" />Kept</dt><dd data-out="kept">0</dd></div>
+      <div><dt><span class="sw wasted" />Wasted offers</dt><dd data-out="wasted">0</dd></div>
+      <div><dt><span class="sw lost" />Cancelled anyway</dt><dd data-out="lost">100</dd></div>
+      <div><dt><span class="sw alone" />Left alone</dt><dd data-out="alone">900</dd></div>
+      <div class="total"><dt>Net value</dt><dd data-out="value">$0</dd><dd class="calc" data-out="calc">0 kept × $200 − 0 offers × $20</dd></div>
+      <div class="total"><dt>Accuracy</dt><dd data-out="acc">90.0%</dd><dd class="calc">customers the model called right</dd></div>
+    </dl>
   </div>
 
-  <div class="demo-chart">
-    <p class="label">Net value</p>
-    <div class="demo-plot" data-plot="value">
-      <div aria-hidden="true" data-after hidden>
+  <p class="demo-note" aria-live="polite" data-note></p>
+
+  <div class="cdemo-compare">
+    <div><p class="label">Most accurate</p><p class="big">Offer nobody</p><p data-out="acc-line">90.0% accurate · $0</p></div>
+    <div><p class="label">Most valuable</p><p class="big" data-out="best-who">Offer 300</p><p data-out="best-line">78.0% accurate · $12,000</p></div>
+  </div>
+
+  <div class="cdemo-cost">
+    <p class="label" id="cdemo-cost">Now change what an offer costs</p>
+    <div class="demo-pills" role="group" aria-labelledby="cdemo-cost">
+      <button type="button" data-cost="2" aria-pressed="false">$2</button>
+      <button type="button" data-cost="20" aria-pressed="true">$20</button>
+      <button type="button" data-cost="60" aria-pressed="false">$60</button>
+      <button type="button" data-cost="100" aria-pressed="false">$100</button>
+    </div>
+    <div class="demo-chart">
+      <p class="label">Net value by offers sent</p>
+      <div class="demo-plot" aria-hidden="true" data-plot>
         <svg viewBox="0 0 1000 100" preserveAspectRatio="none"><path data-line /></svg>
         <span class="demo-hline" data-zero></span>
         <span class="demo-rule" data-rule></span>
         <span class="demo-best" data-best></span>
-        <span class="demo-tag label" data-best-tag>Best</span>
+        <span class="demo-tag label" data-best-tag>Most valuable</span>
         <span class="demo-dot" data-dot></span>
         <span class="demo-y label" data-ymax></span>
         <span class="demo-y label" data-y0>$0</span>
         <span class="demo-y label" data-ymin></span>
       </div>
-      <div class="demo-veil" data-veil>
-        <button type="button" class="demo-btn solid" data-reveal>Show what each setting is worth</button>
-      </div>
+      <div class="demo-x label" aria-hidden="true"><span>0</span><span class="mid" style="left: 50%;">500</span><span class="end">1,000</span></div>
     </div>
   </div>
-  <div class="demo-x label" aria-hidden="true"><span>0</span><span class="mid" style="left: 50%;">500</span><span class="end">1,000</span></div>
 
-  <p class="demo-note" aria-live="polite" data-note></p>
-  <p class="demo-coda" data-after hidden>Accuracy is the same curve at every price. The best setting moves from everyone ($2) to nobody ($100). So the threshold is a business call, and a manager has to own it.</p>
+  <p class="demo-coda">Accuracy is the same at every price. The most valuable number of offers moves from everyone ($2) to nobody ($100). So the threshold is a business call, and a manager has to own it.</p>
 </div>
 
 <script>
-  const SAVED = 200; // value of a customer the offer keeps
+  const SAVED = 200;
   const caught = (n: number) =>
-    n <= 150 ? Math.floor((7 * n) / 15)
-    : n <= 300 ? 70 + Math.floor(((n - 150) * 2) / 15)
-    : 90 + Math.floor((n - 300) / 70);
+    n <= 150 ? Math.floor((7 * n) / 15) : n <= 300 ? 70 + Math.floor(((n - 150) * 2) / 15) : 90 + Math.floor((n - 300) / 70);
   const accuracy = (n: number) => (900 - n + 2 * caught(n)) / 1000;
   const value = (n: number, cost: number) => SAVED * caught(n) - cost * n;
   const grid = Array.from({ length: 101 }, (_, i) => i * 10);
   const money = (v: number) => (v < 0 ? '−' : '') + '$' + Math.abs(v).toLocaleString('en-CA');
   const short = (v: number) => (v < 0 ? '−' : '') + '$' + (Math.abs(v) >= 1000 ? `${Math.round(Math.abs(v) / 1000)}k` : Math.abs(v));
   const pct = (a: number) => (a * 100).toFixed(1) + '%';
-  const who = (n: number) => (n === 0 ? 'nobody' : n === 1000 ? 'everyone' : `${n} customers`);
+  const fmt = (n: number) => n.toLocaleString('en-CA');
+  const who = (n: number) => (n === 0 ? 'nobody' : n === 1000 ? 'everyone' : `the riskiest ${fmt(n)}`);
 
-  document.querySelectorAll<HTMLElement>('[data-tdemo]').forEach((root) => {
+  document.querySelectorAll<HTMLElement>('[data-cdemo]').forEach((root) => {
     const $ = <T extends Element>(s: string) => root.querySelector<T>(s)!;
     const slider = $<HTMLInputElement>('input[type=range]');
-    const accPlot = $<HTMLElement>('[data-plot=acc]');
-    const valPlot = $<HTMLElement>('[data-plot=value]');
-    let cost = 20;
-    let revealed = false;
-
-    const pathFor = (ys: number[]) => ys.map((y, i) => `${i ? 'L' : 'M'}${grid[i]},${y.toFixed(2)}`).join(' ');
-    const place = (el: HTMLElement, n: number, y?: number) => {
-      el.style.left = `${n / 10}%`;
-      if (y !== undefined) el.style.top = `${y}%`;
-    };
-
-    // The accuracy curve never changes.
-    $<SVGPathElement>('[data-plot=acc] [data-line]').setAttribute('d', pathFor(grid.map((n) => 100 - accuracy(n) * 100)));
-
-    let lo = 0, hi = 0, best = 0;
+    const plot = $<HTMLElement>('[data-plot]');
+    const cells = [...root.querySelectorAll<HTMLElement>('.cdemo-grid span')];
+    const cancels = cells.map((c) => c.dataset.c === '1');
+    let n = 0, painted = 0, cost = 20, best = 300, lo = 0, hi = 1;
     const yOf = (v: number) => (100 * (hi - v)) / (hi - lo);
+    const place = (el: HTMLElement, x: number, y: number) => { el.style.left = `${x / 10}%`; el.style.top = `${y}%`; };
+
+    function paint() {
+      const a = Math.min(n, painted), b = Math.max(n, painted);
+      for (let i = a; i < b; i++) cells[i].className = i < n ? (cancels[i] ? 'kept' : 'wasted') : (cancels[i] ? 'lost' : 'alone');
+      painted = n;
+    }
 
     function drawValue() {
-      const vs = grid.map((n) => value(n, cost));
+      const vs = grid.map((x) => value(x, cost));
       best = grid[vs.indexOf(Math.max(...vs))];
-      const max = Math.max(0, ...vs), min = Math.min(0, ...vs);
-      const pad = (max - min) * 0.08 || 1000;
+      const max = Math.max(0, ...vs), min = Math.min(0, ...vs), pad = (max - min) * 0.08 || 1000;
       hi = max + pad; lo = min - pad;
-      valPlot.querySelector('[data-line]')!.setAttribute('d', pathFor(vs.map(yOf)));
-      valPlot.querySelector<HTMLElement>('[data-zero]')!.style.top = `${yOf(0)}%`;
-      // Axis labels sit at the values they name; $0 only when it isn't already one of them or crowded.
+      $('[data-line]').setAttribute('d', grid.map((x, i) => `${i ? 'L' : 'M'}${x},${yOf(vs[i]).toFixed(2)}`).join(' '));
+      $<HTMLElement>('[data-zero]').style.top = `${yOf(0)}%`;
+      const h = plot.clientHeight || 150;
+      const apart = (p: number, q: number) => (Math.abs(yOf(p) - yOf(q)) * h) / 100 > 22;
       const label = (sel: string, v: number, show = true) => {
-        const el = valPlot.querySelector<HTMLElement>(sel)!;
-        el.textContent = short(v);
-        el.style.top = `${yOf(v)}%`;
-        el.hidden = !show;
+        const el = $<HTMLElement>(sel);
+        el.textContent = short(v); el.style.top = `${yOf(v)}%`; el.hidden = !show;
       };
-      const h = valPlot.clientHeight || 150;
-      const apart = (a: number, b: number) => (Math.abs(yOf(a) - yOf(b)) * h) / 100 > 22;
       label('[data-ymax]', max);
       label('[data-ymin]', min, min !== max);
       label('[data-y0]', 0, max > 0 && min < 0 && apart(0, max) && apart(0, min));
-      const b = valPlot.querySelector<HTMLElement>('[data-best]')!;
-      const tag = valPlot.querySelector<HTMLElement>('[data-best-tag]')!;
-      place(b, best, yOf(value(best, cost)));
+      place($<HTMLElement>('[data-best]'), best, yOf(value(best, cost)));
+      const tag = $<HTMLElement>('[data-best-tag]');
       place(tag, best, yOf(value(best, cost)));
-      tag.classList.toggle('flip', best > 700);
+      tag.classList.toggle('flip', best > 600);
+      $('[data-out=best-who]').textContent = best === 0 ? 'Offer nobody' : best === 1000 ? 'Offer everyone' : `Offer ${fmt(best)}`;
+      $('[data-out=best-line]').textContent = `${pct(accuracy(best))} accurate · ${money(value(best, cost))}`;
     }
 
     function update() {
-      const n = Number(slider.value);
-      const c = caught(n);
-      $('[data-out=n]').textContent = n.toLocaleString('en-CA');
-      $('[data-out=caught]').textContent = `${c} of 100`;
-      $('[data-out=fp]').textContent = (n - c).toLocaleString('en-CA');
-      $('[data-out=acc]').textContent = pct(accuracy(n));
-      slider.setAttribute('aria-valuetext', `${n} customers offered, accuracy ${pct(accuracy(n))}`);
-      accPlot.querySelectorAll<HTMLElement>('[data-rule], [data-dot]').forEach((el) => place(el, n, 100 - accuracy(n) * 100));
-      const note = $('[data-note]');
-      if (!revealed) {
-        $('[data-out=value]').textContent = '?';
-        note.textContent = n === 0
-          ? 'Nobody gets an offer, and accuracy is 90.0% - as high as it goes.'
-          : `Offering ${who(n)} drops accuracy to ${pct(accuracy(n))}. The most accurate setting is nobody, at 90.0%.`;
-        return;
-      }
-      const v = value(n, cost);
+      n = Number(slider.value);
+      const k = caught(n), wasted = n - k, v = value(n, cost);
+      paint();
+      $('[data-out=n]').textContent = fmt(n);
+      $('[data-out=kept]').textContent = fmt(k);
+      $('[data-out=wasted]').textContent = fmt(wasted);
+      $('[data-out=lost]').textContent = fmt(100 - k);
+      $('[data-out=alone]').textContent = fmt(900 - wasted);
       $('[data-out=value]').textContent = money(v);
-      valPlot.querySelectorAll<HTMLElement>('[data-rule], [data-dot]').forEach((el) => place(el, n, yOf(v)));
-      note.textContent = `At $${cost} an offer, the best setting offers ${who(best)} for ${money(value(best, cost))}, at ${pct(accuracy(best))} accuracy. Yours (${who(n)}) is worth ${money(v)}.`;
+      $('[data-out=calc]').textContent = `${fmt(k)} kept × $200 − ${fmt(n)} offers × $${cost}`;
+      $('[data-out=acc]').textContent = pct(accuracy(n));
+      slider.setAttribute('aria-valuetext', `${n} offers, ${k} kept, net ${money(v)}, accuracy ${pct(accuracy(n))}`);
+      plot.querySelectorAll<HTMLElement>('[data-rule], [data-dot]').forEach((el) => place(el, n, yOf(v)));
+      $('[data-note]').textContent = n === 0
+        ? 'Offer nobody and the model is 90% accurate - it\'s right about all 900 customers who stay. It also earns nothing: all 100 cancellations walk out the door.'
+        : `Offering ${who(n)}: ${fmt(k)} kept, ${fmt(wasted)} offers wasted on people who'd have stayed. Net ${money(v)} at ${pct(accuracy(n))} accuracy${n === best ? ' - the most valuable setting at this price.' : '.'}`;
     }
 
+    const set = (x: number) => { slider.value = String(x); update(); };
     slider.addEventListener('input', update);
-    $('[data-reveal]').addEventListener('click', () => {
-      revealed = true;
-      $<HTMLElement>('[data-veil]').hidden = true;
-      root.querySelectorAll<HTMLElement>('[data-after]').forEach((el) => (el.hidden = false));
-      drawValue();
-      update();
-      slider.focus();
-    });
+    root.querySelectorAll<HTMLButtonElement>('[data-preset]').forEach((b) =>
+      b.addEventListener('click', () => set(b.dataset.preset === 'acc' ? 0 : b.dataset.preset === 'all' ? 1000 : best)));
     root.querySelectorAll<HTMLButtonElement>('[data-cost]').forEach((btn) =>
       btn.addEventListener('click', () => {
         cost = Number(btn.dataset.cost);
@@ -167,6 +161,7 @@
         update();
       }),
     );
+    drawValue();
     update();
   });
 </script>

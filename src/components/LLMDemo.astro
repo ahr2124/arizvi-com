@@ -1,0 +1,116 @@
+---
+// Week 11 of ANOP 330: how an LLM works inside a decision model.
+// The model's odds for its next word (at temperature 1): low 20%, medium 45%, high 35%.
+// Temperature reshapes them (p ^ 1/T, renormalised); at 0 it always picks the favourite.
+// The café bakes 40 / 80 / 120 croissants for low / medium / high. Cost $1, price $5.
+// If the odds are honest, expected profit is $160 / $280 / $310 for each bake, so the best bake is 120.
+const answers = [
+  { key: 'low', label: 'Low' },
+  { key: 'medium', label: 'Medium' },
+  { key: 'high', label: 'High' },
+];
+const strategies = [
+  { key: 'once', label: 'Ask it once, bake what it says' },
+  { key: 'top', label: 'Always bake for its top answer' },
+  { key: 'odds', label: 'Bake for its odds' },
+];
+---
+<div class="ldemo" data-ldemo>
+  <div class="ldemo-prompt">
+    <p class="label">The café's prompt</p>
+    <p class="ldemo-q">Tomorrow is a rainy Saturday and the farmers' market is on. Will croissant demand be high, medium or low? Answer in one word.</p>
+  </div>
+
+  <div class="ldemo-step">
+    <p class="label">1 · The model's odds for its next word</p>
+    <div class="ldemo-bars">
+      {answers.map((a) => (
+        <div class="ldemo-bar">
+          <span class="ldemo-name">{a.label}</span>
+          <span class="ldemo-track"><span class={`ldemo-fill ${a.key}`} data-bar={a.key} /></span>
+          <span class="ldemo-pct" data-pct={a.key}></span>
+        </div>
+      ))}
+    </div>
+    <div class="ldemo-temp">
+      <label class="label" for="ldemo-t">Temperature <output data-out="t" for="ldemo-t">1.0</output></label>
+      <input type="range" id="ldemo-t" min="0" max="1.5" step="0.1" value="1" />
+      <div class="demo-scale label" aria-hidden="true"><span>0 · always the favourite</span><span>1.5 · spread the bets</span></div>
+    </div>
+  </div>
+
+  <div class="ldemo-step">
+    <p class="label">2 · Ask it the same question 20 times</p>
+    <div class="demo-buttons"><button type="button" class="demo-btn solid" data-ask>Ask 20 times</button></div>
+    <div class="ldemo-chips" data-chips aria-live="polite"></div>
+    <p class="ldemo-tally" data-tally></p>
+  </div>
+
+  <div class="ldemo-step">
+    <p class="label">3 · Put it in the decision model</p>
+    <p>The café bakes 40, 80 or 120 croissants for low, medium or high. Each costs $1 to bake and sells for $5, so running out costs $4 a croissant and a leftover costs $1. Expected profit a day, if the model's odds are honest:</p>
+    <div class="ldemo-strats">
+      {strategies.map((s) => (
+        <div class="ldemo-strat" data-strat={s.key}>
+          <span class="ldemo-sname">{s.label}</span>
+          <span class="ldemo-track"><span class="ldemo-sfill" data-sbar={s.key} /></span>
+          <span class="ldemo-sval" data-sval={s.key}></span>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <p class="demo-coda">The model's single most likely answer is medium. But running out costs 4 times as much as a leftover, so the best plan bakes for high. That's the decision model's job: take the LLM's odds and the costs, and pick the move with the best expected outcome. It only works if the odds are honest. Real LLMs can be overconfident, so in the course we check their odds against what actually happened - and decide where a person signs off.</p>
+</div>
+
+<script>
+  const KEYS = ['low', 'medium', 'high'] as const;
+  const BASE = [0.2, 0.45, 0.35];
+  const PROFIT = [160, 280, 310]; // expected profit a day for baking 40 / 80 / 120, if the odds are honest
+  const odds = (t: number) => {
+    if (t < 0.05) { const top = BASE.indexOf(Math.max(...BASE)); return BASE.map((_, i) => (i === top ? 1 : 0)); }
+    const w = BASE.map((p) => Math.pow(p, 1 / t));
+    const s = w.reduce((a, b) => a + b, 0);
+    return w.map((x) => x / s);
+  };
+  const money = (v: number) => '$' + Math.round(v).toLocaleString('en-CA');
+
+  document.querySelectorAll<HTMLElement>('[data-ldemo]').forEach((root) => {
+    const $ = <T extends Element>(s: string) => root.querySelector<T>(s)!;
+    const slider = $<HTMLInputElement>('#ldemo-t');
+    const best = Math.max(...PROFIT);
+
+    function update() {
+      const t = Number(slider.value);
+      const p = odds(t);
+      $('[data-out=t]').textContent = t.toFixed(1);
+      KEYS.forEach((k, i) => {
+        $<HTMLElement>(`[data-bar=${k}]`).style.width = `${p[i] * 100}%`;
+        $(`[data-pct=${k}]`).textContent = `${Math.round(p[i] * 100)}%`;
+      });
+      const once = p.reduce((sum, q, i) => sum + q * PROFIT[i], 0);
+      const vals: Record<string, number> = { once, top: PROFIT[1], odds: PROFIT[2] };
+      Object.entries(vals).forEach(([k, v]) => {
+        $<HTMLElement>(`[data-sbar=${k}]`).style.width = `${(v / best) * 100}%`;
+        $(`[data-sval=${k}]`).textContent = money(v) + (v === best ? ' · best' : '');
+        $(`[data-strat=${k}]`).classList.toggle('is-best', v === best);
+      });
+      slider.setAttribute('aria-valuetext', `temperature ${t.toFixed(1)}: low ${Math.round(p[0] * 100)}%, medium ${Math.round(p[1] * 100)}%, high ${Math.round(p[2] * 100)}%`);
+    }
+
+    $('[data-ask]').addEventListener('click', () => {
+      const p = odds(Number(slider.value));
+      const picks = Array.from({ length: 20 }, () => {
+        let r = Math.random(), i = 0;
+        while (i < 2 && r >= p[i]) { r -= p[i]; i++; }
+        return i;
+      });
+      $('[data-chips]').innerHTML = picks.map((i) => `<span class="chip ${KEYS[i]}">${KEYS[i]}</span>`).join('');
+      const count = KEYS.map((_, i) => picks.filter((x) => x === i).length);
+      $('[data-tally]').textContent = `Same question, same model: ${count[2]} high, ${count[1]} medium, ${count[0]} low.`;
+    });
+
+    slider.addEventListener('input', update);
+    update();
+  });
+</script>
