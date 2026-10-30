@@ -56,7 +56,6 @@ COURSES = {
     '400': ('ANOP 400', 'Practicum', True),
     '302': ('ANOP 302', 'Financial Modeling', True),
     '242': ('ANOP 242', 'SQL, Cloud & GenAI', False),
-    '311': ('ANOP 311', 'Supply Chain Analytics', False),
 }
 
 LINKS = {'102': '/bucknell/anop-102/', '302': '/bucknell/anop-302/', '330': '/bucknell/anop-330/', '400': '/bucknell/anop-400/'}
@@ -97,7 +96,7 @@ def curriculum_wide():
     out.append(f'<path class="link" d="M{cx[2]+bw:.1f},{r2+30} H{cx[2]+bw+12:.1f} V{ey} H{cx[3]-8:.1f}" />' + arrow_right(cx[3], ey))
     out.append(f'<path class="sep" d="M0,{r3-18} H{W}" />')
     out.append(lbl(cx[0], r3 + 35, 'Electives'))
-    out += [box('302', cx[1], r3, bw, h), box('242', cx[2], r3, bw, h), box('311', cx[3], r3, bw, h)]
+    out += [box('302', cx[1], r3, bw, h), box('242', cx[2], r3, bw, h)]
     H = r3 + h + 2
     return W, H, '\n'.join(out)
 
@@ -121,9 +120,8 @@ def curriculum_tall():
     out.append(f'<path class="sep" d="M0,{sep} H{W}" />')
     out.append(lbl(0, sep + 26, 'Electives'))
     e1 = sep + 40
-    out += [box('302', xl, e1, bw, h, pad=12), box('242', xr, e1, bw, h, pad=12),
-            box('311', xl, e1 + 68, bw, h, pad=12)]
-    H = e1 + 68 + h + 2
+    out += [box('302', xl, e1, bw, h, pad=12), box('242', xr, e1, bw, h, pad=12)]
+    H = e1 + h + 2
     return W, H, '\n'.join(out)
 
 def svg(W, H, body, title, desc, cls=''):
@@ -229,7 +227,7 @@ def write(path, content):
 cw = curriculum_wide()
 ct = curriculum_tall()
 desc = ('ANOP 102 leads to ANOP 330 and then the ANOP 400 practicum; ANOP 203 also leads to 330, '
-        'and ANOP 350 or 370 also leads to 400. Electives include ANOP 302, 242 and 311. '
+        'and ANOP 350 or 370 also leads to 400. Electives include ANOP 302 and 242. '
         'The courses I would teach are 102, 330, 400 and 302.')
 write('src/components/CurriculumMap.astro', f'''---
 {STYLE_NOTE}
