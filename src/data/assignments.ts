@@ -80,13 +80,14 @@ export const a330: Assignment[] = [
   },
   {
     title: 'The model card and the memo',
-    meta: 'Team project · 30% · weeks 5 to 14',
+    meta: 'Team project · 30% · weeks 4 to 14',
     prompt: [
       'Your team builds one model that would change a decision for a real organization, or on public data where we cannot get one. The model is scored on a term of data the team never sees.',
       'What you hand in is a notebook, a 1-page model card and a 2-page memo, and an 8-minute pitch to the person who would act on it.',
     ],
     stepsLabel: 'The pieces',
     steps: [
+      'Week 4: the pitch video, 2 minutes, 1 per member.',
       'Week 5: the charter: the decision, what a wrong prediction costs in each direction, the data, and the held-out plan.',
       'Week 9: a first model with its cross-validated error, against a simple baseline.',
       'Week 12: the cutoff chosen by cost, and the model card.',
@@ -97,7 +98,7 @@ export const a330: Assignment[] = [
       { name: 'The decision and the costs', levels: L([4, 'The decision named; the cost of each kind of mistake stated and used to choose the cutoff.'], [2, 'The decision named; costs guessed; the cutoff left at the default.'], [0, 'Accuracy is the only yardstick.']) },
       { name: 'Data and leakage', levels: L([4, 'Every feature exists at decision time; the holdout is a later period.'], [2, 'One leak I can find, or a holdout that is a random split of the same period.'], [0, 'Leaks throughout.']) },
       { name: 'The model and its validation', levels: L([4, 'Cross-validated; error reported on held-out data; a simpler baseline beaten and shown.'], [2, 'Validated, but no baseline.'], [0, 'Scored on the training data.']) },
-      { name: 'The model card', levels: L([4, 'What it predicts, what it is for, where it fails, who is harmed when it is wrong, and where AI tools were used.'], [2, 'Half of those.'], [0, 'Missing.']) },
+      { name: 'The held-out term', levels: L([4, 'The score on the term the team never saw is in the memo, against the baseline, with what it means.'], [2, 'The score, with no baseline.'], [0, 'Not scored on the held-out term.']) },
       { name: 'The memo and the pitch', levels: L([4, 'A decision-maker could act on it: what to do, what acting costs, and when to stop trusting the model.'], [2, 'Describes the model instead of the decision.'], [0, 'Hard to follow.']) },
     ],
     note: "The peer evaluation at week 14 moves each member's share of the 20 points up or down by up to 2.",

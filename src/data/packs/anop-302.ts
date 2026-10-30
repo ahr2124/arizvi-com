@@ -10,7 +10,7 @@ const midterm: Assignment = {
   title: 'The midterm case',
   meta: 'Midterm · 20% · week 7, class 2 · 75 minutes',
   prompt: [
-    'A financial decision you have not seen, its numbers on 1 page, and 4 questions: formulate, solve, read the sensitivity report, recommend. The practice case in class 1 that week has the same shape, and we mark it together before you leave.',
+    'A financial decision you haven\'t seen, its numbers on 1 page, and 4 questions: formulate, solve, read the sensitivity report, recommend. The practice case in class 1 that week has the same shape, and we mark it together before you leave.',
     'Open book: your labs, your notes and the texts. Closed internet, no AI tools. In a workbook, because Solver is the point; the formulation is written on paper first and handed in with it.',
   ],
   stepsLabel: 'The 4 questions, every time',
@@ -34,13 +34,13 @@ const project: Assignment = {
   meta: 'Team project · 30% · weeks 4 to 14',
   prompt: [
     'A financial decision a real organization faces, built from its public filings, or with the organization itself where we can arrange it: a capital budget, a financing plan, a portfolio mandate, a hedge. The team builds the model that informs it and writes the 2-page memo a CFO could act on.',
-    'Built in pieces: teams form in week 4, the decision is chosen by week 6, the model is reviewed with me in week 10, and the team presents in week 14 with the memo and the model attached.',
+    'Built in pieces: teams form in week 4, the decision is chosen by week 6, the model is reviewed with me in week 10 or 11, and the team presents in week 14 with the memo and the model attached.',
   ],
   stepsLabel: 'The pieces',
   steps: [
     'Week 4: a team of 3 or 4.',
     'Week 6: the decision in 1 paragraph I sign off: who decides, between which options, by when, and the public numbers it rests on.',
-    'Week 10: the model review: 20 minutes with me, the model open, the sensitivity or simulation output on the screen.',
+    'Weeks 10 and 11: the model review: 20 minutes with me, by appointment, the model open, the sensitivity or simulation output on the screen.',
     'Week 14: 8 minutes to present, then the memo and the workbook handed in.',
   ],
   handIn: ['The memo: 2 pages, PDF.', 'The workbook, with the source filings cited on the inputs sheet.', 'One slide per member on what they did.', 'The peer evaluation, in private.'],
@@ -77,11 +77,11 @@ export const pack: Pack = {
     ['The lab', 'One a week, started in class 2 and finished on your own, due before the next class 1. Each ends with a 3-sentence recommendation.'],
     ['Tools', 'Excel with Solver, and the Analysis ToolPak for the simulation weeks. ANOP 102 is the prerequisite, so the modelling rules are assumed from week 1 and the finance is taught.'],
     ['Text', 'No required text. Recommended: Winston and Albright, Practical Management Science, for the optimisation weeks, and Benninga, Financial Modeling, for portfolios and options. Public data: Treasury yields, 5 years of monthly stock returns from a public source, Fed H.10 exchange rates, and filings from EDGAR for the project.'],
-    ['Help', '2 office hours a week, plus time by appointment. Come with a half-built model; that is the best time to talk. Course questions go on the forum so the answer helps everyone.'],
+    ['Help', '2 office hours a week, plus time by appointment. Come with a half-built model; that\'s the best time to talk. Course questions go on the forum so the answer helps everyone.'],
     ['Day one', "I ask the class how it wants to be graded. The weights are fixed. What's open: whether the final is 2 hours or 3, and whether week 13 covers hedging foreign exchange (my pick) or a commodity, which the class votes on in week 7 with the anonymous mid-term form."],
   ],
   grading: [
-    ['Weekly labs', '25%', '12 labs (weeks 1 to 6 and 8 to 13), marked pass or redo on a rubric you see before you start. A lab that does not pass comes back within a week with feedback, and you resubmit until it does, up to the last day of week 13. Each lab passed is worth 25/12 of the 25.'],
+    ['Weekly labs', '25%', '12 labs (weeks 1 to 6 and 8 to 13), marked pass or redo on a rubric you see before you start. A lab that doesn\'t pass comes back within a week with feedback, and you resubmit until it does, up to the last day of classes. Each lab passed is worth 25/12 of the 25.'],
     ['Midterm', '20%', 'Week 7. Optimisation: formulate, solve, read, recommend. Rubric below.'],
     ['Team project', '30%', 'Weeks 4 to 14. A financial decision a real organization faces, from its filings or with the organization. Rubric below. Peer evaluation moves each member\'s share by up to 2 points.'],
     ['Final exam', '15%', 'On paper, 2 or 3 hours. Portfolios, risk and simulation, with the outputs printed. Attempt up to 30 marks. Sample below.'],
@@ -91,13 +91,13 @@ export const pack: Pack = {
     {
       title: 'Pass or redo',
       body: [
-        'Labs are satisfactory or they come back. A lab passes at 6 of its 8 rubric points with no row at 0. Anything else comes back with feedback within a week, and you resubmit until it passes, until the last day of week 13. Full marks for every lab you bring to a pass.',
+        'Labs are satisfactory or they come back. A lab passes at 6 of its 8 rubric points with no row at 0. Anything else comes back with feedback within a week, and you resubmit until it passes, until the last day of classes. Full marks for every lab you bring to a pass.',
       ],
     },
     {
       title: 'Late work',
       body: [
-        '5 late days for the term, spent on labs 1 day at a time, no reason needed; weekends and holidays do not count. The project pieces, the midterm and the final have fixed dates. A lab handed in late with no late day left is a 0. Extensions beyond that are for illness or a family emergency, with a note from the appropriate office. Keep your workbooks in OneDrive from week 1.',
+        '5 late days for the term, spent on labs 1 day at a time, no reason needed; weekends and holidays don\'t count. The project pieces, the midterm and the final have fixed dates. A lab handed in late with no late day left is a 0. Extensions beyond that are for illness or a family emergency, with a note from the appropriate office. Keep your workbooks in OneDrive from week 1.',
       ],
     },
     {
@@ -109,13 +109,13 @@ export const pack: Pack = {
     {
       title: 'AI tools',
       body: [
-        'Allowed for checking formulas and debugging. Submit the prompts with the lab. Off limits: the formulation and the recommendation, which are the parts I am marking. You stay responsible for every cell, and there is no AI in the midterm or the final.',
+        'Allowed for checking formulas and debugging. Submit the prompts with the lab. Off limits: the formulation and the recommendation, which are the parts I\'m marking. You stay responsible for every cell, and there\'s no AI in the midterm or the final.',
       ],
     },
     {
       title: 'Marks and attendance',
       body: [
-        'Labs and the midterm are marked within a week; exit tickets in the room. Grades are final 1 week after the work comes back; if a mark looks wrong, email me inside that week with the cell you mean. Exit tickets cannot be made up, which is why only the best 20 count.',
+        'Labs and the midterm are marked within a week; exit tickets in the room. Grades are final 1 week after the work comes back; if a mark looks wrong, email me inside that week with the cell you mean. Exit tickets can\'t be made up, which is why only the best 20 count.',
       ],
     },
     {
@@ -129,7 +129,7 @@ export const pack: Pack = {
     {
       w: 1, topic: 'From spreadsheets to finance',
       before: 'Video (15 min): a linear program in plain words: decisions, an objective, constraints. Read the 1-page case: a bakery\'s 6-month financial plan. Check: 3 questions, one is "which of these 4 lines is a constraint?"',
-      c1: 'How this runs and the day-one poll (15). Guess first: the bakery\'s plan, which month runs out of cash (5). The LP from scratch for anyone who has not met one: a 2-product mix on paper, by hand, then with Solver (30). Pairs: the bakery plan as an LP, with the 3 modelling rules from ANOP 102 assumed (20). Exit ticket.',
+      c1: 'How this runs and the day-one poll (15). Guess first: the bakery\'s plan, which month runs out of cash (5). The LP from scratch for anyone who hasn\'t met one: a 2-product mix on paper, by hand, then with Solver (30). Pairs: the bakery plan as an LP, with the 3 modelling rules from ANOP 102 assumed (20). Exit ticket.',
       c2: 'Model hygiene for finance: inputs, decisions and outputs on separate sheets, every rate named, every period a column (15). Pairs rebuild the bakery plan to the rules and add a borrowing line (35). Debrief: 2 models on the screen, the room finds the typed-in rate (15). Exit ticket, and the lab starts.',
       lab: 'Lab 1: the bakery\'s 6-month plan as an LP, to the rules, with the month it borrows and the 3 sentences to the owner.',
     },
@@ -137,15 +137,15 @@ export const pack: Pack = {
       w: 2, topic: 'Short-term financing',
       before: 'Read Winston and Albright on multi-period cash models (6 pages). Check: 3 questions, one is the cash balance identity.',
       c1: 'Guess first: a small manufacturer with a $100,000 credit line at 1% a month, a shortfall in months 2 to 4, a surplus after, and the option to delay suppliers at a 2% penalty. Borrow, invest or hold? (5). The balance identity, month by month, on the board (15). Pairs build it: 6 months, 3 decisions a month (40). Debrief: the month everyone got wrong (15).',
-      c2: 'Solve it (10). What the optimum does that the guess did not (15). In threes, 3 variations: a cheaper line with a fee, a supplier who will not be delayed, a bonus month (35). Exit ticket. The lab starts (15).',
+      c2: 'Solve it (10). What the optimum does that the guess didn\'t (15). In threes, 3 variations: a cheaper line with a fee, a supplier who won\'t be delayed, a bonus month (35). Exit ticket. The lab starts (15).',
       lab: 'Lab 2: the manufacturer\'s 6-month cash plan, solved, with a chart of the balance and the 3 sentences.',
     },
     {
       w: 3, topic: 'Sensitivity analysis',
       before: 'Video (16 min): the Solver sensitivity report, line by line: shadow prices, reduced costs, allowable ranges. Check: 3 questions on a printed report.',
-      c1: 'Guess first: what is 1 more dollar of credit line worth to the week 2 model? (5). The report generated and read, line by line, as sentences (25). Pairs: raise the line by $25,000, re-solve, and compare the gain with the shadow price (25). Debrief: when the shadow price stops being right, and the allowable range that said so (20).',
-      c2: 'Reduced costs: the product you do not make and what its price would have to be (20). In threes, the bank\'s 3 offers, each priced with the report before re-solving, then checked (40). Exit ticket. The lab starts (15).',
-      lab: 'Lab 3: What is an extra dollar of credit line worth? In full under Assignments.',
+      c1: 'Guess first: what\'s 1 more dollar of credit line worth to the week 2 model? (5). The report generated and read, line by line, as sentences (25). Pairs: raise the line by $25,000, re-solve, and compare the gain with the shadow price (25). Debrief: when the shadow price stops being right, and the allowable range that said so (20).',
+      c2: 'Reduced costs: the product you don\'t make and what its price would have to be (20). In threes, the bank\'s 3 offers, each priced with the report before re-solving, then checked (40). Exit ticket. The lab starts (15).',
+      lab: 'Lab 3: What\'s an extra dollar of credit line worth? In full under Assignments.',
     },
     {
       w: 4, topic: 'Multi-period models',
@@ -175,7 +175,7 @@ export const pack: Pack = {
       before: 'Nothing new. Read your labs 1 to 6 and the feedback on them.',
       c1: 'The practice case, timed, 60 minutes: formulate, solve, read, recommend (60). Marked together against the rubric (15).',
       c2: 'The midterm (75). The anonymous mid-term form and the week 13 vote go out the same evening.',
-      lab: 'No lab. Office hours in the lab hour for anyone who wants the practice case again.',
+      lab: 'No lab. Extra office hours this week for anyone who wants the practice case again.',
     },
     {
       w: 8, topic: 'Nonlinear models',
@@ -194,10 +194,10 @@ export const pack: Pack = {
     {
       w: 10, topic: 'Monte Carlo fundamentals',
       before: 'Video (16 min): a random draw, a distribution, the law of large numbers, and the standard error of a simulated mean. Check: 3 questions, one is how many more draws halve the error.',
-      c1: 'Guess first: a project with 3 uncertain inputs; what is the chance it loses money? (5). RAND and NORM.INV, and a Data Table that runs the model 1,000 times (25). Pairs: the project simulated, the histogram, the chance of a loss (30). Debrief: how the answer moved between 100, 1,000 and 10,000 runs, and the standard error that predicted it (15).',
-      c2: 'Choosing a distribution: what the data says, and the 3 you will use most (20). Correlated inputs, and the simulation that ignored them (20). Model reviews: 20 minutes a team with me, the model open, while the rest of the class works on the lab (35).',
+      c1: 'Guess first: a project with 3 uncertain inputs; what\'s the chance it loses money? (5). RAND and NORM.INV, and a Data Table that runs the model 1,000 times (25). Pairs: the project simulated, the histogram, the chance of a loss (30). Debrief: how the answer moved between 100, 1,000 and 10,000 runs, and the standard error that predicted it (15).',
+      c2: 'Choosing a distribution: what the data says, and the 3 you will use most (20). Correlated inputs, and the simulation that ignored them (20). In threes, the project\'s uncertain inputs named and a distribution picked for each, with a reason (35).',
       lab: 'Lab 10: a capital project with 3 uncertain inputs, 2 of them correlated, simulated 5,000 times, with the chance of a loss, its standard error, and the 3 sentences to the CFO.',
-      memo: 'The model review: 20 minutes with me, the sensitivity or simulation output on the screen.',
+      memo: 'The model review: 20 minutes with me, by appointment in weeks 10 and 11, the sensitivity or simulation output on the screen.',
     },
     {
       w: 11, topic: 'Risk management',
@@ -208,7 +208,7 @@ export const pack: Pack = {
     },
     {
       w: 12, topic: 'Pricing derivatives',
-      before: 'Video (18 min): a call option\'s payoff, a stock path, and why the average payoff is a price. Read: the "price an option by simulation" class on the course page. Check: 3 questions, one is a payoff at expiry.',
+      before: 'Video (18 min): a call option\'s payoff, a stock path, and why the average payoff is a price. Check: 3 questions, one is a payoff at expiry. The written-up class on the course page is for after class 1, so the guess stays a guess.',
       c1: 'Guess first: a call on a $100 stock, strike $100, 1 year, 20% volatility, 5% rates; worth more or less than $10? (5). Try the class: simulate paths, average the payoffs, watch the estimate close in on Black-Scholes (the demo from the course page) (20). Pairs build it: 1,000 paths, the discounted average, the standard error (30). Debrief: the runs it takes to get within 10 cents (20).',
       c2: 'Black-Scholes in a cell, and put-call parity as the check (20). A path-dependent option: an Asian call, which no formula prices, by the same method (35). Exit ticket. The lab starts (20).',
       lab: 'Lab 12: the European call checked against Black-Scholes, then an Asian call priced the same way, with the standard error and the 3 sentences to the treasurer on what the check proves.',
@@ -222,7 +222,7 @@ export const pack: Pack = {
     },
     {
       w: 14, topic: 'Project presentations',
-      before: 'Nothing. Sleep.',
+      before: 'Nothing new. Sleep.',
       c1: 'Presentations: 8 minutes a team and 4 of questions. The room marks the presentation row; I mark the rest. Slides go up the evening before.',
       c2: 'The rest of the presentations, then the memo and the workbook handed in by midnight, and the peer evaluation in private.',
       lab: 'No lab. Office hours for the final.',
@@ -232,11 +232,11 @@ export const pack: Pack = {
   labs: [
     { n: 1, title: 'The bakery\'s 6 months', due: 'before week 2', prompt: 'The bakery\'s 6-month plan as an LP, to the modelling rules, with a borrowing line: the month it borrows, how much, and the 3 sentences to the owner.', handIn: 'The workbook, with the 3 sentences on the inputs sheet. The chat, if you used an AI tool.', passes: 'Inputs, decisions and outputs on separate sheets; every rate named; Solver finds the plan; the 3 sentences name the month and the amount.' },
     { n: 2, title: 'Borrow, invest or hold', due: 'before week 3', prompt: 'The manufacturer\'s 6-month cash plan with a credit line, a supplier-delay option and a surplus to invest. Solve it, chart the balance, and tell the owner what to do in 3 sentences.', handIn: 'The workbook with the chart and the 3 sentences.', passes: 'The balance identity holds every month; the optimum beats the guess and the 3 sentences say by how much; the penalty is used only when the model says so.' },
-    { n: 3, title: 'What is an extra dollar of credit line worth?', due: 'before week 4', prompt: 'The week 2 model with the credit line as an input; the shadow price and its range; the $25,000 offer taken or left. In full under Assignments.', handIn: 'The workbook with the sensitivity report pasted in and the 3 sentences.', passes: '6 of 8 on the rubric, no row at 0.' },
+    { n: 3, title: 'What\'s an extra dollar of credit line worth?', due: 'before week 4', prompt: 'The week 2 model with the credit line as an input; the shadow price and its range; the $25,000 offer taken or left. In full under Assignments.', handIn: 'The workbook with the sensitivity report pasted in and the 3 sentences.', passes: '6 of 8 on the rubric, no row at 0.' },
     { n: 4, title: 'Dedicate the liabilities', due: 'before week 5', prompt: 'A 5-year liability stream met with 7 Treasuries and a cash account, from the public price list, at the lowest cost today.', handIn: 'The workbook with the report and the 3 sentences to the trustees.', passes: 'Every year\'s liability covered by coupons, principal and cash; the cheapest set found; the bond not bought explained by its reduced cost.' },
     { n: 5, title: 'The 2-year capital budget', due: 'before week 6', prompt: '10 projects, 2 years, a budget each year, and 3 logical rules (if A then B; at most 2 of 3; either or). Which to fund, and which rule cost the most.', handIn: 'The workbook and the 3 sentences to the board.', passes: 'Binaries used for every project; the 3 rules written as constraints that work; the cost of each rule found by re-solving without it.' },
     { n: 6, title: 'The product the manager wanted to drop', due: 'before week 7', prompt: 'The 3-product plant: the optimal mix, profit with and without the "unprofitable" product, and a paragraph to the manager on what the overhead allocation hid.', handIn: 'The workbook with the paragraph on the inputs sheet.', passes: 'The mix uses contribution margins; the dropped-product scenario is solved and compared; the paragraph names the allocation and its effect in dollars.' },
-    { n: 8, title: 'Three investors, one frontier', due: 'before week 9', prompt: 'The 10-stock minimum-variance portfolio at 3 target returns, long only, with the covariance matrix built from the public return file.', handIn: 'The workbook and the 3 sentences to the client.', passes: 'Covariances computed from the file; the GRG solver finds each portfolio; the 3 weights add to 1 with no shorts; the sentences say what the extra return costs in risk.' },
+    { n: 8, title: 'Three investors, one frontier', due: 'before week 9', prompt: 'The 10-stock minimum-variance portfolio at 3 target returns, long only, with the covariance matrix built from the public return file.', handIn: 'The workbook and the 3 sentences to the client.', passes: 'Covariances computed from the file; the GRG solver finds each portfolio; in each of the 3 portfolios the 10 weights add to 1 with no shorts; the sentences say what the extra return costs in risk.' },
     { n: 9, title: 'The constraint that cost the most', due: 'before week 10', prompt: 'The frontier with and without a 20% position limit, charted together, and a tracking portfolio for an index.', handIn: 'The workbook with the chart and the 3 sentences to the investment committee.', passes: 'Both frontiers traced from at least 8 points; the gap read in return at a fixed risk; the tracking error defined and minimised.' },
     { n: 10, title: 'The chance of a loss', due: 'before week 11', prompt: 'A capital project with 3 uncertain inputs, 2 of them correlated, simulated 5,000 times. The chance of a loss, its standard error, and what the correlation did to the answer.', handIn: 'The workbook with the histogram and the 3 sentences to the CFO.', passes: 'Distributions chosen with a reason each; the correlation built in and its effect shown; the standard error reported and read.' },
     { n: 11, title: 'How much could it lose?', due: 'before week 12', prompt: 'VaR and expected shortfall for the week 8 portfolio, historical and simulated, at 1 month and 1 year.', handIn: 'The workbook and the 3 sentences to the risk committee.', passes: 'Both methods right; the 2 answers compared and the difference explained; the horizon scaling done and defended.' },
@@ -250,12 +250,12 @@ export const pack: Pack = {
     meta: 'Final · 15% · on paper · 2 hours, or 3 if the class chose 3 on day one · portfolios, risk and simulation',
     rules: [
       'Attempt up to 30 marks. If you attempt more, only the first 30 count.',
-      'Show your work. A number with no sentence after it is half a number.',
+      'Show your work, and follow every number with a sentence that says what it means. A bare number gets half marks.',
       'You may have a pen, a calculator and this paper. The charts and reports you need are printed on it.',
       'Each question names the outcome it tests, from the syllabus.',
       'Best of luck. Every chart on this paper is one you built in a lab.',
     ],
-    note: 'This paper goes out in week 12. Do any 3 questions and hand them in with lab 12; I mark them for feedback, and it is the closest thing to a mock exam the course has.',
+    note: 'This paper goes out in week 12. Do any 3 questions and hand them in with lab 12; I mark them for feedback, and it\'s the closest thing to a mock exam the course has.',
     questions: [
       {
         tag: 'O3 · Portfolios',
@@ -263,7 +263,7 @@ export const pack: Pack = {
         parts: [
           { text: 'The return and standard deviation of a 50/50 mix. Show the variance arithmetic.', marks: 2 },
           { text: 'Would the minimum-variance mix hold more or less of B than 50%? Say why without solving.', marks: 1 },
-          { text: 'The client wants 9% a year. Write the Solver set-up: variables, objective, constraints.', marks: 2 },
+          { text: 'Add a third asset: cash at 3% with no risk. The client wants 9% a year at the least risk. Write the Solver set-up: variables, objective, constraints.', marks: 2 },
         ],
       },
       {
@@ -290,7 +290,7 @@ export const pack: Pack = {
         parts: [
           { text: 'The standard error of a proportion near 0.2 from 1,000 runs, and whether the 2 runs disagree.', marks: 2 },
           { text: 'How many runs to get the error under 0.5 of a percentage point?', marks: 1 },
-          { text: 'The 3 inputs were simulated as independent; 2 of them move together. Which way does the chance of a loss move when that is fixed, and why?', marks: 2 },
+          { text: 'The 3 inputs were simulated as independent, but 2 of them, the materials cost and the labour cost, rise and fall together. Which way does the chance of a loss move when that\'s built in, and why?', marks: 2 },
         ],
       },
       {
@@ -308,7 +308,7 @@ export const pack: Pack = {
         text: 'A Canadian exporter is owed $2 million US in 6 months. Three histograms of the 6-month cash flow in Canadian dollars are printed below: unhedged, a forward at 1.36, and a put with a strike of 1.34 costing 2 cents a dollar.',
         parts: [
           { text: 'Read the worst case and the best case of each choice off the histograms.', marks: 2 },
-          { text: 'Which choice would a treasurer who must make payroll pick, and which would one who is paid on upside pick? A sentence each.', marks: 2 },
+          { text: 'Which choice would a treasurer who must make payroll pick, and which would one who\'s paid on upside pick? A sentence each.', marks: 2 },
           { text: 'You have run a hipster coffee importer on the side, against my advice, and it owes euros in 6 months. Which of the 3 choices changes, and why?', marks: 1 },
         ],
       },
@@ -317,7 +317,7 @@ export const pack: Pack = {
         text: 'A 2-page memo is printed below. It recommends that a company fund 6 of its 10 projects, based on a model whose optimum is 7, and its first paragraph gives no number, no date and no condition.',
         parts: [
           { text: 'Find the contradiction between the memo and its model.', marks: 1 },
-          { text: 'Rewrite the first paragraph so that a CFO could act on it: what to do, by when, what it is worth, and what would change it.', marks: 2 },
+          { text: 'Rewrite the first paragraph so that a CFO could act on it: what to do, by when, what it\'s worth, and what would change it.', marks: 2 },
           { text: 'Name the 1 sensitivity the writer should have run before sending it.', marks: 1 },
         ],
       },

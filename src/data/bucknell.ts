@@ -22,7 +22,7 @@ export const courses: Course[] = [
     code: 'ANOP 102',
     slug: 'anop-102',
     title: 'Spreadsheet Modeling & Data Analysis',
-    line: 'Students leave with a model a manager could audit and a 1-page memo that says what to do. Every week adds one piece of that memo.',
+    line: 'Students leave with a model a manager could audit and a 2-page memo that says what to do. Every week adds one piece of that memo.',
     where: 'Freeman College core · offered every term',
     who: 'Every Freeman College student, usually in first year.',
     seats: 'Up to 2 sections a term, about 25 in each',
