@@ -1,0 +1,118 @@
+---
+// Week 3 of ANOP 102: a pivot table adds up whatever it is given.
+// A coffee cart's week of sales, as the till exported it, with 3 problems: the library cart spelled 4 ways,
+// one Tuesday order exported twice, and a $4.50 latte typed as $45. The real answer: Library $51, Union $33.50.
+const raw: [string, string, string, number, number][] = [
+  ['Mon', 'Library', 'Latte', 2, 4.5],
+  ['Mon', 'Union', 'Drip', 3, 2.5],
+  ['Mon', 'library ', 'Latte', 1, 4.5],
+  ['Tue', 'Union', 'Latte', 2, 4.5],
+  ['Tue', 'LIB', 'Drip', 4, 2.5],
+  ['Tue', 'Union', 'Drip', 3, 2.5],
+  ['Tue', 'Union', 'Drip', 3, 2.5],
+  ['Wed', 'Library', 'Latte', 3, 4.5],
+  ['Wed', 'Union', 'Latte', 1, 45],
+  ['Thu', 'Library ', 'Drip', 2, 2.5],
+  ['Thu', 'Union', 'Drip', 2, 2.5],
+  ['Fri', 'Library', 'Latte', 2, 4.5],
+];
+const money = (v: number) => '$' + (Number.isInteger(v) ? v.toFixed(0) : v.toFixed(2));
+const fixes = [
+  { key: 'names', label: 'Match the names' },
+  { key: 'dups', label: 'Drop the duplicate' },
+  { key: 'typo', label: 'Fix the $45 latte' },
+];
+---
+<div class="demo pdemo" data-pdemo>
+  <div class="pdemo-controls">
+    <p class="label" id="pdemo-fix">Clean the export</p>
+    <div class="demo-pills" role="group" aria-labelledby="pdemo-fix">
+      {fixes.map((f) => <button type="button" data-fix={f.key} aria-pressed="false">{f.label}</button>)}
+    </div>
+  </div>
+
+  <div class="pdemo-main">
+    <div class="pdemo-export">
+      <p class="label">The export · 12 rows</p>
+      <table class="pdemo-table">
+        <thead><tr><th>Day</th><th>Where</th><th>Item</th><th>Qty</th><th>Price</th><th>Sales</th></tr></thead>
+        <tbody>
+          {raw.map(([d, w, i, q, p]) => (
+            <tr data-where={w} data-price={p}>
+              <td>{d}</td>
+              <td data-cell="where">{w.trimEnd()}{w.endsWith(' ') && <span class="ws" title="a space after the name"> </span>}</td>
+              <td>{i}</td>
+              <td class="num">{q}</td>
+              <td class="num" data-cell="price">{money(p)}</td>
+              <td class="num" data-cell="sales">{money(q * p)}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <div class="pdemo-pivot">
+      <p class="label">Pivot · sales by location</p>
+      <div data-pivot aria-live="polite"></div>
+      <p class="demo-note" data-note></p>
+    </div>
+  </div>
+
+  <p class="demo-coda">The pivot was right every time. It added up what it was given. Week 3's lab is the same job on 2,000 rows, and the brief that comes out of it says what happened last week and what you had to fix to find out.</p>
+</div>
+
+<script>
+  const money = (v: number) => '$' + (Number.isInteger(v) ? v.toFixed(0) : v.toFixed(2));
+  const canon = (w: string) => (/^lib/i.test(w.trim()) ? 'Library' : w.trim());
+
+  document.querySelectorAll<HTMLElement>('[data-pdemo]').forEach((root) => {
+    const rows = [...root.querySelectorAll<HTMLTableRowElement>('tbody tr')];
+    const on = { names: false, dups: false, typo: false };
+
+    function update() {
+      const totals = new Map<string, number>();
+      const seen = new Set<string>();
+      rows.forEach((tr) => {
+        const rawWhere = tr.dataset.where!;
+        const rawPrice = Number(tr.dataset.price);
+        const where = on.names ? canon(rawWhere) : rawWhere;
+        const price = on.typo && rawPrice === 45 ? 4.5 : rawPrice;
+        const qty = Number(tr.children[3].textContent);
+        const key = [tr.children[0].textContent, canon(rawWhere), tr.children[2].textContent, qty, price].join('|');
+        const dup = on.dups && seen.has(key);
+        seen.add(key);
+        tr.classList.toggle('dup', dup);
+        const wc = tr.querySelector('[data-cell=where]')!;
+        const changed = on.names && where !== rawWhere;
+        wc.classList.toggle('fixed', changed);
+        if (changed) wc.textContent = where;
+        else wc.innerHTML = rawWhere.trimEnd() + (rawWhere.endsWith(' ') ? '<span class="ws" title="a space after the name"> </span>' : '');
+        const pc = tr.querySelector('[data-cell=price]')!;
+        pc.classList.toggle('fixed', price !== rawPrice);
+        pc.textContent = money(price);
+        tr.querySelector('[data-cell=sales]')!.textContent = money(qty * price);
+        if (!dup) totals.set(where, (totals.get(where) ?? 0) + qty * price);
+      });
+      const list = [...totals.entries()].sort((a, b) => b[1] - a[1]);
+      const max = list[0][1];
+      root.querySelector('[data-pivot]')!.innerHTML = list.map(([w, v], i) =>
+        `<div class="pdemo-bar${i === 0 ? ' top' : ''}"><span class="pdemo-name">${w.replace(/ $/, '<span class="ws"> </span>')}</span><span class="pdemo-track"><span class="pdemo-fill" style="width:${(v / max) * 100}%"></span></span><span class="pdemo-val">${money(v)}</span></div>`).join('')
+        + `<div class="pdemo-bar total"><span class="pdemo-name">Total</span><span class="pdemo-track"></span><span class="pdemo-val">${money(list.reduce((s, [, v]) => s + v, 0))}</span></div>`;
+      const parts: string[] = [];
+      if (on.names) parts.push('4 spellings of the library cart became 1.');
+      if (on.dups) parts.push('One Tuesday order was exported twice.');
+      if (on.typo) parts.push('A $4.50 latte was typed as $45.');
+      const all = on.names && on.dups && on.typo;
+      parts.push(`${list.length} location${list.length === 1 ? '' : 's'}, ${list[0][0]} on top at ${money(list[0][1])}.${all ? ' That matches the till.' : ' The cart has 2 locations.'}`);
+      root.querySelector('[data-note]')!.textContent = parts.join(' ');
+    }
+
+    root.querySelectorAll<HTMLButtonElement>('[data-fix]').forEach((b) =>
+      b.addEventListener('click', () => {
+        const k = b.dataset.fix as keyof typeof on;
+        on[k] = !on[k];
+        b.setAttribute('aria-pressed', String(on[k]));
+        update();
+      }));
+    update();
+  });
+</script>

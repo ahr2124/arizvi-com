@@ -1,0 +1,108 @@
+---
+// Week 10 of ANOP 102: a regression on 12 weeks of a bike shop's Instagram spend and sales.
+// One weekend is different: the gran fondo brought riders through town and sold $3,400 on $60 of ads.
+// With it, the slope is $1.70 of sales per $1 of ads (R² 0.14); without it, $2.87 (R² 0.86). At a 40% margin the decision flips.
+const spend = [0, 40, 80, 120, 160, 200, 240, 280, 60, 140, 220, 100];
+const sales = [1910, 2230, 2160, 2490, 2320, 2600, 2780, 2700, 3400, 2280, 2650, 2230];
+const OUT = 8;
+const X = [0, 300], Y = [1800, 3600];
+const left = (x: number) => ((x - X[0]) / (X[1] - X[0])) * 100;
+const top = (y: number) => ((Y[1] - y) / (Y[1] - Y[0])) * 100;
+function ols(xs: number[], ys: number[]) {
+  const n = xs.length, mx = xs.reduce((s, v) => s + v, 0) / n, my = ys.reduce((s, v) => s + v, 0) / n;
+  let sxy = 0, sxx = 0, syy = 0;
+  xs.forEach((x, i) => { sxy += (x - mx) * (ys[i] - my); sxx += (x - mx) ** 2; syy += (ys[i] - my) ** 2; });
+  const b = sxy / sxx, a = my - b * mx;
+  return { a, b, r2: (sxy * sxy) / (sxx * syy) };
+}
+const fit0 = ols(spend, sales);
+const S0 = 200;
+const money = (v: number) => (v < 0 ? '−' : '') + '$' + Math.abs(Math.round(v)).toLocaleString('en-CA');
+---
+<div class="demo rdemo" data-rdemo>
+  <div class="demo-controls rdemo-controls">
+    <div>
+      <label class="label" for="rdemo-s">Next week's ad spend <output data-out="s" for="rdemo-s">$200</output></label>
+      <input type="range" id="rdemo-s" min="0" max="300" step="10" value={S0} />
+    </div>
+    <div>
+      <p class="label" id="rdemo-w">The 12 weeks</p>
+      <div class="demo-pills" role="group" aria-labelledby="rdemo-w">
+        <button type="button" data-outlier aria-pressed="true">Keep the gran fondo weekend</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="demo-chart">
+    <p class="label">Weekly sales by ad spend · 12 weeks</p>
+    <div class="rdemo-plot" aria-hidden="true">
+      <svg viewBox="0 0 1000 100" preserveAspectRatio="none"><line data-fit x1="0" y1={top(fit0.a)} x2="1000" y2={top(fit0.a + fit0.b * X[1])} /></svg>
+      {spend.map((x, i) => <span class={`rdemo-pt${i === OUT ? ' out' : ''}`} style={`left: ${left(x)}%; top: ${top(sales[i])}%`} />)}
+      <span class="rdemo-pred" data-pred style={`left: ${left(S0)}%; top: ${top(fit0.a + fit0.b * S0)}%`}></span>
+      <span class="demo-y label" style="top: 0">$3,600</span>
+      <span class="demo-y label" style={`top: ${top(2700)}%`}>$2,700</span>
+      <span class="demo-y label" style="top: 100%">$1,800</span>
+    </div>
+    <div class="demo-x label" aria-hidden="true"><span>$0</span><span class="mid" style="left: 33.33%;">$100</span><span class="mid" style="left: 66.67%;">$200</span><span class="end">$300</span></div>
+  </div>
+
+  <dl class="demo-readout rdemo-readout">
+    <div><dt class="label">Slope</dt><dd data-out="b">${fit0.b.toFixed(2)} per $1</dd></div>
+    <div><dt class="label">R²</dt><dd data-out="r2">{fit0.r2.toFixed(2)}</dd></div>
+    <div><dt class="label">Sales at <span data-out="s2">$200</span></dt><dd data-out="pred">{money(fit0.a + fit0.b * S0)}</dd></div>
+    <div><dt class="label">Ads pay back</dt><dd data-out="pay">{money(0.4 * fit0.b * S0 - S0)}</dd></div>
+  </dl>
+  <p class="demo-note" aria-live="polite" data-note></p>
+
+  <p class="demo-coda">One weekend flips the answer. The regression can't tell you that week was a bike race; the person who was there can. So the lab asks for the scatter plot before the slope, and the memo names the weeks it set aside and why.</p>
+</div>
+
+<script>
+  const spend = [0, 40, 80, 120, 160, 200, 240, 280, 60, 140, 220, 100];
+  const sales = [1910, 2230, 2160, 2490, 2320, 2600, 2780, 2700, 3400, 2280, 2650, 2230];
+  const OUT = 8, MARGIN = 0.4;
+  const X = [0, 300], Y = [1800, 3600];
+  const left = (x: number) => ((x - X[0]) / (X[1] - X[0])) * 100;
+  const top = (y: number) => ((Y[1] - y) / (Y[1] - Y[0])) * 100;
+  function ols(xs: number[], ys: number[]) {
+    const n = xs.length, mx = xs.reduce((s, v) => s + v, 0) / n, my = ys.reduce((s, v) => s + v, 0) / n;
+    let sxy = 0, sxx = 0, syy = 0;
+    xs.forEach((x, i) => { sxy += (x - mx) * (ys[i] - my); sxx += (x - mx) ** 2; syy += (ys[i] - my) ** 2; });
+    const b = sxy / sxx, a = my - b * mx;
+    return { a, b, r2: (sxy * sxy) / (sxx * syy) };
+  }
+  const money = (v: number) => (v < 0 ? '−' : '') + '$' + Math.abs(Math.round(v)).toLocaleString('en-CA');
+
+  document.querySelectorAll<HTMLElement>('[data-rdemo]').forEach((root) => {
+    const $ = <T extends Element>(s: string) => root.querySelector<T>(s)!;
+    const slider = $<HTMLInputElement>('#rdemo-s');
+    const btn = $<HTMLButtonElement>('[data-outlier]');
+    const pt = root.querySelectorAll<HTMLElement>('.rdemo-pt')[OUT];
+
+    function update() {
+      const inc = btn.getAttribute('aria-pressed') === 'true';
+      const keep = spend.map((_, i) => inc || i !== OUT);
+      const { a, b, r2 } = ols(spend.filter((_, i) => keep[i]), sales.filter((_, i) => keep[i]));
+      const s = Number(slider.value);
+      const pred = a + b * s, pay = MARGIN * b * s - s, per = MARGIN * b;
+      pt.classList.toggle('off', !inc);
+      const line = $<SVGLineElement>('[data-fit]');
+      line.setAttribute('y1', String(top(a)));
+      line.setAttribute('y2', String(top(a + b * X[1])));
+      const pm = $<HTMLElement>('[data-pred]');
+      pm.style.left = `${left(s)}%`; pm.style.top = `${top(pred)}%`;
+      $('[data-out=s]').textContent = '$' + s;
+      $('[data-out=s2]').textContent = '$' + s;
+      $('[data-out=b]').textContent = `$${b.toFixed(2)} per $1`;
+      $('[data-out=r2]').textContent = r2.toFixed(2);
+      $('[data-out=pred]').textContent = money(pred);
+      $('[data-out=pay]').textContent = s === 0 ? '$0' : (pay >= 0 ? '+' : '') + money(pay);
+      $('[data-note]').textContent = inc
+        ? `Slope $${b.toFixed(2)}, R² ${r2.toFixed(2)}: the line explains ${Math.round(r2 * 100)}% of the week-to-week swing. At a 40% margin, $1 of ads brings back $${per.toFixed(2)}. The scatter says why: one weekend sold $3,400 on $60 of ads - the gran fondo, when 2,000 riders came through town.`
+        : `Without that weekend: slope $${b.toFixed(2)}, R² ${r2.toFixed(2)}. At a 40% margin, $1 of ads brings back $${per.toFixed(2)}. Worth it, and only just${s ? `: a $${s} week clears ${money(pay)} after the ads` : ''}.`;
+    }
+    slider.addEventListener('input', update);
+    btn.addEventListener('click', () => { btn.setAttribute('aria-pressed', String(btn.getAttribute('aria-pressed') !== 'true')); update(); });
+    update();
+  });
+</script>

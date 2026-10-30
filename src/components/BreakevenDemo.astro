@@ -1,0 +1,94 @@
+---
+// Week 6 of ANOP 102: a two-way data table for a taco truck.
+// Profit a week = (price - ingredients) x tacos - fixed cost. Defaults: $8, $3, 140 tacos, $600 a week.
+// Breakeven at $8 is 120 tacos, so the plan clears $100 with 20 tacos to spare.
+const prices = [6, 7, 8, 9, 10, 11];
+const volumes = [80, 100, 120, 140, 160, 180];
+const F0 = 600, V0 = 3;
+const profit = (p: number, q: number, f: number, v: number) => (p - v) * q - f;
+const scale = Math.max(...prices.flatMap((p) => volumes.map((q) => Math.abs(profit(p, q, F0, V0)))));
+const fill = (v: number) => (v === 0 ? '#e4e3de' : `rgba(${v > 0 ? '27, 175, 122' : '235, 104, 52'}, ${(0.12 + (0.5 * Math.abs(v)) / scale).toFixed(2)})`);
+const money = (v: number) => (v < 0 ? '−' : '') + '$' + Math.abs(Math.round(v)).toLocaleString('en-CA');
+---
+<div class="demo bdemo" data-bdemo>
+  <div class="demo-controls bdemo-controls">
+    <div>
+      <label class="label" for="bdemo-f">Truck, permit and insurance a week <output data-out="f" for="bdemo-f">$600</output></label>
+      <input type="range" id="bdemo-f" min="300" max="900" step="50" value="600" />
+    </div>
+    <div>
+      <label class="label" for="bdemo-v">Ingredients a taco <output data-out="v" for="bdemo-v">$3.00</output></label>
+      <input type="range" id="bdemo-v" min="2" max="5" step="0.25" value="3" />
+    </div>
+  </div>
+
+  <div class="bdemo-grid">
+    <p class="label">Profit a week · price down, tacos sold across</p>
+    <table class="bdemo-table">
+      <thead>
+        <tr><th scope="col"><span class="sr">Price</span></th>{volumes.map((q) => <th scope="col">{q}</th>)}</tr>
+      </thead>
+      <tbody>
+        {prices.map((p) => (
+          <tr>
+            <th scope="row">${p}</th>
+            {volumes.map((q) => {
+              const v = profit(p, q, F0, V0);
+              return <td data-p={p} data-q={q} class={p === 8 && q === 140 ? 'plan' : undefined} style={`background: ${fill(v)}`}>{money(v)}</td>;
+            })}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+
+  <dl class="demo-readout bdemo-readout">
+    <div><dt class="label">The plan · $8 × 140</dt><dd data-out="plan">$100</dd></div>
+    <div><dt class="label">Breakeven at $8</dt><dd data-out="be">120 tacos</dd></div>
+    <div><dt class="label">Room for error</dt><dd data-out="room">20 tacos</dd></div>
+    <div><dt class="label">Goal Seek · price for 140</dt><dd data-out="gs">$7.29</dd></div>
+  </dl>
+  <p class="demo-note" aria-live="polite" data-note></p>
+
+  <p class="demo-coda">The table is one formula copied 36 times, and it answers the question a manager has: how wrong can the forecast be before this loses money? At $8 the answer is 20 tacos a week. So the memo doesn't say "$100 a week". It says "$100 a week, and a loss below 120 tacos".</p>
+</div>
+
+<script>
+  const profit = (p: number, q: number, f: number, v: number) => (p - v) * q - f;
+  const money = (v: number) => (v < 0 ? '−' : '') + '$' + Math.abs(Math.round(v)).toLocaleString('en-CA');
+  const fmt = (n: number) => n.toLocaleString('en-CA');
+
+  document.querySelectorAll<HTMLElement>('[data-bdemo]').forEach((root) => {
+    const $ = <T extends Element>(s: string) => root.querySelector<T>(s)!;
+    const fs = $<HTMLInputElement>('#bdemo-f'), vs = $<HTMLInputElement>('#bdemo-v');
+    const cells = [...root.querySelectorAll<HTMLTableCellElement>('td[data-p]')];
+
+    function update() {
+      const f = Number(fs.value), v = Number(vs.value);
+      $('[data-out=f]').textContent = '$' + f;
+      $('[data-out=v]').textContent = '$' + v.toFixed(2);
+      const vals = cells.map((c) => profit(Number(c.dataset.p), Number(c.dataset.q), f, v));
+      const scale = Math.max(...vals.map(Math.abs));
+      cells.forEach((c, i) => {
+        const x = vals[i];
+        c.textContent = money(x);
+        c.style.background = x === 0 ? '#e4e3de' : `rgba(${x > 0 ? '27, 175, 122' : '235, 104, 52'}, ${(0.12 + (0.5 * Math.abs(x)) / scale).toFixed(2)})`;
+      });
+      const plan = profit(8, 140, f, v);
+      const be = 8 - v > 0 ? f / (8 - v) : Infinity;
+      const gs = v + f / 140;
+      $('[data-out=plan]').textContent = money(plan) + ' a week';
+      $('[data-out=be]').textContent = Number.isFinite(be) ? `${fmt(Math.ceil(be))} tacos` : 'never';
+      $('[data-out=room]').textContent = Number.isFinite(be) ? (140 - be >= 0 ? `${fmt(Math.floor(140 - be))} tacos` : `${fmt(Math.ceil(be - 140))} short`) : 'none';
+      $('[data-out=gs]').textContent = '$' + gs.toFixed(2);
+      $('[data-note]').textContent = !Number.isFinite(be)
+        ? `At $8 a taco you lose money on every one you sell. Raise the price or cut the ingredients.`
+        : plan >= 0
+          ? `At $8 you need ${fmt(Math.ceil(be))} tacos a week to break even. The plan sells 140, so you clear ${money(plan)} - and lose money if more than ${fmt(Math.floor(140 - be))} customers stay home. Goal Seek: $${gs.toFixed(2)} is the lowest price that works at 140.`
+          : `At $8 you need ${fmt(Math.ceil(be))} tacos a week to break even, and the plan sells 140. That's a loss of ${money(-plan)} a week. Goal Seek: $${gs.toFixed(2)} a taco breaks even at 140.`;
+    }
+    fs.addEventListener('input', update);
+    vs.addEventListener('input', update);
+    update();
+  });
+</script>

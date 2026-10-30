@@ -555,3 +555,48 @@ ol li + li { margin-top: 0.5em; }
   .ldemo-strat { grid-template-columns: 1fr auto; row-gap: 4px; }
   .ldemo-strat .ldemo-sname { grid-column: 1 / -1; }
 }
+
+/* ANOP 102 demos */
+.term .label { padding-top: 3px; }
+.pdemo-main { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); gap: 24px var(--gutter); margin-top: 24px; align-items: start; }
+.pdemo-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 14px; }
+.pdemo-table th, .pdemo-table td { border-bottom: 1px solid #000; padding: 5px 6px 5px 0; text-align: left; white-space: nowrap; }
+.pdemo-table th { font-weight: 500; font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; }
+.pdemo-table .num, .pdemo-table th.num { text-align: right; padding-right: 0; }
+.pdemo-table td:last-child, .pdemo-table th:last-child { padding-right: 0; }
+.pdemo-table .fixed { background: rgba(42, 120, 214, 0.18); }
+.pdemo-table .dup td { text-decoration: line-through; color: rgba(0, 0, 0, 0.4); }
+.ws { display: inline-block; width: 0.5em; height: 1em; vertical-align: -0.15em; background: rgba(235, 104, 52, 0.45); }
+.pdemo-bar { display: grid; grid-template-columns: 5.2rem minmax(0, 1fr) 3.6rem; gap: 10px; align-items: center; margin-top: 10px; font-size: 15px; }
+.pdemo-bar.top { font-weight: 600; }
+.pdemo-bar.total { border-top: 1px solid #000; padding-top: 8px; color: rgba(0, 0, 0, 0.6); }
+.pdemo-name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pdemo-track { height: 14px; background: #e4e3de; }
+.pdemo-fill { display: block; height: 100%; background: #000; }
+.pdemo-val { text-align: right; white-space: nowrap; }
+.pdemo-pivot .demo-note { min-height: 0; }
+.bdemo-controls { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px var(--gutter); }
+.bdemo-controls output { font-weight: 600; margin-left: 6px; }
+.bdemo-grid { margin-top: 24px; }
+.bdemo-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 14px; table-layout: fixed; }
+.bdemo-table th, .bdemo-table td { padding: 7px 4px; text-align: right; white-space: nowrap; }
+.bdemo-table th { font-weight: 500; font-size: 12px; letter-spacing: 0.06em; }
+.bdemo-table thead th { border-bottom: 1px solid #000; }
+.bdemo-table tbody th { text-align: left; padding-left: 0; width: 2.4rem; }
+.bdemo-table td.plan { outline: 2px solid #000; outline-offset: -2px; font-weight: 600; }
+.rdemo-controls { grid-template-columns: minmax(0, 1fr) auto; gap: 16px var(--gutter); }
+.rdemo-controls output { font-weight: 600; margin-left: 6px; }
+.rdemo-plot { position: relative; height: 220px; margin: 12px 0 0 3.5rem; border-left: 1px solid #000; border-bottom: 1px solid #000; }
+.rdemo-plot svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.rdemo-plot line { stroke: #000; stroke-width: 2; vector-effect: non-scaling-stroke; }
+.rdemo-pt { position: absolute; width: 9px; height: 9px; margin: -4.5px 0 0 -4.5px; background: #000; }
+.rdemo-pt.out { background: #eb6834; }
+.rdemo-pt.out.off { background: #fff; border: 2px solid #eb6834; box-sizing: border-box; }
+.rdemo-pred { position: absolute; width: 16px; height: 16px; margin: -8px 0 0 -8px; border: 2px solid #000; background: #fff; box-sizing: border-box; }
+@media (max-width: 767px) {
+  .pdemo-main, .bdemo-controls, .rdemo-controls { grid-template-columns: 1fr; }
+  .pdemo-table { font-size: 13px; }
+  .bdemo-table { font-size: 12px; }
+  .bdemo-table th, .bdemo-table td { padding: 6px 2px; }
+  .bdemo-readout, .rdemo-readout { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}

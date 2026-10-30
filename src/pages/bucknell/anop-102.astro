@@ -1,18 +1,75 @@
 ---
 // src/pages/bucknell/anop-102.astro  →  arizvi.com/bucknell/anop-102
-// ANOP 102 and its 2 sample classes. Not linked from the nav; sends noindex.
+// ANOP 102: the term week by week, 4 classes to try and a 5th to read. Not linked from the nav; sends noindex.
 import Base from '../../layouts/Base.astro';
 import Section from '../../components/Section.astro';
 import CourseHeader from '../../components/CourseHeader.astro';
 import CourseNav from '../../components/CourseNav.astro';
-import LPFigure from '../../components/LPFigure.astro';
+import PivotDemo from '../../components/PivotDemo.astro';
+import BreakevenDemo from '../../components/BreakevenDemo.astro';
 import LLMDemo from '../../components/LLMDemo.astro';
+import RegressionDemo from '../../components/RegressionDemo.astro';
+import LPFigure from '../../components/LPFigure.astro';
 import { course } from '../../data/bucknell';
 
 const c = course('anop-102');
+
+// The term. Each week: the topic, what the class builds, and the class to try where there is one.
+const weeks: { w: number; topic: string; build: string; try?: string }[] = [
+  { w: 1, topic: 'What a model is for', build: 'Inputs, decisions, outputs. Spreadsheet hygiene: layout, named inputs, no hard-coded numbers. A 1-tab model of a pricing decision.' },
+  { w: 2, topic: 'Cleaning and structuring data', build: 'Sorting, filtering, lookups and tidy tables. A sales export, cleaned.' },
+  { w: 3, topic: 'Descriptive statistics and pivot tables', build: 'Summaries by segment, and a 1-page "what happened" brief.', try: 'pivot' },
+  { w: 4, topic: 'Charts that answer a question', build: 'Choosing the chart for the claim. 2 charts with a headline each.' },
+  { w: 5, topic: 'Breakeven and cost-volume-profit', build: 'The model built from a case, with its assumptions in one place.' },
+  { w: 6, topic: 'What-if analysis', build: 'Data tables, scenarios and Goal Seek on the week 5 model.', try: 'breakeven' },
+  { w: 7, topic: 'Review and midterm', build: 'A practice case, then the midterm.' },
+  { w: 8, topic: 'Probability and expected value for managers', build: 'A forecast that comes with odds, and what to do with it.', try: 'llm' },
+  { w: 9, topic: 'Sampling and confidence', build: 'Confidence intervals, and a test on a business claim written up in plain words.' },
+  { w: 10, topic: 'Simple and multiple regression', build: 'A sales-driver model: fitting it, reading it and knowing when to doubt it.', try: 'regression' },
+  { w: 11, topic: 'Linear optimisation', build: 'Formulating a product-mix decision and solving it with Solver.', try: 'overtime' },
+  { w: 12, topic: 'Shadow prices and sensitivity', build: "The sensitivity report behind week 11's answer: which constraint to relax, and what it's worth." },
+  { w: 13, topic: 'Monte Carlo simulation and risk', build: 'Profit under uncertain demand, as a risk profile with a recommendation.' },
+  { w: 14, topic: 'Team presentations', build: 'The decision memo and the model behind it.' },
+];
 ---
-<Base title="ANOP 102" description="ANOP 102, Spreadsheet Modeling & Data Analysis, as Ali Rizvi would teach it at Bucknell - with 2 sample classes." noindex>
-  <CourseHeader course={c} />
+<Base title="ANOP 102" description="ANOP 102, Spreadsheet Modeling & Data Analysis, as Ali Rizvi would teach it at Bucknell - the term week by week, with 4 classes you can try." noindex>
+  <CourseHeader course={c} facts={[
+    ['Format', '1 credit · 14 weeks · 2 classes of 75 minutes a week'],
+    ['Tools', 'Excel. Laptops open while we build, closed for the debrief.'],
+    ['Grading', 'Weekly labs 30% (lowest dropped) · midterm 20% · team project and memo 30% · final 15% · reflection 5%'],
+  ]}>
+    <p>ANOP 102 is the first analytics course every Freeman student takes, and it runs in several sections a term. I'd keep my sections in step with the others - same topics, same exams - and bring the classes below to mine. Every week adds a piece of the decision memo students hand in at the end.</p>
+  </CourseHeader>
+
+  <Section label="The term" title="Week by week" id="term">
+    <ul class="rows compact bk-wide term">
+      {weeks.map((x) => (
+        <li class="grid">
+          <div class="label">Week {x.w}</div>
+          <div class="body">
+            <span class="title">{x.topic}</span>
+            <p>{x.build}{x.try && <> <a href={`#${x.try}`}>{x.try === 'overtime' ? 'Read the class below.' : 'Try it below.'}</a></>}</p>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </Section>
+
+  <Section label="Try a class · Week 3" title="Clean it before you count it" id="pivot">
+    <div class="grid"><div class="span-8">
+      <p>A coffee cart runs 2 locations on campus. Which one sold more last week? The till exported 12 rows and a pivot table adds them up by location. Both are below, as they came out.</p>
+      <p>Count first. Then clean the export one problem at a time and watch the answer move.</p>
+    </div></div>
+    <PivotDemo />
+  </Section>
+
+  <Section label="Try a class · Week 6" title="How wrong can the forecast be?" id="breakeven">
+    <div class="grid"><div class="span-8">
+      <p>A taco truck for the summer: $600 a week for the truck, permit and insurance, $3 of ingredients a taco, $8 a taco. Last summer's truck sold about 140 a week. One cell says the plan makes $100 a week. A manager's next question is how sure that is.</p>
+      <p>A two-way data table answers it: profit for every price and every volume at once. Then move the assumptions and watch the breakeven move.</p>
+    </div></div>
+    <BreakevenDemo />
+  </Section>
 
   <Section label="Try a class · Week 8" title="An LLM gives you probabilities" id="llm">
     <div class="grid"><div class="span-8">
@@ -23,7 +80,15 @@ const c = course('anop-102');
     <LLMDemo />
   </Section>
 
-  <Section label="Sample class · Week 11" title="Which overtime is worth paying for?" id="sample">
+  <Section label="Try a class · Week 10" title="One weekend flips the slope" id="regression">
+    <div class="grid"><div class="span-8">
+      <p>The bike shop from week 11 spent between $0 and $280 a week on Instagram ads for 12 weeks and logged its sales. Does the spend work? The shop keeps 40 cents of every sales dollar, so an ad pays for itself when $1 of ads brings in more than $2.50 of sales.</p>
+      <p>Fit the line and read the slope. Then take out the one weekend that was different.</p>
+    </div></div>
+    <RegressionDemo />
+  </Section>
+
+  <Section label="Sample class · Week 11" title="Which overtime is worth paying for?" id="overtime">
     <div class="grid"><div class="span-8">
       <p>A 75-minute class. A small shop builds 2 bikes. A Commuter earns $120 over its materials and takes 3 hours of assembly and 1 of painting. A Trail earns $180 and takes 4 and 3. The crew is paid for 240 assembly hours and 120 painting hours a week whatever gets built, and only 30 Trails sell.</p>
       <ol>
