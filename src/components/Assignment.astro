@@ -1,6 +1,7 @@
 ---
 // An assignment: the prompt, what to do, what to hand in, and the rubric it is marked on.
-// Each rubric row has 3 levels, best first, each with its points and a description.
+// Each rubric row has 3 levels, best first, each with its points and a description. The rubric reads down one column:
+// the criterion and its points, the sentence that earns full marks, then the lesser levels in grey on one line.
 export interface Level { pts: number; text: string }
 export interface Criterion { name: string; levels: [Level, Level, Level] }
 interface Props {
@@ -17,6 +18,7 @@ interface Props {
 }
 const { title, meta, prompt, steps = [], stepsLabel = 'Do', handIn = [], rubric, note, rubricLabel, heads = ['Full marks', 'Part way', 'Not there'] } = Astro.props;
 const total = rubric.reduce((s, c) => s + c.levels[0].pts, 0);
+const legend = `${heads[0]}, then ${heads[1].toLowerCase()} and ${heads[2].toLowerCase()}`;
 ---
 <article class="asg">
   <header class="asg-head">
@@ -41,17 +43,18 @@ const total = rubric.reduce((s, c) => s + c.levels[0].pts, 0);
     </div>
     <div class="asg-rubric">
       <p class="label asg-sub">{rubricLabel ?? `How it's marked · ${total} points`}</p>
-      <table class="rubric">
-        <thead><tr><th scope="col"><span class="sr">Criterion</span></th>{heads.map((h) => <th scope="col">{h}</th>)}</tr></thead>
-        <tbody>
-          {rubric.map((c) => (
-            <tr>
-              <th scope="row">{c.name}</th>
-              {c.levels.map((l, i) => <td><span class="pts" aria-label={`${l.pts} points`}>{l.pts}</span><span class="lv label" aria-hidden="true">{heads[i]}</span>{l.text}</td>)}
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <p class="muted rb-legend">{legend}.</p>
+      <ul class="rubric-list">
+        {rubric.map((c) => (
+          <li>
+            <div class="rb-head"><span class="rb-name">{c.name}</span><span class="rb-pts">{c.levels[0].pts} {c.levels[0].pts === 1 ? 'point' : 'points'}</span></div>
+            <p class="rb-full">{c.levels[0].text}</p>
+            <p class="rb-less">
+              {c.levels.slice(1).map((l, i) => <><span class="lv" aria-label={`${heads[i + 1]}, ${l.pts} points`}>{l.pts}</span>{l.text}{i === 0 ? ' ' : ''}</>)}
+            </p>
+          </li>
+        ))}
+      </ul>
       {note && <p class="muted asg-note">{note}</p>}
     </div>
   </div>
