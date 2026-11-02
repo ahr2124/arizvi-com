@@ -68,7 +68,7 @@ export const courses: Course[] = [
     seats: '1 section, about 25 students',
     when: 'Year 1 or 2, the department\'s call',
     prereqs: 'ACFM 124 or ACFM 203, and ANOP 102 (or equivalents)',
-    sample: 'The draft syllabus, and an option you can price by simulation',
+    sample: 'The term week by week, and an option you can price by simulation',
     pack: 'The full pack: 14 weeks, 12 labs, the midterm, the project and a sample final',
   },
 ];

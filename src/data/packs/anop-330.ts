@@ -101,7 +101,6 @@ export const pack: Pack = {
   standing: "ANOP 330 already runs in the department, and whatever outline it runs on comes first. This is a term as I'd plan it if asked: every week, every lab with what passes, the project in pieces, the rubrics up front and a sample of the final. Where the department's outline covers the same week, the class and the lab drop in as they're.",
   description: [
     'The course teaches students to build a model that would change a decision, to validate it on data it never saw, to choose its cutoff by what mistakes cost, and to say who signs off before it acts. By week 14 every team has done all of that for a real organization, or for public data where we couldn\'t get one.',
-    "What's in the pack: the syllabus, all 14 weeks (before class, both classes with timings, the lab), the 10 labs with what passes, the midterm, the project in 4 pieces, the paper report, the model card, and a sample final on paper.",
   ],
   outcomes: [
     { id: 'O1', text: 'Frame a prediction as a decision: what\'s predicted, when it must be known, and what changes if it\'s right or wrong.' },

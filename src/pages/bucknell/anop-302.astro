@@ -7,20 +7,12 @@ import CourseHeader from '../../components/CourseHeader.astro';
 import CourseNav from '../../components/CourseNav.astro';
 import OptionDemo from '../../components/OptionDemo.astro';
 import UnitFigure from '../../components/UnitFigure.astro';
-import Assignment from '../../components/Assignment.astro';
-import { a302 } from '../../data/assignments';
+import HandedIn from '../../components/HandedIn.astro';
+import { pack } from '../../data/packs/anop-302';
 import { course } from '../../data/bucknell';
 
 const c = course('anop-302');
 
-// The short names double as the columns of the grading table.
-const outcomes = [
-  ['Formulate', 'Turn a finance or accounting decision into a spreadsheet model with clear inputs, decisions, constraints and an objective.'],
-  ['Optimise', 'Solve linear, integer and nonlinear models, and read the sensitivity output to say what a constraint is worth.'],
-  ['Manage risk', 'Build and defend a mean-variance portfolio, and measure its risk with value at risk.'],
-  ['Simulate', 'Price options with Monte Carlo simulation, and check the answer against a closed-form price.'],
-  ['Recommend', 'Write a recommendation a manager can act on, including what would change it.'],
-];
 
 // Three units. Each week: a model the class builds together, then a lab students finish on their own.
 const units: { n: 1 | 2 | 3; weeks: string; name: string; line: string; items: { w: string; topic: string; build: string; try?: boolean }[] }[] = [
@@ -55,34 +47,18 @@ const units: { n: 1 | 2 | 3; weeks: string; name: string; line: string; items: {
   },
 ];
 
-// Marks per outcome, in the order above: 1 = assessed, 0.5 = one of these, the team's choice, 0 = not assessed.
-const grading = [
-  { item: 'Weekly labs', weight: '25%', when: 'Weeks 1-13', note: 'Small, frequent, pass or redo: a lab that doesn\'t pass comes back with feedback and you resubmit until it does. Each ends with a 3-sentence recommendation.', marks: [1, 1, 1, 1, 1] },
-  { item: 'Midterm', weight: '20%', when: 'Week 7', note: 'Optimisation: formulate, solve, interpret.', marks: [1, 1, 0, 0, 0] },
-  { item: 'Team project', weight: '30%', when: 'Weeks 4-14', note: 'A financial decision a real organization faces, built from its public filings, or with the organization itself where we can arrange it. Teams form in week 4, pick their decision by week 6, review their model with me in week 10 or 11 and present in week 14, with a 2-page memo and the model attached. Peer evaluation adjusts each member\'s mark.', marks: [1, 0.5, 0.5, 0.5, 1] },
-  { item: 'Final exam', weight: '15%', when: 'Exam week', note: 'Portfolios, risk and simulation.', marks: [0, 0, 1, 1, 0] },
-  { item: 'Exit tickets', weight: '10%', when: 'Every class', note: '2 sentences at the end of each class: what to do, and what would change it. Marked 0, 1 or 2 for whether a manager could act on it.', marks: [0, 0, 0, 0, 1] },
-];
-const mark = (m: number) => (m === 1 ? '●' : m === 0.5 ? '○' : '');
 ---
-<Base title="ANOP 302 syllabus" description="Draft syllabus for Bucknell's ANOP 302, Financial Decision Modeling using Spreadsheets, by Ali Rizvi." noindex>
-  <CourseHeader course={c} crumb="Draft syllabus" facts={[
+<Base title="ANOP 302" description="ANOP 302, Financial Decision Modeling using Spreadsheets, as Ali Rizvi would teach it at Bucknell: the term week by week, and an option to price by simulation." noindex>
+  <CourseHeader course={c} facts={[
     ['Format', '1 credit · 14 weeks · 2 classes of 75 minutes a week'],
     ['Tools', 'Excel with Solver. Laptops open while we build, closed for the debrief.'],
-    ['AI tools', 'Allowed for checking formulas and debugging. Submit the prompts with the lab. You stay responsible for every cell.'],
   ]}>
     <p>The catalogue describes ANOP 302 as linear and nonlinear optimisation in finance and accounting, portfolio and risk management, and Monte Carlo pricing of derivatives. The arc below is the one that course needs: formulate, then risk, then simulation, with every week ending in a decision written up for a manager. ANOP 350 goes deeper on simulation; weeks 10 to 13 here are the finance applications.</p>
     <p class="practice"><span class="label">From practice</span>At Morgan Stanley I built the team and the products that put data science and AI models in front of compliance staff, and was the firm's voice to 7 regulators on the topic. The deliverable was always a decision someone could defend, with the model behind it. Every week here ends with that memo.</p>
-    <p class="label pack-link"><a href="/bucknell/anop-302/pack/">The full course pack: syllabus, every week, every lab, the rubrics and a sample final →</a></p>
   </CourseHeader>
 
-  <Section label="What you'll be able to do" id="outcomes">
-    <div class="grid"><div class="span-8">
-      <ol>{outcomes.map(([k, v]) => <li><strong>{k}.</strong> {v}</li>)}</ol>
-    </div></div>
-  </Section>
-
-  <Section label="Schedule" id="schedule">
+  
+  <Section label="A term, as I'd plan it" title="Week by week" id="term">
     {units.map((u) => (
       <div class="unit grid">
         <div class="unit-side">
@@ -106,57 +82,17 @@ const mark = (m: number) => (m === 1 ? '●' : m === 0.5 ? '○' : '');
     ))}
   </Section>
 
-  <Section label="Grading" id="grading">
-    <table class="matrix">
-      <thead>
-        <tr>
-          <th class="label" scope="col">Assessment</th>
-          {outcomes.map(([k], i) => <th class="o label" scope="col"><span aria-hidden="true">{i + 1}</span><span class="sr">{k}</span></th>)}
-        </tr>
-      </thead>
-      <tbody>
-        {grading.map((g) => (
-          <tr>
-            <td><span class="name">{g.item} · {g.weight}</span><p><span class="label when">{g.when}</span> {g.note}</p></td>
-            {g.marks.map((m, i) => (
-              <td class="o">
-                <span aria-hidden="true">{mark(m)}</span>
-                <span class="sr">{m === 1 ? `${outcomes[i][0]}: assessed` : m === 0.5 ? `${outcomes[i][0]}: team's choice` : ''}</span>
-              </td>
-            ))}
-          </tr>
-        ))}
-      </tbody>
-    </table>
-    <div class="grid"><div class="span-8">
-      <p class="muted" style="margin-top: 1rem;">Columns are the 5 outcomes above. ● assessed · ○ one of these, the team's choice. Every outcome is assessed at least twice.</p>
-    </div></div>
-  </Section>
-
-  <Section label="Assignments" title="What is handed in, and how it is marked" id="assignments">
-    <div class="grid"><div class="span-8">
-      <p>One weekly lab in full, with the rubric it is marked on. The midterm, the project, all 12 labs and a sample final are in the <a href="/bucknell/anop-302/pack/">full pack</a>.</p>
-    </div></div>
-    {a302.map((a) => <Assignment {...a} />)}
-  </Section>
-
-  <Section label="How the class runs" id="policies">
-    <div class="grid"><div class="span-8">
-      <ol>
-        <li><strong>Guess first.</strong> Every case opens with a guess before any modelling, and we come back to it once the model is solved.</li>
-        <li><strong>Pairs, then the room.</strong> Each model is built in pairs before we debrief it together.</li>
-        <li><strong>Readings.</strong> No required textbook. Recommended: Winston and Albright, <em>Practical Management Science</em>, and Benninga, <em>Financial Modeling</em>.</li>
-        <li><strong>Office hours.</strong> 2 slots a week, plus time by appointment. Come with a half-built model - that's the best time to talk.</li>
-      </ol>
-    </div></div>
-  </Section>
-
-  <Section label="Try week 12" title="Price an option by simulation" id="try">
+  
+  
+  
+  <Section label="Try a class · Week 12" title="Price an option by simulation" id="try">
     <div class="grid"><div class="span-8">
       <p>A call option on a $100 stock: strike $100, 1 year to expiry, 20% volatility, 5% interest. Under these assumptions Black-Scholes gives the exact price, so it can check the simulation before we trust simulation with options no formula can price. Simulate stock paths, average the payoffs, and watch the estimate close in.</p>
     </div></div>
     <OptionDemo />
   </Section>
+
+  <HandedIn pack={pack} />
 
   <CourseNav current={c.slug} />
 </Base>

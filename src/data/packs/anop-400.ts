@@ -107,7 +107,6 @@ export const pack: Pack = {
   standing: "ANOP 400 has a client pipeline and an instructor who runs it, and I'd learn it before I touched it: sit in on the spring 2028 run, help where asked, and teach a section when the department asks. This is the section as I'd run it, with every week, every deliverable and every rubric.",
   description: [
     'The practicum is one project, start to finish, for a client: scope it into a decision and a question, audit the data, build the model, backtest it on a period the client has lived through, and hand over a recommendation the client can act on the week after. 5 teams, 5 clients, 14 weeks.',
-    "What's in the pack: the syllabus, all 14 weeks (the skills session, the workshop and the stand-up), the charter and the team contract, the mid-term check-in, the final report and presentation, the peer evaluation, the reflection, and the forms the course runs on: the stand-up sheet, the data agreement and the client's feedback form.",
   ],
   outcomes: [
     { id: 'O1', text: 'Scope a client\'s problem into a decision, a question and a success measure, and get it signed by week 3.' },

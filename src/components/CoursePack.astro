@@ -3,7 +3,7 @@
 import Section from './Section.astro';
 import CourseNav from './CourseNav.astro';
 import Assignment from './Assignment.astro';
-import { arrows, course } from '../data/bucknell';
+import { course } from '../data/bucknell';
 import type { Pack } from '../data/packs/types';
 interface Props { pack: Pack }
 const { pack } = Astro.props;
@@ -21,7 +21,6 @@ const marks = (q: { parts: { marks: number }[] }) => q.parts.reduce((s, p) => s 
 <header class="page-head course-head">
   <p class="label"><a href="/bucknell/">Bucknell</a> · <a href={`/bucknell/${pack.slug}/`}>{pack.code}</a> · Course pack</p>
   <h1>{pack.title}</h1>
-  <p class="tagline">{arrows(c.line, true)}</p>
   <div class="grid"><div class="span-8">
     <p>{pack.standing}</p>
     {pack.description.map((p) => <p>{p}</p>)}

@@ -6,8 +6,8 @@ import Section from '../../components/Section.astro';
 import CourseHeader from '../../components/CourseHeader.astro';
 import CourseNav from '../../components/CourseNav.astro';
 import Gantt from '../../components/Gantt.astro';
-import Assignment from '../../components/Assignment.astro';
-import { a400 } from '../../data/assignments';
+import HandedIn from '../../components/HandedIn.astro';
+import { pack } from '../../data/packs/anop-400';
 import { course } from '../../data/bucknell';
 
 const c = course('anop-400');
@@ -32,24 +32,14 @@ const brief = [
   ['The client gives', '5 meetings (weeks 1, 3, 8, 11 and 14), a named contact, and the data by week 4.'],
 ];
 
-const grading = [
-  ['Charter', '10%', 'Week 3. Signed by the client.'],
-  ['Mid-term check-in', '15%', 'Week 8. The data audit and first findings, presented to the client.'],
-  ['Final presentation and report', '45%', 'Week 14. The client in the room, and the model attached.'],
-  ['Stand-ups and peer evaluation', '20%', 'Every week. Peer evaluation at week 7 and week 14 moves each member\'s share of the team marks up or down by up to 10 points out of 100.'],
-  ['Reflection', '10%', 'Week 14. 2 pages: what you would do differently, and what you would tell next year\'s team.'],
-];
 ---
 <Base title="ANOP 400" description="ANOP 400, the Business Analytics Practicum, as Ali Rizvi would run it at Bucknell: the term, the clients, the grading, and what happens when a project goes wrong." noindex>
   <CourseHeader course={c} facts={[
     ['Format', '1 credit · 14 weeks · teams of 4 or 5, a client each'],
-    ['Grading', 'Charter 10% · mid-term check-in 15% · final presentation and report 45% · stand-ups and peer evaluation 20% · reflection 10%. Peer evaluation moves a member\'s share up or down by up to 10 points.'],
-    ['AI tools', 'Allowed on public data and on your own writing. Nothing from a client file goes into a chatbot unless the data agreement says it can.'],
     ['What I\'d bring', 'A term planned to the week, a charter the client signs by week 3, a playbook for the week it goes wrong, and the habit of finding next term\'s clients during this one. The deliverable is a model and a recommendation the client can act on.'],
   ]}>
     <p>ANOP 400 has a client pipeline and an instructor who runs it, and I'd learn it before I touched it: sit in on the spring 2028 run, help where asked, and teach a section when the department asks. Below is how I'd run a section: the term, the clients, the grading, and what happens when a project goes wrong.</p>
     <p class="practice"><span class="label">From practice</span>A clinical trial is a capstone with higher stakes: the protocol is written before the first patient, the success measure is named in advance, and nobody moves it. The A/B tests I ran inside an e-commerce retailer worked the same way, with the metric and the stopping rule agreed before launch, and the ones that skipped that step produced quick wins that never showed up in revenue. The charter above is that discipline, scaled to 14 weeks.</p>
-    <p class="label pack-link"><a href="/bucknell/anop-400/pack/">The full course pack: every week, every deliverable with its rubric, and the forms the course runs on →</a></p>
   </CourseHeader>
 
   <Section label="The term" title="Week by week" id="term">
@@ -70,23 +60,9 @@ const grading = [
     </div></div>
   </Section>
 
-  <Section label="Grading" title="What the mark is made of" id="grading">
-    <ul class="rows compact bk-wide">
-      {grading.map(([item, weight, note]) => (
-        <li class="grid">
-          <div class="label">{weight}</div>
-          <div class="body"><span class="title">{item}</span><p>{note}</p></div>
-        </li>
-      ))}
-    </ul>
-  </Section>
-
-  <Section label="Assignments" title="What is handed in, and how it is marked" id="assignments">
-    <div class="grid"><div class="span-8">
-      <p>The two pieces students ask about first: the charter that starts the term, and the peer evaluation that decides how a team mark is shared. The team contract, the check-in, the final report, the reflection, the stand-up sheet, the data agreement and the client's feedback form are in the <a href="/bucknell/anop-400/pack/">full pack</a>.</p>
-    </div></div>
-    {a400.map((a) => <Assignment {...a} />)}
-  </Section>
+  
+  
+  <HandedIn pack={pack} />
 
   <Section label="When it goes wrong" title="The playbook" id="playbook">
     <div class="grid"><div class="span-8">

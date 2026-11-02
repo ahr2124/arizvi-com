@@ -56,7 +56,6 @@ export const pack: Pack = {
   standing: "ANOP 102 runs in several sections a term on a shared outline, and that outline comes first. This is the course as I'd run it if the department asked, written the way I write a course: every week planned, every lab with what passes, the rubrics up front, and a sample of the final. It's also what I'd bring to a shared-outline section, piece by piece, where the weeks line up.",
   description: [
     'The course teaches students to build a spreadsheet model a manager could audit, to say how sure they are, and to write the 2-page memo that says what to do. By week 14 every team has done all 3 for a decision a real organization faces.',
-    "What's in the pack: the syllabus (outcomes, grading, the rules), all 14 weeks (what to do before class, both classes with timings, the lab), the 12 labs with what passes, the 4 big pieces with their rubrics, and a sample final exam in the format the real one uses.",
   ],
   outcomes: [
     { id: 'O1', text: 'Build a spreadsheet model someone else can audit: inputs, formulas and outputs kept apart, every assumption named and in one place.' },

@@ -61,7 +61,6 @@ export const pack: Pack = {
   standing: "ANOP 302 is the course I'd most like to build, and the one that isn't in the posting, so it takes a slot in year 1 or 2 at the department's call. This is the whole term as I'd run it: every week, every lab with what passes, the project in pieces, the rubrics up front and a sample of the final.",
   description: [
     'The catalogue describes ANOP 302 as optimisation in finance and accounting, portfolio and risk management, and Monte Carlo pricing of derivatives. The course teaches students to formulate a financial decision as a model, solve it, say what a constraint is worth, measure the risk, and write the recommendation a CFO could act on. Every week ends in that recommendation.',
-    "What's in the pack: the syllabus, all 14 weeks (before class, both classes with timings, the lab), the 12 labs with what passes, the midterm, the project, and a sample final on portfolios, risk and simulation.",
   ],
   outcomes: [
     { id: 'O1', text: 'Formulate: turn a finance or accounting decision into a spreadsheet model with clear inputs, decisions, constraints and an objective.' },
