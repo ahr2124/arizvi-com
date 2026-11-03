@@ -2,8 +2,9 @@
 // A class you can try, explained: the scenario (the slot) beside the plan for the 75 minutes, with a bar that
 // shows who has the floor, then the pre-class work, the lab that follows, and 3 things to try in the widget below.
 import type { ClassPlan } from '../data/classes';
-interface Props { plan: ClassPlan; course: string }
-const { plan, course } = Astro.props;
+// `pack` false drops the link to the week in the course pack (for pages, like /tulane, with no pack behind them).
+interface Props { plan: ClassPlan; course: string; pack?: boolean }
+const { plan, course, pack = true } = Astro.props;
 const total = plan.steps.reduce((s, x) => s + x.min, 0);
 const who = { me: 'Me, at the front', you: 'You, working', room: 'The room, laptops closed' } as const;
 let t = 0;
@@ -29,7 +30,7 @@ const steps = plan.steps.map((s) => { const from = t; t += s.min; return { ...s,
         <dt class="label">Before class</dt>
         <dd>{plan.before}</dd>
         <dt class="label">The lab that follows</dt>
-        <dd>{plan.lab} <a class="cls-more" href={`/bucknell/${course}/pack/#week-${plan.week}`}>Week {plan.week} in the pack →</a></dd>
+        <dd>{plan.lab}{pack && <> <a class="cls-more" href={`/bucknell/${course}/pack/#week-${plan.week}`}>Week {plan.week} in the pack →</a></>}</dd>
       </dl>
     </aside>
     <div class="cls-try">

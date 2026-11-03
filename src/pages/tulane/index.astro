@@ -1,0 +1,122 @@
+---
+// src/pages/tulane/index.astro  →  arizvi.com/tulane
+// For the Tulane Freeman search (Professor of Practice, Management Science - Information Systems): how I teach,
+// the courses I'd take, a first year, and one class to try. Not linked from the nav; sends noindex.
+// Codes, titles and prerequisites are from Tulane's 2026-27 catalogue.
+import Base from '../../layouts/Base.astro';
+import Section from '../../components/Section.astro';
+import ClassPlan from '../../components/ClassPlan.astro';
+import ThresholdDemo from '../../components/ThresholdDemo.astro';
+import { classes } from '../../data/classes';
+import { arrows } from '../../data/bucknell';
+
+const catalogue = 'https://catalog.tulane.edu/courses/mgsc/';
+// Numbers and course codes stay on the same line as the word after them (as on /bucknell).
+const keep = (s: string) => s.replace(/(\d|[A-Z]{4}) (?=\w)/g, '$1 ');
+
+const principles = [
+  ['Build the course backwards from the outcome.', 'Each course ends in work a manager could use, and every week builds toward it.'],
+  ['Personalize within a defined structure.', 'Everyone learns the same methods. Each student picks the decision or dataset they apply them to.'],
+  ['Learn on real problems.', 'Real sponsors and real constraints wherever I can get them. At Freeman that starts with MGSC 7870.'],
+  ['Test the teaching itself.', 'Mid-term feedback in every course, with changes made before the term ends. In MSCI 543 it moved the exams to paper.'],
+];
+
+const courses = [
+  {
+    code: 'MGSC 3010',
+    where: 'BSM core',
+    title: 'Introduction to Business Analytics',
+    line: 'Excel models -> optimisation -> simulation, and every model ends in a short memo a manager could act on.',
+    who: 'BSM students, after INFO 1010 and MGSC 3005 (or MATH 1230).',
+  },
+  {
+    code: 'MGSC 4690',
+    where: 'Business Analytics and AI certificate',
+    title: 'AI for Business',
+    line: 'Every model is a decision tool, so we judge models by what their mistakes cost - and decide who stays in the loop.',
+    who: 'Undergraduates past MGSC 3010. I\'d take MGSC 7350, its graduate twin, too.',
+    sample: { href: '#try', text: 'Try a class from it below' },
+  },
+  {
+    code: 'MGSC 7340',
+    where: 'Required in the master\'s',
+    title: 'Web Analytics',
+    line: 'Funnels -> instrumentation -> A/B tests -> a ship-or-kill call, taught from a year of live experiments I ran inside an e-commerce retailer.',
+    who: 'Master of Business Analytics and AI students, and seniors on the 4+1.',
+    sample: { href: '/work/experimentation/', text: 'The experiments it\'s taught from →' },
+  },
+  {
+    code: 'MGSC 7870',
+    where: 'The master\'s capstone',
+    title: 'Business Analytics Projects',
+    line: 'Scope -> data -> model -> recommendation -> delivery. A charter the sponsor signs by week 3, and the sponsor in the room at the end. The 40+ portfolio companies I work across at AMJ Capital are a ready list of sponsors.',
+    who: 'Master of Business Analytics and AI students, after MGSC 7310 and 7330 (or MGSC 7520).',
+  },
+];
+
+const plan = [
+  { term: 'Fall 2027', load: 'MGSC 3010 (2 sections) · MGSC 7340' },
+  { term: 'Spring 2028', load: 'MGSC 3010 · MGSC 4690 · MGSC 7870' },
+  { term: 'Year 2', load: 'The same core, plus MGSC 7350 or 4590 where the area needs them' },
+];
+---
+<Base title="Tulane" description="The courses Ali Rizvi would teach in the Management Science area at Tulane's Freeman School of Business, and how he teaches them." noindex>
+  <header class="page-head">
+    <div class="intro-grid">
+      <div class="text">
+        <p class="label">Tulane · Freeman School of Business · Management Science</p>
+        <h1>Teaching analytics and AI at Freeman</h1>
+      </div>
+      <div class="photo"><img src="/media/headshot.jpg" alt="Ali Rizvi" width="400" height="500" /></div>
+    </div>
+  </header>
+
+  <Section label="How I teach" id="approach">
+    <ol class="principles">
+      {principles.map(([head, line]) => <li><strong>{head}</strong> {line}</li>)}
+    </ol>
+    <p class="muted principles-note">14 course sections at Waterloo between 2021 and 2024, ~700 students, classes of 40 to 180. The stories in class come from the work: Alexa at Amazon, a year of A/B tests inside a healthcare e-commerce retailer, compliance models at Morgan Stanley, and the portfolio companies at AMJ Capital. More on the <a href="/teaching/">Teaching</a> page.</p>
+  </Section>
+
+  <Section label="The courses" id="courses">
+    <ul class="rows bk-wide">
+      {courses.map((c) => (
+        <li class="grid">
+          <div class="label">{c.code}<br />{c.where}</div>
+          <div class="body">
+            <span class="title">{c.title}</span>
+            <p>{arrows(c.line)}</p>
+            <p class="who"><span class="label">Students</span>{keep(c.who)}</p>
+            {c.sample && <p class="sample"><a href={c.sample.href}>{c.sample.text}</a></p>}
+          </div>
+        </li>
+      ))}
+    </ul>
+    <div class="grid"><div class="span-8">
+      <p class="muted" style="margin-top: 1.5rem;">I can also take MGSC 3005, 4320, 4590 and 7100. Codes, titles and prerequisites are from the <a href={catalogue} target="_blank" rel="noopener">2026-27 catalogue</a>.</p>
+    </div></div>
+  </Section>
+
+  <Section label="A first year" id="plan">
+    <ul class="rows bk-wide">
+      {plan.map((p) => (
+        <li class="grid">
+          <div class="label">{p.term}</div>
+          <div class="body"><p>{p.load}</p></div>
+        </li>
+      ))}
+    </ul>
+    <div class="grid"><div class="span-8">
+      <p class="muted" style="margin-top: 1.5rem;">A starting point. The sections are the area's call, and I'll fit the rest to what Freeman needs.</p>
+    </div></div>
+  </Section>
+
+  <Section label="Try a class · MGSC 4690" title="The most accurate cutoff earns nothing" id="try">
+    <ClassPlan plan={classes.threshold} course="mgsc-4690" pack={false}>
+      <p>Your subscription business has 1,000 customers. Next month 100 of them will cancel - you just don't know which 100. A model gives every customer a risk score.</p>
+      <p>You can send a retention offer. It costs $20, and each customer it keeps is worth $200. To keep the arithmetic simple, say it keeps everyone it reaches who was about to cancel. How many of your riskiest customers should get it?</p>
+      <p>The widget is the first 20 minutes of the class. The grid is next month, 1 square a customer, in the order the model ranked them, riskiest first. The slider is the business decision: how far down the list the offers go. Every position on it has an accuracy and a dollar value, and the class is about which of the 2 a manager should care about. Then I change what an offer costs, and the right answer moves while the accuracy stays put.</p>
+    </ClassPlan>
+    <ThresholdDemo />
+  </Section>
+</Base>
