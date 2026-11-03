@@ -11,16 +11,16 @@
 
   <dl class="demo-readout">
     <div><dt class="label">Paths</dt><dd data-out="n">0</dd></div>
-    <div><dt class="label">Estimate</dt><dd data-out="est">?</dd></div>
+    <div><dt class="label"><span class="swi acc" aria-hidden="true" />Estimate</dt><dd data-out="est">?</dd></div>
     <div><dt class="label">95% confidence interval</dt><dd data-out="ci">?</dd></div>
-    <div><dt class="label">Black-Scholes</dt><dd data-out="bs">?</dd></div>
+    <div><dt class="label"><span class="swi warm" aria-hidden="true" />Black-Scholes</dt><dd data-out="bs">?</dd></div>
   </dl>
 
   <div class="demo-chart">
     <p class="label">Estimated price, by number of paths</p>
     <div class="demo-plot" aria-hidden="true">
       <svg viewBox="0 0 1000 100" preserveAspectRatio="none"><polygon data-band /><polyline data-line /></svg>
-      <span class="demo-hline" data-bs-line></span>
+      <span class="demo-hline bs" data-bs-line></span>
       <span class="demo-tag label" data-bs-tag>Black-Scholes</span>
       <span class="demo-y top label">$15</span>
       <span class="demo-y bottom label">$6</span>
@@ -89,7 +89,7 @@
       $('[data-band]').setAttribute('points', upper.concat(lower).join(' '));
       root.querySelectorAll<HTMLButtonElement>('[data-add]').forEach((b) => (b.disabled = n >= MAX));
       $('[data-note]').textContent = !n
-        ? 'Guess first: how many paths does it take to get within 10 cents of the right price?'
+        ? 'No paths yet. Press +1,000 to start, and keep your guess in mind.'
         : n >= MAX
           ? `That's the cap: 100,000 paths gives ${money(est)}, give or take ${money(half)}. Black-Scholes says ${money(BS)}.`
           : `${n.toLocaleString('en-CA')} paths: ${money(est)}, give or take ${money(half)}. Black-Scholes says ${money(BS)}.`;

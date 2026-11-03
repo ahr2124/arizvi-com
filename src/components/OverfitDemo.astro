@@ -39,8 +39,8 @@ const path = (d: number) => fits[d].curve.map((y, i) => `${i ? 'L' : 'M'}${(left
 
   <dl class="demo-readout odemo-readout">
     <div><dt class="label">Degree</dt><dd data-out="deg">{D0}</dd></div>
-    <div><dt class="label">Error on the 16 days</dt><dd data-out="tr">${fits[D0].train}</dd></div>
-    <div><dt class="label">Error on the 8 held out</dt><dd data-out="te">?</dd></div>
+    <div><dt class="label"><span class="swi deep" aria-hidden="true" />Error on the 16 days</dt><dd data-out="tr">${fits[D0].train}</dd></div>
+    <div><dt class="label"><span class="swi warm" aria-hidden="true" />Error on the 8 held out</dt><dd data-out="te">?</dd></div>
   </dl>
   <p class="demo-note" aria-live="polite" data-note></p>
 

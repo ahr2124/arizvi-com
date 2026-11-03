@@ -142,9 +142,9 @@ def lp_figure(W=340, H=290, mini=False):
     out.append('<polygon class="region" points="' + ' '.join(f'{X(c):.1f},{Y(t):.1f}' for c, t in region) + '" />')
     def seg(c0, t0, c1, t1, cls='cline'):
         return f'<path class="{cls}" d="M{X(c0):.1f},{Y(t0):.1f} L{X(c1):.1f},{Y(t1):.1f}" />'
-    out.append(seg(20, 45, 80, 0))       # assembly: 3C + 4T = 240
-    out.append(seg(0, 40, 90, 10))       # painting: C + 3T = 120
-    out.append(seg(0, 30, 90, 30))       # Trail demand: T = 30
+    out.append(seg(20, 45, 80, 0, 'cline c-asm'))    # assembly: 3C + 4T = 240
+    out.append(seg(0, 40, 90, 10, 'cline c-paint'))   # painting: C + 3T = 120
+    out.append(seg(0, 30, 90, 30, 'cline c-dem'))     # Trail demand: T = 30
     out.append(seg(16.5, 45, 84, 0, 'iso'))  # every plan worth $10,080: 120C + 180T = 10,080
     ox, oy = X(48), Y(24)
     out.append(f'<rect class="opt" x="{ox-5:.1f}" y="{oy-5:.1f}" width="10" height="10" />')
@@ -320,14 +320,14 @@ write('src/components/CurriculumMap.astro', f'''---
 </figure>
 ''')
 
-lp = lp_figure()
+lp = lp_figure(440, 330)
 write('src/components/LPFigure.astro', f'''---
 {STYLE_NOTE}
 // The ANOP 102 sample class: a bike shop's product mix. 3C + 4T <= 240 (assembly), C + 3T <= 120 (painting), T <= 30.
 ---
 <figure class="fig lp">
-  {svg(340, 290, lp, 'The bike shop product-mix problem', 'Feasible plans are bounded by assembly hours, painting hours and Trail demand. The best plan is 48 Commuters and 24 Trails for $10,080 a week, where assembly and painting both run out.')}
-  <figcaption class="muted">The best plan sits where assembly and painting both run out. An extra assembly hour adds $36 (for up to 120 more hours), so the $30 assembler pays. An extra painting hour adds only $12, so turn down the $25 painter. Dashed: every plan worth $10,080.</figcaption>
+  {svg(440, 330, lp, 'The bike shop product-mix problem', 'Feasible plans are bounded by assembly hours, painting hours and Trail demand. The best plan is 48 Commuters and 24 Trails for $10,080 a week, where assembly and painting both run out.')}
+  <figcaption class="muted">The shaded region is every plan the crew can build. The square is the best one, and the dashed line through it is every plan worth $10,080. The $36 an assembly hour is worth holds for up to 120 more hours; after that the painters are the limit.</figcaption>
 </figure>
 ''')
 

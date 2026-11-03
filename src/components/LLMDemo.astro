@@ -109,7 +109,9 @@ const strategies = [
       });
       $('[data-chips]').innerHTML = picks.map((i) => `<span class="chip ${KEYS[i]}">${KEYS[i]}</span>`).join('');
       const count = KEYS.map((_, i) => picks.filter((x) => x === i).length);
-      $('[data-tally]').textContent = `Same question, same model: ${count[2]} high, ${count[1]} medium, ${count[0]} low. Ask again and the count changes; the bars don't. 20 asks is a small sample, which is week 9's lesson.`;
+      $('[data-tally]').textContent = Number(slider.value) < 0.05
+        ? `Temperature 0: medium, ${count[1]} times out of 20. Raise the temperature and the count starts to move; the bars never do.`
+        : `Same question, same model: ${count[2]} high, ${count[1]} medium, ${count[0]} low. Ask again and the count changes; the bars don't. 20 asks is a small sample, which is week 9's lesson.`;
     });
 
     slider.addEventListener('input', update);

@@ -390,7 +390,7 @@ ol li + li { margin-top: 0.5em; }
 .unit-figs .path { fill: none; stroke: rgba(0, 0, 0, 0.3); stroke-width: 1; }
 .unit-figs .asset { fill: #fff; stroke: #000; stroke-width: 1.5; }
 .fig svg.fig-tall { display: none; }
-.fig.lp svg { width: 100%; max-width: 340px; }
+.fig.lp svg { width: 100%; max-width: 440px; }
 .curriculum { margin-bottom: 2.5rem; }
 .row-fig { margin-top: 20px; }
 .unit-figs { list-style: none; margin: 0 0 2.5rem; padding: 0; max-width: 860px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
@@ -696,3 +696,85 @@ ol li + li { margin-top: 0.5em; }
 .pack-cta { max-width: 860px; margin: 3rem 0 0; font-weight: 600; font-size: 1.15rem; letter-spacing: -0.01em; }
 .pack-cta a { display: block; text-decoration: none; border-top: 2px solid #000; padding-top: 12px; }
 .pack-cta a:hover { text-decoration: underline; }
+
+/* A class as it runs: the plan beside the scenario, then what to try. Colour says who has the floor. */
+.cls { --me: #eb6834; --you: #2a78d6; --room: #1baf7a; }
+.cls-head { align-items: start; grid-template-rows: auto 1fr; }
+.cls-intro { grid-column: 1 / 9; grid-row: 1; }
+.cls-side { grid-column: 9 / 13; grid-row: 1 / 3; }
+.cls-more { white-space: nowrap; }
+.cls-bar { display: flex; gap: 2px; height: 14px; margin-top: 10px; }
+.cls-bar span { display: block; min-width: 0; }
+.cls .me { background: var(--me); }
+.cls .you { background: var(--you); }
+.cls .room { background: var(--room); }
+.cls-steps { list-style: none; margin: 10px 0 0; padding: 0; max-width: none; }
+.cls-steps li { display: grid; grid-template-columns: 3rem 10px minmax(0, 1fr); column-gap: 8px; align-items: start; font-size: 15px; padding: 8px 0; border-top: 1px solid rgba(0, 0, 0, 0.15); }
+.cls-steps li + li { margin-top: 0; }
+.cls-steps li:first-child { border-top: 0; padding-top: 0; }
+.cls-min { font-size: 12px; font-weight: 500; letter-spacing: 0.06em; white-space: nowrap; padding-top: 4px; }
+.cls .sw { display: inline-block; width: 10px; height: 10px; flex: none; }
+.cls-steps .sw { margin-top: 7px; }
+.cls-legend { display: flex; flex-wrap: wrap; gap: 4px 16px; margin: 10px 0 0; font-size: 13px; color: rgba(0, 0, 0, 0.6); max-width: none; }
+.cls-legend .sw { margin-right: 6px; vertical-align: 0; }
+.cls-kv { margin: 18px 0 0; }
+.cls-kv dt { margin-top: 12px; }
+.cls-kv dd { margin: 4px 0 0; font-size: 15px; }
+.cls-try { grid-column: 1 / 9; grid-row: 2; align-self: end; margin-top: 2rem; border-top: 1px solid #000; padding-top: 12px; }
+.cls-try ol { list-style: none; margin: 12px 0 0; padding: 0; max-width: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px var(--gutter); }
+.cls-try li { display: grid; grid-template-columns: 28px minmax(0, 1fr); column-gap: 10px; align-items: start; }
+.cls-try li + li { margin-top: 0; }
+.cls-try .n { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; background: var(--you); color: #fff; font-weight: 600; font-size: 14px; }
+.cls-try p { margin: 0; font-size: 15px; }
+.cls-try p b { font-weight: 600; }
+.cls + .demo, .cls + .cdemo, .cls + .ldemo, .cls + .row-fig { margin-top: 2rem; }
+@media (max-width: 1279px) {
+  .cls-try ol { grid-template-columns: 1fr; }
+}
+@media (max-width: 1023px) {
+  .cls-intro, .cls-side, .cls-try { grid-column: 1 / -1; grid-row: auto; }
+  .cls-side { order: 1; margin-top: 1rem; max-width: 560px; }
+  .cls-try { order: 2; margin-top: 2.5rem; }
+}
+
+/* The class widgets in colour: blue for the controls and the model, orange for the point that changes the answer,
+   aqua for the thing you're after. Text stays black. */
+.demo, .cdemo, .ldemo, .fig.lp { --acc: #2a78d6; --deep: #104281; --warm: #eb6834; --ok: #1baf7a; }
+.demo input[type='range']::-webkit-slider-runnable-track, .cdemo input[type='range']::-webkit-slider-runnable-track, .ldemo input[type='range']::-webkit-slider-runnable-track { background: rgba(0, 0, 0, 0.3); }
+.demo input[type='range']::-moz-range-track, .cdemo input[type='range']::-moz-range-track, .ldemo input[type='range']::-moz-range-track { background: rgba(0, 0, 0, 0.3); }
+.demo input[type='range']::-webkit-slider-thumb, .cdemo input[type='range']::-webkit-slider-thumb, .ldemo input[type='range']::-webkit-slider-thumb { background: var(--acc); }
+.demo input[type='range']::-moz-range-thumb, .cdemo input[type='range']::-moz-range-thumb, .ldemo input[type='range']::-moz-range-thumb { background: var(--acc); }
+.demo-pills button[aria-pressed='true'] { background: var(--acc); border-color: var(--acc); color: #fff; }
+.demo-btn.solid { background: var(--acc); border-color: var(--acc); color: #fff; }
+.demo-plot path, .demo-plot polyline { stroke: var(--acc); }
+.demo-plot polygon { fill: rgba(42, 120, 214, 0.16); }
+.demo-rule { border-left-color: var(--acc); }
+.demo-hline { border-top-color: rgba(0, 0, 0, 0.45); }
+.demo-hline.bs { border-top: 2px dashed var(--warm); }
+.demo-dot { background: var(--deep); }
+.demo-best { border-color: var(--ok); }
+.swi { display: inline-block; width: 10px; height: 10px; margin-right: 6px; vertical-align: 0; }
+.swi.acc { background: var(--acc); }
+.swi.deep { background: var(--deep); }
+.swi.warm { background: var(--warm); }
+.swi.ok { background: var(--ok); }
+.pdemo-fill { background: var(--acc); }
+.pdemo-bar.top .pdemo-fill { background: var(--deep); }
+.bdemo-table td.plan { outline-color: var(--deep); }
+.ldemo-sfill { background: #86b6ef; }
+.ldemo-strat.is-best .ldemo-sfill { background: var(--deep); }
+.rdemo-plot line { stroke: var(--acc); }
+.rdemo-pt { background: var(--deep); }
+.rdemo-pt.out { background: var(--warm); }
+.rdemo-pt.out.off { background: #fff; border-color: var(--warm); }
+.rdemo-pred { width: 14px; height: 14px; margin: -7px 0 0 -7px; border: 0; background: var(--ok); box-shadow: 0 0 0 2px #fff; }
+.odemo-plot path { stroke: var(--acc); }
+.odemo-pt { background: var(--deep); }
+.odemo-pt.held { background: var(--warm); border: 0; box-shadow: 0 0 0 2px #fff; }
+.fig.lp .region { fill: rgba(42, 120, 214, 0.12); }
+.fig.lp .cline { stroke-width: 1.5; }
+.fig.lp .c-asm { stroke: var(--deep); }
+.fig.lp .c-paint { stroke: var(--acc); }
+.fig.lp .c-dem { stroke: var(--ok); }
+.fig.lp .iso { stroke: var(--warm); stroke-width: 1.5; }
+.fig.lp .opt { fill: var(--warm); }
