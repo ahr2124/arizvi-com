@@ -1,7 +1,7 @@
 ---
 // Week 8 of the course on /uis: is the gauge lying?
-// A part has to come out within 0.25 mm of nominal (a band 0.50 mm wide). The reader sets the gauge's standard deviation
-// and where a good part really sits, and sees how much of the band is within 3 standard deviations of a limit and how often
+// A part has to come out within 0.25 mm of nominal (a band 0.50 mm wide). The reader sets the gauge R&R standard deviation
+// (the measurement system: the calipers and the people using them) and where a good part really sits, and sees how much of the band is within 3 standard deviations of a limit and how often
 // the gauge fails the part. The class's calipers: 0.04 mm, 48% of the band. With a fixture and trained operators: 0.01 mm, 12%.
 // The arithmetic is in src/data/gauge.ts.
 import { BAND, SD_CLASS, SD_FIXED, D_START, shareTenths, fails, verdict, mm, pct, prob, shapes } from '../data/gauge';
@@ -12,7 +12,7 @@ const words = { ok: 'Acceptable', marginal: 'Marginal', bad: 'Unacceptable' } as
 <div class="demo gdemo" data-gdemo>
   <div class="demo-controls gdemo-controls">
     <div>
-      <label class="label" for="gdemo-sd">The gauge's standard deviation <output data-out="sd" for="gdemo-sd">{mm(sd)} mm</output></label>
+      <label class="label" for="gdemo-sd">Gauge R&amp;R standard deviation <output data-out="sd" for="gdemo-sd">{mm(sd)} mm</output></label>
       <input type="range" id="gdemo-sd" min="4" max="60" step="1" value={sd} />
       <div class="demo-scale label" aria-hidden="true"><span>0.004 mm</span><span>0.06 mm</span></div>
     </div>
@@ -22,6 +22,8 @@ const words = { ok: 'Acceptable', marginal: 'Marginal', bad: 'Unacceptable' } as
       <div class="demo-scale label" aria-hidden="true"><span>Dead centre</span><span>On the limit</span></div>
     </div>
   </div>
+  <!-- On a phone the sliders and the readout below the chart don't share a screen, so the result is repeated here. -->
+  <p class="cdemo-live" aria-hidden="true" data-out="live">{pct(shareTenths(sd))} of the band · {words[verdict(shareTenths(sd))].toLowerCase()} · the part fails {prob(fails(sd, d))}</p>
   <div class="gdemo-jump">
     <p class="label" id="gdemo-jump">Jump to</p>
     <div class="demo-pills" role="group" aria-labelledby="gdemo-jump">
@@ -51,14 +53,14 @@ const words = { ok: 'Acceptable', marginal: 'Marginal', bad: 'Unacceptable' } as
       </svg>
     </div>
     <div class="gdemo-x label" aria-hidden="true">
-      <span style="left: 25%;">−0.25 mm</span><span style="left: 50%;">Nominal</span><span style="left: 75%;">+0.25 mm</span>
+      <span style="left: 25%;">−0.25 mm</span><span style="left: 50%;"><span class="gx-l">Nominal</span><span class="gx-s">0</span></span><span style="left: 75%;">+0.25 mm</span>
     </div>
   </div>
 
   <dl class="demo-readout gdemo-readout">
     <div><dt class="label"><span class="swi zone" aria-hidden="true" />6 standard deviations</dt><dd data-out="six">{mm(6 * sd)} mm</dd></div>
     <div><dt class="label">Share of the {mm(BAND, 2)} mm band</dt><dd data-out="share">{pct(shareTenths(sd))}</dd></div>
-    <div><dt class="label">By the rule of thumb</dt><dd data-out="verdict">{words[verdict(shareTenths(sd))]}</dd></div>
+    <div><dt class="label">By the AIAG guideline</dt><dd data-out="verdict">{words[verdict(shareTenths(sd))]}</dd></div>
     <div><dt class="label"><span class="swi warm" aria-hidden="true" />The part fails</dt><dd data-out="fails">{prob(fails(sd, d))}</dd></div>
   </dl>
   <p class="demo-note" aria-live="polite" data-note></p>
@@ -101,6 +103,7 @@ const words = { ok: 'Acceptable', marginal: 'Marginal', bad: 'Unacceptable' } as
       $('[data-out=share]').textContent = pct(tenths);
       $('[data-out=verdict]').textContent = words[v];
       $('[data-out=fails]').textContent = prob(p);
+      $('[data-out=live]').textContent = `${pct(tenths)} of the band · ${words[v].toLowerCase()} · the part fails ${prob(p)}`;
       pills.forEach((b) => b.setAttribute('aria-pressed', String(Number(b.dataset.sd) === sd)));
       sdIn.setAttribute('aria-valuetext', `${mm(sd)} mm, ${pct(tenths)} of the band, ${words[v].toLowerCase()}`);
       dIn.setAttribute('aria-valuetext', `${mm(d, 2)} mm inside the upper limit, fails ${prob(p)} of the time`);

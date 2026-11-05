@@ -146,21 +146,22 @@ export const classes: Record<string, ClassPlan> = {
     ],
   },
   // /uis: the measurement lab from week 8 of the course on that page. No pack behind it, so the page passes pack={false}.
+  // A gauge R&R study (10 parts, 3 students, 2 readings each), judged against the tolerance by the AIAG guideline.
   // Band 0.50 mm; the class's gauge at 0.04 mm (6 x 0.04 / 0.50 = 48%); with a fixture and training 0.01 mm (12%).
   gauge: {
     week: 8,
     before: 'Video (12 min): how to read calipers, and what a tolerance band is. A 3-question check.',
     steps: [
       { min: 10, who: 'me', title: 'The question.', text: '10 parts on the bench, a drawing that allows 0.25 mm either way, and 1 pair of calipers a team. Everyone writes a prediction first: how far apart will 2 readings of the same part be?' },
-      { min: 25, who: 'you', title: 'Measure.', text: 'Teams of 3. Each student measures all 10 parts twice: 60 readings on the sheet.' },
-      { min: 20, who: 'you', title: 'Work the number.', text: 'From the repeat readings to the gauge\'s standard deviation, then 6 of them as a share of the band.' },
-      { min: 20, who: 'room', title: 'Debrief.', text: 'The class\'s own number goes into this widget on the projector. Would you release parts measured on this gauge today? What would change your answer?' },
+      { min: 25, who: 'you', title: 'Measure.', text: 'Teams of 3. Check the calipers on a gauge block first. Then each student measures all 10 parts twice: 60 readings on the sheet.' },
+      { min: 20, who: 'you', title: 'Work the number.', text: 'Repeatability from each student\'s 2 readings of a part, reproducibility from the gaps between the 3 students\' averages. Together they give the gauge R&R standard deviation. Then 6 of those as a share of the band.' },
+      { min: 20, who: 'room', title: 'Debrief.', text: 'The class\'s number goes on this widget\'s slider, on the projector. Teams land on different numbers, because 60 readings is a small study. Would you release parts measured this way today? What would change your answer?' },
     ],
     lab: 'Lab 2, the gauge study: the 60 readings worked up into a 1-page decision for the shop - release the parts, measure again, or fix the gauge first. Pass or redo, with feedback inside a week.',
     tries: [
-      { do: 'Start with the class\'s calipers.', see: 'A standard deviation of 0.04 mm, so 6 × 0.04 = 0.24 mm of spread in a 0.50 mm band: 48%. A good part 0.04 mm inside the limit fails 16% of the time.' },
+      { do: 'Start with the class\'s calipers.', see: 'A standard deviation of 0.04 mm, so 6\u00a0×\u00a00.04 = 0.24\u00a0mm of spread in a 0.50 mm band: 48%. A good part 0.04 mm inside the limit fails 16% of the time.' },
       { do: 'Add the fixture and the training.', see: 'The standard deviation drops to 0.01 mm: 12% of the band, marginal and usable. The same part now fails about 3 times in 100,000.' },
-      { do: 'Find the gauge that gets under 10%.', see: '0.008 mm (9.6%). 6 standard deviations have to fit inside 0.05 mm.' },
+      { do: 'Find the gauge that gets under 10%.', see: '0.008 mm (9.6%): 6 standard deviations have to fit inside 0.05 mm. Calipers read to 0.01 mm, so that takes a micrometer.' },
     ],
   },
 };

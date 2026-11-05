@@ -22,18 +22,19 @@ export const tail = (z: number) => 0.5 * erfc(z / Math.SQRT2);
 export const shareTenths = (sd: number) => Math.round((6 * sd * 1000) / BAND);
 // A good part d inside the upper limit reads outside the band this often (the lower limit is included for completeness).
 export const fails = (sd: number, d: number) => tail(d / sd) + tail((BAND - d) / sd);
-// The rule of thumb: under 10% acceptable, 10 to 30% may be acceptable, over 30% unacceptable.
+// The AIAG guideline: under 10% acceptable, 10 to 30% may be acceptable, over 30% unacceptable.
 export const verdict = (tenths: number) => (tenths < 100 ? 'ok' : tenths <= 300 ? 'marginal' : 'bad');
 
 // 40 -> "0.04", 8 -> "0.008", 240 -> "0.24". `places` forces the decimals (the part's position always shows 2).
 export const mm = (um: number, places?: number) =>
   places !== undefined ? (um / 1000).toFixed(places) : (um / 1000).toFixed(3).replace(/0$/, '');
 export const pct = (tenths: number) => (tenths % 10 === 0 ? `${tenths / 10}%` : `${(tenths / 10).toFixed(1)}%`);
-// A probability as a percentage a person can read: 16%, 2.3%, 0.003%.
+// A probability as a percentage a person can read: 16%, 2.3%, 0.15%, 0.0032%. Under 1% it keeps 2 significant figures,
+// so the percentage and the odds beside it ("about 1 in 678") agree.
 export const prob = (p: number) =>
   p >= 0.0995 ? `${Math.round(p * 100)}%`
-  : p >= 0.00095 ? `${(p * 100).toFixed(1)}%`
-  : p >= 1e-6 ? `${Number((p * 100).toPrecision(1))}%`
+  : p >= 0.00995 ? `${(p * 100).toFixed(1)}%`
+  : p >= 1e-6 ? `${Number((p * 100).toPrecision(2))}%`
   : 'under 0.0001%';
 // The same probability as odds: "about 1 in 6", "about 3 in 100,000".
 export const odds = (p: number) =>

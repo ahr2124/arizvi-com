@@ -813,10 +813,22 @@ ol li + li { margin-top: 0.5em; }
 .gdemo-plot .limit { stroke: #000; stroke-width: 1; vector-effect: non-scaling-stroke; }
 .gdemo-plot .part { stroke: var(--deep); stroke-width: 2; stroke-dasharray: 4 3; vector-effect: non-scaling-stroke; }
 .gdemo-x { position: relative; height: 1.4em; margin-top: 6px; }
-.gdemo-x span { position: absolute; top: 0; white-space: nowrap; transform: translateX(-50%); }
+.gdemo-x > span { position: absolute; top: 0; white-space: nowrap; transform: translateX(-50%); }
+.gdemo-x .gx-s { display: none; }
 .swi.safe { background: rgba(27, 175, 122, 0.45); }
 .swi.zone { background: rgba(235, 104, 52, 0.45); }
 @media (max-width: 767px) {
   .gdemo-controls { grid-template-columns: 1fr; }
   .gdemo-plot { height: 140px; }
+}
+/* "Unacceptable" is the longest readout on the site: it's set a size down until its cell is wide enough,
+   and on a phone the 3 axis labels have to clear each other. */
+.gdemo-readout dd[data-out="verdict"] { font-size: 1.25rem; line-height: 1.32; }
+@media (min-width: 1000px) {
+  .gdemo-readout dd[data-out="verdict"] { font-size: 1.5rem; line-height: 1.1; }
+}
+@media (max-width: 480px) {
+  .gdemo-readout dd[data-out="verdict"] { font-size: 1.1rem; line-height: 1.5; }
+  .gdemo-x .gx-l { display: none; }
+  .gdemo-x .gx-s { display: inline; }
 }
