@@ -548,8 +548,13 @@ ol li + li { margin-top: 0.5em; }
 .ldemo .chip.low { color: #0b0b0b; }
 .ldemo-tally { margin: 10px 0 0; }
 .cdemo .demo-chart, .cdemo .demo-pills { margin-top: 12px; }
+.cdemo-live { display: none; margin: 6px 0 0; font-size: 15px; }
+.demo-key { margin-left: 1.2em; white-space: nowrap; }
+.demo-best-key { display: inline-block; width: 12px; height: 12px; margin-right: 6px; vertical-align: -1px; border: 2px solid var(--ok, #000); box-sizing: border-box; }
+.pdemo-key { margin: 8px 0 0; font-size: 13px; color: rgba(0, 0, 0, 0.6); }
 @media (max-width: 767px) {
   .cdemo-controls, .cdemo-main { grid-template-columns: 1fr; }
+  .cdemo-live { display: block; }
   .cdemo-grid { grid-template-columns: repeat(25, minmax(0, 1fr)); }
   .cdemo-compare .big { font-size: 1.15rem; }
   .ldemo-bar { grid-template-columns: 4.5rem minmax(0, 1fr) 3.5rem; }
@@ -740,13 +745,13 @@ ol li + li { margin-top: 0.5em; }
 
 /* The class widgets in colour: blue for the controls and the model, orange for the point that changes the answer,
    aqua for the thing you're after. Text stays black. */
-.demo, .cdemo, .ldemo, .fig.lp { --acc: #2a78d6; --deep: #104281; --warm: #eb6834; --ok: #1baf7a; }
+.demo, .cdemo, .ldemo, .fig.lp { --acc: #2a78d6; --acc-fill: #2873cf; --deep: #104281; --warm: #eb6834; --ok: #1baf7a; }
 .demo input[type='range']::-webkit-slider-runnable-track, .cdemo input[type='range']::-webkit-slider-runnable-track, .ldemo input[type='range']::-webkit-slider-runnable-track { background: rgba(0, 0, 0, 0.3); }
 .demo input[type='range']::-moz-range-track, .cdemo input[type='range']::-moz-range-track, .ldemo input[type='range']::-moz-range-track { background: rgba(0, 0, 0, 0.3); }
 .demo input[type='range']::-webkit-slider-thumb, .cdemo input[type='range']::-webkit-slider-thumb, .ldemo input[type='range']::-webkit-slider-thumb { background: var(--acc); }
 .demo input[type='range']::-moz-range-thumb, .cdemo input[type='range']::-moz-range-thumb, .ldemo input[type='range']::-moz-range-thumb { background: var(--acc); }
-.demo-pills button[aria-pressed='true'] { background: var(--acc); border-color: var(--acc); color: #fff; }
-.demo-btn.solid { background: var(--acc); border-color: var(--acc); color: #fff; }
+.demo-pills button[aria-pressed='true'] { background: var(--acc-fill); border-color: var(--acc-fill); color: #fff; }
+.demo-btn.solid { background: var(--acc-fill); border-color: var(--acc-fill); color: #fff; }
 .demo-plot path, .demo-plot polyline { stroke: var(--acc); }
 .demo-plot polygon { fill: rgba(42, 120, 214, 0.16); }
 .demo-rule { border-left-color: var(--acc); }
@@ -768,7 +773,7 @@ ol li + li { margin-top: 0.5em; }
 .rdemo-pt { background: var(--deep); }
 .rdemo-pt.out { background: var(--warm); }
 .rdemo-pt.out.off { background: #fff; border-color: var(--warm); }
-.rdemo-pred { width: 14px; height: 14px; margin: -7px 0 0 -7px; border: 0; background: var(--ok); box-shadow: 0 0 0 2px #fff; }
+.rdemo-pred { width: 20px; height: 20px; margin: -10px 0 0 -10px; border: 3px solid var(--ok); background: transparent; box-shadow: none; }
 .odemo-plot path { stroke: var(--acc); }
 .odemo-pt { background: var(--deep); }
 .odemo-pt.held { background: var(--warm); border: 0; box-shadow: 0 0 0 2px #fff; }
@@ -779,3 +784,12 @@ ol li + li { margin-top: 0.5em; }
 .fig.lp .c-dem { stroke: var(--ok); }
 .fig.lp .iso { stroke: var(--warm); stroke-width: 1.5; }
 .fig.lp .opt { fill: var(--warm); }
+
+/* Touch screens: pills and buttons 44px tall, a wider slider thumb, and vertical swipes left to the page. */
+@media (pointer: coarse) {
+  .demo-pills button { padding: 12px 16px; }
+  .demo-btn { padding: 13px 18px; }
+  .demo input[type='range'], .cdemo input[type='range'], .ldemo input[type='range'] { height: 44px; touch-action: pan-y; }
+  .demo input[type='range']::-webkit-slider-thumb, .cdemo input[type='range']::-webkit-slider-thumb, .ldemo input[type='range']::-webkit-slider-thumb { width: 24px; height: 36px; margin-top: -17px; }
+  .demo input[type='range']::-moz-range-thumb, .cdemo input[type='range']::-moz-range-thumb, .ldemo input[type='range']::-moz-range-thumb { width: 24px; height: 36px; }
+}

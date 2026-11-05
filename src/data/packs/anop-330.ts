@@ -98,7 +98,7 @@ export const pack: Pack = {
   slug: 'anop-330',
   code: 'ANOP 330',
   title: 'ANOP 330, in full',
-  standing: "ANOP 330 already runs in the department, and whatever outline it runs on comes first. This is a term as I'd plan it if asked: every week, every lab with what passes, the project in pieces, the rubrics up front and a sample of the final. Where the department's outline covers the same week, the class and the lab drop in as they're.",
+  standing: "ANOP 330 already runs in the department, and whatever outline it runs on comes first. This is a term as I'd plan it if asked: every week, every lab with what passes, the project in pieces, the rubrics up front and a sample of the final. Where the department's outline covers the same week, the class and the lab drop in as they are.",
   description: [
     'The course teaches students to build a model that would change a decision, to validate it on data it never saw, to choose its cutoff by what mistakes cost, and to say who signs off before it acts. By week 14 every team has done all of that for a real organization, or for public data where we couldn\'t get one.',
   ],
@@ -115,7 +115,7 @@ export const pack: Pack = {
     ['Format', '14 weeks · 2 classes of 75 minutes a week · a weekly lab started in class 2 and finished on your own'],
     ['Before class', 'A 10-to-20-minute video or reading and a 3-question check that closes when class starts. The check usually includes 5 lines of code with a bug in them; class starts from the bug most people missed.'],
     ['In class', 'Notebooks open, in pairs or threes, in timed steps. Every model gets built 3 ways in the room: on paper first, then as a baseline, then with scikit-learn. Each class 2 ends with an exit ticket, 2 sentences on paper, which is the first cell of that week\'s lab.'],
-    ['The lab', 'One a week, started in class 2 and finished on your own, on a public dataset or one of the course\'s 2 running cases (an ice-cream stand, a subscription business). A TA help hour each week for anyone who wants it. Due before the next week\'s class 1.'],
+    ['The lab', 'One a week, started in class 2 and finished on your own, on a public dataset or one of the course\'s 2 running cases (an ice-cream stand, a subscription business). A help hour each week for anyone who wants it, with me or a TA. Due before the next week\'s class 1.'],
     ['Hand-in format', 'The notebook and its PDF export. It runs top to bottom in under a minute after Restart and run all. A heading per question (# Q1, # Q2). Follow every number with a sentence in English that says what it means; a bare number gets half marks.'],
     ['Tools', 'Python in Jupyter: pandas and scikit-learn, with matplotlib for the pictures. ANOP 203 is the prerequisite, so code from week 1. GitHub for the project, with the organization\'s say-so where there\'s one.'],
     ['Text', "The department's text where there's one. Otherwise Géron, Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow, as an optional reference; we use its first 9 chapters."],

@@ -9,7 +9,7 @@ export interface Course {
   line: string;       // what students leave with
   where: string;      // where it sits in the major
   who: string;        // who takes it, from the catalogue
-  seats: string;      // how many students in year 1
+  seats: string;      // my share of it in year 1
   when: string;       // when I'd teach it in year 1
   prereqs?: string;
   leadsTo?: string;
@@ -25,7 +25,7 @@ export const courses: Course[] = [
     line: 'Students leave with a model a manager could audit and a 2-page memo that says what to do. Every week adds one piece of that memo.',
     where: 'Freeman College core · offered every term',
     who: 'Every Freeman College student, usually in first year.',
-    seats: 'Up to 2 sections a term, about 25 in each',
+    seats: 'I\'d take up to 2 sections a term',
     when: 'Fall 2027 and Spring 2028',
     leadsTo: 'Most ANOP courses after it',
     sample: 'The term week by week, 4 classes to try and a 5th to read',
@@ -38,8 +38,8 @@ export const courses: Course[] = [
     line: 'Every model is a decision tool, so we judge models by what their mistakes cost - and decide who stays in the loop.',
     where: 'Required for the Business Analytics major and minor',
     who: 'Business Analytics majors and minors, usually in sophomore spring or junior year.',
-    seats: '1 section a term, about 25 students',
-    when: 'Each term, from Fall 2027',
+    seats: 'I\'d take 1 section a term',
+    when: 'A section when the department wants one',
     prereqs: 'ANOP 102 (or a statistics course) and ANOP 203 (or CSCI 203)',
     leadsTo: 'ANOP 400',
     sample: 'The term week by week, and 2 classes to try',
@@ -52,8 +52,8 @@ export const courses: Course[] = [
     line: 'Scope -> data -> model -> recommendation -> delivery. A signed project charter by week 3, and the client in the room at the end.',
     where: 'Capstone for Business Analytics majors',
     who: 'Junior and senior Business Analytics majors. Others by permission.',
-    seats: '1 section, about 25 students in 5 client teams',
-    when: 'When asked. Spring 2028: sit in',
+    seats: 'I\'d take 1 section, in client teams of 4 or 5',
+    when: 'When asked. Year 1: sit in',
     prereqs: 'ANOP 330, and ANOP 350 or 370 (or MATH 358)',
     sample: 'The term, the clients, the grading, and the week 9 playbook',
     pack: 'The full pack: 14 weeks, every deliverable with its rubric, and the forms the course runs on',
@@ -65,7 +65,7 @@ export const courses: Course[] = [
     line: 'Optimisation -> portfolios -> simulation, and every week ends with a decision written up for a manager.',
     where: 'Elective · counts toward the Business Analytics minor',
     who: 'Anyone past corporate finance and ANOP 102.',
-    seats: '1 section, about 25 students',
+    seats: 'I\'d take 1 section',
     when: 'Year 1 or 2, the department\'s call',
     prereqs: 'ACFM 124 or ACFM 203, and ANOP 102 (or equivalents)',
     sample: 'The term week by week, and an option you can price by simulation',

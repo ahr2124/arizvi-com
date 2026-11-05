@@ -136,7 +136,7 @@ export const a400: Assignment[] = [
     meta: 'Weeks 7 and 14 · in private · part of the 20% for stand-ups and peer evaluation',
     prompt: [
       'Each member rates every teammate on 4 things, 1 to 5, with a comment required for any 1 or 5. I see the numbers; teammates see only their own average. At week 7 it is a warning and a conversation. At week 14 it moves marks.',
-      "How it moves marks: a member's score is their average across teammates. The adjustment is 5 points for every point they sit above or below the team's average score, capped at 10 points out of 100 either way, applied to their share of the team marks. A team that rates everyone the same moves nobody.",
+      "How it moves marks: a member's score is the average of every rating they got, on the 1-to-5 scale. The adjustment is 5 points for every point they sit above or below the team's average score, capped at 10 points out of 100 either way, applied to their share of the team marks. A team that rates everyone the same moves nobody.",
     ],
     rubric: [
       { name: 'Shows up', levels: L([5, 'At every stand-up and meeting; replies within a day.'], [3, 'Misses some; replies eventually.'], [1, 'The team works around them.']) },

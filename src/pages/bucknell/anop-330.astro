@@ -78,7 +78,7 @@ const weeks: { w: number; topic: string; build: string; try?: string }[] = [
     <ClassPlan plan={classes.threshold} course={c.slug}>
       <p>Your subscription business has 1,000 customers. Next month 100 of them will cancel - you just don't know which 100. A model gives every customer a risk score.</p>
       <p>You can send a retention offer. It costs $20, and each customer it keeps is worth $200. To keep the arithmetic simple, say it keeps everyone it reaches who was about to cancel. How many of your riskiest customers should get it?</p>
-      <p>The widget is the first 20 minutes of class 1. The grid is next month, 1 square a customer, in the order the model ranked them, riskiest first. The slider is the business decision: how far down the list the offers go. Every position on it has an accuracy and a dollar value, and the class is about which of the 2 a manager should care about. Then I change what an offer costs, and the right answer moves while the accuracy stays put.</p>
+      <p>The widget is 20 minutes of class 1, straight after the mid-term form. The grid is next month, 1 square a customer, in the order the model ranked them, riskiest first. The slider is the business decision: how far down the list the offers go. Every position on it has an accuracy and a dollar value, and the class is about which of the 2 a manager should care about. Then I change what an offer costs, and the right answer moves while the accuracy stays put.</p>
     </ClassPlan>
     <ThresholdDemo />
   </Section>
@@ -86,7 +86,7 @@ const weeks: { w: number; topic: string; build: string; try?: string }[] = [
   <Section label="Try a class · Week 4" title="The model that memorised the past" id="overfit">
     <ClassPlan plan={classes.overfit} course={c.slug}>
       <p>An ice-cream stand logged 24 days of sales and the day's temperature. 16 days are on the chart. The other 8 are in a drawer.</p>
-      <p>Fit a curve to the 16. A straight line misses; a curve that bends can follow every bump. The slider is the degree of the curve, and the readout shows how far it misses the days it was fitted to. That error only ever falls as the degree goes up, which is the trap.</p>
+      <p>Fit a curve to the 16. A straight line misses; a curve that bends can follow every bump. The slider is the degree of the curve, and the readout shows how far it misses the days it was fitted to. That error never rises as the degree goes up, which is the trap.</p>
       <p>I run it on the projector with the drawer shut. Pairs call out the degree they'd ship and I write the numbers on the board; most of the room goes high, because the training error says so. Then we open the drawer. The widget is that 20 minutes, and the lab is the same lesson 5 times over, with a different fifth of the data in the drawer each time.</p>
     </ClassPlan>
     <OverfitDemo />

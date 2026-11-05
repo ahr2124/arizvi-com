@@ -53,7 +53,7 @@ export const pack: Pack = {
   slug: 'anop-102',
   code: 'ANOP 102',
   title: 'ANOP 102, in full',
-  standing: "ANOP 102 runs in several sections a term on a shared outline, and that outline comes first. This is the course as I'd run it if the department asked, written the way I write a course: every week planned, every lab with what passes, the rubrics up front, and a sample of the final. It's also what I'd bring to a shared-outline section, piece by piece, where the weeks line up.",
+  standing: "ANOP 102 runs in several sections a term, and where the department has a shared outline and exams, those come first. This is the course as I'd run it if the department asked, written the way I write a course: every week planned, every lab with what passes, the rubrics up front, and a sample of the final. It's also what I'd bring to a shared-outline section, piece by piece, where the weeks line up.",
   description: [
     'The course teaches students to build a spreadsheet model a manager could audit, to say how sure they are, and to write the 2-page memo that says what to do. By week 14 every team has done all 3 for a decision a real organization faces.',
   ],
@@ -70,7 +70,7 @@ export const pack: Pack = {
     ['Format', '14 weeks · 2 classes of 75 minutes a week · a lab hour a week'],
     ['Before class', 'A 10-to-20-minute video or reading, and a 3-question check on the course site that closes when class starts. I read the answers before I walk in, and class starts from what the check says the room got wrong.'],
     ['In class', 'Exercises, in pairs or threes, in timed steps: build, swap, break, fix, write it up. Laptops open while we build and closed for the debrief. Each class 2 ends with an exit ticket: 2 sentences on paper, which become the first page of that week\'s lab.'],
-    ['The lab', 'A lab hour with me or a TA in the room, on a task from one of the course\'s running cases (a coffee chain, a taco truck, a bike shop), which carry through the term. It starts in the hour and is finished on your own, and it\'s due before the next week\'s class 1.'],
+    ['The lab', 'A lab hour with me in the room (or a TA, where the course has them), on a task from one of the course\'s running cases (a coffee chain, a taco truck, a bike shop), which carry through the term. It starts in the hour and is finished on your own, and it\'s due before the next week\'s class 1.'],
     ['Tools', 'Excel, the desktop version. On day one you need sums, averages and copying a formula down; everything else is taught. Solver and the Analysis ToolPak get switched on in week 11.'],
     ['Text', "The department's text where there's one. Otherwise Powell and Baker, Business Analytics: The Art of Modeling with Spreadsheets, as an optional reference; the videos cover what the labs need."],
     ['Help', '2 office hours a week, 1 in the office and 1 on Zoom. Questions about the course go on the course forum so the answer helps everyone; questions about your mark come to me by email.'],
@@ -176,7 +176,7 @@ export const pack: Pack = {
       before: 'Nothing new. Read your own labs 1 to 6 and the feedback on them. Check: 3 questions from the practice cases.',
       c1: 'The practice case, timed, 60 minutes: a new business, 1 page of numbers, the 4 questions (60). We mark it together against the rubric before anyone leaves (15).',
       c2: 'The midterm (75). The anonymous mid-term form goes out the same evening: what to keep, what to change, 1 thing you didn\'t understand.',
-      lab: 'No lab. The lab hour is office hours, for anyone who wants to go through the practice case again.',
+      lab: 'Lab 7: the practice case, handed back in with your own corrections. The lab hour is office hours, for anyone who wants to go through it again.',
     },
     {
       w: 8, topic: 'Expected value',

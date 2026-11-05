@@ -81,7 +81,7 @@ const weeks: { w: number; topic: string; build: string; try?: string }[] = [
   <Section label="Try a class · Week 3" title="Clean it before you count it" id="pivot">
     <ClassPlan plan={classes.pivot} course={c.slug}>
       <p>A coffee cart runs 2 locations on campus. Which one sold more last week? The till exported 12 rows and a pivot table adds them up by location. Both are below, as they came out.</p>
-      <p>This is the first 20 minutes of class 1, as the room sees it on the projector. I ask for the answer and someone reads it off the pivot: Union, $81.50. Then I ask how many locations the cart has, and the room goes quiet. We find the 3 problems together, 1 button each, and the answer moves 3 times. By the end the question has changed from "which cart sold more" to "what did I have to fix to find out", and that second question is the sentence the week's brief is built around.</p>
+      <p>This is the first 20 minutes of class 1, as the room sees it on the projector. I ask for the answer and someone reads it off the pivot: Union, $81.50. Then I ask how many locations the cart has, and the room goes quiet. We find the 3 problems together, 1 button each, and the pivot changes 3 times, the last one flipping the winner. By the end the question has changed from "which cart sold more" to "what did I have to fix to find out", and that second question is the sentence the week's brief is built around.</p>
     </ClassPlan>
     <PivotDemo />
   </Section>
@@ -97,7 +97,7 @@ const weeks: { w: number; topic: string; build: string; try?: string }[] = [
   <Section label="Try a class · Week 8" title="An LLM gives you probabilities" id="llm">
     <ClassPlan plan={classes.llm} course={c.slug}>
       <p>Students already ask chatbots for answers. This class shows them what comes back, and how to use it in a spreadsheet decision.</p>
-      <p>An LLM doesn't look an answer up. It scores every word it could say next, turns the scores into probabilities, and picks one at random, weighted by those probabilities. Temperature sets how much it gambles: at 0 it always picks the favourite.</p>
+      <p>An LLM (a large language model, the engine behind a chatbot) doesn't look an answer up. It scores every word it could say next, turns the scores into probabilities, and picks one at random, weighted by those probabilities. Temperature sets how much it gambles: at 0 it always picks the favourite.</p>
       <p>Here a café asks one for tomorrow's croissant demand, then has to decide how many to bake. In the spreadsheet, each bake's expected profit is one formula (a SUMPRODUCT). The chatbot is the hook; expected value is the lesson.</p>
       <p>The widget is the class's 3 steps in order: what the model believes, what it says when you ask, and what to do with the difference. On the projector I ask it 20 times and the count is different every time, which is the moment the room stops trusting the single answer and starts asking for the odds.</p>
     </ClassPlan>

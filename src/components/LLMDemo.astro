@@ -76,7 +76,13 @@ const strategies = [
     return w.map((x) => x / s);
   };
   const money = (v: number) => '$' + Math.round(v).toLocaleString('en-CA');
-  const pc = (p: number) => `${Math.round(p * 100)}%`;
+  // Whole percentages that add to 100 (largest remainders get the spare points), so low + medium + high never reads 99% or 101%.
+  const pcs = (q: number[]) => {
+    const raw = q.map((p) => p * 100), out = raw.map(Math.floor);
+    let spare = 100 - out.reduce((a, b) => a + b, 0);
+    raw.map((x, i) => [x - out[i], i]).sort((a, b) => b[0] - a[0]).forEach(([, i]) => { if (spare > 0) { out[i]++; spare--; } });
+    return out.map((x) => `${x}%`);
+  };
 
   document.querySelectorAll<HTMLElement>('[data-ldemo]').forEach((root) => {
     const $ = <T extends Element>(s: string) => root.querySelector<T>(s)!;
@@ -86,10 +92,11 @@ const strategies = [
     function update() {
       const t = Number(slider.value);
       const q = draws(t);
+      const [pl, pm, ph] = pcs(q);
       $('[data-out=t]').textContent = t.toFixed(1);
       $('[data-draw-odds]').textContent = t < 0.05
         ? 'At temperature 0 it answers medium every time, because medium is its favourite.'
-        : `At temperature ${t.toFixed(1)} it answers low ${pc(q[0])}, medium ${pc(q[1])} and high ${pc(q[2])} of the time.`;
+        : `At temperature ${t.toFixed(1)} it answers low ${pl}, medium ${pm} and high ${ph} of the time.`;
       const once = q.reduce((sum, p, i) => sum + p * PROFIT[i], 0);
       const vals: Record<string, number> = { once, top: PROFIT[1], weigh: PROFIT[2] };
       Object.entries(vals).forEach(([k, v]) => {
@@ -97,7 +104,7 @@ const strategies = [
         $(`[data-sval=${k}]`).textContent = money(v) + (v === best ? ' · best' : '');
         $(`[data-strat=${k}]`).classList.toggle('is-best', v === best);
       });
-      slider.setAttribute('aria-valuetext', `temperature ${t.toFixed(1)}: answers low ${pc(q[0])}, medium ${pc(q[1])}, high ${pc(q[2])} of the time`);
+      slider.setAttribute('aria-valuetext', `temperature ${t.toFixed(1)}: answers low ${pl}, medium ${pm}, high ${ph} of the time`);
     }
 
     $('[data-ask]').addEventListener('click', () => {

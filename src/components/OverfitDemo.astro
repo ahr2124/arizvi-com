@@ -70,11 +70,11 @@ const path = (d: number) => fits[d].curve.map((y, i) => `${i ? 'L' : 'M'}${(left
       $('[data-out=te]').textContent = shown ? '$' + f.test.toLocaleString('en-CA') : '?';
       const verdict = d === 1 ? "Too simple: a straight line can't bend, so it misses both sets."
         : d <= 4 ? 'This is the one to ship. It follows the shape, and it holds on days it never saw.'
-        : d <= 8 ? 'It has started fitting the noise. The error on new days is climbing while the training error keeps falling.'
-        : 'It memorised the 16 days and has nothing useful to say about any other.';
+        : d <= 8 ? 'It has started fitting the noise. The error on new days is climbing, and the training error gives no warning.'
+        : 'It memorised the 16 days and has nothing useful to say about any other.' + (d === 10 ? ' Nearly all of that miss is the 34 °C day, 1 degree hotter than anything it was fitted to.' : '');
       $('[data-note]').textContent = shown
         ? `Degree ${d}: $${f.train} off on the days it trained on, $${f.test.toLocaleString('en-CA')} on the 8 it never saw. ${verdict}`
-        : `Degree ${d}: the curve misses the 16 days by $${f.train} a day on average. Raise the degree and the error keeps falling. Pick the degree you'd ship, then reveal the held-out days.`;
+        : `Degree ${d}: the curve misses the 16 days by $${f.train} a day (root-mean-square error). ${d < 10 ? 'Raise the degree and that error never goes up.' : 'That is as low as it goes.'} Pick the degree you'd ship, then reveal the held-out days.`;
     }
     slider.addEventListener('input', update);
     btn.addEventListener('click', () => { btn.setAttribute('aria-pressed', String(btn.getAttribute('aria-pressed') !== 'true')); update(); });

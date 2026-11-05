@@ -104,7 +104,7 @@ export const pack: Pack = {
   slug: 'anop-400',
   code: 'ANOP 400',
   title: 'ANOP 400, in full',
-  standing: "ANOP 400 has a client pipeline and an instructor who runs it, and I'd learn it before I touched it: sit in on the spring 2028 run, help where asked, and teach a section when the department asks. This is the section as I'd run it, with every week, every deliverable and every rubric.",
+  standing: "ANOP 400 has a client pipeline and an instructor who runs it, and I'd learn it before I touched it: sit in on a section in my first year, help where asked, and teach a section when the department asks. This is the section as I'd run it, with every week, every deliverable and every rubric.",
   description: [
     'The practicum is one project, start to finish, for a client: scope it into a decision and a question, audit the data, build the model, backtest it on a period the client has lived through, and hand over a recommendation the client can act on the week after. 5 teams, 5 clients, 14 weeks.',
   ],
@@ -118,9 +118,9 @@ export const pack: Pack = {
   ],
   runs: [
     ['Format', '14 weeks · 2 classes of 75 minutes a week · a 15-minute stand-up per team each week, with team time around it · teams of 4 or 5, assigned by me, a client each'],
-    ['Before class', 'A 2-page case most weeks: a project that went wrong at the stage you\'re at, and the 3 questions it raises. Some are mine from practice with the names removed; the rest are from past teams, with permission.'],
-    ['In class', 'Class 1 is a skills session for the stage the projects are at (scoping, the data audit, interviewing, backtesting, writing for the person who decides) with an exercise in it. Class 2 is a workshop: teams at tables on their own project, me and the TA moving between them, and another team playing the client when a dry run is due.'],
-    ['Team time', 'The stand-up: 15 minutes per team with me each week, on a 1-page status sheet in a fixed format (done, next, blocked, the ask). The sheet goes in the team repo; the record it builds is what the peer evaluation and the playbook rely on.'],
+    ['Before class', 'A 2-page case most weeks: a project that went wrong at the stage you\'re at, and the 3 questions it raises. Some are mine from practice with the names removed; from the second run on, the rest come from past teams, with permission.'],
+    ['In class', 'Class 1 is a skills session for the stage the projects are at (scoping, the data audit, interviewing, backtesting, writing for the person who decides) with an exercise in it. Class 2 is a workshop: teams at tables on their own project, me (and a TA, where the section has one) moving between them, and another team playing the client when a dry run is due.'],
+    ['Team time', 'The stand-up: 15 minutes per team with me each week, at a time each team books in week 1, on a 1-page status sheet in a fixed format (done, next, blocked, the ask). The sheet goes in the team repo; the record it builds is what the peer evaluation and the playbook rely on.'],
     ['With the client', '5 meetings: kick-off (week 1), the signed charter (3), the check-in (8), the draft recommendation (11) and the final presentation (14). The client gets a named contact on the team and a weekly 3-line email, and I\'m copied.'],
     ['Tools', 'Whatever answers the question: Excel, Python, or both. A private GitHub repo per team for the code and the stand-up record. Client data lives on university storage the data agreement names, never on a laptop\'s desktop.'],
     ['Help', '2 office hours a week and the stand-up. Questions for a client are collected in the team\'s shared sheet before each meeting, so the meeting is spent on answers.'],
@@ -130,14 +130,14 @@ export const pack: Pack = {
     ['Charter', '10%', 'Week 3, signed by the client and every member. Rubric below.'],
     ['Mid-term check-in', '15%', 'Week 8. The data audit, the baseline and the first result, presented to the client. Rubric below.'],
     ['Final presentation and report', '45%', 'Week 14. The client in the room and the model attached. Rubric below.'],
-    ['Stand-ups and peer evaluation', '20%', 'Every week. The status sheet is marked complete, half or not done; the team contract and its week 7 amendment count here. Peer evaluation at weeks 7 and 14 moves each member\'s share of the team marks up or down by up to 10 points out of 100.'],
-    ['Reflection', '10%', 'Week 14. 2 pages, 4 questions, marked for specifics and honesty.'],
+    ['Stand-ups and peer evaluation', '20%', 'Every week to week 13. The status sheet is marked complete, half or not done, and each of the 13 sheets, the team contract and its week 7 amendment is an equal share of the 20. Peer evaluation runs at weeks 7 and 14: week 7 is a warning and a conversation, and week 14 moves each member\'s share of the team marks up or down by up to 10 points out of 100.'],
+    ['Reflection', '10%', 'The final-exam slot. 2 pages, 4 questions, marked for specifics and honesty.'],
   ],
   policies: [
     {
       title: 'Every piece, to pass',
       body: [
-        'A team has to hand in every team deliverable to pass the course; a missing one is an incomplete for everyone on the team until it arrives. Every member is expected to carry an equal share, and the stand-up record and the peer evaluation are how I know.',
+        'A team has to hand in every team deliverable to pass the course; a missing one holds every member\'s mark for the course until it arrives. Every member is expected to carry an equal share, and the stand-up record and the peer evaluation are how I know.',
       ],
     },
     {
@@ -156,7 +156,7 @@ export const pack: Pack = {
     {
       title: 'Data and confidentiality',
       body: [
-        'Every client signs the 1-page data agreement below with the charter. Customer and member IDs are replaced before a file reaches students, students sign an NDA where the client asks for one, and nothing from a client file goes into a chatbot unless the agreement says it can. What the team keeps afterwards is written on the agreement: the method and the memo with the numbers replaced, unless the client agrees to more.',
+        'Every client signs the 1-page data agreement below with the charter, once the university has cleared the template. Customer and member IDs are replaced before a file reaches students, students sign an NDA where the client asks for one, and nothing from a client file goes into a chatbot unless the agreement says it can. What the team keeps afterwards is written on the agreement: the method and the memo with the numbers replaced, unless the client agrees to more.',
       ],
     },
     {
@@ -168,7 +168,7 @@ export const pack: Pack = {
     {
       title: 'Conflicts',
       body: [
-        'A company I or AMJ Capital hold a stake in is never a client of a team I grade. A student who has a stake in a client, or a family tie to one, says so in week 1 and joins another team.',
+        'A company that AMJ Capital or I hold a stake in is never a client of a team I grade. A student who has a stake in a client, or a family tie to one, says so in week 1 and joins another team.',
       ],
     },
   ],
@@ -179,7 +179,7 @@ export const pack: Pack = {
       w: 1, topic: 'Kick-off',
       before: 'Read the 5 client briefs, 1 page each, and the sample charter. Fill the shared sheet: 3 questions you would ask each client.',
       c1: 'How the term runs and the day-one poll (15). Teams announced, assigned by me from the skills survey, with a client each (10). The team contract, written in the room, 1 page, signed by everyone (35). Reading a brief for the decision hiding in it, in teams (15).',
-      c2: 'Kick-off meetings: each client has 25 minutes with its team, in the room, and the class listens in to 1 of them. The questions come from the sheet. The TA takes notes the team gets the same evening.',
+      c2: 'Kick-off meetings: each client has 25 minutes with its team, in the room, and the class listens in to 1 of them. The questions come from the sheet. Each team\'s notetaker sends the notes round the same evening.',
       lab: 'Stand-up 1: the status sheet for the first time, mostly "the ask". Then the 3-column worksheet on 1 page: what we know about the decision, what we need to know, and how we would find out. A photo of it goes in the repo.',
     },
     {
@@ -230,7 +230,7 @@ export const pack: Pack = {
       w: 8, topic: 'The check-in',
       before: 'Nothing new. The 4 pages, to me by 5 pm the day before class 2.',
       c1: 'Dry run: each team presents its check-in to another team playing the client, 15 minutes, marked on the rubric, with the 3 written sentences of feedback. The questions the stand-in client asked go on the board; the real client will ask 2 of them.',
-      c2: 'Client meeting 3: the check-in, 15 minutes a team and 10 of questions, with the client in the room or on the screen. 3 teams in class 2 and 2 in the team-time slot the same week. The project changes shape here if it has to.',
+      c2: 'Client meeting 3: the check-in, 15 minutes a team and 8 of questions, with the client in the room or on the screen. 3 teams in class 2 and 2 at their stand-up times the same week. The project changes shape here if it has to.',
       lab: 'The last 2 check-ins, then stand-up 8 cut to 5 minutes: what the client said, and what changes in the plan. The client\'s notes come to me and shape the feedback.',
       memo: 'The mid-term check-in, 15%. Rubric below.',
     },
@@ -250,7 +250,7 @@ export const pack: Pack = {
     },
     {
       w: 11, topic: 'The draft recommendation',
-      before: 'Read 2 memos from past teams, with permission: 1 the client acted on and 1 it didn\'t. Check: the difference, in 1 sentence.',
+      before: 'Read 2 memos, 1 the client acted on and 1 it didn\'t: from past teams, with permission, once the course has them, and from my own practice until then. Check: the difference, in 1 sentence.',
       c1: 'Skills: writing for the person who decides. The first paragraph: what to do, what it costs, what it\'s worth, what would change it. Then the numbers that support each clause, and nothing else on page 1 (25). In teams, the first paragraph, drafted and read aloud to another team as the client (35). Debrief: the clause every draft was missing (15).',
       c2: 'Client meeting 4: the draft recommendation, 10 minutes a team, with the client\'s reaction written down. What the client pushes back on is what weeks 12 and 13 are for.',
       lab: 'Stand-up 11. The client\'s pushback, in the record, with what the team will do about each point.',
@@ -265,14 +265,14 @@ export const pack: Pack = {
     {
       w: 13, topic: 'Rehearsal',
       before: 'Nothing new. The slides, the report draft and the handover, ready to rehearse.',
-      c1: 'Full dry runs, 20 minutes and 5 of questions, 3 teams, with me and another team as the client, marked on the rubric. Every member speaks. The question each team couldn\'t answer goes on the board.',
+      c1: 'Full dry runs, 20 minutes and 3 of questions, 3 teams, with me and another team as the client, marked on the rubric. Every member speaks. The question each team couldn\'t answer goes on the board.',
       c2: 'The last 2 dry runs, then 25 minutes on the fixes from class 1. The teams whose client can\'t make week 14 plan the recording and the handover meeting instead.',
       lab: 'Stand-up 13, the last. Materials to me by 5 pm the day before each team\'s slot.',
     },
     {
       w: 14, topic: 'Delivery',
       before: 'Nothing. Sleep, and iron a shirt.',
-      c1: 'Final presentations, in a 3-hour block the department books in place of the 2 classes: 20 minutes and 10 of questions a team, with the client in the room or on the screen, or me in the client\'s chair where the client can\'t make it. Classmates give each team 3 written sentences.',
+      c1: 'Final presentations, in a 3-hour block in place of the 2 classes if the registrar can give us one (otherwise across the 2 classes and the exam slot): 20 minutes and 10 of questions a team, with the client in the room or on the screen, or me in the client\'s chair where the client can\'t make it. Classmates give each team 3 written sentences.',
       c2: 'No class 2; the block replaces it. The reflection is written in the final-exam slot, 45 minutes, with the stand-up record open, and the peer evaluation goes in, in private. The report is due by midnight on presentation day.',
       lab: 'The handover meeting with the client, 30 minutes, with the files and the steps. The client\'s feedback form comes to me within the week.',
       memo: 'The final report and presentation, 45%, and the reflection, 10%. Rubrics below.',
@@ -305,7 +305,7 @@ export const pack: Pack = {
       listLabel: 'What it says',
       list: [
         'What the team gets: the files, their period, and the date they arrive (by week 4).',
-        'Who may see it: the team, me, the TA, and nobody else without the client\'s say-so.',
+        'Who may see it: the team, me, a TA if the section has one, and nobody else without the client\'s say-so.',
         'Where it lives: the university storage the agreement names. Never a personal laptop\'s desktop, never a chatbot.',
         'What\'s removed first: customer and member IDs, names and addresses, replaced by the client before the file is sent.',
         'What the team keeps afterwards: the method and the memo with the numbers replaced, unless the client agrees to more here.',

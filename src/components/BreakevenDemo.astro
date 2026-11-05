@@ -50,13 +50,15 @@ const money = (v: number) => (v < 0 ? '−' : '') + '$' + Math.abs(Math.round(v)
   </dl>
   <p class="demo-note" aria-live="polite" data-note></p>
 
-  <p class="demo-coda">In Excel this is a two-way Data Table: one profit formula in the corner, and Excel fills the 36 cells. It answers the question a manager has: how wrong can the forecast be before this loses money? At $8 the answer is 20 tacos a week. So the memo doesn't say "$100 a week". It says "$100 a week, and a loss below 120 tacos".</p>
+  <p class="demo-coda">In Excel this is a two-way Data Table: one profit formula in the corner, and Excel fills the 36 cells. It answers the question a manager has: how wrong can the forecast be before this loses money? With the starting numbers, the answer at $8 is 20 tacos a week. So the memo doesn't say "$100 a week". It says "$100 a week, and a loss below 120 tacos".</p>
 </div>
 
 <script>
   const profit = (p: number, q: number, f: number, v: number) => (p - v) * q - f;
   const money = (v: number) => (v < 0 ? '−' : '') + '$' + Math.abs(Math.round(v)).toLocaleString('en-CA');
   const fmt = (n: number) => n.toLocaleString('en-CA');
+  // A price rounded up to the cent, so the price shown still covers the costs ($6.2143 is $6.22: $6.21 loses 60 cents).
+  const up = (x: number) => (Math.ceil(Math.round(x * 1e6) / 1e4) / 100).toFixed(2);
 
   document.querySelectorAll<HTMLElement>('[data-bdemo]').forEach((root) => {
     const $ = <T extends Element>(s: string) => root.querySelector<T>(s)!;
@@ -80,12 +82,12 @@ const money = (v: number) => (v < 0 ? '−' : '') + '$' + Math.abs(Math.round(v)
       $('[data-out=plan]').textContent = money(plan) + ' a week';
       $('[data-out=be]').textContent = Number.isFinite(be) ? `${fmt(Math.ceil(be))} tacos` : 'never';
       $('[data-out=room]').textContent = Number.isFinite(be) ? (140 - be >= 0 ? `${fmt(Math.floor(140 - be))} tacos` : `${fmt(Math.ceil(be - 140))} short`) : 'none';
-      $('[data-out=gs]').textContent = '$' + gs.toFixed(2);
+      $('[data-out=gs]').textContent = '$' + up(gs);
       $('[data-note]').textContent = !Number.isFinite(be)
         ? `At $8 a taco you lose money on every one you sell. Raise the price or cut the ingredients.`
         : plan >= 0
-          ? `At $8 you need ${fmt(Math.ceil(be))} tacos a week to break even. The plan sells 140, so you clear ${money(plan)} - and lose money if more than ${fmt(Math.floor(140 - be))} customers stay home. Goal Seek: $${gs.toFixed(2)} is the lowest price that works at 140.`
-          : `At $8 you need ${fmt(Math.ceil(be))} tacos a week to break even, and the plan sells 140. That's a loss of ${money(-plan)} a week. Goal Seek: $${gs.toFixed(2)} a taco breaks even at 140.`;
+          ? `At $8 you need ${fmt(Math.ceil(be))} tacos a week to break even. The plan sells 140, so you clear ${money(plan)} - and lose money if sales fall by more than ${fmt(Math.floor(140 - be))} tacos. Goal Seek: $${up(gs)} is the lowest price that works at 140.`
+          : `At $8 you need ${fmt(Math.ceil(be))} tacos a week to break even, and the plan sells 140. That's a loss of ${money(-plan)} a week. Goal Seek: $${up(gs)} is the lowest price that works at 140.`;
     }
     fs.addEventListener('input', update);
     vs.addEventListener('input', update);

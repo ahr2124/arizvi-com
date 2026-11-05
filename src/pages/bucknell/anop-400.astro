@@ -20,7 +20,7 @@ const term = [
   { label: 'Recommendation', bars: [[11, 13]] as [number, number][] },
   { label: 'Delivery', bars: [[14, 14]] as [number, number][] },
   { label: 'With the client', marks: [{ w: 1 }, { w: 3 }, { w: 8 }, { w: 11 }, { w: 14 }] },
-  { label: 'Team stand-ups', ticks: Array.from({ length: 14 }, (_, i) => i + 1) },
+  { label: 'Team stand-ups', ticks: Array.from({ length: 13 }, (_, i) => i + 1) },
 ];
 
 const brief = [
@@ -38,19 +38,19 @@ const brief = [
     ['Format', '1 credit · 14 weeks · teams of 4 or 5, a client each'],
     ['What I\'d bring', 'A term planned to the week, a charter the client signs by week 3, a playbook for the week it goes wrong, and the habit of finding next term\'s clients during this one. The deliverable is a model and a recommendation the client can act on.'],
   ]}>
-    <p>ANOP 400 has a client pipeline and an instructor who runs it, and I'd learn it before I touched it: sit in on the spring 2028 run, help where asked, and teach a section when the department asks. Below is how I'd run a section: the term, the clients, the grading, and what happens when a project goes wrong.</p>
-    <p class="practice"><span class="label">From practice</span>A clinical trial is a capstone with higher stakes: the protocol is written before the first patient, the success measure is named in advance, and nobody moves it. The A/B tests I ran inside an e-commerce retailer worked the same way, with the metric and the stopping rule agreed before launch, and the ones that skipped that step produced quick wins that never showed up in revenue. The charter above is that discipline, scaled to 14 weeks.</p>
+    <p>ANOP 400 has a client pipeline and an instructor who runs it, and I'd learn it before I touched it: sit in on a section in my first year, help where asked, and teach a section when the department asks. Below is how I'd run a section: the term, the clients, the grading, and what happens when a project goes wrong.</p>
+    <p class="practice"><span class="label">From practice</span>A clinical trial is a capstone with higher stakes: the protocol is written before the first patient, the success measure is named in advance, and nobody moves it. The A/B tests I ran inside an e-commerce retailer worked the same way, with the metric and the stopping rule agreed before launch, and the ones that skipped that step produced quick wins that never showed up in revenue. The charter is that discipline, scaled to 14 weeks.</p>
   </CourseHeader>
 
   <Section label="The term" title="Week by week" id="term">
     <Gantt title="The ANOP 400 term, week by week" weeks={14} rows={term}
-      caption="With the client: kick-off (week 1), signed charter (3), check-in (8), draft recommendation (11), final presentation (14). Every team gets a 15-minute stand-up with me each week." />
+      caption="With the client: kick-off (week 1), signed charter (3), check-in (8), draft recommendation (11), final presentation (14). Every team gets a 15-minute stand-up with me each week, to week 13." />
   </Section>
 
   <Section label="Clients" title="Where the projects come from" id="clients">
     <div class="grid"><div class="span-8">
-      <p>The course has a client pipeline already. If the department wants more clients than it has, this is where I'd look: businesses within an hour of campus, the small businesses that come through Bucknell's SBDC, alumni-run companies, and regional non-profits with data they have never looked at. I'd start the term before, so every team has a client in week 1 and a signed charter by week 3. A company I or AMJ Capital hold a stake in is never a client of a team I grade.</p>
-      <p>Each client signs the 1-page charter and a data agreement with it: what the team gets, who may see it, and what the team may keep and show afterwards - the method and the memo with the numbers replaced, unless the client agrees to more. Customer and member IDs are replaced before a file reaches students, and students sign an NDA where the client asks for one.</p>
+      <p>The course has a client pipeline already. If the department wants more clients than it has, this is where I'd look: businesses within an hour of campus, small businesses referred by the staff at Bucknell's SBDC, alumni-run companies, and regional non-profits with data they have never looked at. I'd start the term before, so every team has a client in week 1 and a signed charter by week 3. A company that AMJ Capital or I hold a stake in is never a client of a team I grade.</p>
+      <p>Each client signs the 1-page charter and a data agreement with it, on a template the university has cleared: what the team gets, who may see it, and what the team may keep and show afterwards - the method and the memo with the numbers replaced, unless the client agrees to more. Customer and member IDs are replaced before a file reaches students, and students sign an NDA where the client asks for one.</p>
     </div></div>
     <div class="grid" style="margin-top: 2rem;"><div class="span-8">
       <p class="label">A sample brief · fictional</p>

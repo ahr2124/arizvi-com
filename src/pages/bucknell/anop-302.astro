@@ -90,7 +90,7 @@ const units: { n: 1 | 2 | 3; weeks: string; name: string; line: string; items: {
   <Section label="Try a class · Week 12" title="Price an option by simulation" id="try">
     <ClassPlan plan={classes.option} course={c.slug}>
       <p>A call option on a $100 stock: strike $100, 1 year to expiry, 20% volatility, 5% interest. Under these assumptions Black-Scholes gives the exact price, so it can check the simulation before we trust simulation with options no formula can price.</p>
-      <p>The widget is the class's first 20 minutes. Each press simulates stock paths a year out, pays each one off at expiry, discounts it and takes the average: that average is the price. The band is the 95% confidence interval around it, and the dashed line is the answer Black-Scholes gives in closed form, which is the check. The question I put to the room before anyone presses anything is how many paths it takes to get within 10 cents, and the guesses are always too low. Class 2 prices an Asian call the same way, and there is no dashed line for that one.</p>
+      <p>The widget is 20 minutes of the class, straight after the guess. Each press simulates stock paths a year out, pays each one off at expiry, discounts it and takes the average: that average is the price. The band is the 95% confidence interval around it, and the dashed line is the answer Black-Scholes gives in closed form, which is the check. The question I put to the room before anyone presses anything is how many paths it takes to get within 10 cents, and the guesses are always too low. Class 2 prices an Asian call the same way, and there is no dashed line for that one.</p>
     </ClassPlan>
     <OptionDemo />
   </Section>

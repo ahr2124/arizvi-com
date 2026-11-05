@@ -58,7 +58,7 @@ export const classes: Record<string, ClassPlan> = {
     lab: 'Lab 8: the market stall, modelled 2 ways, best expected profit and smallest worst case, with a paragraph on which you\'d pick for an owner who can\'t afford a bad week.',
     tries: [
       { do: 'Read the bars.', see: '20, 45 and 35 percent, and they don\'t move. That is the forecast.' },
-      { do: 'Ask 20 times.', see: 'A different count every time. Set the temperature to 0 and ask again: medium, 20 times out of 20.' },
+      { do: 'Ask 20 times.', see: 'The count changes from press to press. Set the temperature to 0 and ask again: medium, 20 times out of 20.' },
       { do: 'Compare the 3 ways to use it.', see: 'Weighing the probabilities wins at $310 whatever the temperature. Asking once and baking what it says is $267 at temperature 1.' },
     ],
   },
@@ -109,7 +109,7 @@ export const classes: Record<string, ClassPlan> = {
     lab: 'Lab 8: Telco churn with the case\'s cost matrix. The cutoff chosen on held-out data, the money it makes against the default cutoff, and the ranked call list for a $2,000 budget.',
     tries: [
       { do: 'Start at nobody.', see: '90% accurate, because the model is right about the 900 who stay. Net value $0.' },
-      { do: 'Press Most valuable.', see: '270 offers: 65 of the 100 cancellations kept, 205 offers wasted, $7,600 net, 76% accurate.' },
+      { do: 'Press Most valuable.', see: '270 offers: 65 of the 100 cancellations kept, 205 offers wasted, $7,600 net, 76% accurate. Slide on to 380: still $7,600, at 67% accurate.' },
       { do: 'Change the offer to $100, then to $2.', see: 'The most valuable cutoff moves from nobody to everyone, and accuracy never moved. At $2 the best plan is 10% accurate.' },
     ],
   },
@@ -124,9 +124,9 @@ export const classes: Record<string, ClassPlan> = {
     ],
     lab: 'Lab 4, Hold it out: the stand\'s 2 summers, 3 models of rising complexity, 5-fold cross-validation, 1 pick, scored once on the last 30 days.',
     tries: [
-      { do: 'Degree 1 is a straight line.', see: 'It misses the 16 days by $56 a day on average.' },
-      { do: 'Push the degree to 10.', see: 'The training error falls to $20 and the curve wriggles through every point.' },
-      { do: 'Reveal the 8 held-out days.', see: 'Degree 10 misses them by $2,916 a day. Degrees 2 to 4 miss by about $30, and that is the curve to ship.' },
+      { do: 'Degree 1 is a straight line.', see: 'It misses the 16 days by $56 a day (root-mean-square error).' },
+      { do: 'Push the degree to 10.', see: 'The training error falls to $20 and the curve bends to chase every point.' },
+      { do: 'Reveal the 8 held-out days.', see: 'Degree 10 misses them by $2,916 a day, nearly all of it on the 34 °C day, 1 degree hotter than anything it was fitted to. Degrees 2 to 4 miss by about $30, and that is the curve to ship.' },
     ],
   },
   option: {
@@ -141,7 +141,7 @@ export const classes: Record<string, ClassPlan> = {
     lab: 'Lab 12: the European call checked against Black-Scholes and put-call parity, then an Asian call priced the same way, with the standard error and 3 sentences to the treasurer.',
     tries: [
       { do: 'Guess first.', see: 'More or less than $10? Black-Scholes says $10.45, and that is the dashed line the estimate has to find.' },
-      { do: 'Press +1,000 paths.', see: 'The estimate lands within about 90 cents of it, with a wide band either side.' },
+      { do: 'Press +1,000 paths.', see: 'The estimate usually lands within about 90 cents of it (19 times in 20), with a wide band either side.' },
       { do: 'Keep pressing +10,000.', see: 'The band narrows with the square root of the paths: 4 times the paths, half the width. How many until it\'s within 10 cents? Guess, then open the answer under the chart.' },
     ],
   },

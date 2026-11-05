@@ -49,6 +49,7 @@ const fixes = [
           ))}
         </tbody>
       </table>
+      <p class="pdemo-key" data-key><span class="ws"> </span> a space after the name</p>
     </div>
     <div class="pdemo-pivot">
       <p class="label">Pivot · sales by location</p>
@@ -101,6 +102,7 @@ const fixes = [
       if (on.names) parts.push('4 spellings of the library cart became 1.');
       if (on.dups) parts.push('One Tuesday order was exported twice.');
       if (on.typo) parts.push('A $4.50 latte was typed as $45.');
+      root.querySelector<HTMLElement>('[data-key]')!.hidden = on.names;
       const all = on.names && on.dups && on.typo;
       parts.push(`${list.length} location${list.length === 1 ? '' : 's'}, ${list[0][0]} on top at ${money(list[0][1])}.${all ? ' That matches the till.' : ' The cart has 2 locations.'}`);
       root.querySelector('[data-note]')!.textContent = parts.join(' ');

@@ -14,7 +14,7 @@ const contents: [string, string][] = [
   ...(pack.labs.length ? [['labs', 'The labs'] as [string, string]] : []),
   ['assignments', 'Assignments'],
   ...(pack.exam ? [['exam', pack.exam.title] as [string, string]] : []),
-  ...(pack.extras ?? []).map((e) => [e.label.toLowerCase().replace(/[^a-z0-9]+/g, '-'), e.title] as [string, string]),
+  ...(pack.extras ?? []).map((e) => [e.label.toLowerCase().replace(/[^a-z0-9]+/g, '-'), e.label] as [string, string]),
 ];
 const marks = (q: { parts: { marks: number }[] }) => q.parts.reduce((s, p) => s + p.marks, 0);
 ---

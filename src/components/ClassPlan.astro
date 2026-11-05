@@ -30,7 +30,7 @@ const steps = plan.steps.map((s) => { const from = t; t += s.min; return { ...s,
         <dt class="label">Before class</dt>
         <dd>{plan.before}</dd>
         <dt class="label">The lab that follows</dt>
-        <dd>{plan.lab}{pack && <> <a class="cls-more" href={`/bucknell/${course}/pack/#week-${plan.week}`}>Week {plan.week} in the pack →</a></>}</dd>
+        <dd>{plan.lab}{pack && <> <a class="cls-more" href={`/bucknell/${course}/pack/#week-${plan.week}`}>Week {plan.week} in the pack&nbsp;→</a></>}</dd>
       </dl>
     </aside>
     <div class="cls-try">

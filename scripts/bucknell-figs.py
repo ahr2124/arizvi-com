@@ -124,8 +124,9 @@ def curriculum_tall():
     H = e1 + h + 2
     return W, H, '\n'.join(out)
 
-def svg(W, H, body, title, desc, cls=''):
-    return (f'<svg class="{cls}" viewBox="0 0 {W:.0f} {H:.0f}" width="{W:.0f}" height="{H:.0f}" role="img" '
+def svg(W, H, body, title, desc, cls='', role='img'):
+    # role="group" for a figure with links inside it (the curriculum map), so the links are announced.
+    return (f'<svg class="{cls}" viewBox="0 0 {W:.0f} {H:.0f}" width="{W:.0f}" height="{H:.0f}" role="{role}" '
             f'aria-label="{esc(title)}. {esc(desc)}">\n{body}\n</svg>')
 
 # ---------------------------------------------------------------- LP figure (bike shop)
@@ -308,15 +309,15 @@ cw = curriculum_wide()
 ct = curriculum_tall()
 desc = ('ANOP 102 leads to ANOP 330 and then the ANOP 400 practicum; ANOP 203 also leads to 330, '
         'and ANOP 350 or 370 also leads to 400. Electives include ANOP 302 and 242. '
-        'The courses I would teach are 102, 330, 400 and, in year 2, 302.')
+        'The courses I would teach are 102, 330, 400 and 302.')
 write('src/components/CurriculumMap.astro', f'''---
 {STYLE_NOTE}
 // Where the four courses sit in Bucknell's Business Analytics major (2026-27 catalogue).
 ---
 <figure class="fig curriculum">
-  {svg(*cw, 'Where these courses sit in the Business Analytics major', desc, 'fig-wide')}
-  {svg(*ct, 'Where these courses sit in the Business Analytics major', desc, 'fig-tall')}
-  <figcaption class="muted">Black: the courses I'd teach - each one opens its page. Arrows are prerequisites from the 2026-27 catalogue. ANOP 330, 350 and 370 each need ANOP 203 (Python) and either ANOP 102 or a statistics course.</figcaption>
+  {svg(*cw, 'Where these courses sit in the Business Analytics major', desc, 'fig-wide', role='group')}
+  {svg(*ct, 'Where these courses sit in the Business Analytics major', desc, 'fig-tall', role='group')}
+  <figcaption class="muted">Black: the courses I'd teach - each one opens its page. Arrows are the prerequisites that lead to them, from the 2026-27 catalogue. ANOP 330, 350 and 370 each need ANOP 203 (Python) or CSCI 203, and either ANOP 102 or a statistics course.</figcaption>
 </figure>
 ''')
 
