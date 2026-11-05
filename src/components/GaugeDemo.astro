@@ -1,0 +1,121 @@
+---
+// Week 8 of the course on /uis: is the gauge lying?
+// A part has to come out within 0.25 mm of nominal (a band 0.50 mm wide). The reader sets the gauge's standard deviation
+// and where a good part really sits, and sees how much of the band is within 3 standard deviations of a limit and how often
+// the gauge fails the part. The class's calipers: 0.04 mm, 48% of the band. With a fixture and trained operators: 0.01 mm, 12%.
+// The arithmetic is in src/data/gauge.ts.
+import { BAND, SD_CLASS, SD_FIXED, D_START, shareTenths, fails, verdict, mm, pct, prob, shapes } from '../data/gauge';
+const sd = SD_CLASS, d = D_START;
+const s = shapes(sd, d);
+const words = { ok: 'Acceptable', marginal: 'Marginal', bad: 'Unacceptable' } as const;
+---
+<div class="demo gdemo" data-gdemo>
+  <div class="demo-controls gdemo-controls">
+    <div>
+      <label class="label" for="gdemo-sd">The gauge's standard deviation <output data-out="sd" for="gdemo-sd">{mm(sd)} mm</output></label>
+      <input type="range" id="gdemo-sd" min="4" max="60" step="1" value={sd} />
+      <div class="demo-scale label" aria-hidden="true"><span>0.004 mm</span><span>0.06 mm</span></div>
+    </div>
+    <div>
+      <label class="label" for="gdemo-d">A good part, inside the upper limit by <output data-out="d" for="gdemo-d">{mm(d, 2)} mm</output></label>
+      <input type="range" id="gdemo-d" min="0" max={BAND / 2} step="10" value={BAND / 2 - d} />
+      <div class="demo-scale label" aria-hidden="true"><span>Dead centre</span><span>On the limit</span></div>
+    </div>
+  </div>
+  <div class="gdemo-jump">
+    <p class="label" id="gdemo-jump">Jump to</p>
+    <div class="demo-pills" role="group" aria-labelledby="gdemo-jump">
+      <button type="button" data-sd={SD_CLASS} aria-pressed="true">The class's calipers</button>
+      <button type="button" data-sd={SD_FIXED} aria-pressed="false">With a fixture and training</button>
+    </div>
+  </div>
+
+  <div class="demo-chart">
+    <p class="label">The band on the drawing · 1 good part, measured again and again</p>
+    <p class="gdemo-key">
+      <span><span class="swi safe" aria-hidden="true" />The band, clear of the limits</span>
+      <span><span class="swi zone" aria-hidden="true" />Within 3 standard deviations of a limit</span>
+      <span><span class="swi acc" aria-hidden="true" />Readings of the part</span>
+      <span><span class="swi warm" aria-hidden="true" />Readings that fail it</span>
+    </p>
+    <div class="gdemo-plot" aria-hidden="true">
+      <svg viewBox="0 0 1000 100" preserveAspectRatio="none">
+        <rect class="safe" data-safe x={s.safe.x} y="0" width={s.safe.w} height="100" />
+        <rect class="zone" data-zone-l x={s.zoneL.x} y="0" width={s.zoneL.w} height="100" />
+        <rect class="zone" data-zone-r x={s.zoneR.x} y="0" width={s.zoneR.w} height="100" />
+        <path class="curve" data-curve d={s.curve} />
+        <path class="fail" data-fail d={s.fail} />
+        <line class="limit" x1="250" y1="0" x2="250" y2="100" />
+        <line class="limit" x1="750" y1="0" x2="750" y2="100" />
+        <line class="part" data-part x1={s.part} y1="0" x2={s.part} y2="100" />
+      </svg>
+    </div>
+    <div class="gdemo-x label" aria-hidden="true">
+      <span style="left: 25%;">−0.25 mm</span><span style="left: 50%;">Nominal</span><span style="left: 75%;">+0.25 mm</span>
+    </div>
+  </div>
+
+  <dl class="demo-readout gdemo-readout">
+    <div><dt class="label"><span class="swi zone" aria-hidden="true" />6 standard deviations</dt><dd data-out="six">{mm(6 * sd)} mm</dd></div>
+    <div><dt class="label">Share of the {mm(BAND, 2)} mm band</dt><dd data-out="share">{pct(shareTenths(sd))}</dd></div>
+    <div><dt class="label">By the rule of thumb</dt><dd data-out="verdict">{words[verdict(shareTenths(sd))]}</dd></div>
+    <div><dt class="label"><span class="swi warm" aria-hidden="true" />The part fails</dt><dd data-out="fails">{prob(fails(sd, d))}</dd></div>
+  </dl>
+  <p class="demo-note" aria-live="polite" data-note></p>
+
+  <p class="demo-coda">Measurement is a process you design. Here the design is a fixture and trained operators, and it comes before any control chart. The same arithmetic also passes bad parts that sit just outside a limit. Week 9 puts the control chart on a gauge the class has checked.</p>
+</div>
+
+<script>
+  import { BAND, SD_CLASS, shareTenths, fails, verdict, mm, pct, prob, odds, shapes } from '../data/gauge';
+  const words = { ok: 'Acceptable', marginal: 'Marginal', bad: 'Unacceptable' } as const;
+  const rules = {
+    ok: 'Under 10% is acceptable.',
+    marginal: '10 to 30% may be acceptable, depending on the job.',
+    bad: 'Over 30% is unacceptable: near a limit, this gauge can\'t tell a good part from a bad one.',
+  } as const;
+
+  document.querySelectorAll<HTMLElement>('[data-gdemo]').forEach((root) => {
+    const $ = <T extends Element>(q: string) => root.querySelector<T>(q)!;
+    const sdIn = $<HTMLInputElement>('#gdemo-sd');
+    const dIn = $<HTMLInputElement>('#gdemo-d');
+    const pills = [...root.querySelectorAll<HTMLButtonElement>('[data-sd]')];
+    const rect = (q: string, r: { x: number; w: number }) => {
+      const el = $<SVGRectElement>(q);
+      el.setAttribute('x', String(r.x));
+      el.setAttribute('width', String(Math.max(0, r.w)));
+    };
+
+    function update() {
+      const sd = Number(sdIn.value), d = BAND / 2 - Number(dIn.value);   // the slider runs with the chart: right is the limit
+      const tenths = shareTenths(sd), v = verdict(tenths), p = fails(sd, d);
+      const s = shapes(sd, d);
+      rect('[data-safe]', s.safe); rect('[data-zone-l]', s.zoneL); rect('[data-zone-r]', s.zoneR);
+      $('[data-curve]').setAttribute('d', s.curve);
+      $('[data-fail]').setAttribute('d', s.fail);
+      const part = $<SVGLineElement>('[data-part]');
+      part.setAttribute('x1', String(s.part)); part.setAttribute('x2', String(s.part));
+      $('[data-out=sd]').textContent = `${mm(sd)} mm`;
+      $('[data-out=d]').textContent = `${mm(d, 2)} mm`;
+      $('[data-out=six]').textContent = `${mm(6 * sd)} mm`;
+      $('[data-out=share]').textContent = pct(tenths);
+      $('[data-out=verdict]').textContent = words[v];
+      $('[data-out=fails]').textContent = prob(p);
+      pills.forEach((b) => b.setAttribute('aria-pressed', String(Number(b.dataset.sd) === sd)));
+      sdIn.setAttribute('aria-valuetext', `${mm(sd)} mm, ${pct(tenths)} of the band, ${words[v].toLowerCase()}`);
+      dIn.setAttribute('aria-valuetext', `${mm(d, 2)} mm inside the upper limit, fails ${prob(p)} of the time`);
+      const where = d === 0
+        ? 'A part sitting on the limit fails half the time, on any gauge.'
+        : p < 9.5e-7
+          ? `A good part ${mm(d, 2)} mm inside the limit practically never fails (${odds(p)}).`
+          : `A good part ${mm(d, 2)} mm inside the limit fails ${prob(p)} of the time, ${odds(p)}.`;
+      $('[data-note]').textContent =
+        `6 × ${mm(sd)} = ${mm(6 * sd)} mm of spread in a ${mm(BAND, 2)} mm band: ${pct(tenths)}. ${rules[v]} ${where}`;
+    }
+
+    sdIn.addEventListener('input', update);
+    dIn.addEventListener('input', update);
+    pills.forEach((b) => b.addEventListener('click', () => { sdIn.value = b.dataset.sd ?? String(SD_CLASS); update(); }));
+    update();
+  });
+</script>
