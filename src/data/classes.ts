@@ -1,4 +1,4 @@
-// The classes you can try on the /bucknell course pages, as they run: the 75 minutes step by step (who has the floor),
+// The classes you can try on the /bucknell course pages (and on /tulane and /uis), as they run: the 75 minutes step by step (who has the floor),
 // the pre-class work, the lab that follows, and 3 things to try in the widget. The minutes match class 1 of the same
 // week in the course pack (src/data/packs), which stays the reference.
 export type Who = 'me' | 'you' | 'room';
@@ -143,6 +143,24 @@ export const classes: Record<string, ClassPlan> = {
       { do: 'Guess first.', see: 'More or less than $10? Black-Scholes says $10.45, and that is the dashed line the estimate has to find.' },
       { do: 'Press +1,000 paths.', see: 'The estimate usually lands within about 90 cents of it (19 times in 20), with a wide band either side.' },
       { do: 'Keep pressing +10,000.', see: 'The band narrows with the square root of the paths: 4 times the paths, half the width. How many until it\'s within 10 cents? Guess, then open the answer under the chart.' },
+    ],
+  },
+  // /uis: the measurement lab from week 8 of the course on that page. No pack behind it, so the page passes pack={false}.
+  // Band 0.50 mm; the class's gauge at 0.04 mm (6 x 0.04 / 0.50 = 48%); with a fixture and training 0.01 mm (12%).
+  gauge: {
+    week: 8,
+    before: 'Video (12 min): how to read calipers, and what a tolerance band is. A 3-question check.',
+    steps: [
+      { min: 10, who: 'me', title: 'The question.', text: '10 parts on the bench, a drawing that allows 0.25 mm either way, and 1 pair of calipers a team. Everyone writes a prediction first: how far apart will 2 readings of the same part be?' },
+      { min: 25, who: 'you', title: 'Measure.', text: 'Teams of 3. Each student measures all 10 parts twice: 60 readings on the sheet.' },
+      { min: 20, who: 'you', title: 'Work the number.', text: 'From the repeat readings to the gauge\'s standard deviation, then 6 of them as a share of the band.' },
+      { min: 20, who: 'room', title: 'Debrief.', text: 'The class\'s own number goes into this widget on the projector. Would you release parts measured on this gauge today? What would change your answer?' },
+    ],
+    lab: 'Lab 2, the gauge study: the 60 readings worked up into a 1-page decision for the shop - release the parts, measure again, or fix the gauge first. Pass or redo, with feedback inside a week.',
+    tries: [
+      { do: 'Start with the class\'s calipers.', see: 'A standard deviation of 0.04 mm, so 6 × 0.04 = 0.24 mm of spread in a 0.50 mm band: 48%. A good part 0.04 mm inside the limit fails 16% of the time.' },
+      { do: 'Add the fixture and the training.', see: 'The standard deviation drops to 0.01 mm: 12% of the band, marginal and usable. The same part now fails about 3 times in 100,000.' },
+      { do: 'Find the gauge that gets under 10%.', see: '0.008 mm (9.6%). 6 standard deviations have to fit inside 0.05 mm.' },
     ],
   },
 };

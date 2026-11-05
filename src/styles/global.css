@@ -798,3 +798,25 @@ ol li + li { margin-top: 0.5em; }
   .demo input[type='range']::-webkit-slider-thumb, .cdemo input[type='range']::-webkit-slider-thumb, .ldemo input[type='range']::-webkit-slider-thumb { width: 24px; height: 36px; margin-top: -17px; }
   .demo input[type='range']::-moz-range-thumb, .cdemo input[type='range']::-moz-range-thumb, .ldemo input[type='range']::-moz-range-thumb { width: 24px; height: 36px; }
 }
+
+/* /uis: the gauge against the band. Aqua for the band, blue for the readings, orange for what the gauge gets wrong. */
+.gdemo-controls { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px var(--gutter); align-items: start; }
+.gdemo-controls output { font-weight: 600; white-space: nowrap; }
+.gdemo-jump { margin-top: 18px; }
+.gdemo-key { display: flex; flex-wrap: wrap; gap: 4px 16px; margin: 8px 0 0; font-size: 13px; color: rgba(0, 0, 0, 0.6); max-width: none; }
+.gdemo-plot { position: relative; height: 170px; margin-top: 12px; border-bottom: 1px solid #000; }
+.gdemo-plot svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.gdemo-plot .safe { fill: rgba(27, 175, 122, 0.22); }
+.gdemo-plot .zone { fill: rgba(235, 104, 52, 0.26); }
+.gdemo-plot .curve { fill: rgba(42, 120, 214, 0.2); stroke: var(--acc); stroke-width: 2; vector-effect: non-scaling-stroke; }
+.gdemo-plot .fail { fill: var(--warm); }
+.gdemo-plot .limit { stroke: #000; stroke-width: 1; vector-effect: non-scaling-stroke; }
+.gdemo-plot .part { stroke: var(--deep); stroke-width: 2; stroke-dasharray: 4 3; vector-effect: non-scaling-stroke; }
+.gdemo-x { position: relative; height: 1.4em; margin-top: 6px; }
+.gdemo-x span { position: absolute; top: 0; white-space: nowrap; transform: translateX(-50%); }
+.swi.safe { background: rgba(27, 175, 122, 0.45); }
+.swi.zone { background: rgba(235, 104, 52, 0.45); }
+@media (max-width: 767px) {
+  .gdemo-controls { grid-template-columns: 1fr; }
+  .gdemo-plot { height: 140px; }
+}
