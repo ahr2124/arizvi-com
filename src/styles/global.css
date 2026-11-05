@@ -622,6 +622,11 @@ ol li + li { margin-top: 0.5em; }
   .odemo-controls { grid-template-columns: 1fr; }
   .odemo-readout { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
+/* On the narrowest phones (320) the widest cell of the taco table ($1,140) and the $2,916 readout stay in their columns. */
+@media (max-width: 359px) {
+  .bdemo-table td { letter-spacing: -0.04em; }
+  .odemo-readout dd { font-size: 1.25rem; }
+}
 
 .course-head .practice { margin-top: 1rem; }
 .course-head .practice .label { display: inline; margin-right: 10px; }
