@@ -155,7 +155,8 @@ a:focus-visible { outline: 2px solid #000; outline-offset: 3px; }
 
 /* Case study */
 .case-head { padding-top: 4rem; }
-.case-head h1 { margin: 0.6rem 0 1.5rem; }
+/* On phones the title scales with the width, so a long first word ("Experimentation") stays inside the column. */
+.case-head h1 { margin: 0.6rem 0 1.5rem; font-size: clamp(2rem, min(11vw, max(2.8rem, 6vw)), 5rem); overflow-wrap: break-word; }
 .case-cover { margin: 3rem 0; }
 .outcome { border-top: 1px solid #000; border-bottom: 1px solid #000; padding: 16px 0; margin-bottom: 2.5rem; }
 .outcome .label { grid-column: 1 / 4; padding-top: 4px; }
