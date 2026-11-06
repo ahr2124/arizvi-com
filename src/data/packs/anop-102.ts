@@ -11,7 +11,7 @@ const midterm: Assignment = {
   meta: 'Midterm · 20% · week 7, class 2 · 75 minutes',
   prompt: [
     'A business you haven\'t seen, its numbers on 1 page, and 4 questions. You build the model and answer them. The practice case in class 1 that week is the same shape with different numbers, and we mark it together before you leave.',
-    'Open book: your own labs, your notes and the course text. Closed internet and no AI tools. On paper or in a workbook, whichever the class chose on day one. My last class asked for paper at mid-term, and got it.',
+    'Open book: your own labs, your notes and the course text. Closed internet and no AI tools. On paper or in a workbook, whichever the class chose on day one.',
   ],
   stepsLabel: 'The 4 questions, every time',
   steps: [
