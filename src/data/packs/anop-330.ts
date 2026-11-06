@@ -31,10 +31,10 @@ const pitch: Assignment = {
 
 const midterm: Assignment = {
   title: 'The midterm notebook',
-  meta: 'Midterm · 20% · week 7 · 2 timed hours in a booked room, or a 24-hour take-home',
+  meta: 'Midterm · 20% · week 7 · 2 timed hours in a room booked outside class time, or a 24-hour take-home',
   prompt: [
     'A dataset you haven\'t seen, a decision it could inform, and a notebook with 5 empty sections. You fill them in 2 hours with the course notebooks and the scikit-learn docs open and nothing else. It covers weeks 1 to 6.',
-    '2 timed hours in a booked room or a 24-hour take-home: the class chose on day one. Either way it\'s your own work, and the notebook has to run top to bottom.',
+    '2 timed hours in a room booked outside class time, or a 24-hour take-home: the class chose on day one, and it\'s the take-home if there\'s no evening everyone can make. Either way it\'s your own work, and the notebook has to run top to bottom.',
   ],
   stepsLabel: 'The 5 sections, every time',
   steps: [
@@ -120,11 +120,11 @@ export const pack: Pack = {
     ['Tools', 'Python in Jupyter: pandas and scikit-learn, with matplotlib for the pictures. ANOP 203 is the prerequisite, so code from week 1. GitHub for the project, with the organization\'s say-so where there\'s one.'],
     ['Text', "The department's text where there's one. Otherwise Géron, Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow, as an optional reference; we use its first 9 chapters."],
     ['Help', '2 office hours a week, 1 in the office and 1 on Zoom. Course questions go on the forum so the answer helps everyone. A practitioner guest in week 10 where I can get one; questions for the guest are collected the week before in a shared sheet.'],
-    ['Day one', "I ask the class how it wants to be graded. The weights are fixed. What's open: whether the midterm is 2 timed hours in the lab or a 24-hour take-home, and whether the class wants week 11 on LLMs in the workflow (my pick) or on time series. In week 7 an anonymous form asks what to change, and I change it."],
+    ['Day one', "I ask the class how it wants to be graded. The weights are fixed. What's open: whether the midterm is 2 timed hours in a booked room or a 24-hour take-home, and whether the class wants week 11 on LLMs in the workflow (my pick) or on time series. In week 7 an anonymous form asks what to change, and I change it."],
   ],
   grading: [
     ['Weekly labs', '30%', '10 labs (weeks 1 to 6 and 8 to 11), marked pass or redo on a rubric you see before you start. A lab that doesn\'t pass comes back within a week with feedback, and you resubmit until it does, up to the last day of week 13. Each lab passed is worth 3 of the 30.'],
-    ['Midterm', '20%', 'Week 7: a timed notebook on a dataset you haven\'t seen, 2 hours. Rubric below.'],
+    ['Midterm', '20%', 'Week 7: a notebook on a dataset you haven\'t seen, in 2 timed hours or as a 24-hour take-home. Rubric below.'],
     ['Team project', '30%', 'Teams of 3 or 4 from week 4. The pitch video (2), the charter (4), a first model against a baseline (4), and the final notebook, memo and 8-minute pitch (20, rubric below). Peer evaluation moves each member\'s share of the 20 by up to 2.'],
     ['Final', '15%', 'On paper, 2 hours. Model outputs are printed and you read them and decide. Attempt up to 30 marks. Sample below.'],
     ['Model card', '5%', 'Week 12. 1 page that travels with the project model. Rubric below.'],
@@ -221,7 +221,7 @@ export const pack: Pack = {
       before: 'Video (18 min): many trees; random forests average, gradient boosting corrects. Check: 3 questions, one is "which of these 2 models overfits more at depth 20?"',
       c1: 'What the week 7 form will ask, and the vote on week 11 (10). Random forests in pairs: 10 trees, 100, 500, and the CV error curve (25). Feature importance and its traps: the correlated pair that splits the credit (20). Gradient boosting: small trees, one at a time, each fixing what the last ones missed; the learning rate as a dial (20).',
       c2: 'Review for the midterm: the 5 sections on a fresh dataset, in pairs, timed, 50 minutes (50). Marked together against the rubric (25). The anonymous form goes out the same evening.',
-      lab: 'The midterm: a timed notebook, 2 hours, in a booked room, or the 24-hour take-home if the class chose that. Covers weeks 1 to 6.',
+      lab: 'The midterm takes this week\'s lab: a timed notebook, 2 hours, in a room booked outside class time, or the 24-hour take-home if the class chose that. Covers weeks 1 to 6.',
     },
     {
       w: 8, topic: 'Evaluation and thresholds',
@@ -257,7 +257,7 @@ export const pack: Pack = {
       before: 'Video (15 min): drift; the model that quietly stopped working; what to monitor and how often. Check: 3 questions, one is reading a chart of weekly error for 6 months.',
       c1: 'The Telco model, scored month by month on a year the model never saw, on everyone\'s screen (5). Pairs find the month it broke and argue about why (20). Drift of the inputs against drift of the labels, and which you can see sooner (20). The retraining rule, written in 1 sentence, and the sentence that says when to pull it (15). Debrief: the dashboard a retention manager would need, sketched on paper (15).',
       c2: 'The model card, built in class for the project model, heading by heading (45). Peer review: swap cards, read the other team\'s cold, write the 1 question it doesn\'t answer (20). Exit ticket: the month your project model should be retrained, and how you would know.',
-      lab: 'Lab 12 is the model card, 5%. In full under Assignments.',
+      lab: 'The model card, 5%, takes this week\'s lab. In full under Assignments.',
       memo: 'The cutoff chosen by cost, and the model card, are due.',
     },
     {

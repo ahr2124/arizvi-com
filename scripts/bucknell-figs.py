@@ -317,7 +317,7 @@ write('src/components/CurriculumMap.astro', f'''---
 <figure class="fig curriculum">
   {svg(*cw, 'Where these courses sit in the Business Analytics major', desc, 'fig-wide', role='group')}
   {svg(*ct, 'Where these courses sit in the Business Analytics major', desc, 'fig-tall', role='group')}
-  <figcaption class="muted">Black: the courses I'd teach - each one opens its page. Arrows are the prerequisites that lead to them, from the 2026-27 catalogue. ANOP 330, 350 and 370 each need ANOP 203 (Python) or CSCI 203, and either ANOP 102 or a statistics course.</figcaption>
+  <figcaption class="muted">Black: the courses I'd teach - each one opens its page. Arrows are the prerequisites on the way to the practicum, from the 2026-27 catalogue. ANOP 330, 350 and 370 each need ANOP 203 (Python) or CSCI 203, and either ANOP 102 or a statistics course. ANOP 302 needs ANOP 102 and corporate finance (ACFM 124 or 203).</figcaption>
 </figure>
 ''')
 

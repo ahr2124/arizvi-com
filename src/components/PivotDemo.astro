@@ -2,10 +2,12 @@
 // Week 3 of ANOP 102: a pivot table adds up whatever it is given.
 // A coffee cart's week of sales, as the till exported it, with 3 problems: the library cart spelled 4 ways,
 // one Tuesday order exported twice, and a $4.50 latte typed as $45. The real answer: Library $51, Union $33.50.
+// The 4 spellings (Library, Libary, LIB, and Library with a space after it) differ by more than case on purpose:
+// an Excel PivotTable ignores case, so "library" and "Library" would land in 1 row and the first count would be 4.
 const raw: [string, string, string, number, number][] = [
   ['Mon', 'Library', 'Latte', 2, 4.5],
   ['Mon', 'Union', 'Drip', 3, 2.5],
-  ['Mon', 'library ', 'Latte', 1, 4.5],
+  ['Mon', 'Libary', 'Latte', 1, 4.5],
   ['Tue', 'Union', 'Latte', 2, 4.5],
   ['Tue', 'LIB', 'Drip', 4, 2.5],
   ['Tue', 'Union', 'Drip', 3, 2.5],

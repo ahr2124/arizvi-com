@@ -99,7 +99,7 @@ const weeks: { w: number; topic: string; build: string; try?: string }[] = [
       <p>Students already ask chatbots for answers. This class shows them what comes back, and how to use it in a spreadsheet decision.</p>
       <p>An LLM (a large language model, the engine behind a chatbot) doesn't look an answer up. It scores every word it could say next, turns the scores into probabilities, and picks one at random, weighted by those probabilities. Temperature sets how much it gambles: at 0 it always picks the favourite.</p>
       <p>Here a café asks one for tomorrow's croissant demand, then has to decide how many to bake. In the spreadsheet, each bake's expected profit is one formula (a SUMPRODUCT). The chatbot is the hook; expected value is the lesson.</p>
-      <p>The widget is the class's 3 steps in order: what the model believes, what it says when you ask, and what to do with the difference. On the projector I ask it 20 times and the count is different every time, which is the moment the room stops trusting the single answer and starts asking for the odds.</p>
+      <p>The widget is the class's 3 steps in order: what the model believes, what it says when you ask, and what to do with the difference. On the projector I ask it 20 times, then again, and the count keeps moving, which is the moment the room stops trusting the single answer and starts asking for the odds.</p>
     </ClassPlan>
     <LLMDemo />
   </Section>
@@ -107,7 +107,7 @@ const weeks: { w: number; topic: string; build: string; try?: string }[] = [
   <Section label="Try a class · Week 11" title="One weekend flips the slope" id="regression">
     <ClassPlan plan={classes.regression} course={c.slug}>
       <p>A bike shop spent between $0 and $280 a week on Instagram ads for 12 weeks and logged its sales. Does the spend work? The shop keeps 40 cents of every sales dollar, so an ad pays for itself when $1 of ads brings in more than $2.50 of sales.</p>
-      <p>On the projector the line goes up with all 12 weeks in, and the room reads the slope: $1.70 of sales per dollar of ads, so the ads lose money. Then someone asks about the orange point. One click takes it out and the same spreadsheet says the opposite. The 20 minutes are about who gets to make that click, and what they have to write down when they do.</p>
+      <p>On the projector the line goes up with all 12 weeks in, and the room reads the slope: $1.70 of sales per dollar of ads, so the ads look like they lose money. Then someone asks about the orange point. One click takes it out and the same spreadsheet says the opposite. The 20 minutes are about who gets to make that click, and what they have to write down when they do.</p>
       <p>One more catch the class names: the shop chose its own ad spend, and may have spent more in weeks it expected to be busy. That's why weeks 9 and 10 come first: a test where you choose who gets the ad.</p>
     </ClassPlan>
     <RegressionDemo />

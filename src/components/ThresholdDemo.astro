@@ -161,7 +161,7 @@ const pct = (a: number) => (a * 100).toFixed(1) + '%';
       plot.querySelectorAll<HTMLElement>('[data-rule], [data-dot]').forEach((el) => place(el, n, yOf(v)));
       $('[data-note]').textContent = n === 0
         ? 'Offer nobody and you\'re 90% accurate - right about all 900 customers who stay. You also earn nothing: all 100 cancellations walk out the door.'
-        : `Offering ${who(n)}: ${fmt(k)} kept, ${fmt(wasted)} offers wasted on people who'd have stayed. Net ${money(v)} at ${pct(accuracy(n))} accuracy${v !== value(best, cost) ? '.' : bestEnd > best ? ` - the most this price can earn. Every setting from ${fmt(best)} to ${fmt(bestEnd)} earns it, and accuracy falls all the way along.` : ' - the most valuable setting at this price.'}`;
+        : `Offering ${who(n)}: ${fmt(k)} kept, ${fmt(wasted)} offers wasted on people who'd have stayed. Net ${money(v)} at ${pct(accuracy(n))} accuracy${v !== value(best, cost) ? '.' : bestEnd > best ? ` - the most any setting earns at this price. Every setting from ${fmt(best)} to ${fmt(bestEnd)} earns it, and accuracy falls all the way along.` : ' - the most valuable setting at this price.'}`;
     }
 
     const set = (x: number) => { slider.value = String(x); update(); };

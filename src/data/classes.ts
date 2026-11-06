@@ -58,7 +58,7 @@ export const classes: Record<string, ClassPlan> = {
     lab: 'Lab 8: the market stall, modelled 2 ways, best expected profit and smallest worst case, with a paragraph on which you\'d pick for an owner who can\'t afford a bad week.',
     tries: [
       { do: 'Read the bars.', see: '20, 45 and 35 percent, and they don\'t move. That is the forecast.' },
-      { do: 'Ask 20 times.', see: 'The count changes from press to press. Set the temperature to 0 and ask again: medium, 20 times out of 20.' },
+      { do: 'Ask 20 times.', see: 'Press it a few times and the count moves around. Set the temperature to 0 and ask again: medium, 20 times out of 20.' },
       { do: 'Compare the 3 ways to use it.', see: 'Weighing the probabilities wins at $310 whatever the temperature. Asking once and baking what it says is $267 at temperature 1.' },
     ],
   },

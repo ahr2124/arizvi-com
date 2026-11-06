@@ -58,7 +58,7 @@ export const pack: Pack = {
   slug: 'anop-302',
   code: 'ANOP 302',
   title: 'ANOP 302, in full',
-  standing: "ANOP 302 is the course I'd most like to build, and the one that isn't in the posting, so it takes a slot in year 1 or 2 at the department's call. This is the whole term as I'd run it: every week, every lab with what passes, the project in pieces, the rubrics up front and a sample of the final.",
+  standing: "ANOP 302 is the course I'd most like to teach. It's in the catalogue already, so whatever outline it has run on comes first, and it takes a slot in year 1 or 2 at the department's call. This is a whole term as I'd plan it if asked: every week, every lab with what passes, the project in pieces, the rubrics up front and a sample of the final.",
   description: [
     'The catalogue describes ANOP 302 as optimisation in finance and accounting, portfolio and risk management, and Monte Carlo pricing of derivatives. The course teaches students to formulate a financial decision as a model, solve it, say what a constraint is worth, measure the risk, and write the recommendation a CFO could act on. Every week ends in that recommendation.',
   ],

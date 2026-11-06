@@ -76,7 +76,7 @@ const final: Assignment = {
     { name: 'The handover', levels: L([5, 'The client could run it next month without the team: files, steps, and the retraining rule.'], [2.5, 'Files without steps.'], [0, 'Nothing the client keeps.']) },
     { name: 'The presentation', levels: L([10, '20 minutes, the client\'s questions answered with numbers, every member spoke, materials in the day before.'], [5, 'Over time, or 1 member carried it, or materials late.'], [0, 'Read from slides.']) },
   ],
-  note: 'The client fills in the feedback form below after the meeting; it shapes my mark and it\'s attached to the team\'s report. Peer evaluation at week 14 moves each member\'s share of the team marks by up to 10 points out of 100.',
+  note: 'The client fills in the feedback form below after the meeting; it shapes my mark and it\'s attached to the team\'s report. Peer evaluation at week 14 moves each member\'s mark on the team\'s deliverables by up to 10 points out of 100.',
 };
 
 const reflection: Assignment = {
@@ -121,7 +121,7 @@ export const pack: Pack = {
     ['Before class', 'A 2-page case most weeks: a project that went wrong at the stage you\'re at, and the 3 questions it raises. Some are mine from practice with the names removed; from the second run on, the rest come from past teams, with permission.'],
     ['In class', 'Class 1 is a skills session for the stage the projects are at (scoping, the data audit, interviewing, backtesting, writing for the person who decides) with an exercise in it. Class 2 is a workshop: teams at tables on their own project, me (and a TA, where the section has one) moving between them, and another team playing the client when a dry run is due.'],
     ['Team time', 'The stand-up: 15 minutes per team with me each week, at a time each team books in week 1, on a 1-page status sheet in a fixed format (done, next, blocked, the ask). The sheet goes in the team repo; the record it builds is what the peer evaluation and the playbook rely on.'],
-    ['With the client', '5 meetings: kick-off (week 1), the signed charter (3), the check-in (8), the draft recommendation (11) and the final presentation (14). The client gets a named contact on the team and a weekly 3-line email, and I\'m copied.'],
+    ['With the client', '5 meetings: kick-off (week 1), the signed charter (3), the check-in (8), the draft recommendation (11) and the final presentation (14), with a 30-minute handover after it. In week 5 each team also interviews 2 of the people who do the job. The client gets a named contact on the team and a weekly 3-line email, and I\'m copied.'],
     ['Tools', 'Whatever answers the question: Excel, Python, or both. A private GitHub repo per team for the code and the stand-up record. Client data lives on university storage the data agreement names, never on a laptop\'s desktop.'],
     ['Help', '2 office hours a week and the stand-up. Questions for a client are collected in the team\'s shared sheet before each meeting, so the meeting is spent on answers.'],
     ['Day one', "I ask the class how it wants to run. The weights are fixed. What's open: whether the check-in is a presentation or a written pack with a meeting, and the 1 extra skills session the class wants in week 9 (SQL, Tableau, or writing for executives)."],
@@ -130,7 +130,7 @@ export const pack: Pack = {
     ['Charter', '10%', 'Week 3, signed by the client and every member. Rubric below.'],
     ['Mid-term check-in', '15%', 'Week 8. The data audit, the baseline and the first result, presented to the client. Rubric below.'],
     ['Final presentation and report', '45%', 'Week 14. The client in the room and the model attached. Rubric below.'],
-    ['Stand-ups and peer evaluation', '20%', 'Every week to week 13. The status sheet is marked complete, half or not done, and each of the 13 sheets, the team contract and its week 7 amendment is an equal share of the 20. Peer evaluation runs at weeks 7 and 14: week 7 is a warning and a conversation, and week 14 moves each member\'s share of the team marks up or down by up to 10 points out of 100.'],
+    ['Stand-ups and peer evaluation', '20%', 'Every week to week 13. 13 status sheets at 1 point each (complete, half or not done), 2 for the team contract, 2 for its week 7 amendment, and 3 for the 2 peer evaluations, filled in on time. Peer evaluation runs at weeks 7 and 14. Week 7 is a warning and a conversation. Week 14 moves each member\'s mark on the team\'s deliverables (the charter, the check-in and the final, 70% of the course) up or down by up to 10 points out of 100.'],
     ['Reflection', '10%', 'The final-exam slot. 2 pages, 4 questions, marked for specifics and honesty.'],
   ],
   policies: [
@@ -150,7 +150,7 @@ export const pack: Pack = {
     {
       title: 'Attendance',
       body: [
-        'Miss a stand-up and your share of that week\'s 20% is 0. Miss 3 in the term and we have a conversation about whether you\'re in the course. Class 1 skills sessions are where the methods are taught, so come; class 2 is your own project, so you will want to.',
+        'Miss a stand-up and that week\'s point is 0 for you. Miss 3 in the term and we have a conversation about whether you\'re in the course. Class 1 skills sessions are where the methods are taught, so come; class 2 is your own project, so you will want to.',
       ],
     },
     {

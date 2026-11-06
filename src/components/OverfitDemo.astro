@@ -14,7 +14,7 @@ const path = (d: number) => fits[d].curve.map((y, i) => `${i ? 'L' : 'M'}${(left
     <div>
       <label class="label" for="odemo-d">Degree of the curve <output data-out="d" for="odemo-d">{D0}</output></label>
       <input type="range" id="odemo-d" min="1" max="10" step="1" value={D0} />
-      <div class="demo-scale label" aria-hidden="true"><span>1 · a straight line</span><span>10 · bends 9 times</span></div>
+      <div class="demo-scale label" aria-hidden="true"><span>1 · a straight line</span><span>10 · up to 9 bends</span></div>
     </div>
     <div>
       <p class="label" id="odemo-r">The test</p>
@@ -70,8 +70,12 @@ const path = (d: number) => fits[d].curve.map((y, i) => `${i ? 'L' : 'M'}${(left
       $('[data-out=te]').textContent = shown ? '$' + f.test.toLocaleString('en-CA') : '?';
       const verdict = d === 1 ? "Too simple: a straight line can't bend, so it misses both sets."
         : d <= 4 ? 'This is the one to ship. It follows the shape, and it holds on days it never saw.'
-        : d <= 8 ? 'It has started fitting the noise. The error on new days is climbing, and the training error gives no warning.'
-        : 'It memorised the 16 days and has nothing useful to say about any other.' + (d === 10 ? ' Nearly all of that miss is the 34 °C day, 1 degree hotter than anything it was fitted to.' : '');
+        : d <= 6 ? 'It has started fitting the noise. The error on new days is climbing, and the training error gives no warning.'
+        // From degree 7 the 34 °C day carries most of the held-out miss (76%, 88%, 96%, 99.5% of the squared error at 7 to 10).
+        // Without it, the other 7 held-out days miss by $31, $29 and $33 at degrees 2 to 4, and by $220 at degree 10.
+        : d <= 8 ? 'It is fitting the noise. The error on new days is climbing, most of it on the 34 °C day, 1 degree hotter than anything it was fitted to, and the training error gives no warning.'
+        : 'It memorised the 16 days and has nothing useful to say about any other. Nearly all of that miss is the 34 °C day, 1 degree hotter than anything it was fitted to.'
+          + (d === 10 ? ' Leave that day out and it still misses the other 7 by $220, against about $30 at degrees 2 to 4.' : '');
       $('[data-note]').textContent = shown
         ? `Degree ${d}: $${f.train} off on the days it trained on, $${f.test.toLocaleString('en-CA')} on the 8 it never saw. ${verdict}`
         : `Degree ${d}: the curve misses the 16 days by $${f.train} a day (root-mean-square error). ${d < 10 ? 'Raise the degree and that error never goes up.' : 'That is as low as it goes.'} Pick the degree you'd ship, then reveal the held-out days.`;
