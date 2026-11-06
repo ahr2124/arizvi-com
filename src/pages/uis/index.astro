@@ -49,12 +49,12 @@ const areas = [
 
 // The course I'd offer to build first: 15 weeks (UIS's fall term), each adding a piece of the final deliverable.
 const weeks = [
-  { w: 'Weeks 1-2', title: 'What a technical project is', line: 'Scope, requirements, constraints and stakeholders. Lab and site safety come first: nobody works at a bench or visits an employer before the orientation. Students write a 1-page requirements sheet for a small device from a user interview.' },
+  { w: 'Weeks 1-2', title: 'What a technical project is', line: 'Scope, requirements, constraints and stakeholders. Lab and site safety come first: nobody works at a bench or visits an employer until the university\'s safety orientation is signed off and on file. Students write a 1-page requirements sheet for a small device from a user interview.' },
   { w: 'Weeks 3-4', title: 'Design to cost', line: 'Bills of materials, trade-offs, make or buy. Lab 1: a temperature-screening kiosk\'s bill of materials comes to $90 a unit against a $100 target, and marketing wants a battery pack (+$25) and a metal stand (+$18). Neither fits in the $10 that\'s left, so teams decide what to cut, stay at or under $100 and defend 3 trade-offs.' },
   { w: 'Weeks 5-6', title: 'Schedules', line: 'Critical path, buffers and the weekly stand-up. Students mark the critical path on their own schedule and keep a stand-up sheet.' },
   { w: 'Week 7', title: 'Review and midterm', line: 'On paper: a project memo written from a scenario.' },
   { w: 'Weeks 8-9', title: 'Measurement and quality', line: 'Can the gauge be trusted (a gauge R&R study), then control charts. Lab 2 is the class at the bottom of this page.' },
-  { w: 'Weeks 10-11', title: 'Systems integration', line: 'Interfaces, test plans and failure modes. Lab 3, on the bench: each team gets an infrared temperature sensor, a Bluetooth board and a tablet, writes the interface list and the integration test plan, then runs the tests and logs every failure.' },
+  { w: 'Weeks 10-11', title: 'Systems integration', line: 'Interfaces, test plans and failure modes. Lab 3, on the bench: each team gets an infrared temperature sensor, a pre-flashed Bluetooth board and a tablet, writes the interface list and the integration test plan, then runs the tests and logs every failure.' },
   { w: 'Week 12', title: 'Ethics, product safety and societal impact', line: 'A 1-page decision record with the trade-off written down.' },
   { w: 'Weeks 13-15', title: 'The employer project', line: 'The charter and the plan, presented to the employer\'s mentor, and a short reflection.' },
 ];
@@ -80,7 +80,7 @@ const plan = [
     <ol class="principles">
       {principles.map(([head, line]) => <li><strong>{head}</strong> {line}</li>)}
     </ol>
-    <p class="muted principles-note">Industrial engineer by training. 14 course sections of 6 courses at Waterloo between 2021 and 2024, ~700 students, in person, hybrid and online. 3 of those courses taught statistics and data analytics, my user research course taught project management and requirements engineering, and my capstone seminar ran on live client projects with external partners. The stories in class come from the work: owning <a href="/work/amazon/">Alexa's orchestration layer</a> at Amazon, <a href="/work/secure-check-n/">SecureCheck-N</a> (a temperature-screening kiosk that shipped during the pandemic), <a href="/work/scramble/">Proteus</a> (52 playing cards with e-ink faces and Bluetooth radios), and the portfolio companies at AMJ Capital. More on the <a href="/teaching/">Teaching</a> page.</p>
+    <p class="muted principles-note">Industrial engineer by training. 14 course sections of 6 courses at Waterloo between 2021 and 2024, ~700 students, in person, hybrid and online. Statistics and data analytics ran inside 3 of them (Human-Computer Interaction, Analytics and User Experience, Introduction to UX), project management and requirements engineering inside my user research course, and my capstone seminar ran on live client projects with external partners. The stories in class come from the work: owning <a href="/work/amazon/">Alexa's orchestration layer</a> at Amazon, <a href="/work/secure-check-n/">SecureCheck-N</a> (a temperature-screening kiosk that shipped during the pandemic), <a href="/work/scramble/">Proteus</a> (52 playing cards with e-ink faces and Bluetooth radios), and the portfolio companies at AMJ Capital. More on the <a href="/teaching/">Teaching</a> page.</p>
   </Section>
 
   <Section label="What I'd teach" id="areas">
@@ -127,13 +127,13 @@ const plan = [
       <ol>
         <li>The problem, in the employer's words.</li>
         <li>Who the mentor is, and how often they meet the student.</li>
-        <li>What the student gets access to (equipment, data, the site), with the site's safety rules and any confidentiality terms.</li>
+        <li>What the student gets access to (equipment, data, the site), and the site's safety rules.</li>
         <li>What the employer gets back, and when.</li>
         <li>How we'll know it worked.</li>
         <li>The dates of the mid-term check-in and the final presentation.</li>
         <li>A plan B if the problem changes.</li>
       </ol>
-      <p style="margin-top: 1em;">The charter is a learning plan. The agreement between UIS and the employer (who signs it, insurance, safety on site) is the university's, and it comes first.</p>
+      <p style="margin-top: 1em;">The charter is a learning plan. The agreement between UIS and the employer (who signs it, insurance, confidentiality, who owns the work, safety on site) is the university's, and it comes first.</p>
       <p>After that it's a 15-minute stand-up every week, a mid-term check-in with the mentor, and a final presentation with the employer in the room. If an employer goes quiet (it happens, usually around week 9), the charter already names the fallback, and the student switches at that week's stand-up. The grade comes from the charter, the deliverable, the mentor's feedback and a short reflection.</p>
       <p>The BAS-ET is for transfer students and working adults as well as students straight from high school. A student who already works in the field can run the placement at their own employer, on the same charter, with the stand-up at a time that fits their shift.</p>
       <p>The posting also asks for community college pathways and the techX dual-credit program at the Capital Area Career Center. For transfer students I'd write the map down course by course with the community college faculty, starting with Lincoln Land Community College, so a student knows in year 1 of an associate degree what carries over. For techX I'd bring the same employer problems, sized for a dual-credit class.</p>
@@ -156,10 +156,10 @@ const plan = [
 
   <Section label="Try a class · week 8 of the course above" title="Is the gauge lying?" id="try">
     <ClassPlan plan={classes.gauge} course="uis" pack={false}>
-      <p>A shop machines a part that has to come out within 0.25 mm of its nominal size, either way. That's a band 0.50 mm wide, and every part is checked with calipers before it ships.</p>
+      <p>A shop machines a part that has to come out within 0.25 mm of its nominal size, either way. That's a band 0.50 mm wide, and every part is checked with digital calipers before it ships.</p>
       <p>In class, 3 students measure 10 parts twice each with the same calipers. It's a gauge repeatability and reproducibility study (gauge R&amp;R). A perfect measurement system would give 1 part the same reading every time. Theirs doesn't, and how much the readings of 1 part disagree, within a student (repeatability) and between students (reproducibility), is the standard deviation of the measurement system: the calipers and the hands holding them.</p>
-      <p>The number we work out is 6 of those standard deviations as a share of the band. The usual guideline, from the AIAG measurement systems analysis manual: under 10% is acceptable, 10 to 30% may be acceptable depending on the job, and over 30% is unacceptable. The study measures scatter. Whether the calipers read true is a separate check against a gauge block, and the class does it first.</p>
-      <p>The widget is the debrief. The class's calipers come out around 0.04 mm, and the room has to decide whether parts measured this way can ship. For an online or blended section, the readings can come from the gauges at a student's own job or from a loaned caliper kit, on the same sheet, and the debrief still runs on this widget.</p>
+      <p>The number we work out is 6 of those standard deviations as a share of the band (gauge R&amp;R as a percentage of the tolerance). The usual guideline, from the AIAG measurement systems analysis manual: under 10% is acceptable, 10 to 30% may be acceptable depending on the job, and over 30% is unacceptable. The study measures scatter. Whether the calipers read true is a separate check against a gauge block, and the class does it first.</p>
+      <p>The widget is the debrief. Say the class's calipers come out around 0.04 mm (an invented number, like the ones in the labs above). The room has to decide whether parts measured this way can ship. For an online or blended section, the readings can come from the gauges at a student's own job or from a loaned caliper kit, on the same sheet, and the debrief still runs on this widget.</p>
     </ClassPlan>
     <GaugeDemo />
   </Section>

@@ -111,7 +111,9 @@ const words = { ok: 'Acceptable', marginal: 'Marginal', bad: 'Unacceptable' } as
         ? 'A part sitting on the limit fails half the time, on any gauge.'
         : p < 9.5e-7
           ? `A good part ${mm(d, 2)} mm inside the limit practically never fails (${odds(p)}).`
-          : `A good part ${mm(d, 2)} mm inside the limit fails ${prob(p)} of the time, ${odds(p)}.`;
+          : p >= 0.25
+            ? `A good part ${mm(d, 2)} mm inside the limit fails ${prob(p)} of the time.`   // "about 1 in 2" is too loose for 40%
+            : `A good part ${mm(d, 2)} mm inside the limit fails ${prob(p)} of the time, ${odds(p)}.`;
       $('[data-note]').textContent =
         `6 × ${mm(sd)} = ${mm(6 * sd)} mm of spread in a ${mm(BAND, 2)} mm band: ${pct(tenths)}. ${rules[v]} ${where}`;
     }
