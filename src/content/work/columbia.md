@@ -1,6 +1,6 @@
 ---
 title: Columbia University
-role: MS, Management Science and Engineering
+role: MS, Engineering Management Systems
 years: 2010–2012
 kind: research
 track: research

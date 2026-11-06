@@ -12,7 +12,7 @@ import { arrows } from '../../data/bucknell';
 
 const catalogue = 'https://catalog.tulane.edu/courses/mgsc/';
 // Numbers and course codes stay on the same line as the word after them (as on /bucknell).
-const keep = (s: string) => s.replace(/(\d|[A-Z]{4}) (?=\w)/g, '$1 ');
+const keep = (s: string) => s.replace(/(\d|[A-Z]{4}) (?=\w)/g, '$1\u00a0');
 
 const principles = [
   ['Build the course backwards from the outcome.', 'Each course ends in work a manager could use, and every week builds toward it.'],
@@ -75,7 +75,7 @@ const plan = [
     <ol class="principles">
       {principles.map(([head, line]) => <li><strong>{head}</strong> {line}</li>)}
     </ol>
-    <p class="muted principles-note">14 course sections at Waterloo between 2021 and 2024, ~700 students, classes of 40 to 180. The stories in class come from the work: Alexa at Amazon, a year of A/B tests inside a healthcare e-commerce retailer, compliance models at Morgan Stanley, and the portfolio companies at AMJ Capital. More on the <a href="/teaching/">Teaching</a> page.</p>
+    <p class="muted principles-note">14 course sections at Waterloo between 2021 and 2024, ~700 students, up to 4 sections and 180 students in a term. The stories in class come from the work: Alexa at Amazon, a year of A/B tests inside a healthcare e-commerce retailer, compliance models at Morgan Stanley, and the portfolio companies at AMJ Capital. More on the <a href="/teaching/">Teaching</a> page.</p>
   </Section>
 
   <Section label="The courses" id="courses">

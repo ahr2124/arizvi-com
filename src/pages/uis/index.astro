@@ -25,7 +25,7 @@ const areas = [
   {
     role: 'I\'d take',
     title: 'Systems integration, project management and applied engineering practice',
-    line: 'Requirements -> design to cost -> a schedule with its critical path -> interfaces and an integration test plan, run on a bench. At Amazon I owned Alexa\'s orchestration layer, the one that decides which of ~10,000 skills answers a request. On SecureCheck-N the parts were an infrared sensor, a Bluetooth link and whatever tablet the facility already had. Getting separate systems to work as one is the job I know best.',
+    line: 'Requirements -> design to cost -> a schedule with its critical path -> interfaces and an integration test plan. At Amazon I owned Alexa\'s orchestration layer, the one that decides which of ~10,000 skills answers a request. On SecureCheck-N the parts were an infrared sensor, a Bluetooth link and whatever tablet the facility already had. Getting separate systems to work as one is the job I know best.',
     link: { href: '#course', text: 'The course I\'d build first is below' },
   },
   {
@@ -43,7 +43,7 @@ const areas = [
   {
     role: 'For colleagues',
     title: 'Automation, robotics and industrial controls · Engineering design, CAD/CAM and manufacturing systems',
-    line: 'These labs are for the colleagues hired beside me to lead. I can carry the design and prototyping end of engineering design (Proteus is the worked example), and I\'d teach alongside them, because the project, measurement and employer work runs through their courses too.',
+    line: 'These labs are for the colleagues hired beside me to lead. I\'d teach alongside them, because the project, measurement and employer work runs through their courses too.',
   },
 ];
 
@@ -54,7 +54,7 @@ const weeks = [
   { w: 'Weeks 5-6', title: 'Schedules', line: 'Critical path, buffers and the weekly stand-up. Students mark the critical path on their own schedule and keep a stand-up sheet.' },
   { w: 'Week 7', title: 'Review and midterm', line: 'On paper: a project memo written from a scenario.' },
   { w: 'Weeks 8-9', title: 'Measurement and quality', line: 'Can the gauge be trusted (a gauge R&R study), then control charts. Lab 2 is the class at the bottom of this page.' },
-  { w: 'Weeks 10-11', title: 'Systems integration', line: 'Interfaces, test plans and failure modes. Lab 3, on the bench: each team gets an infrared temperature sensor, a pre-flashed Bluetooth board and a tablet, writes the interface list and the integration test plan, then runs the tests and logs every failure.' },
+  { w: 'Weeks 10-11', title: 'Systems integration', line: 'Interfaces, test plans and failure modes. Students write an interface list and an integration test plan.' },
   { w: 'Week 12', title: 'Ethics, product safety and societal impact', line: 'A 1-page decision record with the trade-off written down.' },
   { w: 'Weeks 13-15', title: 'The employer project', line: 'The charter and the plan, presented to the employer\'s mentor, and a short reflection.' },
 ];
@@ -103,7 +103,7 @@ const plan = [
 
   <Section label="A course I'd build first · a proposal" title="Engineering project management and systems integration" id="course">
     <div class="grid"><div class="span-8">
-      <p>Founding faculty deliver the BAS-ET's core curriculum, with assignments set by the cohort's needs. This is the course I'd offer to build first, under whatever title it carries there: 15 weeks that end in a project charter and an integration test plan for a real employer problem, with 3 labs on the way and every week adding a piece.</p>
+      <p>Founding faculty deliver the BAS-ET's core curriculum, with assignments set by the cohort's needs. This is the course I'd offer to build first, under whatever title it carries there: 15 weeks that end in a project charter and an integration test plan for a real employer problem, with every week adding a piece of it.</p>
     </div></div>
     <ul class="rows compact bk-wide">
       {weeks.map((k) => (
@@ -135,8 +135,7 @@ const plan = [
       </ol>
       <p style="margin-top: 1em;">The charter is a learning plan. The agreement between UIS and the employer (who signs it, insurance, confidentiality, who owns the work, safety on site) is the university's, and it comes first.</p>
       <p>After that it's a 15-minute stand-up every week, a mid-term check-in with the mentor, and a final presentation with the employer in the room. If an employer goes quiet (it happens, usually around week 9), the charter already names the fallback, and the student switches at that week's stand-up. The grade comes from the charter, the deliverable, the mentor's feedback and a short reflection.</p>
-      <p>The BAS-ET is for transfer students and working adults as well as students straight from high school. A student who already works in the field can run the placement at their own employer, on the same charter, with the stand-up at a time that fits their shift.</p>
-      <p>The posting also asks for community college pathways and the techX dual-credit program at the Capital Area Career Center. For transfer students I'd write the map down course by course with the community college faculty, starting with Lincoln Land Community College, so a student knows in year 1 of an associate degree what carries over. For techX I'd bring the same employer problems, sized for a dual-credit class.</p>
+      <p>The posting also asks for community college pathways and the techX dual-credit program at the Capital Area Career Center. For transfer students I'd write the map down course by course with the community college faculty, so a student knows in year 1 of an associate degree what carries over. For techX I'd bring the same employer problems, sized for a dual-credit class.</p>
     </div></div>
   </Section>
 
@@ -159,7 +158,7 @@ const plan = [
       <p>A shop machines a part that has to come out within 0.25 mm of its nominal size, either way. That's a band 0.50 mm wide, and every part is checked with digital calipers before it ships.</p>
       <p>In class, 3 students measure 10 parts twice each with the same calipers. It's a gauge repeatability and reproducibility study (gauge R&amp;R). A perfect measurement system would give 1 part the same reading every time. Theirs doesn't, and how much the readings of 1 part disagree, within a student (repeatability) and between students (reproducibility), is the standard deviation of the measurement system: the calipers and the hands holding them.</p>
       <p>The number we work out is 6 of those standard deviations as a share of the band (gauge R&amp;R as a percentage of the tolerance). The usual guideline, from the AIAG measurement systems analysis manual: under 10% is acceptable, 10 to 30% may be acceptable depending on the job, and over 30% is unacceptable. The study measures scatter. Whether the calipers read true is a separate check against a gauge block, and the class does it first.</p>
-      <p>The widget is the debrief. Say the class's calipers come out around 0.04 mm (an invented number, like the ones in the labs above). The room has to decide whether parts measured this way can ship. For an online or blended section, the readings can come from the gauges at a student's own job or from a loaned caliper kit, on the same sheet, and the debrief still runs on this widget.</p>
+      <p>The widget is the debrief. Say the class's calipers come out around 0.04 mm (an invented number, like the ones in the labs above). The room has to decide whether parts measured this way can ship.</p>
     </ClassPlan>
     <GaugeDemo />
   </Section>

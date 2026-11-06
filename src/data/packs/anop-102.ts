@@ -74,7 +74,7 @@ export const pack: Pack = {
     ['Tools', 'Excel, the desktop version. On day one you need sums, averages and copying a formula down; everything else is taught. Solver and the Analysis ToolPak get switched on in week 11.'],
     ['Text', "The department's text where there's one. Otherwise Powell and Baker, Business Analytics: The Art of Modeling with Spreadsheets, as an optional reference; the videos cover what the labs need."],
     ['Help', '2 office hours a week, 1 in the office and 1 on Zoom. Questions about the course go on the course forum so the answer helps everyone; questions about your mark come to me by email.'],
-    ['Day one', "I ask the class how it wants to be graded. The weights below are fixed. What's open: whether the midterm is on paper or in a workbook, and whether the final is 2 hours or 3. In week 7 an anonymous form asks what to change, and I change it; in my last course it moved the exams to paper."],
+    ['Day one', "I ask the class how it wants to be graded. The weights below are fixed. What's open: whether the midterm is on paper or in a workbook, and whether the final is 2 hours or 3. In week 7 an anonymous form asks what to change, and I change it."],
   ],
   grading: [
     ['Weekly labs', '30%', '12 labs, marked pass or redo on a rubric you see before you start. A lab that doesn\'t pass comes back within a week with feedback, and you resubmit until it does, up to the last day of week 13. Each lab passed is worth 2.5 of the 30.'],
