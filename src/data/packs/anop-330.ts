@@ -123,7 +123,7 @@ export const pack: Pack = {
     ['Day one', "I ask the class how it wants to be graded. The weights are fixed. What's open: whether the midterm is 2 timed hours in a booked room or a 24-hour take-home, and whether the class wants week 11 on LLMs in the workflow (my pick) or on time series. In week 7 an anonymous form asks what to change, and I change it."],
   ],
   grading: [
-    ['Weekly labs', '30%', '10 labs (weeks 1 to 6 and 8 to 11), marked pass or redo on a rubric you see before you start. A lab that doesn\'t pass comes back within a week with feedback, and you resubmit until it does, up to the last day of week 13. Each lab passed is worth 3 of the 30.'],
+    ['Weekly labs', '30%', '10 labs (weeks 1 to 6 and 8 to 11), marked pass or redo on a rubric you see before you start. A lab that doesn\'t pass comes back within a week with feedback, and you resubmit until it does, up to the last day of classes. Each lab passed is worth 3 of the 30.'],
     ['Midterm', '20%', 'Week 7: a notebook on a dataset you haven\'t seen, in 2 timed hours or as a 24-hour take-home. Rubric below.'],
     ['Team project', '30%', 'Teams of 3 or 4 from week 4. The pitch video (2), the charter (4), a first model against a baseline (4), and the final notebook, memo and 8-minute pitch (20, rubric below). Peer evaluation moves each member\'s share of the 20 by up to 2.'],
     ['Final', '15%', 'On paper, 2 hours. Model outputs are printed and you read them and decide. Attempt up to 30 marks. Sample below.'],
@@ -133,7 +133,7 @@ export const pack: Pack = {
     {
       title: 'Pass or redo',
       body: [
-        'Labs are satisfactory or they come back. A lab passes at 6 of its 8 rubric points with no row at 0. Anything else comes back with feedback within a week, and you resubmit until it passes, until the last day of week 13. Full marks for every lab you bring to a pass.',
+        'Labs are satisfactory or they come back. A lab passes at 6 of its 8 rubric points with no row at 0. Anything else comes back with feedback within a week, and you resubmit until it passes, until the last day of classes. Full marks for every lab you bring to a pass.',
         'The midterm and the final are where I find out whether the method stuck, so they\'re marked on points.',
       ],
     },

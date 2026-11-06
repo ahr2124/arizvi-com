@@ -30,6 +30,7 @@ export interface Pack {
   policies: { title: string; body: string[] }[];
   weeks: Week[];
   labLabel?: string;             // the 4th row of each week: 'Lab' unless the course calls it something else
+  weeksTitle?: string;           // the week-by-week heading: 'Every class and every lab' unless the course has no labs
   weeksNote?: string;
   labs: Lab[];
   labsNote?: string;

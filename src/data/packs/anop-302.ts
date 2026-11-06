@@ -51,7 +51,7 @@ const project: Assignment = {
     { name: 'The recommendation', levels: L([4, 'What to do, by when, what it is worth and what would change it; the numbers support the words.'], [2, 'What to do without what would change it, or numbers and words that disagree.'], [0, 'No recommendation.']) },
     { name: 'Writing and presentation', levels: L([2, '2 pages a CFO reads in 5 minutes; 8 minutes, on time; every member spoke.'], [1, 'Over length, or 1 member carried it.'], [0, 'Hard to follow.']) },
   ],
-  note: "The peer evaluation at week 14 moves each member's share of the 20 points up or down by up to 2.",
+  note: "The 20 points scale to the 30% the project carries. The peer evaluation at week 14 moves each member's share of the 20 points up or down by up to 2.",
 };
 
 export const pack: Pack = {
@@ -74,7 +74,7 @@ export const pack: Pack = {
     ['Before class', 'A 10-to-20-minute video or a short reading from Winston and Albright or Benninga, and a 3-question check that closes when class starts. Class starts from what the check says the room got wrong.'],
     ['In class', 'Guess first: every case opens with a guess before any modelling, and we come back to it once the model is solved. Then pairs build the model, and the room debriefs it. Laptops open while we build, closed for the debrief. Every class ends with an exit ticket: 2 sentences, what to do and what would change it, marked 0, 1 or 2 for whether a manager could act on it.'],
     ['The lab', 'One a week, started in class 2 and finished on your own, due before the next class 1. Each ends with a 3-sentence recommendation.'],
-    ['Tools', 'Excel with Solver, and the Analysis ToolPak for the simulation weeks. ANOP 102 is the prerequisite, so the modelling rules are assumed from week 1 and the finance is taught.'],
+    ['Tools', 'Excel with Solver, and the Analysis ToolPak for the simulation weeks. ANOP 102 and corporate finance (ACFM 124 or 203) are the prerequisites, so the modelling rules are assumed from week 1 and the finance gets a short refresher where a case needs it.'],
     ['Text', 'No required text. Recommended: Winston and Albright, Practical Management Science, for the optimisation weeks, and Benninga, Financial Modeling, for portfolios and options. Public data: Treasury yields, 5 years of monthly stock returns from a public source, Fed H.10 exchange rates, and filings from EDGAR for the project.'],
     ['Help', '2 office hours a week, plus time by appointment. Come with a half-built model; that\'s the best time to talk. Course questions go on the forum so the answer helps everyone.'],
     ['Day one', "I ask the class how it wants to be graded. The weights are fixed. What's open: whether the final is 2 hours or 3, and whether week 13 covers hedging foreign exchange (my pick) or a commodity, which the class votes on in week 7 with the anonymous mid-term form."],
@@ -82,9 +82,9 @@ export const pack: Pack = {
   grading: [
     ['Weekly labs', '25%', '12 labs (weeks 1 to 6 and 8 to 13), marked pass or redo on a rubric you see before you start. A lab that doesn\'t pass comes back within a week with feedback, and you resubmit until it does, up to the last day of classes. Each lab passed is worth 25/12 of the 25.'],
     ['Midterm', '20%', 'Week 7. Optimisation: formulate, solve, read, recommend. Rubric below.'],
-    ['Team project', '30%', 'Weeks 4 to 14. A financial decision a real organization faces, from its filings or with the organization. Rubric below. Peer evaluation moves each member\'s share by up to 2 points.'],
+    ['Team project', '30%', 'Weeks 4 to 14. A financial decision a real organization faces, from its filings or with the organization. Marked on the 20-point rubric below and scaled to the 30. Peer evaluation moves each member\'s share by up to 2 of the 20 points.'],
     ['Final exam', '15%', 'On paper, 2 or 3 hours. Portfolios, risk and simulation, with the outputs printed. Attempt up to 30 marks. Sample below.'],
-    ['Exit tickets', '10%', 'Every class. 2 sentences: what to do, and what would change it. Marked 0, 1 or 2 in the room. The best 20 count.'],
+    ['Exit tickets', '10%', 'Every class. 2 sentences: what to do, and what would change it. Marked 0, 1 or 2 in the room. The best 20 count. The week-by-week names a ticket only where its question is set in advance.'],
   ],
   policies: [
     {

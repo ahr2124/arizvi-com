@@ -10,7 +10,7 @@ const contract: Assignment = {
   title: 'The team contract',
   meta: 'Week 1, signed by every member · amended in week 7 · part of the 20% for stand-ups and peer evaluation',
   prompt: [
-    'The team contract comes before the charter. One page, written in the first team time and signed by everyone, on how the 4 or 5 of you will work. It\'s the page we open when someone goes quiet, so write it for that day.',
+    'The team contract comes before the charter. One page, written in class 1 of week 1 and signed by everyone, on how the 4 or 5 of you will work. It\'s the page we open when someone goes quiet, so write it for that day.',
     'In week 7, with the first peer evaluation back, the team rewrites it: what changed, who does what in the second half, and how decisions get made now. Signed again.',
   ],
   stepsLabel: 'What\'s on the page',
@@ -124,7 +124,7 @@ export const pack: Pack = {
     ['With the client', '5 meetings: kick-off (week 1), the signed charter (3), the check-in (8), the draft recommendation (11) and the final presentation (14), with a 30-minute handover after it. In week 5 each team also interviews 2 of the people who do the job. The client gets a named contact on the team and a weekly 3-line email, and I\'m copied.'],
     ['Tools', 'Whatever answers the question: Excel, Python, or both. A private GitHub repo per team for the code and the stand-up record. Client data lives on university storage the data agreement names, never on a laptop\'s desktop.'],
     ['Help', '2 office hours a week and the stand-up. Questions for a client are collected in the team\'s shared sheet before each meeting, so the meeting is spent on answers.'],
-    ['Day one', "I ask the class how it wants to run. The weights are fixed. What's open: whether the check-in is a presentation or a written pack with a meeting, and the 1 extra skills session the class wants in week 9 (SQL, Tableau, or writing for executives)."],
+    ['Day one', "I ask the class how it wants to run. The weights and the deliverables are fixed. What's open: the 1 extra skills session the class wants in week 9 (SQL, Tableau, or writing for executives). In week 7 an anonymous form asks what to change, and I change it."],
   ],
   grading: [
     ['Charter', '10%', 'Week 3, signed by the client and every member. Rubric below.'],
@@ -173,6 +173,7 @@ export const pack: Pack = {
     },
   ],
   labLabel: 'Team time',
+  weeksTitle: 'Every class and every stand-up',
   weeksNote: 'Each week has the same shape: a short case before class, a skills session in class 1, a workshop in class 2, and the stand-up with me in team time. The timings in brackets are the plan for the room; they slip.',
   weeks: [
     {
@@ -221,17 +222,17 @@ export const pack: Pack = {
     {
       w: 7, topic: 'Modelling begins',
       before: 'Case: the team that picked the method before the question. Check: 3 questions, one is matching 5 questions to 5 methods.',
-      c1: 'Skills: choosing the method for the question. A menu, with the question each answers: a pivot table, regression, a classifier with a cutoff, an optimisation, a simulation, a ranked list (30). In teams, the 2 methods that fit your question, and the simpler one first (25). Peer evaluation 1 opens, in private (5). Debrief: the team that needs a pivot table and not a model, and why that is fine (15).',
-      c2: 'Workshop: the first model, on the training period only. The team contract comes out and is amended: what changed, roles for the second half, how decisions get made now. Signed again.',
-      lab: 'Stand-up 7. Peer evaluation 1 closes; I have the conversation with any team where the numbers and the record disagree.',
+      c1: 'Skills: choosing the method for the question. A menu, with the question each answers: a pivot table, regression, a classifier with a cutoff, an optimisation, a simulation, a ranked list (30). In teams, the 2 methods that fit your question, and the simpler one first (25). Peer evaluation 1 opens, in private, and closes before class 2 (5). Debrief: the team that needs a pivot table and not a model, and why that is fine (15).',
+      c2: 'Workshop: the first model, on the training period only. With peer evaluation 1 in, the team contract comes out and is amended: what changed, roles for the second half, how decisions get made now. Signed again.',
+      lab: 'Stand-up 7. I have the conversation with any team where the peer evaluation and the record disagree. The anonymous mid-term form goes out the same day.',
       memo: 'The team contract, amended and re-signed. Peer evaluation 1, a warning and a conversation.',
     },
     {
       w: 8, topic: 'The check-in',
       before: 'Nothing new. The 4 pages, to me by 5 pm the day before class 2.',
       c1: 'Dry run: each team presents its check-in to another team playing the client, 15 minutes, marked on the rubric, with the 3 written sentences of feedback. The questions the stand-in client asked go on the board; the real client will ask 2 of them.',
-      c2: 'Client meeting 3: the check-in, 15 minutes a team and 8 of questions, with the client in the room or on the screen. 3 teams in class 2 and 2 at their stand-up times the same week. The project changes shape here if it has to.',
-      lab: 'The last 2 check-ins, then stand-up 8 cut to 5 minutes: what the client said, and what changes in the plan. The client\'s notes come to me and shape the feedback.',
+      c2: 'Client meeting 3: the check-in, 15 minutes a team and 8 of questions, with the client in the room or on the screen. 3 teams in class 2, and the other 2 in a 30-minute slot each books that week in place of its stand-up. The project changes shape here if it has to.',
+      lab: 'The last 2 check-ins, in their 30-minute slots. Stand-up 8 is cut to 5 minutes for every team: what the client said, and what changes in the plan. The client\'s notes come to me and shape the feedback.',
       memo: 'The mid-term check-in, 15%. Rubric below.',
     },
     {
@@ -272,8 +273,8 @@ export const pack: Pack = {
     {
       w: 14, topic: 'Delivery',
       before: 'Nothing. Sleep, and iron a shirt.',
-      c1: 'Final presentations, in a 3-hour block in place of the 2 classes if the registrar can give us one (otherwise across the 2 classes and the exam slot): 20 minutes and 10 of questions a team, with the client in the room or on the screen, or me in the client\'s chair where the client can\'t make it. Classmates give each team 3 written sentences.',
-      c2: 'No class 2; the block replaces it. The reflection is written in the final-exam slot, 45 minutes, with the stand-up record open, and the peer evaluation goes in, in private. The report is due by midnight on presentation day.',
+      c1: 'Final presentations, in a 3-hour block in place of the 2 classes if the registrar can give us one (otherwise across the 2 classes, with the final-exam slot for a team that doesn\'t fit): 20 minutes and 10 of questions a team, with the client in the room or on the screen, or me in the client\'s chair where the client can\'t make it. Classmates give each team 3 written sentences.',
+      c2: 'With the block, no class 2. Without it, class 2 is the second half of the presentations. Either way the reflection is written in the final-exam slot, 45 minutes, with the stand-up record open, and the peer evaluation goes in, in private. The report is due by midnight on presentation day.',
       lab: 'The handover meeting with the client, 30 minutes, with the files and the steps. The client\'s feedback form comes to me within the week.',
       memo: 'The final report and presentation, 45%, and the reflection, 10%. Rubrics below.',
     },

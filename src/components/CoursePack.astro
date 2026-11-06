@@ -58,7 +58,7 @@ const marks = (q: { parts: { marks: number }[] }) => q.parts.reduce((s, p) => s 
   </div>
 </Section>
 
-<Section label="Week by week" title="Every class and every lab" id="weeks">
+<Section label="Week by week" title={pack.weeksTitle ?? 'Every class and every lab'} id="weeks">
   <div class="grid"><div class="span-8">
     <p>{pack.weeksNote ?? "Each week has the same shape: something short before class, 2 classes of 75 minutes, and a lab. The timings in brackets are the plan for the room; they slip, and that's fine."}</p>
   </div></div>

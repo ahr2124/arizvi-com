@@ -79,7 +79,7 @@ export const pack: Pack = {
   grading: [
     ['Weekly labs', '30%', '12 labs, marked pass or redo on a rubric you see before you start. A lab that doesn\'t pass comes back within a week with feedback, and you resubmit until it does, up to the last day of week 13. Each lab passed is worth 2.5 of the 30.'],
     ['Midterm', '20%', 'Week 7. A case you haven\'t seen, 75 minutes, open book, closed internet. Rubric below.'],
-    ['Team project and memo', '30%', 'Teams of 4 from week 4. The model, the 2-page memo and an 8-minute presentation in week 14, built in pieces through the term. Peer evaluation moves each member\'s share by up to 2 points.'],
+    ['Team project and memo', '30%', 'Teams of 4 from week 4. The model, the 2-page memo and an 8-minute presentation in week 14, built in pieces through the term. Marked on the 20-point rubric below and scaled to the 30. Peer evaluation moves each member\'s share by up to 2 of the 20 points.'],
     ['Final', '15%', 'On paper, 2 or 3 hours. Scenarios like the labs, with the outcome each question tests named on the paper. Attempt up to 30 marks. Sample below.'],
     ['Reflection', '5%', 'Week 14. 1 page, 3 questions, marked for specifics and honesty.'],
   ],

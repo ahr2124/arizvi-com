@@ -50,7 +50,7 @@ export const a102: Assignment[] = [
       { name: 'The recommendation', levels: L([4, 'What to do, by when, and what would change it; the numbers support the words.'], [2, 'What to do without what would change it, or numbers and words that disagree.'], [0, 'No recommendation.']) },
       { name: 'Writing and presentation', levels: L([4, '2 pages a manager reads in 5 minutes; charts carry the numbers; 8 minutes, on time.'], [2, 'Over length, or charts that decorate instead of inform.'], [0, 'Hard to follow.']) },
     ],
-    note: "The peer evaluation at week 14 moves each member's share of the 20 points up or down by up to 2.",
+    note: "The 20 points scale to the 30% the project carries. The peer evaluation at week 14 moves each member's share of the 20 points up or down by up to 2.",
   },
 ];
 
@@ -136,7 +136,7 @@ export const a400: Assignment[] = [
     meta: 'Weeks 7 and 14 · in private · part of the 20% for stand-ups and peer evaluation',
     prompt: [
       'Each member rates every teammate on 4 things, 1 to 5, with a comment required for any 1 or 5. I see the numbers; teammates see only their own average. At week 7 it is a warning and a conversation. At week 14 it moves marks.',
-      "How it moves marks: a member's score is the average of every rating they got, on the 1-to-5 scale. The adjustment is 5 points for every point they sit above or below the team's average score, capped at 10 points out of 100 either way, applied to their mark on the team's deliverables (the charter, the check-in and the final). A team at 80 with a member 1 point below its average: that member gets 75. A team that rates everyone the same moves nobody. Filling it in on time, both times, is 3 of the 20.",
+      "How it moves marks: a member's score is the average of every rating they got, on the 1-to-5 scale, and the team's average is the average of its members' scores. The adjustment is 5 points for every point a member sits above or below that average, fractions included, capped at 10 points out of 100 either way and at 100 overall, applied to their mark on the team's deliverables (the charter, the check-in and the final). A team at 80 with a member 1 point below its average: that member gets 75. A team that rates everyone the same moves nobody. Filling it in on time, both times, is 3 of the 20.",
     ],
     rubric: [
       { name: 'Shows up', levels: L([5, 'At every stand-up and meeting; replies within a day.'], [3, 'Misses some; replies eventually.'], [1, 'The team works around them.']) },
