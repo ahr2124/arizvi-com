@@ -2,7 +2,7 @@
 // src/pages/tulane/index.astro  →  arizvi.com/tulane
 // For the Tulane Freeman search (Professor of Practice, Management Science - Information Systems): how I teach,
 // the 3 courses I'd start with (the core course and the 2 fall courses the master's requires, 1 of them the information
-// systems course), the ones I'd share with the colleagues who teach them, a first year, and one class to try.
+// systems course), the ones I'd share with the colleagues who teach them, and one class to try.
 // Not linked from the nav; sends noindex. Codes, titles, prerequisites and the master's plan are from Tulane's 2026-27 catalogue.
 import Base from '../../layouts/Base.astro';
 import Section from '../../components/Section.astro';
@@ -53,7 +53,7 @@ const shared = [
     code: 'MGSC 4690',
     where: 'Business Analytics and AI certificate',
     title: 'AI for Business',
-    line: 'Every model is a decision tool, so we judge models by what their mistakes cost - and decide who stays in the loop. I\'d take MGSC 7350, its graduate twin, too.',
+    line: 'Students understand the technology, then build models that can thoughtfully answer business problems. I\'d take MGSC 7350, its graduate twin, too.',
     sample: { href: '#try', text: 'Try a class I\'d bring to it below' },
   },
   {
@@ -64,11 +64,6 @@ const shared = [
   },
 ];
 
-const plan = [
-  { term: 'Fall 2027', load: 'MGSC 3010 · MGSC 7100 · MGSC 7340' },
-  { term: 'Spring 2028', load: 'MGSC 3010 (2 sections) · a third course where the area needs one - a Python course (MGSC 4790 or MGSC 7520) if I get to pick' },
-  { term: 'Year 2', load: 'The same core, plus a section of MGSC 4690 or MGSC 7870 if the area wants one' },
-];
 ---
 <Base title="Tulane" description="The courses Ali Rizvi would teach in the Management Science area at Tulane's Freeman School of Business, and how he teaches them." noindex>
   <header class="page-head">
@@ -129,20 +124,6 @@ const plan = [
     </ul>
     <div class="grid"><div class="span-8">
       <p class="muted" style="margin-top: 1.5rem;">{keep('I can also take MGSC 4320, MGSC 4790 and MGSC 7520 (the last 2 are the Python courses), MGSC 4590 and MGSC 3005.')}</p>
-    </div></div>
-  </Section>
-
-  <Section label="A first year" id="plan">
-    <ul class="rows bk-wide">
-      {plan.map((p) => (
-        <li class="grid">
-          <div class="label">{p.term}</div>
-          <div class="body"><p>{p.load}</p></div>
-        </li>
-      ))}
-    </ul>
-    <div class="grid"><div class="span-8">
-      <p class="muted" style="margin-top: 1.5rem;">A starting point. The load and the sections are the area's call, and I'll fit the rest to what Freeman needs.</p>
     </div></div>
   </Section>
 

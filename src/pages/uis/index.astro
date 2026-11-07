@@ -2,7 +2,7 @@
 // src/pages/uis/index.astro  →  arizvi.com/uis
 // For the UIS search (Clinical Assistant or Associate Professor, Engineering Technology; founding faculty for the BAS-ET):
 // how I teach, what I'd take of the posting's 5 areas, a course I'd build first, how I'd run work-based learning,
-// a first year, and one class to try. Not linked from the nav; sends noindex.
+// and one class to try. Not linked from the nav; sends noindex.
 // UIS facts are from the posting (Req 1288), the Board of Trustees item of 19 March 2026 (120 credit hours; in person, online
 // and blended; traditional, transfer and working students) and UIS's 2027-28 calendar (15 weeks of classes, then finals).
 // The course is my proposal and is labelled as one; the numbers in its labs are invented so they can be checked.
@@ -59,11 +59,6 @@ const weeks = [
   { w: 'Weeks 13-15', title: 'The employer project', line: 'The charter and the plan, presented to the employer\'s mentor, and a short reflection.' },
 ];
 
-const plan = [
-  { term: 'Before the first students', load: 'The employer network, with the director: charters drafted with the first employers, and the transfer map written down with community college faculty.' },
-  { term: 'Fall 2027 · the first cohort', load: 'The course above with its labs, and whatever else the cohort needs covered. Every assignment is tagged to the ETAC student outcome it gives evidence for.' },
-  { term: 'All year', load: 'A 30-minute stand-up each week with the other founding faculty. My share of recruiting (campus visit days, community college advising events) and of the industry advisory board. And the ABET evidence folder, which I\'d offer to keep for the director.' },
-];
 ---
 <Base title="UIS" description="What Ali Rizvi would teach as founding faculty for the Bachelor of Applied Science in Engineering Technology at the University of Illinois Springfield, and how he teaches." noindex>
   <header class="page-head">
@@ -136,20 +131,6 @@ const plan = [
       <p style="margin-top: 1em;">The charter is a learning plan. The agreement between UIS and the employer (who signs it, insurance, confidentiality, who owns the work, safety on site) is the university's, and it comes first.</p>
       <p>After that it's a 15-minute stand-up every week, a mid-term check-in with the mentor, and a final presentation with the employer in the room. If an employer goes quiet (it happens, usually around week 9), the charter already names the fallback, and the student switches at that week's stand-up. The grade comes from the charter, the deliverable, the mentor's feedback and a short reflection.</p>
       <p>The posting also asks for community college pathways and the techX dual-credit program at the Capital Area Career Center. For transfer students I'd write the map down course by course with the community college faculty, so a student knows in year 1 of an associate degree what carries over. For techX I'd bring the same employer problems, sized for a dual-credit class.</p>
-    </div></div>
-  </Section>
-
-  <Section label="A first year" id="plan">
-    <ul class="rows bk-wide">
-      {plan.map((p) => (
-        <li class="grid">
-          <div class="label">{p.term}</div>
-          <div class="body"><p>{p.load}</p></div>
-        </li>
-      ))}
-    </ul>
-    <div class="grid"><div class="span-8">
-      <p class="muted" style="margin-top: 1.5rem;">A starting point. Assignments follow the cohort's needs, and I'll fit the rest to what the program needs.</p>
     </div></div>
   </Section>
 
