@@ -16,10 +16,10 @@ const catalogue = 'https://catalog.tulane.edu/courses/mgsc/';
 const keep = (s: string) => s.replace(/(\d|[A-Z]{4}) (?=\w)/g, '$1\u00a0');
 
 const principles = [
-  ['Build the course backwards from the outcome.', 'Each course ends in work a manager could use, and every week builds toward it.'],
-  ['Personalize within a defined structure.', 'Everyone learns the same methods. Each student picks the decision or dataset they apply them to.'],
-  ['Learn on real problems.', 'Real sponsors and real constraints wherever I can get them.'],
-  ['Test the teaching itself.', 'Mid-term feedback in every course, with changes made before the term ends.'],
+  ['Build the course backwards from the outcome.', 'I start from where the course fits in the program, where it falls in the students\' path through their degree, and where they\'ll use it afterwards. From that I set what students should be able to do by the end of term, and build backwards.'],
+  ['Personalize within a defined structure.', 'Everyone learns the same methods. Within that, I adjust to the cohort in front of me. When a graduate HCI cohort\'s career plans leaned toward data, I added Python and data visualization modules.'],
+  ['Learn on real problems.', 'Students understand a problem best when they work in the setting that produces it, so my projects send them there. In the capstone, every team had a working prototype by midterm and tested it with real users before the second half of term.'],
+  ['Test the teaching itself.', 'I compare course designs across cohorts, share the results with colleagues teaching the same students, and carry the stronger design into the next term.'],
 ];
 
 const courses = [
@@ -27,23 +27,23 @@ const courses = [
     code: 'MGSC 3010',
     where: 'BSM core',
     title: 'Introduction to Business Analytics',
-    line: 'Excel models -> optimisation -> simulation, and every model ends in a short memo a manager could act on.',
+    line: 'Excel models, optimisation and simulation. Every model starts from a decision a manager has to make.',
     who: 'BSM students, after INFO 1010 and MGSC 3005 (or MATH 1230).',
   },
   {
     code: 'MGSC 7100',
     where: 'Required in the master\'s · fall',
     title: 'SQL Database Fundamentals and Business Intelligence',
-    line: 'Tables -> keys -> queries -> a database application each team builds and demos. It\'s the information systems course I\'d teach from practice. At Morgan Stanley I prototyped and deployed data models in SQL and, with partners in IT, implemented a Hadoop-based data lake. On Alexa at Amazon I owned services across AWS, APIs and MLOps.',
+    line: 'Students would map a real process and the data behind it, find where technology and AI fit, redesign it with human oversight built in, and test it with the people who will use it. They\'d govern data as I have had to.',
     who: 'Master of Business Analytics and AI students, and seniors on the 4+1.',
   },
   {
     code: 'MGSC 7340',
     where: 'Required in the master\'s · fall',
     title: 'Web Analytics',
-    line: 'Search and acquisition -> funnels -> instrumentation -> A/B tests -> a ship-or-kill call, with the analysis in Python, taught from a year of live experiments I ran inside an e-commerce retailer.',
+    line: 'Funnels, instrumentation and A/B tests, in Python. A/B testing is the running example because it\'s how I shipped features to over 100 million people at Amazon.',
     who: 'Master of Business Analytics and AI students, and seniors on the 4+1.',
-    sample: { href: '/work/experimentation/', text: 'The experiments it\'s taught from\u00a0→' },
+    sample: { href: '/work/experimentation/', text: 'The A/B testing chapter\u00a0→' },
   },
 ];
 
@@ -53,14 +53,14 @@ const shared = [
     code: 'MGSC 4690',
     where: 'Business Analytics and AI certificate',
     title: 'AI for Business',
-    line: 'Students understand the technology, then build models that can thoughtfully answer business problems. I\'d take MGSC 7350, its graduate twin, too.',
+    line: 'Students understand the technology, then build models that can thoughtfully answer business problems. I\'d teach it from systems I\'ve owned and deployed: Alexa\'s orchestration layer at Amazon, and the AI models my team deployed to compliance users at Morgan Stanley in a usable, auditable way. I\'d take MGSC 7350, the graduate version, too.',
     sample: { href: '#try', text: 'Try a class I\'d bring to it below' },
   },
   {
     code: 'MGSC 7870',
     where: 'Required in the master\'s · spring',
     title: 'Business Analytics Projects',
-    line: 'Scope -> data -> model -> recommendation -> delivery, with a charter the sponsor signs by week 3 and the sponsor in the room at the end. I can bring sponsors from the 40+ portfolio companies I work across at AMJ Capital, and I wouldn\'t grade a team working for a company the fund or I hold a stake in.',
+    line: 'I ran 3 sections of GBDA 402, the client-facing capstone, and would run this the same way: a real client, a working analysis by midterm, and a decision it can act on. I\'d bring the fund\'s portfolio companies into the classroom, so students tackle their problems while they\'re still live.',
   },
 ];
 
@@ -80,12 +80,12 @@ const shared = [
     <ol class="principles">
       {principles.map(([head, line]) => <li><strong>{head}</strong> {line}</li>)}
     </ol>
-    <p class="muted principles-note">14 course sections at Waterloo between 2021 and 2024, ~700 students, up to 4 sections and 180 students in a term. I taught data analytics and statistics inside MSCI 630, GBDA 210 and MSCI 543. MSCI 543 ran entirely in Python, and MSCI 630 had modules in Python and Tableau. GBDA 402, the capstone seminar, ran on live client projects with external partners. The stories in class come from the work: Alexa at Amazon, a year of A/B tests inside a healthcare e-commerce retailer, compliance models at Morgan Stanley, and the portfolio companies at AMJ Capital. More on the <a href="/teaching/">Teaching</a> page.</p>
+    <p class="muted principles-note">14 course sections at Waterloo between 2021 and 2024, 6 courses, over 700 students, up to 4 sections and 180 students in a term, in person, hybrid and online. MSCI 630, MSCI 543 and GBDA 210 taught data analytics and statistics. In MSCI 543, students make the business case for a design decision and build the analysis behind it in Python, and I added Python and Tableau modules to MSCI 630. GBDA 402 was the capstone seminar, with live client projects and external partners. My years at PwC, EY, Morgan Stanley and Amazon give students worked examples. More on the <a href="/teaching/">Teaching</a> page.</p>
   </Section>
 
   <Section label="Where I'd start" id="courses">
     <div class="grid"><div class="span-8">
-      <p>{keep('My letter names MGSC 4320, MGSC 4690 and MGSC 7520, the courses closest to my own work. If the area needs its required courses covered first, this is where I\'d start.')}</p>
+      <p>{keep('In my letter I said I\'d teach MGSC 4320, MGSC 4690 and MGSC 7520. If the area needs its required courses covered first, I\'d start with these 3.')}</p>
     </div></div>
     <ul class="rows bk-wide">
       {courses.map((c) => (
@@ -101,14 +101,14 @@ const shared = [
       ))}
     </ul>
     <div class="grid"><div class="span-8">
-      <p style="margin-top: 1.5rem;">Tools I work in: Python first, then SQL, Tableau and Excel with Solver.</p>
-      <p class="muted">MGSC 7100 and MGSC 7340 are both required in the master's fall term. Whatever outline each of the 3 runs on comes first. Codes, titles and prerequisites are from the <a href={catalogue} target="_blank" rel="noopener">2026-27 catalogue</a>.</p>
+      <p style="margin-top: 1.5rem;">Tools: Python first, then SQL, Tableau and Excel with Solver.</p>
+      <p class="muted">MGSC 7100 and MGSC 7340 are both required in the master's fall term. Where a course already has an outline, that comes first. Codes, titles and prerequisites are from the <a href={catalogue} target="_blank" rel="noopener">2026-27 catalogue</a>.</p>
     </div></div>
   </Section>
 
   <Section label="Alongside colleagues" id="shared">
     <div class="grid"><div class="span-8">
-      <p>These 2 are taught by people who'd be my colleagues. I'd take a section of either on the outline it already runs on.</p>
+      <p>These 2 are taught by people who'd be my colleagues. I'd take a section of either, on the outline it already runs on.</p>
     </div></div>
     <ul class="rows bk-wide">
       {shared.map((c) => (
@@ -123,7 +123,7 @@ const shared = [
       ))}
     </ul>
     <div class="grid"><div class="span-8">
-      <p class="muted" style="margin-top: 1.5rem;">{keep('I can also take MGSC 4320, MGSC 4790 and MGSC 7520 (the last 2 are the Python courses), MGSC 4590 and MGSC 3005.')}</p>
+      <p class="muted" style="margin-top: 1.5rem;">{keep('I can also take MGSC 4320, MGSC 4590 and MGSC 3005, and the 2 Python courses, MGSC 4790 and MGSC 7520.')}</p>
     </div></div>
   </Section>
 
@@ -131,7 +131,7 @@ const shared = [
     <ClassPlan plan={classes.threshold} course="mgsc-4690" pack={false}>
       <p>Your subscription business has 1,000 customers. Next month 100 of them will cancel - you just don't know which 100. A model gives every customer a risk score.</p>
       <p>You can send a retention offer. It costs $20, and each customer it keeps is worth $200. To keep the arithmetic simple, say it keeps everyone it reaches who was about to cancel. How many of your riskiest customers should get it?</p>
-      <p>This is a class from the machine learning term I've planned; at Freeman it would fit a session of MGSC 4690 or MGSC 4320. The widget is 20 minutes of it. The grid is next month, 1 square a customer, in the order the model ranked them, riskiest first. The slider is the business decision: how far down the list the offers go. Every position on it has an accuracy and a dollar value, and the class is about which of the 2 a manager should care about. Then I change what an offer costs, and the right answer moves while the accuracy stays put.</p>
+      <p>This is a class from the machine learning term I've planned; at Freeman it would fit a session of MGSC 4690 or MGSC 4320. The widget is 20 minutes of it. The grid is next month, 1 square a customer, in the order the model ranked them, riskiest first. The slider is the business decision: how far down the list the offers go. Every position on it has an accuracy and a dollar value, and the class is about which of the 2 a manager should care about. Then I change what an offer costs and the best cutoff moves. Accuracy stays the same.</p>
     </ClassPlan>
     <ThresholdDemo />
   </Section>
