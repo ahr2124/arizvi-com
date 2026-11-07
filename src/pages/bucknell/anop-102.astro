@@ -49,8 +49,8 @@ const weeks: { w: number; topic: string; build: string; try?: string }[] = [
     ['Format', '1 credit · 14 weeks · 2 classes of 75 minutes a week · a lab hour a week'],
     ['Tools', 'Excel. On day one you need sums, averages and copying a formula down; everything else is taught. Laptops open while we build, closed for the debrief.'],
   ]}>
-    <p>ANOP 102 is the first analytics course every Freeman student takes, and it runs in several sections a term. Where the department has a shared outline and exams, those come first and set the pace. Below is a term as I'd plan it if asked, and 4 classes to try and 1 to read that drop into whichever weeks cover the same topic. Every week adds a piece of the decision memo students hand in at the end.</p>
-    <p class="practice"><span class="label">From practice</span>Week 9 comes from a year of A/B tests I ran inside a healthcare e-commerce retailer, about 10,000 transactions a year, as its product manager and part-owner, and <a href="/work/experimentation/">wrote up as a textbook chapter</a>: with that little traffic, how many customers before a real difference shows through the noise? Week 10 is the discipline a clinical trial adds: a control group, and the success measure fixed in advance so you can't fool yourself afterwards.</p>
+    <p>I'd teach ANOP 102 with the examples I worked: the A/B tests that decided which Alexa features shipped, and the testing strategy and data mining roadmap that closed a $600 million regulatory matter for a global bank. It runs in several sections a term, and where the department has a shared outline and exams, those come first. Below is a term as I'd plan it, with 4 classes to try and 1 to read. Every week adds a piece of the decision memo students hand in at the end.</p>
+    <p class="practice"><span class="label">From practice</span>Weeks 9 and 10 are A/B testing: a control group, and the success measure fixed before the data comes in. At Amazon, A/B tests decided which Alexa features shipped, and I've written the method up as <a href="/work/experimentation/">a Springer chapter on A/B testing</a>.</p>
   </CourseHeader>
 
   <Section label="A term, as I'd plan it" title="Week by week" id="term">
@@ -81,7 +81,7 @@ const weeks: { w: number; topic: string; build: string; try?: string }[] = [
   <Section label="Try a class · Week 3" title="Clean it before you count it" id="pivot">
     <ClassPlan plan={classes.pivot} course={c.slug}>
       <p>A coffee cart runs 2 locations on campus. Which one sold more last week? The till exported 12 rows and a pivot table adds them up by location. Both are below, as they came out.</p>
-      <p>This is the first 20 minutes of class 1, as the room sees it on the projector. I ask for the answer and someone reads it off the pivot: Union, $81.50. Then I ask how many locations the cart has, and the room goes quiet. We find the 3 problems together, 1 button each, and the pivot changes 3 times, the last one flipping the winner. By the end the question has changed from "which cart sold more" to "what did I have to fix to find out", and that second question is the sentence the week's brief is built around.</p>
+      <p>This is the first 20 minutes of class 1, as the room sees it on the projector. I ask for the answer and someone reads it off the pivot: Union, $81.50. Then I ask how many locations the cart has, and the room goes quiet. We find the 3 problems together, 1 button each, and the pivot changes 3 times. The last fix flips the winner. The week's brief asks what they had to fix to find out.</p>
     </ClassPlan>
     <PivotDemo />
   </Section>
@@ -89,7 +89,7 @@ const weeks: { w: number; topic: string; build: string; try?: string }[] = [
   <Section label="Try a class · Week 6" title="How wrong can the forecast be?" id="breakeven">
     <ClassPlan plan={classes.breakeven} course={c.slug}>
       <p>A taco truck for the summer: $600 a week for the truck, permit and insurance, $3 of ingredients a taco, $8 a taco. Last summer's truck sold about 140 a week. One cell says the plan makes $100 a week. A manager's next question is how sure that is.</p>
-      <p>A two-way data table answers it: profit for every price and every volume at once, 36 cells from 1 formula. In class I put the table up with the sliders at last summer's numbers and ask where the plan is. Then I move 1 assumption at a time and the room watches the colours shift: green is profit, orange is a loss, and the breakeven is the border between them. The point of the 20 minutes is that a forecast is a region, and the memo should say how big it is.</p>
+      <p>A two-way data table answers it: profit for every price and every volume at once, 36 cells from 1 formula. In class I put the table up with the sliders at last summer's numbers and ask where the plan is. Then I move 1 assumption at a time and the room watches the colours shift: green is profit, orange is a loss, and the breakeven is the border between them. The memo has to say how far the numbers can move before the plan loses money.</p>
     </ClassPlan>
     <BreakevenDemo />
   </Section>
@@ -98,8 +98,8 @@ const weeks: { w: number; topic: string; build: string; try?: string }[] = [
     <ClassPlan plan={classes.llm} course={c.slug}>
       <p>Students already ask chatbots for answers. This class shows them what comes back, and how to use it in a spreadsheet decision.</p>
       <p>An LLM (a large language model, the engine behind a chatbot) doesn't look an answer up. It scores every word it could say next, turns the scores into probabilities, and picks one at random, weighted by those probabilities. Temperature sets how much it gambles: at 0 it always picks the favourite.</p>
-      <p>Here a café asks one for tomorrow's croissant demand, then has to decide how many to bake. In the spreadsheet, each bake's expected profit is one formula (a SUMPRODUCT). The chatbot is the hook; expected value is the lesson.</p>
-      <p>The widget is the class's 3 steps in order: what the model believes, what it says when you ask, and what to do with the difference. On the projector I ask it 20 times, then again, and the count keeps moving, which is the moment the room stops trusting the single answer and starts asking for the odds.</p>
+      <p>Here a café asks one for tomorrow's croissant demand, then has to decide how many to bake. In the spreadsheet, each bake's expected profit is one formula (a SUMPRODUCT).</p>
+      <p>The widget is the class's 3 steps in order: what the model believes, what it says when you ask, and what to do with the difference. On the projector I ask it 20 times, then again, and the count changes. Then we use the odds instead of the single answer.</p>
     </ClassPlan>
     <LLMDemo />
   </Section>
@@ -107,7 +107,7 @@ const weeks: { w: number; topic: string; build: string; try?: string }[] = [
   <Section label="Try a class · Week 11" title="One weekend flips the slope" id="regression">
     <ClassPlan plan={classes.regression} course={c.slug}>
       <p>A bike shop spent between $0 and $280 a week on Instagram ads for 12 weeks and logged its sales. Does the spend work? The shop keeps 40 cents of every sales dollar, so an ad pays for itself when $1 of ads brings in more than $2.50 of sales.</p>
-      <p>On the projector the line goes up with all 12 weeks in, and the room reads the slope: $1.70 of sales per dollar of ads, so the ads look like they lose money. Then someone asks about the orange point. One click takes it out and the same spreadsheet says the opposite. The 20 minutes are about who gets to make that click, and what they have to write down when they do.</p>
+      <p>On the projector the line goes up with all 12 weeks in, and the room reads the slope: $1.70 of sales per dollar of ads, so the ads look like they lose money. Then someone asks about the orange point. One click takes it out and the same spreadsheet says the opposite. Whoever takes a point out has to write down why.</p>
       <p>One more catch the class names: the shop chose its own ad spend, and may have spent more in weeks it expected to be busy. That's why weeks 9 and 10 come first: a test where you choose who gets the ad.</p>
     </ClassPlan>
     <RegressionDemo />
@@ -116,7 +116,7 @@ const weeks: { w: number; topic: string; build: string; try?: string }[] = [
   <Section label="Sample class · Week 12" title="Which overtime is worth paying for?" id="overtime">
     <ClassPlan plan={classes.overtime} course={c.slug}>
       <p>A small shop builds 2 bikes. A Commuter earns $120 over its materials and takes 3 hours of assembly and 1 of painting. A Trail earns $180 and takes 4 and 3. The crew is paid for 240 assembly hours and 120 painting hours a week whatever gets built, and only 30 Trails sell.</p>
-      <p>This one is written up as a class to read, because the first 5 minutes are a guess and a widget would give it away. The guess is nearly always the Trail. Then the pairs write the model on paper, build it, and Solver says 48 Commuters and 24 Trails, which nobody guessed. The figure below is what I draw on the board while the room reads the answer: every plan the crew can build, and the corner where 2 constraints run out at once. The real decision comes after, and it's the one the owner cares about: which overtime to buy.</p>
+      <p>This one is written up as a class to read, because the first 5 minutes are a guess and a widget would give it away. The guess is nearly always the Trail. Then the pairs write the model on paper, build it, and Solver says 48 Commuters and 24 Trails, which nobody guessed. The figure below is what I draw on the board while the room reads the answer: every plan the crew can build, and the corner where 2 constraints run out at once. Then the owner's question: which overtime is worth paying for.</p>
     </ClassPlan>
     <div class="row-fig"><LPFigure /></div>
   </Section>

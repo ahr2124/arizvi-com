@@ -8,10 +8,10 @@ import CurriculumMap from '../../components/CurriculumMap.astro';
 import { arrows, courses, students } from '../../data/bucknell';
 
 const principles = [
-  ['Build the course backwards from the outcome.', 'Each course ends in work a manager could use, and every week builds toward it.'],
-  ['Personalize within a defined structure.', 'Everyone learns the same methods. Each student picks the decision or dataset they apply them to.'],
-  ['Learn on real problems.', 'Real clients and real constraints wherever I can get them.'],
-  ['Test the teaching itself.', 'Mid-term feedback in every course, with changes made before the term ends.'],
+  ['Build the course backwards from the outcome.', 'I start each course from where it fits in the program, where it falls in the students\' path through their degree, and where they\'ll use it afterwards. Then I set what students should be able to do by the end of term.'],
+  ['Personalize within a defined structure.', 'Everyone learns the same methods. Within that, I adjust to the cohort in front of me. In the sophomore course, each student chose a second skill to learn alongside their core project.'],
+  ['Learn on real problems.', 'Students understand a problem best when they work in the setting that produces it, so my projects send them there, to users well beyond their class lists, from pharmacists to fruit wholesalers.'],
+  ['Test the teaching itself.', 'I compare course designs across cohorts, share the results with colleagues teaching the same students, and carry the stronger design into the next term.'],
 ];
 ---
 <Base title="Bucknell" description="The courses Ali Rizvi would teach in Bucknell's Analytics & Operations Management department, and how he teaches them." noindex>
@@ -29,18 +29,18 @@ const principles = [
     <ol class="principles">
       {principles.map(([head, line]) => <li><strong>{head}</strong> {line}</li>)}
     </ol>
-    <p class="muted principles-note">14 course sections at Waterloo between 2021 and 2024, ~700 students, up to 4 sections and 180 students in a term. The classes on the course pages are small invented businesses, so the numbers can be checked. Each course also has a full pack, written the way I run a course: the syllabus, every week, every lab or deliverable with what passes, the rubrics, and a sample exam where the course has one. The stories beside them are from the work: Alexa at Amazon, the A/B tests I ran inside an e-commerce retailer, and compliance models at Morgan Stanley. More on the <a href="/teaching/">Teaching</a> page.</p>
+    <p class="muted principles-note">14 course sections of 6 courses at Waterloo between 2021 and 2024, over 700 students, up to 4 sections and 180 students in a term, in person, hybrid and online. 3 colleagues have adopted a course I built. My years at PwC, EY, Morgan Stanley and Amazon give students worked examples. The classes on the course pages use small invented businesses, so the numbers can be checked, and each course has a full pack: the syllabus, every week, the labs or deliverables, the rubrics, and a sample exam where the course has one. More on the <a href="/teaching/">Teaching</a> page.</p>
   </Section>
 
   <Section label="The courses" id="courses">
     <div class="grid"><div class="span-8">
-      <p>The posting names 3 areas it needs covered: spreadsheet modeling and analysis, machine learning, and project-based capstone courses. These are the 4 courses in the 2026-27 catalogue that cover them: ANOP 102 and 302 for spreadsheet modeling, 330 for machine learning, and 400 for the capstone.</p>
+      <p>In my letter I said I'd teach ANOP 102, ANOP 330 and ANOP 400, for the posting's 3 areas: spreadsheet modeling and analysis, machine learning, and project-based capstone courses. ANOP 302, the other spreadsheet modeling course in the 2026-27 catalogue, is here too.</p>
     </div></div>
     <CurriculumMap />
     <ul class="rows bk-wide">
       {courses.map((c) => (
         <li class="grid">
-          <div class="label">{c.code}<br />{c.when}</div>
+          <div class="label">{c.code}<br />{c.where}</div>
           <div class="body">
             <a class="title" href={`/bucknell/${c.slug}/`}>{c.title}&nbsp;→</a>
             <p>{arrows(c.line)}</p>
@@ -50,6 +50,15 @@ const principles = [
         </li>
       ))}
     </ul>
+    <div class="grid"><div class="span-8">
+      <p style="margin-top: 1.5rem;"><strong>New electives.</strong> I'd develop 2, offered first as ANOP 315 special topics. AI for business decisions takes the manager's seat: when to hand a decision to a model, how to check its work, and how to keep each decision auditable. Evaluating AI systems has students bring a system of their own and design a study on it with people in the loop.</p>
+    </div></div>
+  </Section>
+
+  <Section label="Advising" id="advising">
+    <div class="grid"><div class="span-8">
+      <p>I advise the way I teach, one student at a time. I built that practice mentoring more than 30 people at Morgan Stanley and Amazon, carried it into individual meetings with every student in every course I taught, and still mentor students I taught in 2021. Two students from my graduate HCI course are first authors on a paper under preparation for DIS 2027, with me as senior author. At Bucknell, ANOP 310 independent studies and ANOP 390 honors work are where I'd bring undergraduates into applied analytics research.</p>
+    </div></div>
   </Section>
 
   <Section label="Try a class" id="try">
