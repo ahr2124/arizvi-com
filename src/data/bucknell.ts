@@ -35,7 +35,7 @@ export const courses: Course[] = [
     code: 'ANOP 330',
     slug: 'anop-330',
     title: 'Predictive Analytics: Machine Learning Fundamentals for Business',
-    line: 'Every model is a decision tool, so we judge models by what their mistakes cost - and decide who stays in the loop.',
+    line: 'Students understand the technology, then build models that can thoughtfully answer business problems.',
     where: 'Required for the Business Analytics major and minor',
     who: 'Business Analytics majors and minors, usually in sophomore spring or junior year.',
     seats: 'I\'d take 1 section a term',
