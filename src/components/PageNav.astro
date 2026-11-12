@@ -1,0 +1,117 @@
+---
+// In-page nav for the school pages (/bucknell, /tulane, /uis) and the home page: the page's sections, fixed on the
+// right, following the scroll (Ali, 10 Nov 2026: "a small nav pane on the right side that scrolls with the page for
+// in-page content"; 11 Nov 2026: "landing page needs right nav too").
+// Built in the browser from each section's h2, so it always matches the headings on the page.
+// Where the right-hand columns are free it shows as a short list. Where content runs to the right edge, and on
+// small screens, it folds to a rail of dashes in the margin that opens into the list on hover, focus or tap.
+// Hidden over the footer, in print, and on a page with fewer than 3 sections.
+// up: on a page below a school's hub (a Bucknell course or its pack), the way back to the page above. It sits at the
+// top of the list, and shows as an arrow at the top of the rail.
+// rail: on a page whose sections run to the right edge (/uis), the list would only fit in the gaps between them and
+// would flick in and out on the way down. There the nav stays a rail at every width.
+interface Props { up?: [string, string]; rail?: boolean }
+const { up, rail = false } = Astro.props;
+---
+<nav class="page-nav" aria-label="Sections" data-rail={rail ? '' : undefined} hidden>
+  {up && <p class="up"><a href={up[0]}><b aria-hidden="true">←</b><span>{up[1]}</span></a></p>}
+  <ol></ol>
+</nav>
+
+<script>
+  const nav = document.querySelector<HTMLElement>('.page-nav');
+  const list = nav?.querySelector('ol');
+  const main = document.querySelector('main');
+  const footer = document.querySelector<HTMLElement>('.site-footer');
+  const sections = main
+    ? Array.from(main.querySelectorAll<HTMLElement>('section.section')).filter((s) => s.querySelector('.section-head h2'))
+    : [];
+
+  if (nav && list && main && sections.length >= 3) {
+    const slug = (t: string) => t.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+    const links = sections.map((s) => {
+      const title = (s.querySelector('.section-head h2')?.textContent ?? '').trim();
+      if (!s.id) s.id = slug(title);
+      const li = document.createElement('li');
+      const a = document.createElement('a');
+      const span = document.createElement('span');
+      a.href = `#${s.id}`;
+      span.textContent = title;
+      a.append(span);
+      li.append(a);
+      list.append(li);
+      return a;
+    });
+    nav.hidden = false;
+
+    const always = nav.hasAttribute('data-rail');
+    const wide = window.matchMedia('(min-width: 1024px)');
+    const canHover = window.matchMedia('(hover: hover)');
+    let blocks: [number, number][] = []; // where content reaches into the list's column: [top, bottom] on the page
+    let paneH = 0;
+
+    const update = () => {
+      const vh = window.innerHeight;
+      let cur = -1;
+      sections.forEach((s, i) => { if (s.getBoundingClientRect().top <= vh * 0.35) cur = i; });
+      links.forEach((a, i) => (i === cur ? a.setAttribute('aria-current', 'true') : a.removeAttribute('aria-current')));
+      const top = window.scrollY + vh / 2 - paneH / 2 - 12;
+      const bottom = top + paneH + 24;
+      const rail = always || !wide.matches || blocks.some(([a, b]) => a < bottom && b > top);
+      nav.classList.toggle('is-rail', rail);
+      if (!rail) nav.classList.remove('is-open');
+      const f = footer?.getBoundingClientRect();
+      nav.classList.toggle('is-out', !!f && f.top < vh / 2 + paneH / 2 + 12);
+    };
+
+    // Measure the list as a list, then find the text and pictures that reach into its column.
+    const measure = () => {
+      const wasOpen = nav.classList.contains('is-open');
+      nav.classList.remove('is-rail', 'is-open');
+      const r = nav.getBoundingClientRect();
+      paneH = r.height;
+      blocks = [];
+      if (wide.matches && !always) {
+        const left = r.left - 16;
+        const y = window.scrollY;
+        const range = document.createRange();
+        main.querySelectorAll<HTMLElement>('p, li, td, th, h1, h2, h3, dt, dd, label, summary, figcaption, img, svg, canvas, input, button').forEach((el) => {
+          let b: DOMRect;
+          if (/^(IMG|svg|CANVAS|INPUT|BUTTON)$/i.test(el.tagName)) b = el.getBoundingClientRect();
+          else { range.selectNodeContents(el); b = range.getBoundingClientRect(); }
+          if (b.width > 0 && b.height > 0 && b.right > left) blocks.push([b.top + y, b.bottom + y]);
+        });
+      }
+      update();
+      if (wasOpen && nav.classList.contains('is-rail')) nav.classList.add('is-open');
+    };
+
+    const openRail = () => { if (nav.classList.contains('is-rail')) nav.classList.add('is-open'); };
+    const closeRail = () => nav.classList.remove('is-open');
+    let touchOpen = false; // a tap on the closed rail opens it; the next tap picks a section
+    nav.addEventListener('pointerdown', (e) => {
+      touchOpen = e.pointerType !== 'mouse' && nav.classList.contains('is-rail') && !nav.classList.contains('is-open');
+    });
+    nav.addEventListener('click', (e) => {
+      if (touchOpen) { e.preventDefault(); touchOpen = false; openRail(); return; }
+      if ((e.target as HTMLElement).closest('a')) closeRail();
+    });
+    nav.addEventListener('mouseenter', () => { if (canHover.matches) openRail(); });
+    nav.addEventListener('mouseleave', () => { if (canHover.matches) closeRail(); });
+    nav.addEventListener('focusin', openRail);
+    nav.addEventListener('focusout', (e) => { if (!nav.contains(e.relatedTarget as Node | null)) closeRail(); });
+    document.addEventListener('click', (e) => { if (!nav.contains(e.target as Node)) closeRail(); });
+
+    let frame = 0;
+    window.addEventListener('scroll', () => {
+      if (!frame) frame = requestAnimationFrame(() => { frame = 0; update(); });
+    }, { passive: true });
+    let timer = 0;
+    const remeasure = () => { window.clearTimeout(timer); timer = window.setTimeout(measure, 120); };
+    window.addEventListener('resize', remeasure);
+    window.addEventListener('load', measure);
+    document.fonts?.ready.then(measure);
+    new ResizeObserver(remeasure).observe(main);
+    measure();
+  }
+</script>

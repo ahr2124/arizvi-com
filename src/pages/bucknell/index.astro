@@ -1,0 +1,179 @@
+---
+// src/pages/bucknell/index.astro  →  arizvi.com/bucknell
+// Hub for the Bucknell business analytics search. Each section has the layout that suits what it holds, as on /uis
+// (Ali, 10 Nov 2026: "Check out the new V of the UIS site, with accent color used across the board, nicer layouts, and
+// enhanced readability. Lets try the same for these two? Lets vary layouts and make this readable and somewhat fun"):
+// the 4 steps across the page under number tags, the 4 courses as cards, the catalogue's requirement groups side by
+// side, the learning goals as a map against the 4 courses, and the classes to try as tiles.
+// Bucknell blue marks where I come in: the step tags, the course codes, the courses I could teach among the catalogue's
+// groups, the marks on the goals map and the weeks on the class tiles. Bucknell orange is the header line.
+// Each course has its own page. Not linked from the nav; sends noindex.
+// Codes, titles, offering lines, requirement groups and learning goals are from Bucknell's 2026-27 catalogue.
+import Base from '../../layouts/Base.astro';
+import Section from '../../components/Section.astro';
+import { arrows, courses, students, bucknellColours } from '../../data/bucknell';
+
+const byNumber = [...courses].sort((a, b) => a.code.localeCompare(b.code));
+const cols = byNumber.map((c) => c.code);
+
+const steps = [
+  ['Build the course backward from the outcome.', 'The outcome is what students can do by the end of the term. In ANOP 102, that is a model a manager could audit and a 2-page memo. So I start there, and the memo is built in pieces through the term.'],
+  ['Personalize within a defined structure.', 'Everyone gets the same foundations, on the department\'s outline. After that, I meet students where they are, and each student applies the methods to a decision they choose.'],
+  ['Learn on real problems.', 'Projects run on real data, and in ANOP 400 on a real client\'s problem. Most of the sample classes on this page use small, invented businesses, so the numbers can be checked by hand.'],
+  ['Test the teaching itself.', 'Every course gets midterm feedback, and I would make changes before the term ends. At the end of each term, we would sit down together and compare sections.'],
+];
+
+// The catalogue's groups for the major and the minor, side by side. `mine` marks a course I could teach.
+const groups: { g: string; note?: string; rows: { c: string; t: string; mine?: boolean }[] }[] = [
+  { g: 'Core Requirements', rows: [
+    { c: 'MATH 201', t: 'Calculus I, or MATH 192' },
+    { c: 'STAT 216', t: 'Statistics I' },
+    { c: 'ANOP 203', t: 'Introduction to Programming for Business Analytics, or CSCI 203' },
+  ] },
+  { g: 'Major Requirements', note: 'ANOP 400 is the Culminating Experience.', rows: [
+    { c: 'ANOP 270', t: 'Data Visualization for Business Analytics, or HUMN 270' },
+    { c: 'ANOP 330', t: 'Predictive Analytics: Machine Learning Fundamentals for Business', mine: true },
+    { c: 'ANOP 350', t: 'Predictive Analytics: Forecasting & Simulation' },
+    { c: 'ANOP 370', t: 'Prescriptive Analytics: Decision Modeling & Optimization, or MATH 358' },
+    { c: 'ANOP 400', t: 'Business Analytics Practicum', mine: true },
+  ] },
+  { g: 'Minor: required', rows: [
+    { c: 'ANOP 102', t: 'Spreadsheet Modeling & Data Analysis', mine: true },
+    { c: 'ANOP 270', t: 'Data Visualization for Business Analytics' },
+    { c: 'ANOP 330', t: 'Predictive Analytics: Machine Learning Fundamentals for Business', mine: true },
+  ] },
+  { g: 'Minor: 2 from the list', rows: [
+    { c: 'ANOP 203', t: 'Introduction to Programming for Business Analytics' },
+    { c: 'ANOP 242', t: 'Database Management and Applied Data Analysis' },
+    { c: 'ANOP 302', t: 'Financial Decision Modeling using Spreadsheets', mine: true },
+    { c: 'ANOP 311', t: 'Supply Chain Analytics' },
+    { c: 'ANOP 350', t: 'Predictive Analytics: Forecasting & Simulation' },
+    { c: 'ANOP 370', t: 'Prescriptive Analytics: Decision Modeling & Optimization' },
+  ] },
+];
+
+// Freeman's 3 learning goals and the 5 the major adds, by their own names or first words, with where each is taught
+// and which of the 4 courses teach it (for the map).
+const goalMap = [
+  { group: 'Freeman College', rows: [
+    { head: 'Analysis', where: 'ANOP 102: a model a manager can audit, and a 2-page memo.', in: ['ANOP 102'] },
+    { head: 'Integrity', where: 'ANOP 102, week 11: the memo says which data it left out, and why.', in: ['ANOP 102'] },
+    { head: 'Morality', where: 'ANOP 400: the data agreement, and customer IDs removed before files reach students.', in: ['ANOP 400'] },
+  ] },
+  { group: 'Business Analytics majors will', rows: [
+    { head: 'Understand and critically apply the methods', where: 'ANOP 330, weeks 4 and 8: testing on unseen data, and pricing a cutoff.', in: ['ANOP 330'] },
+    { head: 'Bridge technical teams and stakeholders', where: 'ANOP 400: client teams, a signed charter, and a final presentation to the client.', in: ['ANOP 400'] },
+    { head: 'Evaluate and quantify uncertainty and risk', where: 'ANOP 102, week 6: breakeven ranges. ANOP 302, week 12: simulation.', in: ['ANOP 102', 'ANOP 302'] },
+    { head: 'Commit to ethical decision-making', where: 'ANOP 102, week 8, and ANOP 330: who signs off on a model\'s decision.', in: ['ANOP 102', 'ANOP 330'] },
+    { head: 'Personal continuous improvement', where: 'Pass-or-redo labs, and graded reflection in ANOP 400.', in: ['ANOP 102', 'ANOP 302', 'ANOP 330', 'ANOP 400'] },
+  ] },
+];
+
+const cards = [
+  { code: 'ANOP 102', week: 'Week 3', href: '/bucknell/anop-102/#pivot', title: 'Cleaning a sales export before the pivot table', line: 'Three errors in a coffee cart\'s sales change which location sold more.' },
+  { code: 'ANOP 102', week: 'Week 6', href: '/bucknell/anop-102/#breakeven', title: 'How wrong can the forecast be?', line: 'Students map a taco truck\'s profit at every price and volume.' },
+  { code: 'ANOP 102', week: 'Week 8', href: '/bucknell/anop-102/#llm', title: 'Using a chatbot\'s probabilities in a decision', line: 'Students decide how many croissants to bake from an LLM\'s forecast.' },
+  { code: 'ANOP 102', week: 'Week 11', href: '/bucknell/anop-102/#regression', title: 'Fitting a line to 12 weeks of ad spend', line: 'One race weekend decides whether a bike shop\'s ads pay.' },
+  { code: 'ANOP 330', week: 'Week 4', href: '/bucknell/anop-330/#overfit', title: 'Testing a model on days it has not seen', line: 'Students fit ice-cream sales on 16 days and test the model on the 8 held back.' },
+  { code: 'ANOP 330', week: 'Week 8', href: '/bucknell/anop-330/#threshold', title: 'Choosing the cutoff for a retention offer', line: 'Students find that the most accurate cutoff makes no money.' },
+  { code: 'ANOP 302', week: 'Week 12', href: '/bucknell/anop-302/#try', title: 'Pricing an option by simulation', line: 'Students see how many simulated paths it takes to match Black-Scholes.' },
+];
+---
+<Base title="Bucknell" description="The courses Ali Rizvi could teach in Bucknell's Analytics & Operations Management department, and how he teaches them." noindex accent={bucknellColours} rail>
+  <header class="page-head">
+    <div class="intro-grid">
+      <div class="text">
+        <h1>Teaching analytics at <mark>Bucknell</mark></h1>
+        <p>This page is a sample of how I could teach. I would work with the professors who teach these courses now to understand the students and see what works and what does not. Then I would build on what is already there.</p>
+      </div>
+      <div class="photo"><img src="/media/headshot.jpg" alt="Ali Rizvi" width="400" height="500" /></div>
+    </div>
+  </header>
+
+  <Section title="In my 4 steps" id="approach">
+    <ol class="principles steps across">
+      {steps.map(([head, line]) => <li><strong>{head}</strong> {line}</li>)}
+    </ol>
+  </Section>
+
+  <Section title="Courses I could teach" id="courses">
+    <div class="grid"><div class="span-8">
+      <p>Based on the posting, I have focused on 3 areas: spreadsheet modeling and analysis, machine learning, and project-based capstone courses. These 4 courses cover them. Each has its own page, with a full pack (syllabus, weekly plan and rubrics) for colleagues to review.</p>
+    </div></div>
+    <ul class="exhibits courses two">
+      {byNumber.map((c) => (
+        <li class="course">
+          <p class="code">{c.code}</p>
+          <h3><a href={`/bucknell/${c.slug}/`}>{c.title}</a></h3>
+          <p>{arrows(c.line)}</p>
+          <dl class="course-facts">
+            <dt class="label">In the catalog</dt>
+            <dd>1 Credit. {c.offered}.{c.prereqs && ` Prerequisites: ${c.prereqs}.`}</dd>
+            <dt class="label">Students</dt>
+            <dd>{students(c)}</dd>
+            <dt class="label">When</dt>
+            <dd>{c.when}</dd>
+          </dl>
+          <p class="sample"><a href={`/bucknell/${c.slug}/`}>{c.sample}&nbsp;→</a></p>
+        </li>
+      ))}
+    </ul>
+  </Section>
+
+  <Section title="Where they sit in the major" id="requirements">
+    <div class="grid"><div class="span-8">
+      <p>These are the catalog's groups for the Business Analytics major and minor. The courses I could teach are in bold.</p>
+    </div></div>
+    <ul class="cols c4 sits">
+      {groups.map((g) => (
+        <li>
+          <strong>{g.g}</strong>
+          <ul class="sit">
+            {g.rows.map((r) => <li class:list={{ mine: r.mine }}><span class="nb">{r.c}</span> {r.t}</li>)}
+          </ul>
+          {g.note && <p class="who">{g.note}</p>}
+        </li>
+      ))}
+    </ul>
+  </Section>
+
+  <Section title="Learning Goals" id="goals">
+    <div class="grid"><div class="span-8">
+      <p>These are Freeman's 3 goals and the 5 the major adds, with where my sample courses teach each one.</p>
+    </div></div>
+    <div class="gmap" style={`--n: ${cols.length}`}>
+      <div class="gmap-row gmap-head" aria-hidden="true">
+        <span></span>
+        {cols.map((c) => <span class="label">{c}</span>)}
+      </div>
+      {goalMap.map((grp) => (
+        <>
+          <p class="gmap-group">{grp.group}</p>
+          <ul class="gmap-rows">
+            {grp.rows.map((r) => (
+              <li class="gmap-row">
+                <div class="o-text"><strong>{r.head}</strong><p>{r.where}</p></div>
+                {cols.map((c) => <span class="gmap-cell" aria-hidden="true">{r.in.includes(c) && <span class="gmap-dot"></span>}</span>)}
+              </li>
+            ))}
+          </ul>
+        </>
+      ))}
+    </div>
+  </Section>
+
+  <Section title="Try a class" id="try">
+    <div class="grid"><div class="span-8">
+      <p>Each one runs in your browser, the way it runs in class. Pick one!</p>
+    </div></div>
+    <ul class="cols c4 tiles">
+      {cards.map((k) => (
+        <li>
+          <span class="label tile-tag">{k.code} · {k.week}</span>
+          <a class="tile-title" href={k.href}>{k.title}&nbsp;→</a>
+          <p>{k.line}</p>
+        </li>
+      ))}
+    </ul>
+  </Section>
+</Base>

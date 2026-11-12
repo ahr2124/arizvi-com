@@ -1,0 +1,42 @@
+---
+// A week-by-week timeline: one row per phase or assessment.
+// bars: [first week, last week] ranges · ticks: weeks with a small mark · marks: milestone weeks (open = in progress, filled = due)
+// `extra` adds one slot after the last week (e.g. "Exams"), addressed as week weeks + 1.
+interface Row { label: string; bars?: [number, number][]; thin?: boolean; ticks?: number[]; marks?: { w: number; open?: boolean }[] }
+interface Props { weeks: number; extra?: string; rows: Row[]; caption?: string; title: string }
+const { weeks, extra, rows, caption, title } = Astro.props;
+const slots = weeks + (extra ? 1 : 0);
+const left = (w: number) => `${((w - 1) / slots) * 100}%`;
+const mid = (w: number) => `${((w - 0.5) / slots) * 100}%`;
+const span = (a: number, b: number) => `${((b - a + 1) / slots) * 100}%`;
+const name = (w: number) => (extra && w === weeks + 1 ? extra : `week ${w}`);
+const describe = (r: Row) => {
+  const parts: string[] = [];
+  r.bars?.forEach(([a, b]) => parts.push(a === b ? name(a) : `weeks ${a} to ${b}`));
+  if (r.ticks?.length) parts.push(`every week from ${r.ticks[0]} to ${r.ticks[r.ticks.length - 1]}`);
+  r.marks?.forEach((m) => parts.push(name(m.w)));
+  return parts.join(', ');
+};
+---
+<figure class="gantt" style={`--slots: ${slots}`} aria-label={title}>
+  <div class="g-row g-head" aria-hidden="true">
+    <span class="g-label label">Week</span>
+    <div class="g-track">
+      {Array.from({ length: weeks }, (_, i) => i + 1).map((w) => (
+        <span class={`g-wk label${w === weeks && extra ? ' hide' : (w % 2 === 0 && w !== weeks) || (w === weeks - 1 && weeks % 2 === 0) ? ' narrow-hide' : ''}`} style={`left: ${mid(w)}`}>{w}</span>
+      ))}
+      {extra && <span class="g-wk label g-extra" style={`left: ${mid(weeks + 1)}`}>{extra}</span>}
+    </div>
+  </div>
+  {rows.map((r) => (
+    <div class="g-row">
+      <span class="g-label">{r.label}<span class="sr">: {describe(r)}</span></span>
+      <div class="g-track" aria-hidden="true">
+        {r.bars?.map(([a, b]) => <span class={`g-bar${r.thin ? ' thin' : ''}`} style={`left: ${left(a)}; width: ${span(a, b)}`} />)}
+        {r.ticks?.map((w) => <span class="g-tick" style={`left: ${mid(w)}`} />)}
+        {r.marks?.map((m) => <span class={`g-mark${m.open ? ' open' : ''}`} style={`left: ${mid(m.w)}`} />)}
+      </div>
+    </div>
+  ))}
+  {caption && <figcaption class="muted">{caption}</figcaption>}
+</figure>

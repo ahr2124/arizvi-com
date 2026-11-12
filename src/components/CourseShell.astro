@@ -1,0 +1,339 @@
+---
+// A course laid out the way it would sit in Canvas, in the site's own look (Ali, 12 Nov 2026: "At least use the same
+// information architecture when you click into the course as Canvas, while keeping my theme"). A breadcrumb, the
+// course navigation students see in Canvas (Home, Announcements, Syllabus, Modules, Assignments, Discussions, Grades,
+// People) and one panel for each, plus one assignment opened up. No logos, icons or Canvas colours: black on white,
+// the one typeface, and the section colour for where you are and for a rubric's best level.
+// Without JavaScript every panel shows, one after another, and the course navigation jumps to each. With it, one panel
+// shows at a time, the breadcrumb follows, and the address keeps the panel (/tulane/#lms-modules), so a link can open
+// one. On a phone the course navigation is a row that scrolls sideways. In print every panel shows.
+// The content is in src/data/tulane3010.ts.
+import { course, modules, groups, bundles, outcomes, announcements, discussions, grades, people, macro } from '../data/tulane3010';
+
+const nav = [
+  ['lms-home', 'Home'], ['lms-announcements', 'Announcements'], ['lms-syllabus', 'Syllabus'], ['lms-modules', 'Modules'],
+  ['lms-assignments', 'Assignments'], ['lms-discussions', 'Discussions'], ['lms-grades', 'Grades'], ['lms-people', 'People'],
+];
+const items = modules.flatMap((m) => m.items);
+const assignments = items.filter((i) => i.type === 'Assignment');
+const dated = items.filter((i) => i.week).sort((a, b) => a.week! - b.week!);
+const pts = (n?: number) => (n === undefined ? '' : `${n} pt${n === 1 ? '' : 's'}`);
+const meta = (i: { week?: number; pts?: number; note?: string }) => [i.week && `Week ${i.week}`, pts(i.pts), i.note].filter(Boolean).join(' · ');
+---
+<div class="lms" data-lms>
+  <div class="lms-top">
+    <nav class="lms-crumbs" aria-label="Breadcrumb">
+      <ol data-crumbs><li><a href="#lms-home">{course.code}</a></li></ol>
+    </nav>
+    <p class="lms-term">{course.section} · {course.term}</p>
+  </div>
+  <div class="lms-body">
+    <nav class="lms-nav" aria-label="Course">
+      <ul>{nav.map(([id, t]) => <li><a href={`#${id}`}><span>{t}</span></a></li>)}</ul>
+    </nav>
+    <div class="lms-main">
+
+      <div class="lms-panel" id="lms-home" data-crumb="Home">
+        <h3 tabindex="-1">Home</h3>
+        <div class="lms-card">
+          <p class="label">{course.code} · {course.section}</p>
+          <p class="lms-card-title">{course.title}</p>
+          <p>{course.line}</p>
+          <p><strong>The project.</strong> {course.project}</p>
+        </div>
+        <ul class="lms-items lms-start">
+          <li><span class="lms-type label">Start here</span><a href="#lms-syllabus">Read the syllabus first</a><span class="lms-meta">Week 1</span></li>
+          <li><span class="lms-type label">Then</span><a href="#lms-modules">Open the first module</a><span class="lms-meta">Week 1</span></li>
+        </ul>
+      </div>
+
+      <div class="lms-panel" id="lms-announcements" data-crumb="Announcements">
+        <h3 tabindex="-1">Announcements</h3>
+        {announcements.map((a) => (
+          <article class="lms-post">
+            <p class="lms-post-title">{a.title}</p>
+            <p class="lms-meta">Ali Rizvi · {a.week}</p>
+            <p>{a.body}</p>
+          </article>
+        ))}
+      </div>
+
+      <div class="lms-panel" id="lms-syllabus" data-crumb="Syllabus">
+        <h3 tabindex="-1">Syllabus</h3>
+        <p class="lms-sub">The course</p>
+        <p>The computer as a business-modeling tool, in four modules: data modeling, deterministic modeling, spreadsheet automation, and probabilistic modeling. Prerequisites: INFO 1010 and (MATH 1230 or MGSC 3005).</p>
+        <p class="lms-sub">The service project</p>
+        <p>One section works with one community partner, arranged with the Center for Public Service. Each team takes a different question for that partner, and the Service Learning Assistant runs the site orientation and collects the service timesheets. The twenty hours of service (Tulane's minimum for a service-learning course) are the site visits and the working sessions with the partner's staff, logged with the Service Learning Assistant.</p>
+        <p class="lms-sub">What you will be able to do</p>
+        <p>By the last week, each team hands the partner a recommendation it can act on and a model it can keep using. Working backward from that, you will learn to:</p>
+        <ol class="lms-list">{outcomes.map((o) => <li>{o}</li>)}</ol>
+        <p class="lms-sub">How this course works</p>
+        <p>Every assignment states its purpose, the task, and the criteria, and comes with a finished example on practice data. Each spec is 1 or 0, and a piece that is not yet complete can be revised once, within a week. Your letter grade is the bundle you complete (see <a href="#lms-grades">Grades</a>). I meet each team every week.</p>
+        <p class="lms-sub" id="lms-syllabus-ai">Generative AI</p>
+        <p>You may use generative AI on the labs and the project, as you would at work. Disclose it on every piece: the tools, the prompts, how you checked the output, and a short reflection on what changed. A piece made with AI and not disclosed is incomplete. The paper checks are on paper, without AI.</p>
+        <p class="lms-sub">Mid-course feedback</p>
+        <p>In week eight, in class and anonymous: what should I start, continue, and stop doing?</p>
+        <p class="lms-sub">Course summary</p>
+        <table class="lms-table">
+          <thead><tr><th scope="col">Due</th><th scope="col">Details</th></tr></thead>
+          <tbody>{dated.map((i) => <tr><td class="nb">Week {i.week}</td><td>{i.title}{i.pts !== undefined && <span class="lms-meta"> · {pts(i.pts)}</span>}</td></tr>)}</tbody>
+        </table>
+      </div>
+
+      <div class="lms-panel" id="lms-modules" data-crumb="Modules">
+        <h3 tabindex="-1">Modules</h3>
+        {modules.map((m, mi) => (
+          <details class="lms-mod" open={mi === 0}>
+            <summary><span class="lms-mod-name">{m.name}</span><span class="lms-meta">{m.weeks}</span></summary>
+            <p class="lms-mod-text">{m.text}</p>
+            <ul class="lms-items">
+              {m.items.map((i) => (
+                <li>
+                  <span class="lms-type label">{i.type}</span>
+                  {i.href ? <a href={i.href}>{i.title}</a> : <span>{i.title}</span>}
+                  <span class="lms-meta">{meta(i)}</span>
+                </li>
+              ))}
+            </ul>
+          </details>
+        ))}
+      </div>
+
+      <div class="lms-panel" id="lms-assignments" data-crumb="Assignments">
+        <h3 tabindex="-1">Assignments</h3>
+        {groups.map((g) => (
+          <div class="lms-group">
+            <p class="lms-group-head"><strong>{g.name}</strong> <span class="lms-meta">{g.bundle}</span></p>
+            <ul class="lms-items">
+              {assignments.filter((a) => a.group === g.name).map((a) => (
+                <li>
+                  <span class="lms-type label">Assignment</span>
+                  {a.href ? <a href={a.href}>{a.title}</a> : <span>{a.title}</span>}
+                  <span class="lms-meta">{meta(a)}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+
+      <div class="lms-panel" id="lms-discussions" data-crumb="Discussions">
+        <h3 tabindex="-1">Discussions</h3>
+        {discussions.map((d) => (
+          <article class="lms-post">
+            <p class="lms-post-title">{d.title}</p>
+            <p class="lms-meta">Due {d.week}</p>
+            <p>{d.body}</p>
+          </article>
+        ))}
+      </div>
+
+      <div class="lms-panel" id="lms-grades" data-crumb="Grades">
+        <h3 tabindex="-1">Grades</h3>
+        <p class="lms-sub">From bundles to letter grades</p>
+        <ul class="lms-bundles">{bundles.map((b) => <li><span class="lms-grade">{b.g}</span><p>{b.line}</p></li>)}</ul>
+        <p class="lms-sub">A sample student, at week ten</p>
+        <table class="lms-table">
+          <thead><tr><th scope="col">Name</th><th scope="col">Status</th><th scope="col">Score</th></tr></thead>
+          <tbody>{grades.map((r) => <tr><td>{r.name}<span class="lms-meta lms-due">Week {r.week}</span></td><td>{r.status}</td><td class="nb">{r.score}</td></tr>)}</tbody>
+        </table>
+        <p class="lms-note">The running percent is hidden. Bundle so far: on track for B, with every C piece graded so far complete and the first paper check complete.</p>
+      </div>
+
+      <div class="lms-panel" id="lms-people" data-crumb="People">
+        <h3 tabindex="-1">People</h3>
+        <ul class="lms-items lms-people">
+          {people.map((p) => <li><span class="lms-person">{p.name}</span><span class="lms-meta">{p.role}</span></li>)}
+        </ul>
+        <p class="lms-sub">Groups</p>
+        <p>Students, in project teams of four or five. Each team takes one of the partner's questions.</p>
+        <ul class="lms-chips">{['Team 1', 'Team 2', 'Team 3', 'Team 4', 'Team 5', 'Team 6'].map((t) => <li class="chip">{t}</li>)}</ul>
+      </div>
+
+      <div class="lms-panel" id="lms-a-macro" data-crumb={`Assignments|${macro.title}`} data-nav="lms-assignments">
+        <h3 tabindex="-1">{macro.title}</h3>
+        <dl class="lms-facts">
+          <div><dt class="label">Due</dt><dd>{macro.due}</dd></div>
+          <div><dt class="label">Points</dt><dd>{macro.points}</dd></div>
+          <div><dt class="label">Submitting</dt><dd>{macro.submitting}</dd></div>
+          <div><dt class="label">File types</dt><dd>{macro.types}</dd></div>
+        </dl>
+        <p class="lms-sub">Purpose</p>
+        <p>{macro.purpose}</p>
+        <p class="lms-sub">Task</p>
+        <ol class="lms-list">{macro.task.map((t) => <li>{t}</li>)}</ol>
+        <p class="lms-sub">Criteria</p>
+        <p>{macro.criteria}</p>
+        <table class="lms-table lms-rubric">
+          <caption class="label">Rubric</caption>
+          <thead><tr><th scope="col">Criteria</th><th scope="col">Ratings</th><th scope="col">Pts</th></tr></thead>
+          <tbody>
+            {macro.rubric.map(([name, desc]) => (
+              <tr>
+                <td><strong>{name}</strong> {desc}</td>
+                <td><span class="lms-rate top">1 pt Complete</span><span class="lms-rate">0 pts Incomplete</span></td>
+                <td class="nb">1 pt</td>
+              </tr>
+            ))}
+          </tbody>
+          <tfoot><tr><td colspan="2">Total points</td><td>{macro.points}</td></tr></tfoot>
+        </table>
+        <p class="lms-back"><a href="#lms-assignments">← All assignments</a></p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<style>
+  .lms { margin-top: 1.25rem; border: 2px solid #000; background: #fff; font-size: 16px; }
+  .lms p { max-width: 66ch; }
+  .lms-top { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 16px; padding: 12px 18px; border-bottom: 1px solid #000; }
+  .lms-crumbs ol { list-style: none; margin: 0; padding: 0; max-width: none; display: flex; flex-wrap: wrap; gap: 0 8px; font-weight: 600; }
+  /* The breadcrumb's items are written by the script, so their rules are global (inside .lms-crumbs). */
+  .lms-crumbs :global(li) { margin: 0; }
+  .lms-crumbs :global(li + li)::before { content: '›'; margin-right: 8px; font-weight: 400; }
+  .lms-crumbs :global(a) { text-decoration: none; }
+  .lms-crumbs :global(a:hover) { text-decoration: underline; }
+  .lms-term { margin: 0 0 0 auto; color: rgba(0, 0, 0, 0.6); font-size: 14px; }
+  .lms-body { display: grid; grid-template-columns: 11.5rem minmax(0, 1fr); }
+  .lms-nav { border-right: 1px solid rgba(0, 0, 0, 0.25); padding: 10px 0; }
+  .lms-nav ul { list-style: none; margin: 0; padding: 0; max-width: none; }
+  .lms-nav li { margin: 0; }
+  .lms-nav a { display: block; padding: 7px 16px; border-left: 4px solid transparent; color: #000; text-decoration: none; }
+  .lms-nav a:hover { background: var(--hl-soft, #eee); }
+  .lms-nav a[aria-current] { border-left-color: #000; font-weight: 600; }
+  .lms-nav a[aria-current] span { background: linear-gradient(transparent 52%, var(--hl, #ccc) 52%); }
+  .lms-main { min-width: 0; padding: 18px 22px 24px; }
+  .lms-panel h3 { margin: 0 0 14px; font-size: 1.35rem; outline: none; }
+  .lms-panel + .lms-panel { margin-top: 2rem; padding-top: 1.25rem; border-top: 1px solid #000; }
+  .lms.js .lms-panel:not(.is-on) { display: none; }
+  .lms.js .lms-panel + .lms-panel { margin-top: 0; padding-top: 0; border-top: 0; }
+  .lms-sub { margin: 1.25rem 0 0.4rem; font-weight: 600; }
+  .lms-panel > h3 + .lms-sub { margin-top: 0; }
+  .lms-list { margin: 0 0 1em; }
+  .lms-meta { color: rgba(0, 0, 0, 0.6); font-size: 14px; }
+  .lms-note { margin-top: 12px; color: rgba(0, 0, 0, 0.6); font-size: 14px; }
+
+  /* Home: the course card, with the band in the section colour like the Start here tiles. */
+  .lms-card { border: 2px solid #000; box-shadow: inset 0 8px 0 var(--hl, #ccc); padding: 22px 18px 6px; }
+  .lms-card .label { margin-bottom: 4px; }
+  .lms-card-title { margin: 0 0 8px; font-weight: 600; font-size: 1.25rem; letter-spacing: -0.02em; line-height: 1.15; }
+  .lms-start { margin-top: 14px; border-bottom: 1px solid rgba(0, 0, 0, 0.2); }
+
+  /* Rows: module items, assignments, people. */
+  .lms-items { list-style: none; margin: 0; padding: 0; max-width: none; }
+  .lms-items li { display: grid; grid-template-columns: 8rem minmax(0, 1fr) auto; align-items: baseline; gap: 2px 12px; margin: 0; padding: 9px 14px; border-top: 1px solid rgba(0, 0, 0, 0.2); }
+  .lms-type { font-size: 12px; letter-spacing: 0.1em; }
+  .lms-items .lms-meta { text-align: right; white-space: nowrap; }
+  .lms-mod { border: 1px solid #000; }
+  .lms-mod + .lms-mod { margin-top: 10px; }
+  .lms-mod > summary { display: grid; grid-template-columns: 1ch minmax(0, 1fr) auto; align-items: baseline; gap: 2px 12px; padding: 10px 14px; background: var(--hl-soft, #f2f2f2); cursor: pointer; list-style: none; font-weight: 600; }
+  .lms-mod > summary::-webkit-details-marker { display: none; }
+  .lms-mod > summary::before { content: '+'; font-weight: 400; }
+  .lms-mod[open] > summary::before { content: '−'; }
+  .lms-mod > summary .lms-meta { font-weight: 400; white-space: nowrap; }
+  .lms-mod-text { max-width: none; margin: 0; padding: 10px 14px 10px; border-top: 1px solid #000; }
+  .lms-group + .lms-group { margin-top: 1.25rem; }
+  .lms-group-head { margin: 0; padding: 0 0 6px; display: flex; gap: 12px; align-items: baseline; }
+  .lms-group .lms-items { border-bottom: 1px solid rgba(0, 0, 0, 0.2); }
+  .lms-people li { grid-template-columns: 14rem minmax(0, 1fr); }
+  .lms-people .lms-meta { text-align: left; white-space: normal; }
+  .lms-chips { list-style: none; margin: 8px 0 0; padding: 0; max-width: none; display: flex; flex-wrap: wrap; gap: 8px; }
+  .lms-chips li { margin: 0; }
+
+  .lms-post { border-top: 1px solid rgba(0, 0, 0, 0.2); padding: 12px 0 2px; }
+  .lms-post-title { margin: 0; font-weight: 600; }
+  .lms-post .lms-meta { margin: 2px 0 8px; }
+
+  .lms-bundles { list-style: none; margin: 0; padding: 0; max-width: none; }
+  .lms-bundles li { display: grid; grid-template-columns: 2.6rem minmax(0, 1fr); gap: 12px; align-items: start; margin: 0; padding: 8px 0; border-top: 1px solid rgba(0, 0, 0, 0.2); }
+  .lms-bundles p { margin: 0; }
+  .lms-grade { display: inline-block; padding: 5px 9px 3px; background: var(--hl, #ccc); font-weight: 600; font-size: 1.2rem; line-height: 1; }
+
+  .lms-table { width: 100%; border-collapse: collapse; font-size: 15px; }
+  .lms-table caption { text-align: left; padding: 14px 0 6px; }
+  .lms-table th, .lms-table td { text-align: left; vertical-align: top; padding: 7px 12px 7px 0; border-top: 1px solid rgba(0, 0, 0, 0.2); }
+  .lms-table th { font-weight: 600; border-top: 0; border-bottom: 1px solid #000; }
+  .lms-table tfoot td { font-weight: 600; border-top: 1px solid #000; }
+  .lms-due { display: block; font-size: 13px; }
+  .lms-rate { display: block; width: fit-content; margin: 0 0 4px; padding: 3px 7px 2px; border: 1px solid #000; font-size: 13px; white-space: nowrap; }
+  .lms-rate.top { background: var(--hl, #ccc); }
+  .lms-facts { display: flex; flex-wrap: wrap; gap: 8px 28px; margin: 0 0 6px; padding: 10px 0; border-top: 1px solid #000; border-bottom: 1px solid #000; }
+  .lms-facts dd { margin: 2px 0 0; }
+  .lms-back { margin-top: 1rem; }
+
+  /* A phone: the course navigation becomes a row that scrolls sideways, and each row stacks. */
+  @media (max-width: 767px) {
+    .lms-top { padding: 10px 14px; }
+    .lms-term { margin-left: 0; }
+    .lms-body { grid-template-columns: minmax(0, 1fr); }
+    .lms-nav { border-right: 0; border-bottom: 1px solid #000; padding: 0; position: sticky; top: 0; z-index: 3; background: #fff; }
+    .lms-nav ul { display: flex; flex-wrap: wrap; }
+    .lms-nav a { padding: 11px 12px 8px; border-left: 0; border-bottom: 4px solid transparent; white-space: nowrap; }
+    .lms-nav a[aria-current] { border-bottom-color: #000; }
+    .lms-main { padding: 14px 14px 20px; }
+    .lms-items li, .lms-people li { grid-template-columns: minmax(0, 1fr); padding: 9px 12px; }
+    .lms-items .lms-meta { text-align: left; }
+    .lms-mod > summary { grid-template-columns: 1ch minmax(0, 1fr); padding: 10px 12px; }
+    .lms-mod > summary .lms-meta { grid-column: 2; }
+    .lms-mod-text { padding: 10px 12px; }
+    .lms-table th, .lms-table td { padding-right: 8px; }
+  }
+  @media print {
+    .lms.js .lms-panel:not(.is-on) { display: block; }
+    .lms-nav { display: none; }
+    .lms-body { grid-template-columns: minmax(0, 1fr); }
+    .lms-mod:not([open]) > :not(summary) { display: block; }
+  }
+</style>
+
+<script>
+  // One panel at a time. The course navigation, the breadcrumb and any link to a panel (or to something inside one)
+  // open it; the address keeps it, so a link from elsewhere opens it too.
+  const shell = document.querySelector<HTMLElement>('[data-lms]');
+  if (shell) {
+    const panels = [...shell.querySelectorAll<HTMLElement>('.lms-panel')];
+    const links = [...shell.querySelectorAll<HTMLAnchorElement>('.lms-nav a')];
+    const crumbs = shell.querySelector<HTMLOListElement>('[data-crumbs]')!;
+    const home = crumbs.firstElementChild!.cloneNode(true);
+    const show = (panel: HTMLElement) => {
+      for (const p of panels) p.classList.toggle('is-on', p === panel);
+      const navId = panel.dataset.nav ?? panel.id;
+      for (const a of links) {
+        if (a.getAttribute('href') !== `#${navId}`) { a.removeAttribute('aria-current'); continue; }
+        a.setAttribute('aria-current', 'page');
+        // On a phone the course navigation scrolls sideways: keep the open item in view.
+        const row = a.closest<HTMLElement>('.lms-nav')!;
+        if (row.scrollWidth > row.clientWidth) row.scrollLeft = Math.max(0, a.offsetLeft - (row.clientWidth - a.offsetWidth) / 2);
+      }
+      const parts = (panel.dataset.crumb ?? '').split('|');
+      crumbs.replaceChildren(home.cloneNode(true));
+      parts.forEach((t, i) => {
+        const li = document.createElement('li');
+        if (i < parts.length - 1) { const a = document.createElement('a'); a.href = `#${navId}`; a.textContent = t; li.append(a); }
+        else { li.textContent = t; li.setAttribute('aria-current', 'page'); }
+        crumbs.append(li);
+      });
+    };
+    const target = (id: string) => { const el = id ? document.getElementById(id) : null; const p = el?.closest<HTMLElement>('.lms-panel'); return p && shell.contains(p) ? { el: el!, p } : null; };
+    const open = (t: { el: HTMLElement; p: HTMLElement }) => {
+      show(t.p);
+      if (t.el instanceof HTMLDetailsElement) t.el.open = true;
+      if (t.el !== t.p) t.el.scrollIntoView({ block: 'start' });
+      else if (shell.getBoundingClientRect().top < 0) shell.scrollIntoView({ block: 'start' });
+    };
+    shell.classList.add('js');
+    const first = target(decodeURIComponent(location.hash.slice(1)));
+    if (first) { open(first); if (first.el === first.p) shell.scrollIntoView({ block: 'start' }); } else show(panels[0]);
+    shell.addEventListener('click', (e) => {
+      const a = (e.target as Element).closest?.<HTMLAnchorElement>('a[href^="#lms-"]'); if (!a) return;
+      const t = target(decodeURIComponent(a.getAttribute('href')!.slice(1))); if (!t) return;
+      e.preventDefault();
+      open(t);
+      history.replaceState(null, '', a.getAttribute('href'));
+      if (t.el === t.p && !a.closest('.lms-nav')) t.p.querySelector<HTMLElement>('h3')?.focus({ preventScroll: true });
+    });
+    window.addEventListener('hashchange', () => { const t = target(decodeURIComponent(location.hash.slice(1))); if (t) open(t); });
+  }
+</script>

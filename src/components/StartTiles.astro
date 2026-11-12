@@ -1,0 +1,33 @@
+---
+// Start here: four pieces from /resources, each showing one of the strategies on its carousel (the strategy's name is
+// the tile's label). The same four tiles open the home page's Teaching resources section (Ali, 12 Nov 2026: "Add
+// resources to my landing page", then "like one section"), so they are kept here, in one place.
+// from: where the pieces are. On /resources a tile opens its piece on the page (#id); on the home page it opens the
+// piece on /resources (/resources/#id), whose script opens a piece named in the address.
+// home: the tiles on the home page, with their band in its orange. There they sit on the gutter of the cards below them
+// and, since their pieces are not on that page, they print.
+import data from '../data/resources.json';
+interface Props { from?: string; home?: boolean }
+const { from = '', home = false } = Astro.props;
+const start = [
+  { id: 'gbda310-frenzy', strategy: 'End-of-class quizzes', line: 'Two questions at the end of every class.' },
+  { id: 'gbda310-inquiry', strategy: 'Rubrics', line: 'What to do, why, and what good looks like.' },
+  { id: 'feedback-form', strategy: 'Mid-course feedback', line: 'Start, stop, continue, partway through the term.' },
+  { id: 'gbda402-proposal', strategy: 'Specifications grading', line: 'Approved or sent back, with forty-eight hours to fix it.' },
+];
+const items = Object.fromEntries(data.sections.flatMap((s) => s.items.map((it) => [it.id, it])));
+const codesOf = (s?: string) => s?.match(/[A-Z]{4} \d{3}/g) ?? [];
+---
+<ul class:list={['res-start', { home }]}>
+  {start.map((s) => { const it = items[s.id]; return (
+    <li>
+      <a class="start-tile" href={`${from}#${s.id}`}>
+        <span class="label start-kicker">{s.strategy}</span>
+        <span class="start-codes">{codesOf(it.course).map((c) => <span class="code-chip">{c}</span>)}</span>
+        <span class="start-title">{it.title}</span>
+        <span class="start-line">{s.line}</span>
+        <span class="start-go">Open it <span aria-hidden="true">→</span></span>
+      </a>
+    </li>
+  ); })}
+</ul>

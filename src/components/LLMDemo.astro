@@ -1,0 +1,127 @@
+---
+// Week 8 of ANOP 102: how an LLM works inside a decision model.
+// The model's probabilities for its next word: low 20%, medium 45%, high 35%. Those are what the café should believe.
+// Temperature only changes which single answer comes back when you ask (p ^ 1/T, renormalised; at 0 it always picks the favorite).
+// The café bakes 40 / 80 / 120 croissants for low / medium / high. Cost $1, price $5.
+// If the probabilities are honest, expected profit is $160 / $280 / $310 for each bake, so the best bake is 120.
+const answers = [
+  { key: 'low', label: 'Low', p: 20 },
+  { key: 'medium', label: 'Medium', p: 45 },
+  { key: 'high', label: 'High', p: 35 },
+];
+const strategies = [
+  { key: 'once', label: 'Ask it once, bake what it says' },
+  { key: 'top', label: 'Always bake for its top answer' },
+  { key: 'weigh', label: 'Weigh its probabilities' },
+];
+---
+<div class="ldemo" data-ldemo>
+  <div class="ldemo-prompt">
+    <p class="label">The café's prompt</p>
+    <p class="ldemo-q">Tomorrow is a rainy Saturday and the farmers' market is on. Will croissant demand be high, medium or low? Answer in one word.</p>
+  </div>
+
+  <div class="ldemo-step">
+    <p class="label">1 · How likely the model thinks each answer is</p>
+    <div class="ldemo-bars">
+      {answers.map((a) => (
+        <div class="ldemo-bar">
+          <span class="ldemo-name">{a.label}</span>
+          <span class="ldemo-track"><span class={`ldemo-fill ${a.key}`} style={`width: ${a.p}%`} /></span>
+          <span class="ldemo-pct">{a.p}%</span>
+        </div>
+      ))}
+    </div>
+    <p class="ldemo-sub">These are the model's probabilities, and they do not move. What moves is which one it says out loud.</p>
+  </div>
+
+  <div class="ldemo-step">
+    <p class="label">2 · Ask it the same question 20 times</p>
+    <div class="ldemo-temp">
+      <label class="label" for="ldemo-t">Temperature <output data-out="t" for="ldemo-t">1.0</output></label>
+      <input type="range" id="ldemo-t" min="0" max="1.5" step="0.1" value="1" />
+      <div class="demo-scale label" aria-hidden="true"><span>0 · always the favorite</span><span>1.5 · spread the bets</span></div>
+    </div>
+    <p class="ldemo-sub" data-draw-odds>At temperature 1.0 it answers low 20%, medium 45% and high 35% of the time.</p>
+    <div class="demo-buttons"><button type="button" class="demo-btn solid" data-ask>Ask 20 times</button></div>
+    <div class="ldemo-chips" data-chips aria-live="polite"></div>
+    <p class="ldemo-tally" data-tally></p>
+  </div>
+
+  <div class="ldemo-step">
+    <p class="label">3 · Put it in the decision model</p>
+    <p>The café bakes 40, 80 or 120 croissants for low, medium or high. Each costs $1 to bake and sells for $5, so running out costs $4 a croissant and a leftover costs $1. Expected profit a day, if the model's probabilities are honest:</p>
+    <div class="ldemo-strats">
+      {strategies.map((s) => (
+        <div class="ldemo-strat" data-strat={s.key}>
+          <span class="ldemo-sname">{s.label}</span>
+          <span class="ldemo-track"><span class="ldemo-sfill" data-sbar={s.key} /></span>
+          <span class="ldemo-sval" data-sval={s.key}></span>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <p class="demo-coda">A missed sale costs $4 and a leftover $1, so the extra 40 croissants pay off whenever high demand is more likely than 1 in 5. Here it is 35%, so bake 120. The lab then checks whether the model's probabilities were honest, and decides where a person signs off.</p>
+</div>
+
+<script>
+  const KEYS = ['low', 'medium', 'high'] as const;
+  const BASE = [0.2, 0.45, 0.35];
+  const PROFIT = [160, 280, 310]; // expected profit a day for baking 40 / 80 / 120, if the probabilities are honest
+  const draws = (t: number) => {
+    if (t < 0.05) { const top = BASE.indexOf(Math.max(...BASE)); return BASE.map((_, i) => (i === top ? 1 : 0)); }
+    const w = BASE.map((p) => Math.pow(p, 1 / t));
+    const s = w.reduce((a, b) => a + b, 0);
+    return w.map((x) => x / s);
+  };
+  const money = (v: number) => '$' + Math.round(v).toLocaleString('en-CA');
+  // Whole percentages that add to 100 (largest remainders get the spare points), so low + medium + high never reads 99% or 101%.
+  const pcs = (q: number[]) => {
+    const raw = q.map((p) => p * 100), out = raw.map(Math.floor);
+    let spare = 100 - out.reduce((a, b) => a + b, 0);
+    raw.map((x, i) => [x - out[i], i]).sort((a, b) => b[0] - a[0]).forEach(([, i]) => { if (spare > 0) { out[i]++; spare--; } });
+    return out.map((x) => `${x}%`);
+  };
+
+  document.querySelectorAll<HTMLElement>('[data-ldemo]').forEach((root) => {
+    const $ = <T extends Element>(s: string) => root.querySelector<T>(s)!;
+    const slider = $<HTMLInputElement>('#ldemo-t');
+    const best = Math.max(...PROFIT);
+
+    function update() {
+      const t = Number(slider.value);
+      const q = draws(t);
+      const [pl, pm, ph] = pcs(q);
+      $('[data-out=t]').textContent = t.toFixed(1);
+      $('[data-draw-odds]').textContent = t < 0.05
+        ? 'At temperature 0 it answers medium every time, because medium is its favorite.'
+        : `At temperature ${t.toFixed(1)} it answers low ${pl}, medium ${pm} and high ${ph} of the time.`;
+      const once = q.reduce((sum, p, i) => sum + p * PROFIT[i], 0);
+      const vals: Record<string, number> = { once, top: PROFIT[1], weigh: PROFIT[2] };
+      Object.entries(vals).forEach(([k, v]) => {
+        $<HTMLElement>(`[data-sbar=${k}]`).style.width = `${(v / best) * 100}%`;
+        $(`[data-sval=${k}]`).textContent = money(v) + (v === best ? ' · best' : '');
+        $(`[data-strat=${k}]`).classList.toggle('is-best', v === best);
+      });
+      slider.setAttribute('aria-valuetext', `temperature ${t.toFixed(1)}: answers low ${pl}, medium ${pm}, high ${ph} of the time`);
+    }
+
+    $('[data-ask]').addEventListener('click', () => {
+      const q = draws(Number(slider.value));
+      const picks = Array.from({ length: 20 }, () => {
+        let r = Math.random(), i = 0;
+        while (i < 2 && r >= q[i]) { r -= q[i]; i++; }
+        return i;
+      });
+      $('[data-chips]').innerHTML = picks.map((i) => `<span class="chip ${KEYS[i]}">${KEYS[i]}</span>`).join('');
+      const count = KEYS.map((_, i) => picks.filter((x) => x === i).length);
+      $('[data-tally]').textContent = Number(slider.value) < 0.05
+        ? `Temperature 0: medium, ${count[1]} times out of 20. Raise the temperature and the count starts to move; the bars never do.`
+        : `Same question, same model: ${count[2]} high, ${count[1]} medium, ${count[0]} low. Ask again and the count can change; the bars do not. 20 asks is a small sample, which is week 9's lesson.`;
+    });
+
+    slider.addEventListener('input', update);
+    update();
+  });
+</script>

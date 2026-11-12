@@ -1,0 +1,2790 @@
+{
+ "sections": [
+  {
+   "id": "in-class",
+   "label": "In-class activities",
+   "items": [
+    {
+     "id": "gbda310-mini1",
+     "title": "UX Mini Challenge 1: Heuristic analysis workshop on user profiles",
+     "term": "Fall 2023",
+     "kind": "In class · in groups",
+     "tags": [
+      "In class",
+      "Peer review",
+      "Rubric"
+     ],
+     "brief": "<p><strong>Objective</strong></p>\n<p>The aim of this interactive activity is to practically apply <strong>Nielsen's 10 heuristics </strong>through a focused evaluation of <strong>User Profile</strong> sections on various websites. Working in small groups, you'll analyze, discuss, and suggest improvements. You will write up a short report at the end.</p>\n<p><strong>Duration</strong></p>\n<p>Approximately 60 minutes.</p>\n<p><strong>Steps</strong></p>\n<ol>\n<li>Look up your group assignment and find a spot to sit together. <ul>\n<li>It is okay if not all group members are present, you can still do the activity.</li>\n<li>Please indicate only group members present in your peer review.</li>\n</ul></li>\n<li>Each group gets assigned a website with a <strong>User Profile/Account Management</strong> section. <ul>\n<li>This is different from your Assignment 1 website.</li>\n</ul></li>\n<li>Groups navigate to their website's <strong>User Profile section</strong> and spend a few minutes exploring the website. <strong>(5 mins)</strong> <ul>\n<li>Create an account if you need to.</li>\n<li>If the website does not have a user profile function or requires any kind of payment/info to register, please reach out to your TA or instructor, and we will assign you a different website.</li>\n</ul></li>\n<li>Share your <strong>initial impressions</strong> within the group. <strong>(3 mins)</strong></li>\n<li>Conduct a <strong>heuristic analysis (20-30 mins)</strong> <ul>\n<li>Navigate through the User Profile section</li>\n<li>Jot down your observations on sticky notes or in Miro.</li>\n<li>Each group member focuses on <strong>two</strong> of Nielsen's 10 heuristics. <ol>\n<li>Visibility of System Status</li>\n<li>Match between System and the Real World</li>\n<li>User Control and Freedom</li>\n<li>Consistency and Standards</li>\n<li>Error Prevention</li>\n<li>Recognition Rather Than Recall</li>\n<li>Flexibility and Efficiency of Use</li>\n<li>Aesthetic and Minimalist Design</li>\n<li>Recognize, Diagnose, and Recover from Errors</li>\n<li>Help and Documentation</li>\n</ol></li>\n</ul></li>\n<li><strong>Group Discussion (10 mins)</strong> <ul>\n<li>Share findings within the group.</li>\n<li>As a group, use sticky notes or Miro to categorize observations under each heuristic.</li>\n</ul></li>\n<li><strong>Prioritize Issues (5 mins)</strong> <ul>\n<li>Use a simple voting system with sticky notes to highlight the top 5 issues.</li>\n</ul></li>\n<li><strong>Recommendation Roundtable (7 mins)</strong> <ul>\n<li>Discuss potential improvements for these prioritized issues.</li>\n<li>Each member suggests one actionable recommendation for one of the top issues.</li>\n</ul></li>\n<li><strong>Submit the report document as PDF to Learn (5 mins)</strong> <ul>\n<li>Everyone individually complete the peer review quiz (10% of the score) <ul>\n<li>This quiz is anonymous and only the instructional staff can see it</li>\n<li>You will receive a maximum of 90% unless all peer reviews from your group clearly indicate that you have done an exceptional job.</li>\n</ul></li>\n<li>As a group, submit a PDF file to the dropbox including: <ul>\n<li>List of top 5 prioritized issues and corresponding heuristics</li>\n<li>Up to three actionable recommendations for how to fix each issue <ul>\n<li>One from each member</li>\n</ul></li>\n</ul></li>\n</ul></li>\n<li>Tips for Success</li>\n</ol>\n<ul>\n<li>Collaboration is key; each heuristic can reveal different issues when viewed from diverse perspectives.</li><li>Be as specific as possible in your observations and recommendations to make them actionable.</li>\n</ul>",
+     "rubrics": [
+      {
+       "name": "UX Mini Challenge 1",
+       "criteria": [
+        {
+         "name": "Observation of heuristic analysis",
+         "desc": "",
+         "levels": [
+          {
+           "name": "Good",
+           "pts": 3,
+           "text": "Each group member has completed two of Nielsen's 10 heuristics."
+          },
+          {
+           "name": "Fair",
+           "pts": 2,
+           "text": "Only missing a few heuristic analyses."
+          },
+          {
+           "name": "Poor",
+           "pts": 1,
+           "text": "Missing too many heuristic analyses."
+          },
+          {
+           "name": "Missing",
+           "pts": 0,
+           "text": "Did not provide heuristic analysis."
+          }
+         ]
+        },
+        {
+         "name": "List of top 5 prioritized issues and corresponding heuristics",
+         "desc": "",
+         "levels": [
+          {
+           "name": "Good",
+           "pts": 3,
+           "text": "Listed top 5 prioritized issues and corresponding heuristics."
+          },
+          {
+           "name": "Fair",
+           "pts": 2,
+           "text": "Listed at least 3 prioritized issues and corresponding heuristics."
+          },
+          {
+           "name": "Poor",
+           "pts": 1,
+           "text": "Listed less than 3 prioritized issues and corresponding heuristics."
+          },
+          {
+           "name": "Missing",
+           "pts": 0,
+           "text": "Did not provide prioritized issues."
+          }
+         ]
+        },
+        {
+         "name": "At least one actionable recommendations for how to fix each issue from each member",
+         "desc": "",
+         "levels": [
+          {
+           "name": "Good",
+           "pts": 3,
+           "text": "At least one actionable recommendation from each member for each issue."
+          },
+          {
+           "name": "Fair",
+           "pts": 2,
+           "text": "Only missing a few actionable recommendations overall."
+          },
+          {
+           "name": "Poor",
+           "pts": 1,
+           "text": "Missing too many actionable recommendations overall."
+          },
+          {
+           "name": "Missing",
+           "pts": 0,
+           "text": "Did not provide actionable recommendations."
+          }
+         ]
+        },
+        {
+         "name": "Consistency",
+         "desc": "",
+         "levels": [
+          {
+           "name": "Good",
+           "pts": 3,
+           "text": "The analysis is correctly performed on the User Profile/Account Management section of the assigned website."
+          },
+          {
+           "name": "Fair",
+           "pts": 2,
+           "text": "The majority of the analysis is correctly performed on the User Profile/Account Management section of the assigned website."
+          },
+          {
+           "name": "Poor",
+           "pts": 1,
+           "text": "Only a small portion of the analysis is correctly performed on the User Profile/Account Management section of the assigned website."
+          },
+          {
+           "name": "Missing",
+           "pts": 0,
+           "text": "No analysis was correctly performed on the assigned website, and/or the User Profile/Account Management section."
+          }
+         ]
+        },
+        {
+         "name": "Heuristic Analysis",
+         "desc": "",
+         "levels": [
+          {
+           "name": "Good",
+           "pts": 3,
+           "text": "Provided in-depth and specific analysis on issues you have identified."
+          },
+          {
+           "name": "Fair",
+           "pts": 2,
+           "text": "Provided somewhat specific analysis."
+          },
+          {
+           "name": "Poor",
+           "pts": 1,
+           "text": "Provided plain and surface-level analysis."
+          },
+          {
+           "name": "Missing",
+           "pts": 0,
+           "text": "Did not provide an analysis."
+          }
+         ]
+        },
+        {
+         "name": "Actionable Recommendations",
+         "desc": "",
+         "levels": [
+          {
+           "name": "Good",
+           "pts": 3,
+           "text": "Provided highly actionable, unique, and/or creative recommendations for the issues identified."
+          },
+          {
+           "name": "Fair",
+           "pts": 2,
+           "text": "Provided somewhat actionable, unique, and/or creative recommendations for the issues identified."
+          },
+          {
+           "name": "Poor",
+           "pts": 1,
+           "text": "Provided recommendations that were not actionable, not unique, and not creative."
+          },
+          {
+           "name": "Missing",
+           "pts": 0,
+           "text": "Did not provide an recommendation."
+          }
+         ]
+        },
+        {
+         "name": "Reserved for peer review; please check your grade book for individual grade",
+         "desc": "",
+         "levels": [
+          {
+           "name": "Reserved",
+           "pts": 2,
+           "text": ""
+          },
+          {
+           "name": "Default",
+           "pts": 0,
+           "text": "All groups will get this option. Individual grades will be adjusted based on peer review."
+          }
+         ]
+        }
+       ],
+       "showPoints": true
+      }
+     ],
+     "course": "GBDA 310"
+    },
+    {
+     "id": "gbda310-frenzy",
+     "title": "UX Flashback Frenzy",
+     "term": "Fall 2023",
+     "kind": "End of every class · 10%",
+     "tags": [
+      "In class"
+     ],
+     "brief": "<p>These are quick, 2-question quizzes administered at the end of each class. They serve to reinforce the material covered. The lowest four grades will be dropped.</p>\n<p class=\"omit\">[From the course outline. One of them, as handed out:]</p>\n<p><strong>UX Flashback Frenzy 6: October 23, 2023</strong></p>\n<p><strong>Objective</strong></p>\n<p>You will have roughly 5 minutes to complete this in class. Please hand this paper to the Instructor or TA prior to leaving class.</p>\n<p>Name: ____________<br/>Student ID: ____________</p>\n<ol><li>What is AEIOU short for?</li><li>When should you use a diary study?</li></ol>",
+     "rubrics": [],
+     "course": "GBDA 310"
+    },
+    {
+     "id": "gbda402-exercises",
+     "title": "In-class research exercises",
+     "term": "Winter 2023",
+     "kind": "In class · in teams",
+     "tags": [
+      "In class"
+     ],
+     "brief": "<h4>Week 2 · Generating possible research questions</h4>\n<p>Upload your 3-column worksheet to Dropbox (can be a digital or hand-written document on paper or a picture of your work on a whiteboard)</p>\n<p>Submit to “Week 2: Research Question Exercise” Dropbox on LEARN no later than Sunday, January 22nd.</p>\n<table><thead><tr><th>Prior knowledge and assumptions (What do I currently know about this topic?)</th><th>Related problems to be solved (identify as many as you can)</th><th>Possible research questions (list at least 3)</th></tr></thead></table>\n<p><strong>Tips</strong></p>\n<ul><li>Use How Might We… notes to brainstorm your research questions</li>\n<li>Ask yourself if your research question allows for a variety of potential solutions. If it doesn’t, broaden it. If it allows for too many potential solutions, narrow it.</li></ul>\n<h4>Week 5 · Important guidelines for testing</h4>\n<p>When approaching a potential participant, say…</p>\n<p>We are U of Waterloo students. I’m working on a design project about [your topic]. I’m wondering if you can share some thoughts about the topic and provide some feedback about our prototype to inform our design decisions for our school project.</p>\n<ul><li>Avoid using the word “research”. The type of work we are doing in the capstone does not fit the definition of “research” that requires ethical review by the university. Research is not the primary objective of the capstone. Our objective for using research methods is a professional skill development activity and to apply existing knowledge derived from classroom learning.</li>\n<li>Do not use [client's] logo or any related branding in your studies.</li>\n<li>Do not collect sensitive and private data (e.g., health data; data from vulnerable populations like children).</li>\n<li>Ask for consent (but you do not need a consent form). Be respectful.</li></ul>\n<p><strong>To do for next week</strong></p>\n<ul><li>(DUE: Tuesday, Feb 14 at 11:59 pm) Upload to LEARN a test plan (one per team) briefly describing what you’ll be testing (e.g., what your prototype will be) and how you’ll be testing it. Be specific! Don’t just say you’ll be doing a field observation; describe how you would do it, where, when, what you are hoping to find</li>\n<li>Your testing plan only needs to describe what you’ll do for the mid-course deliverables (i.e., MVP prototype)</li>\n<li>Come to class and be ready to discuss your testing plan with your instructor.</li>\n<li>Your testing plan must be approved by the instructor to proceed forward. If you need approval before Wednesday because you want to run studies before then, you can request it on MS Teams by messaging your instructor.</li></ul>",
+     "rubrics": [],
+     "course": "GBDA 402"
+    },
+    {
+     "id": "msci630-activities",
+     "title": "Class activity rubric",
+     "term": "Winter 2023",
+     "kind": "In class · weekly",
+     "tags": [
+      "Specifications grading",
+      "In class"
+     ],
+     "brief": "<p class=\"omit\">[The class activities that term, as named on LEARN:]</p>\n<ul><li>Activity 1 - Design in a Day</li><li>Activity 2 - Heuristics in a Day</li><li>Activity 3 - Task Oriented Design</li><li>Activity 4 - Tasks and Storyboards</li><li>Activity 5: Screenshot of FIGMA design</li><li>Activity 6: Feedback Collected</li><li>Questions for [a guest speaker]</li><li>Activity 8: DECIDE</li><li>Activity 9 - Evaluation</li><li>Activity 10 - Design</li><li>Activity 11- Journey Map</li></ul>",
+     "rubrics": [
+      {
+       "name": "Class activity rubric",
+       "criteria": [
+        {
+         "name": "",
+         "desc": "",
+         "levels": [
+          {
+           "name": "Submitted - Complete",
+           "pts": 100,
+           "text": "The activity was submitted with all required parts."
+          },
+          {
+           "name": "Submitted",
+           "pts": 50,
+           "text": "The activity was submitted but was not done well. There were portions missing (example, only listed 5 out of 6 required items, did not understand the task completely, etc.)"
+          },
+          {
+           "name": "Incomplete",
+           "pts": 0,
+           "text": "The activity was either not completed, or not uploaded, or an incorrect activity was uploaded."
+          }
+         ]
+        }
+       ],
+       "showPoints": true,
+       "note": "Used for every class activity."
+      }
+     ],
+     "course": "MSCI 630"
+    }
+   ]
+  },
+  {
+   "id": "assignments",
+   "label": "Assignments and projects",
+   "items": [
+    {
+     "id": "gbda310-heuristic",
+     "title": "Assignment 1: Heuristic analysis of shopping cart functionality",
+     "term": "Fall 2023",
+     "kind": "Individual · 10%",
+     "tags": [
+      "Specifications grading",
+      "TILT",
+      "Rubric"
+     ],
+     "brief": "<p><strong>Objective</strong></p>\n<p>Your mission is to conduct a focused heuristic analysis using <strong>Nielsen's 10 heuristics</strong> on the shopping cart functionality of an existing, popular website. This exercise will equip you with a systematic approach to identify and articulate usability issues.</p>\n<p><strong>Scope</strong></p>\n<ul>\n<li>You will be <strong>randomly assigned one</strong> popular website with an active shopping cart functionality of the following websites: Amazon, eBay, Walmart, Target, Best Buy, Macy's, Zara, Nike, IKEA, Home Depot, Sephora, ASOS, Wayfair, Alibaba, Etsy, H&amp;M, Nordstrom, Costco, Gap, J.Crew, Adidas, Staples, Dell, Overstock, Zappos, QVC, Kohl's, Newegg, Chewy, Saks Fifth Avenue, Uniqlo, Lululemon, Ulta Beauty, Shutterfly, Vistaprint, Forever 21, B&amp;H Photo, Office Depot, the Microsoft Store, T.J.Maxx, the Apple Store, Urban Outfitters, Bose, Lowe's, Hollister, Crate &amp; Barrel, Ticketmaster, REI, Bed Bath &amp; Beyond, Victoria's Secret, Walgreens, The Body Shop, Bath &amp; Body Works, GameStop, AutoZone, Skechers, Dick's Sporting Goods, Marks &amp; Spencer, Swarovski, and Bloomingdale's.<br/></li>\n<li>Your heuristic analysis should focus solely on the <strong>shopping cart experience</strong><strong>, from adding items to the cart to the initiation of the checkout process.</strong></li>\n</ul>\n<p><strong>Deliverables</strong></p>\n<ul>\n<li>A 1000-words maximum report <strong>(submitted as PDF on Learn).</strong></li>\n</ul>\n<p><strong>Heuristic Analysis Report:</strong> </p>\n<ul>\n<li><strong>Introduction</strong>: Briefly describe the website, its intended audience, and the specific focus on shopping cart functionality (50 words max).</li><li><strong>Methodology</strong>: Explain very briefly that you will be using Nielsen's 10 heuristics as the framework for your analysis (50 words max).</li><li><strong>Findings</strong>: Use each of Nielsen's 10 heuristics as a subsection to discuss the specific usability issues related to the heuristics found in the shopping cart functionality. Include screenshots for illustration (500 words).\n<ul>\n<li><strong>In the case you really cannot identify issues on any of the 10, write about where you found the website doing well.</strong></li>\n</ul></li><li><strong>Recommendations</strong>: For each heuristic, suggest actionable improvements based on your findings (400 words).<br/></li>\n<li><strong>Appendix (Optional)</strong>:\n<ul>\n<li>Include any supplementary material like annotated screenshots (recommend using Snipping Tool, Skitch, Mac default, CleanShot X (Mac), Xnapper, etc.) that you may have used for your analysis.</li>\n<li>Please review the syllabus on our policy on AI-generated content should you choose to use AI tools to help you complete this assignment.</li>\n</ul></li>\n</ul>\n<p><strong>Grading Criteria</strong></p>\n<ul>\n<li>Depth of Analysis: 40%</li>\n<li>Clarity of Communication: 30%</li>\n<li>Relevance of Recommendations: 30%</li>\n</ul>\n<p><strong>Website Assignment</strong></p>\n<p><strong>Important:</strong> Please inform the TA as soon as you can if your assigned website requires you to reveal information you are uncomfortable with to proceed with the shopping cart. This includes: asking for a phone number, credit card info, or paid membership to sign up. Please complete this step as soon as possible to avoid last-minute issues, this will not be a valid reason to miss the deadline. You should complete the heuristic evaluation way before the submission deadline to allow sufficient time for writing.</p>\n<p class=\"omit\">[The table that gave each student their website is left out.]</p>",
+     "rubrics": [
+      {
+       "name": "Assignment 1",
+       "criteria": [
+        {
+         "name": "Introduction and Website",
+         "desc": "",
+         "levels": [
+          {
+           "name": "Done",
+           "pts": 1,
+           "text": "You did the heuristic analysis of the website assigned."
+          },
+          {
+           "name": "Not Done",
+           "pts": 0,
+           "text": "You did not do the heuristic analysis of the website assigned."
+          }
+         ]
+        },
+        {
+         "name": "Methodology",
+         "desc": "",
+         "levels": [
+          {
+           "name": "Done",
+           "pts": 1,
+           "text": "Very briefly explained Nielsen's 10 heuristics as the framework for the analysis."
+          },
+          {
+           "name": "Not Done",
+           "pts": 0,
+           "text": "Did not explain Nielsen's 10 heuristics as the framework for the analysis."
+          }
+         ]
+        },
+        {
+         "name": "Formatting and References",
+         "desc": "",
+         "levels": [
+          {
+           "name": "Done",
+           "pts": 1,
+           "text": "Properly formatted the submission."
+          },
+          {
+           "name": "Not Done",
+           "pts": 0,
+           "text": "Not formatted properly or has too many inconsistencies."
+          }
+         ]
+        },
+        {
+         "name": "Submitted as PDF and on Learn",
+         "desc": "",
+         "levels": [
+          {
+           "name": "Done",
+           "pts": 1,
+           "text": "Student submitted on Learn and as a PDF file."
+          },
+          {
+           "name": "Not Done",
+           "pts": 0,
+           "text": "Student submitted not on LEARN and/or not as a PDF file."
+          }
+         ]
+        },
+        {
+         "name": "Report Page Limit and Writing Quality",
+         "desc": "",
+         "levels": [
+          {
+           "name": "Done",
+           "pts": 1,
+           "text": "Within the word limit and sufficient writing quality."
+          },
+          {
+           "name": "Not Done",
+           "pts": 0,
+           "text": "Significantly over or under the word limit with poor writing quality."
+          }
+         ]
+        },
+        {
+         "name": "Findings and Heuristic",
+         "desc": "",
+         "levels": [
+          {
+           "name": "Perfect",
+           "pts": 20,
+           "text": "You used each of Nielsen's 10 heuristics to discuss the specific usability issues (or in the case no issues were identified, explained why the website did a good job) related to the heuristics found in the shopping cart functionality. Include screenshots for illustration."
+          },
+          {
+           "name": "Imperfect",
+           "pts": 0,
+           "text": "Your submission has one or more issues in this section."
+          }
+         ]
+        },
+        {
+         "name": "Recommendations",
+         "desc": "",
+         "levels": [
+          {
+           "name": "Perfect",
+           "pts": 20,
+           "text": "You suggested actionable improvements or explained why the website did a good job based on your findings."
+          },
+          {
+           "name": "Imperfect",
+           "pts": 0,
+           "text": "Your submission has one or more issues in this section."
+          }
+         ]
+        },
+        {
+         "name": "Visual Representation and Appendix",
+         "desc": "",
+         "levels": [
+          {
+           "name": "Perfect",
+           "pts": 5,
+           "text": "Screenshots are included for illustration for each of the 10 heuristics."
+          },
+          {
+           "name": "Imperfect",
+           "pts": 0,
+           "text": "Your submission has one or more issues in this section."
+          }
+         ]
+        }
+       ],
+       "showPoints": true,
+       "note": "Each line is done or not done."
+      }
+     ],
+     "course": "GBDA 310"
+    },
+    {
+     "id": "gbda310-inquiry",
+     "title": "Assignment 2: Contextual inquiry",
+     "term": "Fall 2023",
+     "kind": "Individual · 10%",
+     "tags": [
+      "TILT",
+      "Rubric"
+     ],
+     "brief": "<p>For your second assignment, you will begin to look at the world with “researcher’s eyes,” reflecting on the things with which you interact, and the quality of that interaction (carry a small notebook around with you and observe and record where you can in addition to this exercise).</p>\n<h3>For this assignment, do the following contextual inquiry:</h3>\n<ol>\n<li>Go to a local Cafe of your choice (Livery Yard, Balzac’s, Revel, Coffee Culture, Starbucks, Tim Hortons, Williams Fresh Cafe, etc.) and carry out a <strong>one-hour observation</strong>. <ul>\n<li>No you cannot go to a restaurant. A restaurant is in a different context from a coffee shop, and it will be difficult to evaluate your work with the same standard as the rest of the class.</li>\n</ul></li>\n<li>Observe and record movements, interactions, sights, sounds, spatial arrangements, and anything else that strikes you. Be an observer only -- it should be the sort of place where you can sit and take notes without bothering anyone. For this exercise, take <strong>two pictures</strong> of the location/environment you have chosen. You can use audio or video recording as an aid. You should take notes of what is happening in that location for about an hour. <ul>\n<li>Record the time you were there.</li>\n<li>Observe when it was the busiest during the time you were there.</li>\n<li>Ideally, use timestamps with your observations.</li>\n<li>Sketch a quick drawing or overview of the environment.</li>\n<li>(Optional:) If you have any friends frequenting this location, feel free to interview them about why they go to the location.<br/><br/></li>\n</ul></li>\n<li>Describe (be as detailed as you can) about the setting.</li>\n<li>Write down your observations on the spot, then write up longer versions immediately afterward. (Do not interview any strangers. If someone asks you what you are doing, tell them that it’s an assignment in a course about UX research.)</li>\n<li>You should spend at least twice as long writing up field notes as you did observe, probably longer. You will be surprised at the amount of detail you can record in one hour.</li>\n</ol>\n<h3>Your field notes should be a maximum of 1,500 words including:</h3>\n<ul>\n<li>Your first name and last name, obviously;</li>\n<li>The type of setting, and the date and time of your observations;</li>\n<li>Why you chose this setting;</li>\n<li>A rough map and detailed description of the setting (a verbal \"snapshot\");</li>\n<li>A description of what you saw; and finally,</li>\n<li>Your interpretations of what you saw.</li>\n</ul>\n<p>The description should be who, what, when, where -- and under a separate heading you can add your assumptions/inferences, and the assumed why, although be careful about too many too-detailed explanations of motivations because they are not part of your contextual inquiry. Conclude with a brief interpretation of at least one organizing principle of the setting. For instance:</p>\n<ul>\n<li>What patterns do you see?</li>\n<li>What deviations from the general order do you see?</li>\n<li>Are some people acting differently or being treated differently than others?</li>\n</ul>\n<p>The purpose of the exercise is to get you started in observing and notetaking and to give you the experience of being a “passive” (non-participant) observer in a contextual inquiry.</p>\n<h3>What are you handing in on Learn?</h3>\n<p>Upload your assignment as a <strong>PDF </strong>document in Learn. Your write-up should be <strong>no more than 1500 words</strong>. For your reference, a rubric has been created which we will use as the basis for grading.</p>",
+     "rubrics": [
+      {
+       "name": "Assignment 2",
+       "criteria": [
+        {
+         "name": "Observations",
+         "desc": "",
+         "levels": [
+          {
+           "name": "Outstanding",
+           "pts": 5,
+           "text": "Clearly distinguished observations that provide insightful details about the setting and interactions"
+          },
+          {
+           "name": "Great",
+           "pts": 4,
+           "text": "Good observations that provide useful details"
+          },
+          {
+           "name": "Good",
+           "pts": 3,
+           "text": "Basic observations made"
+          },
+          {
+           "name": "Satisfactory",
+           "pts": 2,
+           "text": "Observations lack depth or detail"
+          },
+          {
+           "name": "Unsatisfactory",
+           "pts": 1,
+           "text": "Limited or missing observations"
+          }
+         ]
+        },
+        {
+         "name": "Inferences",
+         "desc": "",
+         "levels": [
+          {
+           "name": "Outstanding",
+           "pts": 5,
+           "text": "Thoughtful interpretations and assumptions based on observations"
+          },
+          {
+           "name": "Great",
+           "pts": 4,
+           "text": "Reasonable inferences drawn from observations"
+          },
+          {
+           "name": "Good",
+           "pts": 3,
+           "text": "Basic inferences made"
+          },
+          {
+           "name": "Satisfactory",
+           "pts": 2,
+           "text": "Inferences lack depth or detail"
+          },
+          {
+           "name": "Unsatisfactory",
+           "pts": 1,
+           "text": "Limited or missing inferences"
+          }
+         ]
+        },
+        {
+         "name": "Field Notes",
+         "desc": "",
+         "levels": [
+          {
+           "name": "Outstanding",
+           "pts": 5,
+           "text": "Field notes are highly detailed and thoughtful. More than 1 hour spent observing and taking notes"
+          },
+          {
+           "name": "Great",
+           "pts": 4,
+           "text": "Good field notes with useful details. 1 hour spent on observation"
+          },
+          {
+           "name": "Good",
+           "pts": 3,
+           "text": "Basic field notes completed"
+          },
+          {
+           "name": "Satisfactory",
+           "pts": 2,
+           "text": "Field notes lack depth or detail"
+          },
+          {
+           "name": "Unsatisfactory",
+           "pts": 1,
+           "text": "Incomplete or missing field notes"
+          }
+         ]
+        },
+        {
+         "name": "Report",
+         "desc": "",
+         "levels": [
+          {
+           "name": "Outstanding",
+           "pts": 5,
+           "text": "Report is professionally written with no errors. Shows deep understanding and mastery of assignment"
+          },
+          {
+           "name": "Great",
+           "pts": 4,
+           "text": "Well-written report with no errors that meets requirements"
+          },
+          {
+           "name": "Good",
+           "pts": 3,
+           "text": "Report reasonably complete with minor errors"
+          },
+          {
+           "name": "Satisfactory",
+           "pts": 2,
+           "text": "Report is satisfactory but could be more thorough or have formatting/grammatical issues"
+          },
+          {
+           "name": "Unsatisfactory",
+           "pts": 1,
+           "text": "Report is incomplete, of low quality, or contains major errors"
+          }
+         ]
+        }
+       ],
+       "showPoints": true
+      }
+     ],
+     "course": "GBDA 310"
+    },
+    {
+     "id": "gbda310-final",
+     "title": "Group final project: comprehensive UX design for a real-world application",
+     "term": "Fall 2023",
+     "kind": "Group · 40%",
+     "tags": [
+      "TILT",
+      "Rubric",
+      "Peer review"
+     ],
+     "brief": "<p>In your final groups of 4-5 people, you will do design work resulting in 3 deliverables at the end of the course that will develop your understanding and abilities to design user experiences. The deliverables must clearly convey practical solutions to the assigned design briefs. As this is a group assignment, you will need to manage your group to complete the assignment (consider signing a group contract; I've attached a template here).​<br/><br/>Your job is to <strong>(1)</strong> carry out user research to discover if there is a <strong>user need</strong> for products like the ones mentioned in the design briefs. You will then <strong>(2) </strong>identify the key user groups, <strong>(3)</strong> identify the key tasks, <strong>(4)</strong> set usability goals,<strong> (5)</strong> develop a prototype and <strong>(6) </strong>run user research before iterating on the UX design.</p>\n<p>Your deliverables will not be graded so much on the quality of your design solution as much as your ability to clearly convey your design ideas in a way that invites feedback, illustrates the potential user experience, and sparks new thinking and discussion of design ideas. We will evaluate your project progress in the following three deliverables:</p>\n<p><strong>1a. Pitch Presentation (10%) </strong>[Slides due <strong>November 12 11:59 pm</strong> EST]</p>\n<p>This is a product pitch to convey your initial <strong>need for the product</strong> and <strong>key user groups</strong>, as well as presenting an overview of your solution (prototype). Think of this as a concise product pitch that you might use in seeking an investor for your design, which likely does not yet exist in more than a concept or rough mock-up. The initial pitch will be presented in class.</p>\n<p>Carry out a user research investigation first. Speak with <strong>a minimum of 5 users</strong> of different systems to the system that you have chosen (e.g., from a competing product or a product in a similar niche). For the design brief, it should not be difficult for you to find users: even friends and family. You should be able to source people who those products are aimed at. They have been chosen so that they are broad in their user base. <strong>The pitch will be exactly 3 minutes long, with 2 minutes reserved for questions (5 minutes total). You need to be able to articulate the important parts of your presentation to us in a meaningful way, thus, all materials must be submitted to LEARN the day before class. <br/></strong></p>\n<p>You will need to answer the following questions in your pitch presentation:</p>\n<p>Is there a need for this system?</p>\n<ul>\n<li>If not, how can you change it so that it meets a need?</li>\n<li>Who are the main user groups? There should be more than one user group: what are they?</li>\n<li>What day-to-day activities do they engage in that are related to the product?</li>\n<li>What do they do now that is related to that product? Go out and observe them; go out into the real world, where they do this activity now.</li>\n<li>What is the workflow (the sequence of their activities)? Write this down. You need to observe people, not just interview them. Interview them as well, ask them some questions, but as mentioned when talking about contextual inquiry and field visits, interviewing is a component, but user research is also strongly about observation. Do not overthink this step, overplan it, and spend ages at it. You could do the research phase of this activity easily in a day. Maybe even half a day. The quicker you get your feet wet and jump in, the easier you will find it to come up with hypotheses to test.</li>\n</ul>\n<p>Who are the key users for this system?</p>\n<ul>\n<li>Document all the different user groups you can think of (not too many). Give each group of users a name. Then write down why they need to use the thing you are developing. Remember to think of this from the user’s perspective. Do not write down the functions they will use, but instead think of the goals that they are trying to accomplish. Think of the problem that you are solving for this user.</li>\n<li>Think about the kind of information that the user needs to achieve those goals. This is where you can start to think about possible functions or features, they may need.</li>\n<li>After this, write down how you think the groups differ from each other. What is it that makes that group a group? What is it that binds them together?</li>\n</ul>\n<p><strong>1b. Prototype</strong> [due <strong>November 12 11:59 pm</strong> EST]</p>\n<p>For this assignment, you will be creating a prototype deliverable using Figma. The goal is to design 6 medium-fidelity screens that address a specific customer pain point mentioned in the pitch presentation.</p>\n<p>Here are the requirements for the prototype deliverable:</p>\n<ul>\n<li>Design <strong>6 medium-fidelity screens</strong>: Each screen should address the customer pain point and be a functional whole to support user testing. Do not include a login or user profile as part of these screens.</li>\n<li>Ensure all interactive elements are linked: Make sure that all interactive elements within the screens are properly linked. This will allow users to navigate through the prototype and reach a logical conclusion.</li>\n<li>Provide a view-only link to the Figma document: Once you have completed the prototype, share a view-only link to the Figma document with all instructors of the class (their email addresses). Please ensure that all instructors can access the document using the provided link. If any instructor cannot view the document, it may result in a loss of marks. If you prefer, you can make the Figma document public.</li>\n<li>Upload a PDF document showcasing the connections: Additionally, please create a PDF document showcasing the connections between the elements in your prototype. You can use screenshots if necessary. Upload this PDF document to the Dropbox.</li>\n</ul>\n<p>If you have any questions or need further clarification, feel free to reach out to us.<br/><br/></p>\n<p><strong>2. Final Presentation (10%)</strong> [Slides due <strong>December 3 11:59 pm</strong> EST]</p>\n<p>Your final presentation should be ~8 minutes and 2 minutes of Q&amp;A from the class. Similar to the pitch presentation, we will cut you off at the 8-minute mark.</p>\n<p>A rough outline for the final presentation (below is required), and you can always choose to add more if you feel it is needed (see rubric as well).</p>\n<p>Research Question<br/>Problem Space<br/>Competitor Analysis<br/>Business aspect, how do you make money?<br/>User Research<br/>Prototype (and how it has changed or iterated)<br/>Quick demo of prototype/walkthrough<br/>Lessons learned/challenges<br/>Improvements and next steps</p>\n\n<p><strong>3. Final Report (20%)</strong> [due <strong>December 4 11:59 pm</strong> EST]</p>\n<p>Please present a professionally formatted final report that lays out the following:</p>\n<ol>\n<li>A write-up of the prototype, along with any changes from the original pitch that you thought necessary while building the prototype</li>\n<li>Detailed report on your testing, which includes as a minimum:</li>\n</ol>\n<p>a. Introduction</p>\n<p>In the final report, you will be presenting a professionally formatted document that provides a comprehensive overview of your UX research project. The report should include detailed information about the prototype, testing process, results, and interpretation of the findings. Additionally, you will need to outline the changes made to the prototype based on the user testing results. <strong>You must justify these changes.</strong></p>\n<p>b. Prototype Description</p>\n<p>Begin the report by providing a thorough write-up of the prototype you developed. Explain the purpose of the prototype and highlight any changes you made from the original pitch presentation. Discuss the specific customer pain point that the prototype aims to address and how the design decisions align with this objective.</p>\n<p>c. Testing Process</p>\n<p>Describe the setup and apparatus used for testing the prototype. Provide information about the participants involved in the testing phase, including relevant demographics and any recruitment criteria. Explain the testing process itself, including the tasks assigned to participants and any specific instructions provided.</p>\n<p>d. Results and Interpretation</p>\n<p>Present the results of your user testing in a clear and organized manner. Include both qualitative and quantitative data, highlighting key findings and trends that emerged from the testing sessions. Interpret the results by providing insights and analysis based on the data collected. Discuss any unexpected findings or notable observations that may have influenced the design decisions.</p>\n<p>e. Changes to the Prototype</p>\n<p>Create a table that outlines the changes needed to address each finding from the user testing. The table should be structured to clearly link each finding with the corresponding design modification. Ensure that the changes address the specific pain points identified during testing and align with best practices in UX design. Note that a minimum of fifteen nuanced and thoughtful findings are expected per prototype.</p>\n<p>f. Conclusion</p>\n<p>Conclude the report by summarizing the main findings and insights obtained from the UX research process. Reflect on the overall success of the prototype in addressing the customer pain point and meeting the project objectives. Discuss any limitations or challenges encountered during the research and testing phases. Provide recommendations for <em>future iterations</em> or <em>improvements</em> based on the findings and insights from the UX research. Highlight areas that could be further explored or enhanced to optimize the user experience and address any remaining pain points that you were not able to address.</p>\n<p>Note: For each prototype, we require a minimum of fifteen findings. Please note that these findings should not be \"basic heuristics\" as we will deduct marks if your initial design does not meet Nielsen's 10 heuristics. It is crucial that the findings are nuanced, thoughtful, and based on user research.</p>",
+     "rubrics": [
+      {
+       "name": "Pitch presentation",
+       "criteria": [
+        {
+         "name": "Visual Appeal of Presentation",
+         "desc": "",
+         "levels": [
+          {
+           "name": "Outstanding",
+           "pts": 4,
+           "text": "Excellent visuals that are tied into the overall story of the research."
+          },
+          {
+           "name": "Great",
+           "pts": 3,
+           "text": "Appropriate visuals are used and explained by the speaker."
+          },
+          {
+           "name": "Good",
+           "pts": 2,
+           "text": "Visuals are used but not explained or put in context."
+          },
+          {
+           "name": "Satisfactory",
+           "pts": 1,
+           "text": "Visuals are used but not explained or put in context."
+          },
+          {
+           "name": "Unsatisfactory",
+           "pts": 0,
+           "text": "There is no visual appeal of the presentation."
+          }
+         ]
+        },
+        {
+         "name": "Problem Space",
+         "desc": "",
+         "levels": [
+          {
+           "name": "Outstanding",
+           "pts": 4,
+           "text": "Identifies a clear, nuanced problem space with evidence of thorough research and understanding of the issue at hand."
+          },
+          {
+           "name": "Great",
+           "pts": 3,
+           "text": "Clearly identifies the problem space with good research backing, but may lack nuanced details."
+          },
+          {
+           "name": "Good",
+           "pts": 2,
+           "text": "Adequately identifies the problem space, but with more generic details."
+          },
+          {
+           "name": "Satisfactory",
+           "pts": 1,
+           "text": "Identifies a basic problem space with minimal research."
+          },
+          {
+           "name": "Unsatisfactory",
+           "pts": 0,
+           "text": "Fails to identify or poorly defines the problem space."
+          }
+         ]
+        },
+        {
+         "name": "Proposed Solutions",
+         "desc": "",
+         "levels": [
+          {
+           "name": "Outstanding",
+           "pts": 4,
+           "text": "Offers innovative, well-researched solutions that directly address the identified problem space with detailed explanations."
+          },
+          {
+           "name": "Great",
+           "pts": 3,
+           "text": "Proposes strong solutions that are relevant to the problem space but may lack some innovation or detail."
+          },
+          {
+           "name": "Good",
+           "pts": 2,
+           "text": "Proposes adequate solutions with a connection to the problem space, but lacks depth."
+          },
+          {
+           "name": "Satisfactory",
+           "pts": 1,
+           "text": "Offers basic solutions with a weak connection to the problem space."
+          },
+          {
+           "name": "Unsatisfactory",
+           "pts": 0,
+           "text": "Provides irrelevant or no solutions to the identified problem space."
+          }
+         ]
+        },
+        {
+         "name": "Why Does This Matter?",
+         "desc": "",
+         "levels": [
+          {
+           "name": "Outstanding",
+           "pts": 4,
+           "text": "Articulates compellingly why the problem and solution matter, with a clear impact on the user and society."
+          },
+          {
+           "name": "Great",
+           "pts": 3,
+           "text": "Explains why the problem and solution are important with a good impact description, but could be more compelling."
+          },
+          {
+           "name": "Good",
+           "pts": 2,
+           "text": "Provides a reasonable explanation of its importance, but the impact is not clearly articulated."
+          },
+          {
+           "name": "Satisfactory",
+           "pts": 1,
+           "text": "Gives a basic explanation of the problem's importance but lacks impact and persuasion."
+          },
+          {
+           "name": "Unsatisfactory",
+           "pts": 0,
+           "text": "Does not explain or poorly explains why the problem and solution matter."
+          }
+         ]
+        },
+        {
+         "name": "Key Demographics",
+         "desc": "",
+         "levels": [
+          {
+           "name": "Outstanding",
+           "pts": 4,
+           "text": "Provides a detailed, insightful analysis of key demographics with evidence from user research."
+          },
+          {
+           "name": "Great",
+           "pts": 3,
+           "text": "Provides a clear analysis of key demographics with good research but less detail."
+          },
+          {
+           "name": "Good",
+           "pts": 2,
+           "text": "Offers a satisfactory overview of key demographics, but with limited research."
+          },
+          {
+           "name": "Satisfactory",
+           "pts": 1,
+           "text": "Describes key demographics in basic terms, with minimal research support."
+          },
+          {
+           "name": "Unsatisfactory",
+           "pts": 0,
+           "text": "Fails to identify or inadequately describes key demographics."
+          }
+         ]
+        },
+        {
+         "name": "Competitive Advantage",
+         "desc": "",
+         "levels": [
+          {
+           "name": "Outstanding",
+           "pts": 4,
+           "text": "Presents a clear, strategic competitive advantage, well-supported by research and clearly linked to user and market needs."
+          },
+          {
+           "name": "Great",
+           "pts": 3,
+           "text": "Identifies a competitive advantage with good support, but the link to user and market needs could be stronger."
+          },
+          {
+           "name": "Good",
+           "pts": 2,
+           "text": "Describes a competitive advantage, but with generic support and weak linkage to user/market needs."
+          },
+          {
+           "name": "Satisfactory",
+           "pts": 1,
+           "text": "Outlines a basic competitive advantage, but lacks clear research support and relevance."
+          },
+          {
+           "name": "Unsatisfactory",
+           "pts": 0,
+           "text": "Does not identify a competitive advantage or presents one that is irrelevant or unsupported."
+          }
+         ]
+        },
+        {
+         "name": "Length of Presentation",
+         "desc": "",
+         "levels": [
+          {
+           "name": "Outstanding",
+           "pts": 4,
+           "text": "3 minutes."
+          },
+          {
+           "name": "Great",
+           "pts": 3,
+           "text": "Between 2:30 - 2:59, or we cut you off at the 3-minute timer. over the 3-minute timer."
+          },
+          {
+           "name": "Good",
+           "pts": 2,
+           "text": "Less than 2:30 minutes."
+          },
+          {
+           "name": "Satisfactory",
+           "pts": 1,
+           "text": "Less than 1:30 minutes."
+          },
+          {
+           "name": "Unsatisfactory",
+           "pts": 0,
+           "text": "Did not present."
+          }
+         ]
+        }
+       ],
+       "showPoints": true
+      },
+      {
+       "name": "Final presentation",
+       "criteria": [
+        {
+         "name": "Research Question",
+         "desc": "",
+         "levels": [
+          {
+           "name": "Outstanding",
+           "pts": 5,
+           "text": "Presents one or more clearly defined, insightful research question that drives the UX design process and addresses core user needs."
+          },
+          {
+           "name": "Great",
+           "pts": 4,
+           "text": "Research question/s is/are well-defined, relevant, and guides the UX design, but may lack some depth or insight."
+          },
+          {
+           "name": "Good",
+           "pts": 3,
+           "text": "Research question/s is/are clear and relevant but could be more specific or insightful."
+          },
+          {
+           "name": "Satisfactory",
+           "pts": 2,
+           "text": "Research question/s is/are somewhat vague or only partially relevant to the UX design process."
+          },
+          {
+           "name": "Unsatisfactory",
+           "pts": 1,
+           "text": "Lacks a clear or relevant research question."
+          }
+         ]
+        },
+        {
+         "name": "Problem Space",
+         "desc": "",
+         "levels": [
+          {
+           "name": "Outstanding",
+           "pts": 5,
+           "text": "Demonstrates an exceptional understanding of the problem space with comprehensive analysis and insightful conclusions."
+          },
+          {
+           "name": "Great",
+           "pts": 4,
+           "text": "Shows a strong understanding of the problem space with good analysis, but less depth compared to 'Outstanding'."
+          },
+          {
+           "name": "Good",
+           "pts": 3,
+           "text": "Adequately identifies and analyzes the problem space, but with less detail and insight."
+          },
+          {
+           "name": "Satisfactory",
+           "pts": 2,
+           "text": "Basic understanding of the problem space, with minimal analysis or superficial conclusions."
+          },
+          {
+           "name": "Unsatisfactory",
+           "pts": 1,
+           "text": "Poorly defines or misunderstands the problem space."
+          }
+         ]
+        },
+        {
+         "name": "Competitor Analysis",
+         "desc": "",
+         "levels": [
+          {
+           "name": "Outstanding",
+           "pts": 5,
+           "text": "Provides a thorough, insightful analysis of competitors, clearly highlighting gaps and opportunities for the UX design."
+          },
+          {
+           "name": "Great",
+           "pts": 4,
+           "text": "Competitor analysis is robust and informative, though it may lack some depth or unique insights."
+          },
+          {
+           "name": "Good",
+           "pts": 3,
+           "text": "Good analysis of competitors, but lacks thoroughness or deeper insights."
+          },
+          {
+           "name": "Satisfactory",
+           "pts": 2,
+           "text": "Competitor analysis is basic and somewhat informative, but lacks depth or clarity."
+          },
+          {
+           "name": "Unsatisfactory",
+           "pts": 1,
+           "text": "Fails to provide a meaningful competitor analysis."
+          }
+         ]
+        },
+        {
+         "name": "User Research",
+         "desc": "",
+         "levels": [
+          {
+           "name": "Outstanding",
+           "pts": 5,
+           "text": "User research is extensive, well-conducted, and directly informs the UX design process with clear, actionable insights."
+          },
+          {
+           "name": "Great",
+           "pts": 4,
+           "text": "Conducts good user research that informs the UX design, though it may lack some breadth or depth."
+          },
+          {
+           "name": "Good",
+           "pts": 3,
+           "text": "User research is adequate, providing some useful insights, but is not comprehensive."
+          },
+          {
+           "name": "Satisfactory",
+           "pts": 2,
+           "text": "User research is limited, offering only basic insights with minimal impact on the UX design."
+          },
+          {
+           "name": "Unsatisfactory",
+           "pts": 1,
+           "text": "Inadequate or irrelevant user research."
+          }
+         ]
+        },
+        {
+         "name": "Lessons Learned",
+         "desc": "",
+         "levels": [
+          {
+           "name": "Outstanding",
+           "pts": 5,
+           "text": "Demonstrates deep learning with insightful reflections on the design process, clearly showing how these lessons impacted UX."
+          },
+          {
+           "name": "Great",
+           "pts": 4,
+           "text": "Shows clear learning and reflection, with a good understanding of its impact on UX, but less detailed."
+          },
+          {
+           "name": "Good",
+           "pts": 3,
+           "text": "Adequate reflection on lessons learned, but connections to UX impact could be stronger."
+          },
+          {
+           "name": "Satisfactory",
+           "pts": 2,
+           "text": "Lessons learned are identified, but reflections are basic and lack depth in relation to UX."
+          },
+          {
+           "name": "Unsatisfactory",
+           "pts": 1,
+           "text": "Fails to articulate lessons learned or their relevance to UX."
+          }
+         ]
+        },
+        {
+         "name": "Improvements & Next Steps",
+         "desc": "",
+         "levels": [
+          {
+           "name": "Outstanding",
+           "pts": 5,
+           "text": "Articulates clear, strategic improvements and next steps, demonstrating forward-thinking and continuous improvement in UX."
+          },
+          {
+           "name": "Great",
+           "pts": 4,
+           "text": "Identifies solid improvements and next steps, but may lack a long-term strategic view or detail."
+          },
+          {
+           "name": "Good",
+           "pts": 3,
+           "text": "Outlines some improvements and next steps, but lacks clarity or strategic planning."
+          },
+          {
+           "name": "Satisfactory",
+           "pts": 2,
+           "text": "Provides basic ideas for improvements and next steps, but they are not well-developed or strategic."
+          },
+          {
+           "name": "Unsatisfactory",
+           "pts": 1,
+           "text": "Lacks meaningful suggestions for improvements or next steps."
+          }
+         ]
+        }
+       ],
+       "showPoints": true
+      },
+      {
+       "name": "Final report",
+       "criteria": [
+        {
+         "name": "Introduction",
+         "desc": "",
+         "levels": [
+          {
+           "name": "Outstanding",
+           "pts": 4,
+           "text": "Provides a comprehensive, engaging introduction, setting a clear context for the report with exceptional clarity and relevance."
+          },
+          {
+           "name": "Great",
+           "pts": 3,
+           "text": "Strong, clear introduction, setting good context for the report, though slightly less engaging or comprehensive."
+          },
+          {
+           "name": "Good",
+           "pts": 2,
+           "text": "Good introduction, provides context, but lacks some detail or engagement."
+          },
+          {
+           "name": "Satisfactory",
+           "pts": 1,
+           "text": "Adequate introduction, sets basic context but lacks depth or clarity."
+          },
+          {
+           "name": "Unsatisfactory",
+           "pts": 0,
+           "text": "Poor or missing introduction, fails to set context for the report."
+          }
+         ]
+        },
+        {
+         "name": "Prototype Description",
+         "desc": "",
+         "levels": [
+          {
+           "name": "Outstanding",
+           "pts": 4,
+           "text": "Exceptionally detailed and insightful description of the prototype, with clear rationale for changes and alignment with objectives."
+          },
+          {
+           "name": "Great",
+           "pts": 3,
+           "text": "Very good description, clear rationale for changes, though could provide more insight or detail."
+          },
+          {
+           "name": "Good",
+           "pts": 2,
+           "text": "Adequate description of the prototype, with some rationale for changes, but lacks depth or insight."
+          },
+          {
+           "name": "Satisfactory",
+           "pts": 1,
+           "text": "Basic description of the prototype, but lacks detail or clear rationale for changes."
+          },
+          {
+           "name": "Unsatisfactory",
+           "pts": 0,
+           "text": "Inadequate or irrelevant description of the prototype, missing rationale."
+          }
+         ]
+        },
+        {
+         "name": "User Testing Process",
+         "desc": "",
+         "levels": [
+          {
+           "name": "Outstanding",
+           "pts": 4,
+           "text": "Thoroughly describes the testing process with excellent detail and clarity, including participant demographics and recruitment."
+          },
+          {
+           "name": "Great",
+           "pts": 3,
+           "text": "Good description of testing process, detailed and clear, but may lack some nuance."
+          },
+          {
+           "name": "Good",
+           "pts": 2,
+           "text": "Satisfactory description, covers key aspects but lacks some detail or clarity."
+          },
+          {
+           "name": "Satisfactory",
+           "pts": 1,
+           "text": "Basic description of the testing process, but missing important details or clarity."
+          },
+          {
+           "name": "Unsatisfactory",
+           "pts": 0,
+           "text": "Poor or incomplete description of the testing process."
+          }
+         ]
+        },
+        {
+         "name": "Results & Interpretation",
+         "desc": "",
+         "levels": [
+          {
+           "name": "Outstanding",
+           "pts": 4,
+           "text": "Expertly presents and interprets results, providing deep insights, clear trends, and thoughtful analysis of unexpected findings."
+          },
+          {
+           "name": "Great",
+           "pts": 3,
+           "text": "Presents and interprets results well, with clear trends and good analysis, but could delve deeper into insights."
+          },
+          {
+           "name": "Good",
+           "pts": 2,
+           "text": "Adequately presents results with some interpretation, but lacks depth in analysis or insight."
+          },
+          {
+           "name": "Satisfactory",
+           "pts": 1,
+           "text": "Presents basic results with minimal interpretation, lacks depth in analysis."
+          },
+          {
+           "name": "Unsatisfactory",
+           "pts": 0,
+           "text": "Fails to present or interpret results effectively, lacking clarity or insight."
+          }
+         ]
+        },
+        {
+         "name": "Changes to Prototype",
+         "desc": "",
+         "levels": [
+          {
+           "name": "Outstanding",
+           "pts": 4,
+           "text": "Detailed, well-justified table of changes, each clearly linked to findings and pain points, demonstrating thoughtful UX practices."
+          },
+          {
+           "name": "Great",
+           "pts": 3,
+           "text": "Good table of changes, well-linked to findings, though some justifications could be stronger."
+          },
+          {
+           "name": "Good",
+           "pts": 2,
+           "text": "Adequate table of changes, links to findings, but lacks depth in justification or clarity."
+          },
+          {
+           "name": "Satisfactory",
+           "pts": 1,
+           "text": "Basic table of changes, some link to findings, but lacks thorough justification or alignment with UX best practices."
+          },
+          {
+           "name": "Unsatisfactory",
+           "pts": 0,
+           "text": "Poor or missing table of changes, lacks clear link to findings or rationale."
+          }
+         ]
+        },
+        {
+         "name": "Conclusion",
+         "desc": "",
+         "levels": [
+          {
+           "name": "Outstanding",
+           "pts": 4,
+           "text": "Provides a comprehensive, reflective conclusion, summarizing key insights, acknowledging limitations, and offering strategic recommendations."
+          },
+          {
+           "name": "Great",
+           "pts": 3,
+           "text": "Strong conclusion, summarizing findings well, with good recommendations, though slightly less reflective."
+          },
+          {
+           "name": "Good",
+           "pts": 2,
+           "text": "Good conclusion, summarizes main points, but could be more reflective or offer more detailed recommendations."
+          },
+          {
+           "name": "Satisfactory",
+           "pts": 1,
+           "text": "Basic conclusion, summarizes findings, but lacks depth, reflection, or detailed recommendations."
+          },
+          {
+           "name": "Unsatisfactory",
+           "pts": 0,
+           "text": "Inadequate or irrelevant conclusion, fails to summarize or reflect on findings."
+          }
+         ]
+        },
+        {
+         "name": "Report Length",
+         "desc": "",
+         "levels": [
+          {
+           "name": "Outstanding",
+           "pts": 4,
+           "text": "Report is concise, focused, and within the 50-page limit, emphasizing quality and relevance in content."
+          },
+          {
+           "name": "Great",
+           "pts": 3,
+           "text": "Report is mostly concise, slightly exceeding 50 pages but maintains high content quality."
+          },
+          {
+           "name": "Good",
+           "pts": 2,
+           "text": "Report is generally concise, within or slightly over the limit, but could be more focused."
+          },
+          {
+           "name": "Satisfactory",
+           "pts": 1,
+           "text": "Report is somewhat lengthy or slightly exceeds the limit or overly concise, with some irrelevant content."
+          },
+          {
+           "name": "Unsatisfactory",
+           "pts": 0,
+           "text": "Report exceeds the page limit significantly or is overly concise, lacking key information."
+          }
+         ]
+        },
+        {
+         "name": "Peer Review",
+         "desc": "",
+         "levels": [
+          {
+           "name": "Outstanding",
+           "pts": 4,
+           "text": "---"
+          },
+          {
+           "name": "Great",
+           "pts": 3,
+           "text": "---"
+          },
+          {
+           "name": "Good",
+           "pts": 2,
+           "text": "---"
+          },
+          {
+           "name": "Satisfactory",
+           "pts": 1,
+           "text": "---"
+          },
+          {
+           "name": "Unsatisfactory",
+           "pts": 0,
+           "text": "Reserved for individual grading."
+          }
+         ]
+        }
+       ],
+       "showPoints": true
+      }
+     ],
+     "course": "GBDA 310"
+    },
+    {
+     "id": "gbda310-paper",
+     "title": "Final paper",
+     "term": "Spring 2024",
+     "kind": "Individual · 40%",
+     "tags": [
+      "TILT",
+      "Rubric"
+     ],
+     "brief": "<p>Your report should contain the following sections, as outlined:</p>\n<p><strong>Abstract:</strong> a concise, clear, and concise summary of the paper.</p>\n<p><strong>Introduction:</strong> Describe why the problem you address is important. State what is lacking in the current knowledge and why this research is necessary. State the research question and the objectives of your study. <strong>Required</strong>:<strong> Pick a good problem. This will heavily determine your mark.</strong></p>\n<p><strong>Related Works:</strong> Provide the necessary background or related work. Synthesize information from a variety of significant sources related to the major point of the paper. Identify any gaps and unresolved questions in existing research and tie them to how your proposed research will address them. Cite all of your sources using any citation format.<strong> Required: You must provide a minimum of 5 related peer-reviewed papers to your topic.</strong></p>\n<p><strong>Methodology:</strong> Provide a detailed description of your proposed research design (e.g., study procedure, how many participants, obtaining consent; how will the researcher(s) interact with the participants), the UX methods that you are planning to use (data collection and analysis), and why those methods are appropriate (i.e., why did you select those methods? Why are they particularly good for addressing your research question?). You should demonstrate that you have a clear understanding of the research methods that you plan to use. <strong>Required: The methodology you select must adhere to and address your problem space.</strong></p>\n<p><strong>Paper length:</strong> approximately 1500-1800 words, or around 5 - 6 pages , excluding the title page and references.</p>\n<p><strong>Visual material:</strong> Include at least one image, figure, or table in your paper. The visual material should be informative and support the textual information in the paper. For example, you could include a graph that depicts a trend, a table of statistics, or an image relating to your research topic. </p>\n<h3><strong>Grading: </strong>The assignment is out of 80 marks. </h3>\n<ul>\n<li><strong>Abstract (5 marks): </strong>Complete, clear, well-organized summary of the 1) topic/research question, 2) research objectives, 3) methodology, and 4) anticipated outcomes/impact of the research. The abstract highlights key points of the research proposal.</li>\n<li><strong>Introduction (20 marks):</strong> The student clearly stated why the research topic/question is important and why this research is necessary. The research question and the objectives of the study are clear and well-defined. A great problem is identified.</li>\n<li><strong>Background (20 marks)</strong>: A comprehensive background is provided. The student demonstrates a clear understanding of the importance of the topic and how it relates to other work. Incorporates relevant external sources.</li>\n<li><strong>Methodology (30 marks):</strong> A detailed description of the proposed research design, including study procedure, participants, data collection, and analysis methods. The student demonstrates a clear understanding of the UX methods proposed in the research design and why they are appropriate.</li>\n<li><strong>Visual material (5 marks):</strong> There is at least one image, figure or table. The visual data is presented in an informative, accurate, and creative manner.</li>\n</ul>\n<h3><strong>What are you handing in on Learn?</strong></h3>\n<p>Upload your assignment as a PDF document: Final paper Dropbox.</p>\n<p><strong>Your submission can be in any format as long as it's consistent and follows Policy 71 adherence (and, of course, exportable as a PDF file).<br/></strong> <br/>For the students who want a paper template in .docx file, feel free to use: https://www.acm.org/binaries/content/assets/publications/taps/acm_submission_template.docx.<br/><br/>If you prefer Latex rather than Word, here's the official version: https://www.overleaf.com/latex/templates/acm-conference-proceedings-primary-article-template/wbvnghjbzwpc.</p>\n<h3>Questions?</h3>\n<p>Feel free to ask your TAs, [names], if you have any questions regarding this final paper's details. Any questions regarding marks or regrading should be addressed by the instructor, Ali.</p>",
+     "rubrics": [
+      {
+       "name": "Final paper",
+       "criteria": [
+        {
+         "name": "Abstract",
+         "desc": "",
+         "levels": [
+          {
+           "name": "Excellent",
+           "pts": 5,
+           "text": "Clear and comprehensive overview of research (objectives, methodology, key findings)"
+          },
+          {
+           "name": "Very good",
+           "pts": 4,
+           "text": "Good overview of research, but lacks depth in one or more areas"
+          },
+          {
+           "name": "Good",
+           "pts": 3,
+           "text": "Basic overview of research, but missing important info"
+          },
+          {
+           "name": "Satisfactory",
+           "pts": 2,
+           "text": "Limited info about research, lacks clarity"
+          },
+          {
+           "name": "Minimally acceptable",
+           "pts": 1,
+           "text": "Minimal or no info about research"
+          },
+          {
+           "name": "Insufficient evidence",
+           "pts": 0,
+           "text": "No content related to research"
+          }
+         ]
+        },
+        {
+         "name": "Visual Material",
+         "desc": "",
+         "levels": [
+          {
+           "name": "Excellent",
+           "pts": 5,
+           "text": "Accurate representation of data or information"
+          },
+          {
+           "name": "Very good",
+           "pts": 4,
+           "text": "Generally accurate in line with the research/study design, minor errors"
+          },
+          {
+           "name": "Good",
+           "pts": 3,
+           "text": "Adequate design, but lacks impact to the research/study design"
+          },
+          {
+           "name": "Satisfactory",
+           "pts": 2,
+           "text": "Only partially relevant to the research/study design"
+          },
+          {
+           "name": "Minimally acceptable",
+           "pts": 1,
+           "text": "Not relevant to the research/study design"
+          },
+          {
+           "name": "Insufficient evidence",
+           "pts": 0,
+           "text": "Irrelevant to the research/study design"
+          }
+         ]
+        },
+        {
+         "name": "Introduction",
+         "desc": "",
+         "levels": [
+          {
+           "name": "Excellent",
+           "pts": 20,
+           "text": "Effectively establishes the significance of the research problem"
+          },
+          {
+           "name": "Very good",
+           "pts": 17,
+           "text": "Provides relevant context for the research problem, but could be more in-depth"
+          },
+          {
+           "name": "Good",
+           "pts": 14,
+           "text": "Offers some context for the research problem, but it is limited"
+          },
+          {
+           "name": "Satisfactory",
+           "pts": 11,
+           "text": "Contextualization is weak or irrelevant"
+          },
+          {
+           "name": "Minimally acceptable",
+           "pts": 8,
+           "text": "Research problem is unclear or irrelevant"
+          },
+          {
+           "name": "Insufficient evidence",
+           "pts": 5,
+           "text": "No research problem identified"
+          }
+         ]
+        },
+        {
+         "name": "Background",
+         "desc": "",
+         "levels": [
+          {
+           "name": "Excellent",
+           "pts": 20,
+           "text": "Synthesizes relevant literature to support the research problem; at least a minimum of 5 papers cited."
+          },
+          {
+           "name": "Very good",
+           "pts": 17,
+           "text": "Reviews relevant literature but lacks depth or critical analysis; at least a minimum of 5 papers cited."
+          },
+          {
+           "name": "Good",
+           "pts": 14,
+           "text": "Mentions some relevant literature but lacks synthesis; at least a minimum of 5 papers cited."
+          },
+          {
+           "name": "Satisfactory",
+           "pts": 11,
+           "text": "Literature review is superficial or irrelevant; less than 5 relevant papers cited."
+          },
+          {
+           "name": "Minimally acceptable",
+           "pts": 8,
+           "text": "No literature review provided; less than 5 relevant papers cited."
+          },
+          {
+           "name": "Insufficient evidence",
+           "pts": 5,
+           "text": "No attempt to review literature; less than 5 relevant papers cited."
+          }
+         ]
+        },
+        {
+         "name": "Methodology",
+         "desc": "",
+         "levels": [
+          {
+           "name": "Excellent",
+           "pts": 30,
+           "text": "Clearly and precisely describes research design and procedures; with justification from supporting literature."
+          },
+          {
+           "name": "Very good",
+           "pts": 27,
+           "text": "Provides a clear overview of methods but lacks specificity in some areas; with justification from supporting literature."
+          },
+          {
+           "name": "Good",
+           "pts": 24,
+           "text": "Describes methods but lacks clarity or detail; with no justification from supporting literature."
+          },
+          {
+           "name": "Satisfactory",
+           "pts": 21,
+           "text": "Methods are vaguely described or difficult to understand; with no justification from supporting literature."
+          },
+          {
+           "name": "Minimally acceptable",
+           "pts": 18,
+           "text": "Methods are unclear or incomplete; with no justification from supporting literature."
+          },
+          {
+           "name": "Insufficient evidence",
+           "pts": 15,
+           "text": "No description of methods; with no justification from supporting literature."
+          }
+         ]
+        }
+       ],
+       "showPoints": true
+      }
+     ],
+     "course": "GBDA 310"
+    },
+    {
+     "id": "gbda402-proposal",
+     "title": "Video proposal: digital product/service",
+     "term": "Winter 2022",
+     "kind": "Individual · 5%",
+     "tags": [
+      "Specifications grading",
+      "Resubmission",
+      "TILT"
+     ],
+     "brief": "<ul>\n<li><strong>What is it? </strong>Proposal for the term project</li>\n<li><strong>Specs:</strong> A two-minute selfie-style video. Submit copy to the dropbox and supply a link to the video hosted on a streaming service, e.g., YouTube or Vimeo. The video must not be longer than 2 minutes: we will stop watching. Resubmissions must be submitted within 48 hours of initial rejection</li>\n<li><strong>Due:</strong> Friday, 14 January, 18:00 (dropbox)</li>\n<li><strong>Value</strong>: 5% of mark, or 2.5% if it undergoes rejection/resubmission (rubric)</li>\n</ul>\n<p>As your design prompt, GBDA 402 is using \"Reduced Inequalities within an Among Countries\", one of the UN's Sustainable Development Goals. This is a broad topic that gives you a lot of leeway to create a product that your team can plan, design, launch, and test by the end of term. </p>\n<h3>What Do I Need To Do?</h3>\n<p>Individuals must create a selfie-style video making a realistic, viable proposal for a digital product / service related to the design prompt. These are subject to approval by the instructors. If your proposal is rejected, you may resubmit a revised proposal within 48 hours; if that is accepted, you will receive partial credit. </p>\n<h3>Proposals and Teams</h3>\n<p>Teams must have a minimum of two approved proposals to be approved. This is so you have a back-up option in case your first idea turns out to be too problematic. </p>",
+     "rubrics": [
+      {
+       "name": "Video proposal",
+       "criteria": [
+        {
+         "name": "Approved / Rejected",
+         "desc": "",
+         "levels": [
+          {
+           "name": "Thumbs Up: Approved",
+           "pts": 5,
+           "text": "The proposal was approved. Well done!"
+          },
+          {
+           "name": "Thumbs Down: Rejected",
+           "pts": 2.5,
+           "text": "Your revised proposal was approved."
+          },
+          {
+           "name": "Thumbs Down: Rejected",
+           "pts": 0,
+           "text": "The proposal was rejected for one or more of the following reasons:\n• Too similar to pre-existing product / too crowded a market space\n• Product too vague\n• Not a digital product (not part of your skillset as a GBDA student)\n• Not feasible to develop in the course's timeframe\n• Target population vulnerable\n• Logically incoherent / self-defeating idea\nYou have the option of resubmitting for partial credit within 48 hours."
+          }
+         ]
+        }
+       ],
+       "showPoints": true,
+       "note": "A proposal approved on resubmission earned 2.5 of 5 points."
+      }
+     ],
+     "course": "GBDA 402"
+    },
+    {
+     "id": "gbda402-iterations",
+     "title": "Iteration and reports",
+     "term": "Winter 2022",
+     "kind": "Team · 3 × 15%",
+     "tags": [
+      "TILT",
+      "Rubric"
+     ],
+     "brief": "<ul>\n<li><strong>What are they?</strong> Reports of your team's accepted proposals, including concept, UX design, visual design, and user testing, alongside prototype iteration</li>\n<li><strong>Format:</strong> PDF; link to working prototype and PDF export of prototype</li>\n<li><strong>Due</strong> three times during the term:\n<ul>\n<li>11 February 18:00 EST (dropbox)</li>\n<li>11 March 18:00 EST (dropbox)</li>\n<li>8 April 18:00 EST (dropbox)</li>\n</ul></li>\n<li><strong>Value:</strong> 15% of final mark for each, or 45% in total (rubric for iterations 1 and 2; rubric for final iteration)</li>\n</ul>\n<p>Following an agile process of iterative development, students will delve more deeply into their chosen subjects as the term progresses. They will write three reports and provide access to three iterations, each more polished than the last. </p>\n<h3>What are we looking for? </h3>\n<h4>Prototype</h4>\n<ul>\n<li>UX. We are looking for a detailed prototype that explores user and work tasks thoroughly, using multiple personae to model flows</li>\n<li>Visual Design. We are looking for a thorough, thoughtful, and consistent application of the design principles outlined in the course. Layout, colour, typography, and interaction should be appropriate for the client and task</li>\n</ul>\n<h4>Report</h4>\n<ul>\n<li>Indicate the roles your team adopted for this particular iteration</li>\n<li>Briefly introduce your project</li>\n<li>Explain your goals for the iteration</li>\n<li>Describe your production for the iteration</li>\n<li>Explain your target user/customer</li>\n<li>Outline roadblocks</li>\n<li>Provide a business analysis reflection</li>\n<li>Provide a UX reflection</li>\n<li>Provide a visual design reflection</li>\n<li>Plans: look ahead to the next iteration (or, if the final iteration, what <em>would</em> you do if you continued on this project?)</li>\n<li>Action items for the next iteration (or, if the final iteration, action items <em>if you were to continue</em> on this project)</li>\n</ul>",
+     "rubrics": [
+      {
+       "name": "Iterations 1 and 2",
+       "criteria": [
+        {
+         "name": "1. What did you build and accomplish in the Iteration?",
+         "desc": "(Clear, concise, includes introduction and has considered the three pillars of capstone)",
+         "levels": [
+          {
+           "name": "Exceptional: A+",
+           "pts": 9.0909,
+           "text": "Iteration perfectly complete and exceeded capstone level goal: of professional quality"
+          },
+          {
+           "name": "Excellent: A",
+           "pts": 7.73,
+           "text": "Iteration superior and complete and met goal"
+          },
+          {
+           "name": "Good: B",
+           "pts": 6.82,
+           "text": "Iteration completed with some gaps toward Iteration goal"
+          },
+          {
+           "name": "Fair: C",
+           "pts": 5.91,
+           "text": "Iteration completed with several gaps toward Iteration goal"
+          },
+          {
+           "name": "Poor: D",
+           "pts": 5,
+           "text": "Iteration completed with significant gaps toward Iteration goal"
+          },
+          {
+           "name": "Very Poor: F",
+           "pts": 3.65,
+           "text": "Iteration incomplete or with significant, fatal errors"
+          }
+         ]
+        },
+        {
+         "name": "2. Why did you choose this as your goal for this Iteration?",
+         "desc": "(Evidence of justification from feedback)",
+         "levels": [
+          {
+           "name": "Exceptional: A+",
+           "pts": 9.0909,
+           "text": "Team perfectly incorporated insightful feedback fully into the Iteration Goal at a professional level"
+          },
+          {
+           "name": "Excellent: A",
+           "pts": 7.73,
+           "text": "Team incorporated significant insightful feedback into the Iteration Goal"
+          },
+          {
+           "name": "Good: B",
+           "pts": 6.82,
+           "text": "Team incorporated feedback with some gaps"
+          },
+          {
+           "name": "Fair: C",
+           "pts": 5.91,
+           "text": "Team incorporated some feedback into the Iteration Goal, but there were several gaps"
+          },
+          {
+           "name": "Poor: D",
+           "pts": 5,
+           "text": "Team incorporated some feedback into the Iteration Goal, but there were significant gaps"
+          },
+          {
+           "name": "Very Poor: F",
+           "pts": 3.65,
+           "text": "Team neglected to incorporate feedback into the Iteration Goal,"
+          }
+         ]
+        },
+        {
+         "name": "3. Who are you building this feature for?",
+         "desc": "(Clear, concise, relevant)",
+         "levels": [
+          {
+           "name": "Exceptional: A+",
+           "pts": 9.0909,
+           "text": "Iteration report perfectly connected to the target user and customer: of professional quality"
+          },
+          {
+           "name": "Excellent: A",
+           "pts": 7.73,
+           "text": "Iteration report very clearly connected to the target user and customer"
+          },
+          {
+           "name": "Good: B",
+           "pts": 6.82,
+           "text": "Iteration report considered both user and customer with some gaps"
+          },
+          {
+           "name": "Fair: C",
+           "pts": 5.91,
+           "text": "Iteration report considered both user and customer with several gaps"
+          },
+          {
+           "name": "Poor: D",
+           "pts": 5,
+           "text": "Iteration report poorly organised or failed to consider user and/or customer"
+          },
+          {
+           "name": "Very Poor: F",
+           "pts": 3.65,
+           "text": "Iteration report incomplete or failed to considerer and/or customer"
+          }
+         ]
+        },
+        {
+         "name": "4. What roadblocks / issues did you face?",
+         "desc": "",
+         "levels": [
+          {
+           "name": "Exceptional: A+",
+           "pts": 9.0909,
+           "text": "Team clearly outlined roadblocks at a professional level"
+          },
+          {
+           "name": "Excellent: A",
+           "pts": 7.73,
+           "text": "Team clearly outlined roadblocks very effectively"
+          },
+          {
+           "name": "Good: B",
+           "pts": 6.82,
+           "text": "Team outlined roadblocks, with some gaps"
+          },
+          {
+           "name": "Fair: C",
+           "pts": 5.91,
+           "text": "Team poorly or did not outline any roadblocks, or explanation was unclear"
+          },
+          {
+           "name": "Poor: D",
+           "pts": 5,
+           "text": "Team outlined roadblocks poorly"
+          },
+          {
+           "name": "Very Poor: F",
+           "pts": 3.65,
+           "text": "Team neglected to outline any roadblocks"
+          }
+         ]
+        },
+        {
+         "name": "5. Business reflection: What did you learn from this Iteration that will help you improve the business model? How did your thinking evolve?",
+         "desc": "",
+         "levels": [
+          {
+           "name": "Exceptional: A+",
+           "pts": 9.0909,
+           "text": "Team showed exceptional evolution in their thinking:at a professional level"
+          },
+          {
+           "name": "Excellent: A",
+           "pts": 7.73,
+           "text": "Team showed superior evolution in their thinking"
+          },
+          {
+           "name": "Good: B",
+           "pts": 6.82,
+           "text": "Team showed some evolution in their thinking"
+          },
+          {
+           "name": "Fair: C",
+           "pts": 5.91,
+           "text": "Team showed little evolution in their thinking"
+          },
+          {
+           "name": "Poor: D",
+           "pts": 5,
+           "text": "Team showed no evolution in their thinking"
+          },
+          {
+           "name": "Very Poor: F",
+           "pts": 3.65,
+           "text": "Team neglected to outline anything they learned"
+          }
+         ]
+        },
+        {
+         "name": "6. UX reflection: What did you learn from a UX perspective, in this Iteration, that will help your team better understand your user needs? How did your thinking evolve?",
+         "desc": "",
+         "levels": [
+          {
+           "name": "Exceptional: A+",
+           "pts": 9.0909,
+           "text": "Team showed exceptional evolution in their thinking:at a professional level"
+          },
+          {
+           "name": "Excellent: A",
+           "pts": 7.73,
+           "text": "Team showed superior evolution in their thinking"
+          },
+          {
+           "name": "Good: B",
+           "pts": 6.82,
+           "text": "Team showed some evolution in their thinking"
+          },
+          {
+           "name": "Fair: C",
+           "pts": 5.91,
+           "text": "Team showed little evolution in their thinking"
+          },
+          {
+           "name": "Poor: D",
+           "pts": 5,
+           "text": "Team showed no evolution in their thinking"
+          },
+          {
+           "name": "Very Poor: F",
+           "pts": 3.65,
+           "text": "Team neglected to outline anything they learned"
+          }
+         ]
+        },
+        {
+         "name": "7. Visual Design reflection: What did you learn from this Iteration that will help you improve your visual design? How did your thinking evolve?",
+         "desc": "",
+         "levels": [
+          {
+           "name": "Exceptional: A+",
+           "pts": 9.0909,
+           "text": "Team showed exceptional evolution in their thinking:at a professional level"
+          },
+          {
+           "name": "Excellent: A",
+           "pts": 7.73,
+           "text": "Team showed superior evolution in their thinking"
+          },
+          {
+           "name": "Good: B",
+           "pts": 6.82,
+           "text": "Team showed some evolution in their thinking"
+          },
+          {
+           "name": "Fair: C",
+           "pts": 5.91,
+           "text": "Team showed little evolution in their thinking"
+          },
+          {
+           "name": "Poor: D",
+           "pts": 5,
+           "text": "Team showed no evolution in their thinking"
+          },
+          {
+           "name": "Very Poor: F",
+           "pts": 3.65,
+           "text": "Team neglected to outline anything they learned"
+          }
+         ]
+        },
+        {
+         "name": "8. What will your team do differently in the next Iteration to improve?",
+         "desc": "(Appropriate and tangible tasks for team to accomplish)",
+         "levels": [
+          {
+           "name": "Exceptional: A+",
+           "pts": 9.0909,
+           "text": "Team provided an exceptional roadmap of tasks to improve in the next Iteration:at a professional level"
+          },
+          {
+           "name": "Excellent: A",
+           "pts": 7.73,
+           "text": "Team provided an excellent roadmap of tasks to improve in the next Iteration"
+          },
+          {
+           "name": "Good: B",
+           "pts": 6.82,
+           "text": "Team provided a solid list of tasks to improve in the next Iteration"
+          },
+          {
+           "name": "Fair: C",
+           "pts": 5.91,
+           "text": "Team provided a vague or unfocused list of ways to improve in the next Iteration"
+          },
+          {
+           "name": "Poor: D",
+           "pts": 5,
+           "text": "Team outlined very unclear or incomplete ways to improve in the next Iteration"
+          },
+          {
+           "name": "Very Poor: F",
+           "pts": 3.65,
+           "text": "Team neglected to consider ways to improve in the next Iteration"
+          }
+         ]
+        },
+        {
+         "name": "9. What action items do you hope to accomplish in the next Iteration",
+         "desc": "(Realistic expectations)",
+         "levels": [
+          {
+           "name": "Exceptional: A+",
+           "pts": 9.0909,
+           "text": "Team provided an exceptional list of insightful action items for the next Iteration:at a professional level"
+          },
+          {
+           "name": "Excellent: A",
+           "pts": 7.73,
+           "text": "Team provided an insightful list of action items for the next Iteration"
+          },
+          {
+           "name": "Good: B",
+           "pts": 6.82,
+           "text": "Team provided a solid list of action items for the next Iteration"
+          },
+          {
+           "name": "Fair: C",
+           "pts": 5.91,
+           "text": "Team provided a a vague or unfocused list of action items for the next Iteration"
+          },
+          {
+           "name": "Poor: D",
+           "pts": 5,
+           "text": "Team provided poor list of action items for the next Iteration"
+          },
+          {
+           "name": "Very Poor: F",
+           "pts": 3.65,
+           "text": "Team neglected to provide any action items for the next Iteration"
+          }
+         ]
+        },
+        {
+         "name": "10. UX execution quality. Did you attend to details? Are tasks thoroughly explored?",
+         "desc": "",
+         "levels": [
+          {
+           "name": "Exceptional: A+",
+           "pts": 9.0909,
+           "text": "Thorough and exhaustive integration of multiple tasks and personae. Professional-level work"
+          },
+          {
+           "name": "Excellent: A",
+           "pts": 7.73,
+           "text": "Superior integration of multiple tasks and personae"
+          },
+          {
+           "name": "Good: B",
+           "pts": 6.82,
+           "text": "Integration of primary work roles and/or personae. Some cursorily-defined areas"
+          },
+          {
+           "name": "Fair: C",
+           "pts": 5.91,
+           "text": "Integration of primary work roles and/or personae. Some overlooked areas"
+          },
+          {
+           "name": "Poor: D",
+           "pts": 5,
+           "text": "Problematic integration of work roles/personae. Several missing components"
+          },
+          {
+           "name": "Very Poor: F",
+           "pts": 3.65,
+           "text": "Inadequate integration. Critical flows missing from the prototype"
+          }
+         ]
+        },
+        {
+         "name": "11. Visual Design execution quality. How professional is the presentation?",
+         "desc": "",
+         "levels": [
+          {
+           "name": "Exceptional: A+",
+           "pts": 9.0909,
+           "text": "Flawless application of design principles outlined in the course. Professional-level quality"
+          },
+          {
+           "name": "Excellent: A",
+           "pts": 7.73,
+           "text": "Excellent application of design principles outlined in the course"
+          },
+          {
+           "name": "Good: B",
+           "pts": 6.82,
+           "text": "Good application of design principles outlined in the course. Small missteps"
+          },
+          {
+           "name": "Fair: C",
+           "pts": 5.91,
+           "text": "Uneven application of design principles (e.g., layout, style, colour and/or typography) outlined in the course"
+          },
+          {
+           "name": "Poor: D",
+           "pts": 5,
+           "text": "Poor application of design principles outlined in the course. Significant clumsiness in e.g., layout, style, colour and/or typography"
+          },
+          {
+           "name": "Very Poor: F",
+           "pts": 3.65,
+           "text": "Inadequate application of design principles outlined in the course in e.g., layout, style, colour and/or typography"
+          }
+         ]
+        }
+       ],
+       "showPoints": false,
+       "note": "Iteration 3 used the same rubric, with rows 8 and 9 about a hypothetical next iteration and the handoff."
+      }
+     ],
+     "course": "GBDA 402"
+    },
+    {
+     "id": "gbda402-final",
+     "title": "Final presentation",
+     "term": "Winter 2022",
+     "kind": "Team · 10%",
+     "tags": [
+      "TILT",
+      "Rubric"
+     ],
+     "brief": "<ul>\n<li><strong>What is this? </strong>The final summative presentation explaining and showcasing your project</li>\n<li><strong>Specs: </strong>Video, uploaded to a streaming site; supply link and your slide deck to the dropbox. The video must not be longer than 10 minutes: we will stop watching</li>\n<li><strong>Due:</strong> Monday, 11 April 18:00 EST (dropbox)</li>\n<li><strong>Value:</strong> 10% of mark (rubric)</li>\n</ul>\n<h3>What Are We Looking For?</h3>\n<ul>\n<li>Research and insights. We want to see good insights rising from your primary &amp; secondary research</li>\n<li>Business model. Is this project viable in the real world?</li>\n<li>UX process. How did design thinking inform your process, and what were the results?</li>\n<li>Visual design. We want to see a good application of the design principles raised in this course</li>\n<li>Execution. How does your prototype address the initial UN Sustainable Development Goal?</li>\n</ul>\n<h3>Recommendations</h3>\n<ul>\n<li>Polish every detail</li>\n<li>Brand your work: do not use someone else's templates</li>\n<li>Rehearse as as team before you record</li>\n<li>Show enthusiasm</li>\n<li>Tell a good story: pay attention to flow</li>\n<li>Make us feel something: why should we care about this proposal?</li>\n<li>Show your prototype</li>\n</ul>",
+     "rubrics": [
+      {
+       "name": "Final presentation",
+       "criteria": [
+        {
+         "name": "1. Research and Insights:",
+         "desc": "How did the team investigate the problem?",
+         "levels": [
+          {
+           "name": "Exceptional: A+",
+           "pts": 20,
+           "text": "Professional-level insights demonstrated based on making clear connections to research shown about the customer, user, and market"
+          },
+          {
+           "name": "Excellent: A",
+           "pts": 17,
+           "text": "Significant level of investigation and relevant insights shown about the customer, user, and market"
+          },
+          {
+           "name": "Good: B",
+           "pts": 15,
+           "text": "Good level of investigation and reasonable insights shown about the customer, user, and market"
+          },
+          {
+           "name": "Fair: C",
+           "pts": 13,
+           "text": "Team displayed a level of investigation and some insights shown about the customer, user, and market, but the results were problematic"
+          },
+          {
+           "name": "Poor: D",
+           "pts": 11,
+           "text": "Minimal investigation and few insights shown about the customer, user, and market"
+          },
+          {
+           "name": "Very Poor: F",
+           "pts": 9,
+           "text": "Little to no indication of a problem or insights shown about the customer, user, and market"
+          }
+         ]
+        },
+        {
+         "name": "2. Business Model:",
+         "desc": "How did the team convey a viable business model with real-world constraints?",
+         "levels": [
+          {
+           "name": "Exceptional: A+",
+           "pts": 20,
+           "text": "Superior and clearly relevant business model that addresses a real-world problem"
+          },
+          {
+           "name": "Excellent: A",
+           "pts": 17,
+           "text": "Well-considered and complete business model that addresses a real-world problem"
+          },
+          {
+           "name": "Good: B",
+           "pts": 15,
+           "text": "Good and complete business model that addresses a real-world problem"
+          },
+          {
+           "name": "Fair: C",
+           "pts": 13,
+           "text": "Some gaps evident in the discussion of the business model with some connections to real-world application"
+          },
+          {
+           "name": "Poor: D",
+           "pts": 11,
+           "text": "Significant gaps evident in the discussion of the business model with some connections to real-world application"
+          },
+          {
+           "name": "Very Poor: F",
+           "pts": 9,
+           "text": "Little to no discussion or assessment of the business or industry the prototype competes in"
+          }
+         ]
+        },
+        {
+         "name": "3. UX Process:",
+         "desc": "How did the team employ design thinking?",
+         "levels": [
+          {
+           "name": "Exceptional: A+",
+           "pts": 20,
+           "text": "Group presented a prototype that demonstrated a professional and complete approach to the development, testing, iterating and refining of the concept"
+          },
+          {
+           "name": "Excellent: A",
+           "pts": 17,
+           "text": "Group presented a prototype that demonstrated a very well-considered and complete approach to the development, testing, iterating and refining of the concept"
+          },
+          {
+           "name": "Good: B",
+           "pts": 15,
+           "text": "Group presented a prototype that demonstrated a complete approach to the development, testing, iterating and refining of the concept"
+          },
+          {
+           "name": "Fair: C",
+           "pts": 13,
+           "text": "Group presented a prototype that demonstrated some basic level of development, testing, and iterating"
+          },
+          {
+           "name": "Poor: D",
+           "pts": 11,
+           "text": "Group presented a prototype that demonstrated a problematic level of development, testing, and iterating"
+          },
+          {
+           "name": "Very Poor: F",
+           "pts": 9,
+           "text": "Group presented a prototype that had little to no basis in data, research or anything more than creative brainstorming"
+          }
+         ]
+        },
+        {
+         "name": "4. Visual Design: How did the team create a prototype that expressed visually-appropriate theory and course concepts?",
+         "desc": "",
+         "levels": [
+          {
+           "name": "Exceptional: A+",
+           "pts": 20,
+           "text": "Group presented a prototype that demonstrated a professional-level approach to the visual development choices made by the team"
+          },
+          {
+           "name": "Excellent: A",
+           "pts": 17,
+           "text": "Group presented a prototype that demonstrated a very well -considered and complete approach to the visual development choices made by the team"
+          },
+          {
+           "name": "Good: B",
+           "pts": 15,
+           "text": "Group presented a prototype that demonstrated a complete approach to the visual development choices made by the team"
+          },
+          {
+           "name": "Fair: C",
+           "pts": 13,
+           "text": "Group presented a prototype that demonstrated some basic level of visual development choices made by the team"
+          },
+          {
+           "name": "Poor: D",
+           "pts": 11,
+           "text": "Group presented a prototype that demonstrated problematic visual development choices made by the team"
+          },
+          {
+           "name": "Very Poor: F",
+           "pts": 9,
+           "text": "Group presented a prototype demonstrating little to no basis in visual design concepts learned by the team in this course"
+          }
+         ]
+        },
+        {
+         "name": "5. Execution:",
+         "desc": "How did the team's prototype resolve the initial problem/issue?",
+         "levels": [
+          {
+           "name": "Exceptional: A+",
+           "pts": 20,
+           "text": "Professional level of engagement: the team was able to connect the prototype outcomes to the topic/issue"
+          },
+          {
+           "name": "Excellent: A",
+           "pts": 17,
+           "text": "Professional level of engagement: the team was able to connect the prototype outcomes to the topic/issue"
+          },
+          {
+           "name": "Good: B",
+           "pts": 15,
+           "text": "Good level of engagement demonstrated: the team was able to connect the prototype outcomes to the topic/issue"
+          },
+          {
+           "name": "Fair: C",
+           "pts": 13,
+           "text": "Some basic level of engagement demonstrated: the team was able to connect the prototype outcomes to the topic/issue, with some problems"
+          },
+          {
+           "name": "Poor: D",
+           "pts": 11,
+           "text": "Engagement demonstrated by the team shows a “stating the obvious” approach: little effort is put forward to the project or team advancement"
+          },
+          {
+           "name": "Very Poor: F",
+           "pts": 9,
+           "text": "Little to no connection to how this helps the overall topic"
+          }
+         ]
+        }
+       ],
+       "showPoints": true
+      }
+     ],
+     "course": "GBDA 402"
+    },
+    {
+     "id": "gbda402-roles",
+     "title": "Role reflection",
+     "term": "Winter 2022",
+     "kind": "Individual · 10%",
+     "tags": [
+      "TILT",
+      "Rubric"
+     ],
+     "brief": "<ul>\n<li><strong>What is it? </strong>Describe and write a summary reflection for the different roles you held for each iteration round</li>\n<li><strong>Format:</strong> PDF</li>\n<li><strong>Due:</strong> Monday, 11 April 18:00 EST (dropbox)</li>\n<li><strong>Value</strong>: 10% of final mark (rubric)</li>\n</ul>\n<p>Students are expected to switch roles in the term. This helps round you out as learners. It also helps create empathy for colleagues who will occupy those roles in the future—you'll know what they have to do in their own roles. This reflection should be no more than 3 pages in length. Describe your role for each iteration, what you did in that role, what you learned that you hadn't previously known, and assess your ability in those roles. </p>",
+     "rubrics": [
+      {
+       "name": "Role reflection",
+       "criteria": [
+        {
+         "name": "1. Evidence of practice (Tools)",
+         "desc": "Did the student show an in-depth assessment of the approaches used in the role as would be expected In a similar real world position?",
+         "levels": [
+          {
+           "name": "Exceptional: A+",
+           "pts": 50,
+           "text": "Shows exceptional ability to convey numerous methods and technique, equal to a professional"
+          },
+          {
+           "name": "Excellent: A",
+           "pts": 42.5,
+           "text": "Shows ability to convey many varied methods and techniques superior to the average fourth-year student."
+          },
+          {
+           "name": "Good: B",
+           "pts": 37.5,
+           "text": "Good range of abilities; able to convey methods and techniques appropriate to a fourth-year student."
+          },
+          {
+           "name": "Fair: C",
+           "pts": 32.5,
+           "text": "Ability to convey useful methods and techniques is more limited than would be expected in a fourth-year student."
+          },
+          {
+           "name": "Poor: D",
+           "pts": 27.5,
+           "text": "Ability to convey useful methods and techniques is poorer than would be expected in a fourth-year student."
+          },
+          {
+           "name": "Very Poor: F",
+           "pts": 20,
+           "text": "Shows no ability to convey useful methods and techniques as would be expected in a fourth-year student."
+          }
+         ]
+        },
+        {
+         "name": "2. Depth of reflection (Learnings)",
+         "desc": "Did the student show an in-depth assessment of the outcomes of the role as would be expected In a similar real-world position?",
+         "levels": [
+          {
+           "name": "Exceptional: A+",
+           "pts": 50,
+           "text": "Clearly, thoughtfully, and thoroughly explains what was learned and how those outcomes contributed to the work done in this role. Done to a professional level"
+          },
+          {
+           "name": "Excellent: A",
+           "pts": 42.5,
+           "text": "Clearly, thoughtfully, and thoroughly explains what was learned and how those outcomes contributed to the work done in this role."
+          },
+          {
+           "name": "Good: B",
+           "pts": 37.5,
+           "text": "Describes well what was learned and how those outcomes contributed to the work done in this role."
+          },
+          {
+           "name": "Fair: C",
+           "pts": 32.5,
+           "text": "Somewhat describes what was learned and how those outcomes contributed to the work done in this role."
+          },
+          {
+           "name": "Poor: D",
+           "pts": 27.5,
+           "text": "Poorly describes what was learned and how those outcomes contributed to the work done in this role."
+          },
+          {
+           "name": "Very Poor: F",
+           "pts": 20,
+           "text": "Neglects to describe what was learned and how those outcomes contributed to the work done in this role."
+          }
+         ]
+        }
+       ],
+       "showPoints": true
+      }
+     ],
+     "course": "GBDA 402"
+    },
+    {
+     "id": "msci630-proposal",
+     "title": "Individual project proposal",
+     "term": "Winter 2022",
+     "kind": "Individual · video",
+     "tags": [
+      "Rubric"
+     ],
+     "brief": "<p><strong>Project Proposal Details</strong></p>\n\n<p>The individual proposal is a 3-to-5-minute selfie style video where you talk through the project you are planning. Make sure to include:</p>\n<ol>\n<li>Your target population</li>\n<li>Your intended contribution</li>\n<li>Why this project is important (to the world, and to you!)</li>\n<li>What methods you will use</li>\n</ol>",
+     "rubrics": [
+      {
+       "name": "Individual proposal rubric",
+       "showPoints": false,
+       "criteria": [
+        {
+         "name": "Content (20%)",
+         "desc": "",
+         "levels": [
+          {
+           "name": "A",
+           "pts": null,
+           "text": "Problem is well formulated, research questions are narrowed down and specific. Problem fits well within the literature field."
+          },
+          {
+           "name": "B",
+           "pts": null,
+           "text": "Problem is formulated well, but there are some potential mishaps with the research questions being asked."
+          },
+          {
+           "name": "C",
+           "pts": null,
+           "text": "Problem is somewhat formulated, but is too broad."
+          },
+          {
+           "name": "D",
+           "pts": null,
+           "text": "Problem is not well formulated. Target population is not discussed."
+          }
+         ]
+        },
+        {
+         "name": "Contribution (30%)",
+         "desc": "",
+         "levels": [
+          {
+           "name": "A",
+           "pts": null,
+           "text": "Contribution is clear and answers all research question. Thesis convinces audience to take some form of action. Proposal is persuasive and practical. Answer to problem is reasonable/modest."
+          },
+          {
+           "name": "B",
+           "pts": null,
+           "text": "Contributions are articulated well, but is not impactful."
+          },
+          {
+           "name": "C",
+           "pts": null,
+           "text": "Contribution is mostly there, but is unclear in its directionality, is not impactful, and is not formulated well"
+          },
+          {
+           "name": "D",
+           "pts": null,
+           "text": "Contribution is unclear. What are you providing to the research community? How does your work move research forward"
+          }
+         ]
+        },
+        {
+         "name": "Importance (20%)",
+         "desc": "",
+         "levels": [
+          {
+           "name": "A",
+           "pts": null,
+           "text": "A deep understanding of the importance of the topic is relayed in a clear and concise manner, convincing the audience that this is a unique and meaningful proposal."
+          },
+          {
+           "name": "B",
+           "pts": null,
+           "text": "Importance of project is stated but is not done so with a convincing argument."
+          },
+          {
+           "name": "C",
+           "pts": null,
+           "text": "Importance of project is stated, but is mostly opinion and is not well backed by examples. Ideas presented are not unique."
+          },
+          {
+           "name": "D",
+           "pts": null,
+           "text": "Importance of project is not stated."
+          }
+         ]
+        },
+        {
+         "name": "Support claims (10%)",
+         "desc": "",
+         "levels": [
+          {
+           "name": "A",
+           "pts": null,
+           "text": "Brings in outside evidence to support claims. Integrates these examples into the proposed topic well."
+          },
+          {
+           "name": "B",
+           "pts": null,
+           "text": "Uses common knowledge or info to make some examples."
+          },
+          {
+           "name": "C",
+           "pts": null,
+           "text": "Minimal examples are given. Background for context is unclear. Does not use evidence to support claims, or does not make examples clear."
+          },
+          {
+           "name": "D",
+           "pts": null,
+           "text": "No examples or support are provided."
+          }
+         ]
+        },
+        {
+         "name": "Presentation (10%)",
+         "desc": "",
+         "levels": [
+          {
+           "name": "A",
+           "pts": null,
+           "text": "Video is creative, communication is clear, and it is evident that student has placed a lot of effort."
+          },
+          {
+           "name": "B",
+           "pts": null,
+           "text": "Video is within the time frame, and communication is clear."
+          },
+          {
+           "name": "C",
+           "pts": null,
+           "text": "Video is under 3 minutes, or over 5 minutes. Communication can be improved, and some effort on quality is present."
+          },
+          {
+           "name": "D",
+           "pts": null,
+           "text": "Video is under 3 minutes, or over 5 minutes. Communication is not clear, not well thought-out and quality is lacking."
+          }
+         ]
+        }
+       ]
+      }
+     ],
+     "course": "MSCI 630"
+    },
+    {
+     "id": "msci630-paper",
+     "title": "Paper reports",
+     "term": "Winter 2023",
+     "kind": "Individual · video",
+     "tags": [],
+     "brief": "<p>Suggested Submission Date: 15th March 2023<br/>Hard Deadline: Due before 1st April</p>\n<p>For the paper report, you are required to pick a research paper presented at either CHI or CSCW conferences for the years 2021 or 2022 and make a video presentation of the chosen paper.</p>\n<p>You can look for the papers through scholar.google.com, or find some videos that may interest you here:</p><ul><li>CHI for 2021 and 2022.</li><li>CSCW for 2021 and 2022.</li></ul>\n<p>After picking a paper, please send the name for approval to [the TA], no two people can do the same paper – so pick quickly!</p>\n<ol><li>Video Length:<ol type=\"a\"><li>Minimum Length: ~ 3 minutes</li><li>Maximum Length: ~5 minutes</li></ol></li>\n<li>Presentation Slides:<ol type=\"a\"><li>Minimum slides: ~5</li><li>Maximum Slides: ~10</li></ol>**Please make sure the video and presentation length are within the specified limit.</li>\n<li>The focus of Concentration: Students can make the video with either of the below focus of concentration<ol type=\"a\"><li>Research</li><li>Industry</li></ol></li>\n<li>Common Elements: The video for either of the concentration should cover the following topics<ol type=\"a\"><li>What is the primary contribution of the paper to HCI</li><li>Describe the related work, i.e. what scholarship happened before the paper</li><li>The method used by the author</li></ol></li>\n<li>Research Concentration: Students within this concentration should cover the below topics in the video:<ol type=\"a\"><li>Their understanding of the context of the paper</li><li>Future directions of research as evidenced by the paper</li><li>Notable research or methodological limitations</li></ol>Tip: Treat the research paper/video you have selected as a review, and walk through the paper’s contribution, strengths, and weaknesses.</li>\n<li>Industry Concentration: Students within this concentration must include:<ol type=\"a\"><li>Applications of the paper to commercial use cases</li><li>Commercial use cases or features within apps and websites that mimic research within the paper/video</li><li>If any other notable ways, the method or the research can be applied outside of academia.</li></ol></li></ol>",
+     "rubrics": [],
+     "note": "[In Winter 2022 it was a written report of two to three pages.]",
+     "course": "MSCI 630"
+    },
+    {
+     "id": "msci630-prompts",
+     "title": "Software deliverable prompt",
+     "term": "Winter 2022",
+     "kind": "Individual",
+     "tags": [],
+     "brief": "<h4>FIGMA Design Prompt</h4>\n<p>You are the user experience designer at one of the largest tech companies in the world. They are launching a competitor to the Instagram app, and this one is focussed on the well-being of adults who browse the content.</p>\n<p>Your task is to build the UX for this app on FIGMA. Here’s what you need to have in your design:</p>\n<ol><li>A minimum of 10 screens</li><li>A page dedicated to components</li><li>Rudimentary branding</li><li>At least one end to end user flow</li></ol>\n<p>You will submit the following:</p>\n<ol><li>Your low fidelity drawings</li><li>A PDF of your FIGMA file</li><li>A link to your live FIGMA file. This should be set so that both [the TA] and I can view it.</li></ol>\n<h4>Tableau Design Prompt</h4>\n<p>You are a data analyst at a big tech company and need to show-off your skills for a large company off-site. As such, you need to showcase not just your data visualization skillset, but also your understanding of data analytics. Pick any dataset of your choice. Statistics Canada has quite a few good ones. If you really can’t pick one, go to: https://www.consumerfinance.gov/ and use the data set provided there.</p>\n<p>Build a tableau file that shows:</p>\n<ol><li>An understanding of the underlying data, in a way that enables a person not familiar with data to grasp it.</li>\n<li>At least 2 dashboards with 4 worksheets each.</li>\n<li>Each dashboard should have a combination of:<ol type=\"a\"><li>Filters</li><li>Parameters</li><li>Drill down capabilities</li><li>Some trendline or median or similar in-sheet analysis</li></ol></li></ol>\n<p>Submit:</p>\n<ol><li>Your low fidelity drawings of your planned dashboard</li><li>A tableau file with embedded data (*.twbx file)</li></ol>",
+     "rubrics": [],
+     "course": "MSCI 630"
+    }
+   ]
+  },
+  {
+   "id": "tools",
+   "label": "Teaching tools",
+   "items": [
+    {
+     "id": "gbda402-team",
+     "title": "Team formation",
+     "term": "Winter 2022",
+     "kind": "Team",
+     "tags": [
+      "TILT"
+     ],
+     "brief": "<ul>\n<li><strong>What is this?</strong> Requirements for creating your teams</li>\n<li><strong>Format:</strong> Contract in Word document format (template)</li>\n<li><strong>Due:</strong> Friday, 21 January at 18:00 EST (dropbox)</li>\n</ul>\n<p>To form successfully, teams must have a minimum of two approved proposals. This is so you have a back-up option in case your first idea turns out to be too problematic. <strong>Joining a team is up to you: it is not the instructor's responsibility. Individuals who fail to join teams by the deadline have 5% deducted from their final mark. </strong></p>\n<p>Aim for a minimum seven people in your teams to have sufficient coverage and assistance for your roles (Product Manager, UX Researcher, Visual Designer, and Business/Marketing Analyst). Team members must fill out the <strong>Charter / Working Agreement</strong> and submit it to the appropriate dropbox—the due-date is at the top of this document. Take this document seriously: it acts as your contract with one another, and helps you in times of conflict. All team members must append their signatures to the document, or at least type their names as Indications of agreement. The document covers the following:</p>\n<h3>Basics</h3>\n<ul>\n<li><strong>Team Name.</strong> Provide a team name, or we'll give you a truly cringey name</li>\n<li><strong>Team Members.</strong> Provide name, ID, email, and phone number</li>\n<li><strong>Team Roles.</strong> Suggested roles: Product Manager, UX Researcher, Visual Designer, and Business/Marketing Analyst. Provide name, role, and responsibilities</li>\n</ul>\n<h3>Team Charter</h3>\n<ul>\n<li><strong>Preliminary.</strong> Provide name and individual strengths, weaknesses, and values. Understanding these helps create a more balanced, robust team.</li>\n<li><strong>Conduct.</strong> Based upon your listed values, how will you conduct yourselves? Be specific.</li>\n<li><strong>Work Process.</strong> How will you manage the deliverable process so that you meet your deadlines? Be specific.</li>\n<li><strong>Conflict Resolution.</strong> What do you plan to do should members come into conflict, or if members do not abide by the charter? Be specific.</li>\n</ul>\n<h3>Working Agreement</h3>\n<ul>\n<li><strong>Core Hours.</strong> When do you agree to be available &amp; present?</li>\n<li><strong>Daily Check-Ins.</strong> How will they occur? What is the extent/depth?</li>\n<li><strong>Mobile Phones/Headphones.</strong> What is appropriate usage, especially in meetings?</li>\n<li><strong>Definition of ‘Done’. </strong>When is a prototype ready to test? When is a deliverable ready to submit to the dropbox? How do you expect reports to be organised/formatted?</li>\n<li><strong>Team Member Contribution and Output.</strong> What is the procedure for the team to decide priorities and set goals? What types of decisions can be made without the whole team’s input?</li>\n<li><strong>Meetings.</strong> How often will you meet? Where/When/How long?</li>\n<li><strong>Decisions re: Missing Meetings.</strong> If a member misses a meeting, do they agree by default to the decisions made by the team members who attended the meeting?</li>\n<li><strong>Break Times.</strong> When will break decisions be made? How will you take a break? When? How long will the break last? (You’ll refer to this more often than you expect)</li>\n</ul>",
+     "rubrics": [],
+     "course": "GBDA 402"
+    },
+    {
+     "id": "msci630-questions",
+     "title": "Project proposal questions",
+     "term": "Winter 2022",
+     "kind": "Group",
+     "tags": [],
+     "brief": "<ol><li>In one word, what is the contribution type of your project (from the 7 contributions paper)*</li>\n<li>In less than 10 words, what specific population does your project help?</li>\n<li>List out 3 academic references and 2 non-academic references. You do not need to follow any referencing guidelines, even a link to a website will be fine</li>\n<li>List out the primary contribution of your project (less than 20 words).</li>\n<li>You can present the project either as a paper or a report – which would you prefer? (one word)</li>\n<li>Will your project be a design, implementation, or evaluation (one word only)</li>\n<li>Do you feel your team is the right team to do this work? Why or why not? (less than 20 words)</li>\n<li>What methods are you using – do you feel like you need extra instruction in any specific method? (less than 20 words)</li>\n<li>Do you have anything else about your project that you would like the instruction staff to know? (less than 50 words)</li>\n<li>Only for those doing artifact contributions – please explain why an artifact is the best way to complete your project (less than 50 words)</li></ol>\n<p>* So you want to do an artifact contribution? Re-think it – does it have to be an artifact? Can you make it another type of contribution and still get the results you wanted?</p>",
+     "rubrics": [],
+     "course": "MSCI 630"
+    },
+    {
+     "id": "msci630-discussion",
+     "title": "Tips and tricks for leading group discussions",
+     "term": "Winter 2022",
+     "kind": "Handout",
+     "tags": [],
+     "brief": "<p>Your role is to lead your class to help get to a shared understanding of parts of the paper you read. While you may answer a few questions from your classmates, the goal of this time is to discuss specific aspects of the paper.</p>\n<p><strong>Focus Management:</strong></p>\n<ol><li>Ensure you start off with a focus.<ol type=\"a\"><li>You can pick a focus on reading the paper.</li><li>If you don’t have a focus, you could either talk about the core contribution of the paper (answer questions about why the community cares about this paper, or why we are making you read this paper), how your classmates would use the output of this paper in their studies or the impact of the paper in the HCI community long term.</li></ol></li>\n<li>Work towards an output – ensure that you communicate this with the team at the beginning and during the discussion.</li></ol>\n<p><strong>Participant Management:</strong></p>\n<ol><li>Encourage people to speak – diverse perspectives make for a better discussion</li>\n<li>No one person should be talking for more than 2 minutes</li>\n<li>Ensure that participants do not paraphrase someone else’s comments as their own</li></ol>\n<p><strong>Personal Management:</strong></p>\n<ol><li>Know your content – and be willing to learn from others</li>\n<li>Everyone has their own leadership style, use this time to understand what you’re comfortable with:<ol type=\"a\"><li>Are you ok telling participants to pause?</li><li>Are you an active or a passive leader?</li><li>Do you prefer the gentle nudge, or a more direct approach?</li></ol></li>\n<li>Think through how you would like to conduct your meeting before it starts, remember the discussion is as important as your presentation</li></ol>",
+     "rubrics": [],
+     "course": "MSCI 630"
+    },
+    {
+     "id": "feedback-form",
+     "course": "GBDA 310 and MSCI 630",
+     "title": "Mid-course feedback form",
+     "term": "2023 and 2024",
+     "kind": "Anonymous · during the term",
+     "tags": [],
+     "rubrics": [],
+     "brief": "<ol><li>What should we start doing?</li><li>What should we stop doing?</li><li>What should we continue doing?</li></ol>\n<p class=\"omit\">[The questions as asked in GBDA 310 (Fall 2023, Spring 2024) and MSCI 630 (Winter 2023), from the forms on Google Drive. The MSCI 630 sheet has a column for the theme of each answer and one for a response.]</p>"
+    }
+   ]
+  },
+  {
+   "id": "grading",
+   "label": "Grading",
+   "items": [
+    {
+     "id": "gbda402-weekly",
+     "title": "Weekly assignments: full/partial/no credit",
+     "term": "Winter 2022",
+     "kind": "Individual · weekly",
+     "tags": [
+      "Specifications grading"
+     ],
+     "brief": "<p class=\"omit\">[Business homework 1, as an example.]</p>\n<p><strong>GBDA 402 – Business: Homework Assignment I</strong></p>\n<p><strong>Due date: 9:00 am ET, January 26, 2022</strong></p>\n\n<p><strong>Dataset (choose either, the two are equivalent)</strong></p>\n<p>GBDA402_Business_HW1.xlsx</p>\n<p>GBDA402_Business_HW1.csv</p>\n\n<p><strong>Explanation to the dataset</strong></p>\n<p><strong><em>Policy-related Economic Uncertainty (EPU) Index </em></strong></p>\n<p>EPU Index measures policy-related economic uncertainty. The index is constructed mainly from three sources: (1) search results from major newspapers, (2) policy releases regarding taxation and government budgets, as well as (3) economic forecast surveys that are usually conducted by the central bank.</p>\n<p><strong><em>Data source:</em></strong></p>\n<p>See https://www.policyuncertainty.com/all_country_data.html for details</p>\n<p><strong><em>References:</em></strong></p>\n<p>Baker, S. R., Bloom, N., &amp; Davis, S. J. (2016). Measuring economic policy uncertainty. <em>Quarterly Journal of Economics</em>, 131(4), 1593-1636.</p>\n\n<p><strong>Requirements</strong></p>\n<ol>\n<li>Select 10 countries of your interest.</li>\n<li>Choose a 20-year period of interest.</li>\n<li>Highlight one country you like to emphasize.</li>\n<li>Draw a time series plot with your choice. Describe the time series trend of your chosen country a compared to the rest 9 (2 or 3 sentences).</li>\n<li>No restrictions on the visualization tools. You can use Excel.</li>\n<li>Avoid clutter. Be simple and to-the-point. Make sure your graph is visually appealing.</li>\n</ol>\n<p><strong>Delivery format</strong></p>\n<p>.pdf (one page only)</p>",
+     "rubrics": [
+      {
+       "name": "Full, partial, or no credit",
+       "criteria": [
+        {
+         "name": "F/P/N",
+         "desc": "",
+         "levels": [
+          {
+           "name": "Full credit",
+           "pts": 10,
+           "text": "Assignment's objectives have been met—or exceeded"
+          },
+          {
+           "name": "Partial credit",
+           "pts": 7.5,
+           "text": "Assignment's objectives have been partly met, but some components are missing, or don't quite work"
+          },
+          {
+           "name": "No credit",
+           "pts": 0,
+           "text": "Assignment's objectives have been not been met at all. Work missing the objectives/ not submitted"
+          }
+         ]
+        }
+       ],
+       "showPoints": true,
+       "note": "Every weekly assignment was graded this way."
+      }
+     ],
+     "course": "GBDA 402"
+    }
+   ]
+  }
+ ],
+ "strategies": {
+  "cols": [
+   "GBDA 210",
+   "GBDA 310",
+   "GBDA 402",
+   "GBDA 410",
+   "MSCI 543",
+   "MSCI 630"
+  ],
+  "groups": [
+   {
+    "name": "In-class activities",
+    "rows": [
+     {
+      "name": "Graded in-class activities",
+      "desc": "Students work on something in class, and it counts toward the grade.",
+      "refs": [],
+      "link": "msci630-activities",
+      "marks": {
+       "GBDA 210": "Course outline: class activities, 20%",
+       "GBDA 310": "UX Mini Challenges, done in class",
+       "GBDA 402": "Winter 2023: weekly in-class design and research exercises",
+       "GBDA 410": "Course outline: class activities, 15%",
+       "MSCI 543": "Course outline: in-class exercises, 20%",
+       "MSCI 630": "Course outline: a graded activity every lecture"
+      }
+     },
+     {
+      "name": "End-of-class quizzes",
+      "desc": "Two quick questions at the end of each class, on that day's material. The lowest four do not count.",
+      "refs": [],
+      "link": "gbda310-frenzy",
+      "marks": {
+       "GBDA 310": "UX Flashback Frenzy: two questions at the end of every class"
+      }
+     },
+     {
+      "name": "Student-led discussion",
+      "desc": "Students lead the class through a paper they read.",
+      "refs": [],
+      "link": "msci630-discussion",
+      "marks": {
+       "MSCI 630": "Students led the class discussion of a paper"
+      }
+     },
+     {
+      "name": "Peer feedback between teams",
+      "desc": "Teams give each other feedback on their projects.",
+      "refs": [],
+      "link": null,
+      "marks": {
+       "GBDA 402": "Winter 2023 outline: project feedback to peers, twice"
+      }
+     }
+    ]
+   },
+   {
+    "name": "Assignments and projects",
+    "rows": [
+     {
+      "name": "Term project in milestones",
+      "desc": "One project for the term, handed in piece by piece, with feedback on each piece.",
+      "refs": [],
+      "link": "gbda402-iterations",
+      "marks": {
+       "GBDA 210": "Four project milestones",
+       "GBDA 310": "Pitch, prototype, final presentation, and report",
+       "GBDA 402": "Three iterations, each with a report",
+       "GBDA 410": "Design project, then a research plan for it",
+       "MSCI 630": "Proposal, implementation, and final presentation"
+      }
+     },
+     {
+      "name": "Fieldwork",
+      "desc": "Students run real studies on real people from week one.",
+      "refs": [],
+      "link": "gbda310-inquiry",
+      "marks": {
+       "GBDA 210": "Milestone 1: end users review the task list",
+       "GBDA 310": "Contextual inquiry; at least five users for the final project",
+       "GBDA 402": "Prototypes tested with real users"
+      }
+     },
+     {
+      "name": "Students pick their own topic",
+      "desc": "Students propose what they work on.",
+      "refs": [],
+      "link": "gbda402-proposal",
+      "marks": {
+       "GBDA 210": "Milestone 1: each team picks its own opportunity",
+       "GBDA 310": "Final paper: 'Pick a good problem'",
+       "GBDA 402": "Individual video proposals",
+       "GBDA 410": "Research plan built on each student's own design idea",
+       "MSCI 630": "Individual project proposals"
+      }
+     },
+     {
+      "name": "External client",
+      "desc": "Teams build for a real client and present to them.",
+      "refs": [],
+      "link": null,
+      "marks": {
+       "GBDA 402": "Winter 2023: teams worked for an industry client, under an IP agreement"
+      }
+     },
+     {
+      "name": "Reflection",
+      "desc": "Students write up what they did and what they learned.",
+      "refs": [],
+      "link": "gbda402-roles",
+      "marks": {
+       "GBDA 210": "Reflection assignment, with its own rubric",
+       "GBDA 402": "Role reflections"
+      }
+     }
+    ]
+   },
+   {
+    "name": "Teaching tools",
+    "rows": [
+     {
+      "name": "Team charter or contract",
+      "desc": "Teams agree up front how they will work, meet, and sort out conflict.",
+      "refs": [],
+      "link": "gbda402-team",
+      "marks": {
+       "GBDA 310": "Group contract template offered for the final project",
+       "GBDA 402": "Charter in Winter 2022; contract, amended in week eight, in Winter 2023"
+      }
+     },
+     {
+      "name": "Contribution statements or peer review",
+      "desc": "Each person says what they did, and teammates review each other.",
+      "refs": [],
+      "link": null,
+      "marks": {
+       "GBDA 210": "Statement of contribution with every milestone",
+       "GBDA 310": "Anonymous peer review quiz in the mini challenges",
+       "GBDA 402": "Winter 2023 outline: peer evaluation",
+       "MSCI 630": "Statement of contribution with each milestone"
+      }
+     },
+     {
+      "name": "Mid-course feedback",
+      "desc": "Partway through, students tell me what to start, stop, and continue.",
+      "refs": [],
+      "link": "feedback-form",
+      "marks": {
+       "GBDA 310": "Start, stop, continue form (Fall 2023, Spring 2024)",
+       "MSCI 543": "Mid-course feedback form (Spring 2023)",
+       "MSCI 630": "Mid-course feedback forms (Winter 2022, Winter 2023)"
+      }
+     },
+     {
+      "name": "One-on-one meetings",
+      "desc": "I meet students one on one in every course.",
+      "refs": [],
+      "link": null,
+      "marks": {
+       "GBDA 210": "My Teaching page, Mentoring: I meet students one on one in every course",
+       "GBDA 310": "My Teaching page, Mentoring: I meet students one on one in every course",
+       "GBDA 402": "My Teaching page, Mentoring: I meet students one on one in every course",
+       "GBDA 410": "My Teaching page, Mentoring: I meet students one on one in every course",
+       "MSCI 543": "My Teaching page, Mentoring: I meet students one on one in every course",
+       "MSCI 630": "My Teaching page, Mentoring: I meet students one on one in every course"
+      }
+     },
+     {
+      "name": "Tool training",
+      "desc": "Students learn the tools of the job in class.",
+      "refs": [],
+      "link": "msci630-prompts",
+      "marks": {
+       "GBDA 210": "Figma cheat sheets and a Figma quiz",
+       "GBDA 310": "My Teaching page: spreadsheets, Python, and Tableau",
+       "GBDA 402": "Figma exercise in week one, 'What's your baseline?'",
+       "MSCI 543": "My Teaching page: taught in Python",
+       "MSCI 630": "Python and Tableau modules; a Figma tutorial and Tableau setup"
+      }
+     }
+    ]
+   },
+   {
+    "name": "Grading",
+    "rows": [
+     {
+      "name": "Rubrics",
+      "desc": "Posted with the brief on LEARN, Waterloo's course site.",
+      "refs": [
+       "Jonsson, A., & Svingby, G. (2007). The use of scoring rubrics: Reliability, validity and educational consequences. Educational Research Review, 2(2), 130–144.",
+       "Panadero, E., & Jonsson, A. (2013). The use of scoring rubrics for formative assessment purposes revisited: A review. Educational Research Review, 9, 129–144."
+      ],
+      "link": "gbda310-inquiry",
+      "marks": {
+       "GBDA 210": "Course outline: grading follows the rubrics posted on LEARN",
+       "GBDA 310": "Every assignment, mini challenge, and project piece",
+       "GBDA 402": "Winter 2022: every graded piece",
+       "GBDA 410": "Design project and research plan rubrics",
+       "MSCI 630": "Proposal and class activity rubrics"
+      }
+     },
+     {
+      "name": "TILT",
+      "desc": "Transparency in Learning and Teaching. The brief says what it is, what to hand in, and how it is graded.",
+      "refs": [
+       "Winkelmes, M.-A., Bernacki, M., Butler, J., Zochowski, M., Golanics, J., & Weavil, K. H. (2016). A teaching intervention that increases underserved college students' success. Peer Review, 18(1/2), 31–36."
+      ],
+      "link": "gbda402-proposal",
+      "marks": {
+       "GBDA 310": "Briefs state purpose, task, and grading",
+       "GBDA 402": "What is it, format, due, value, at the top of each brief",
+       "MSCI 630": "Individual project proposal: the brief and its rubric"
+      }
+     },
+     {
+      "name": "Specifications grading",
+      "desc": "Done or not done (or full, partial, or no credit).",
+      "refs": [
+       "Nilson, L. B. (2015). Specifications grading: Restoring rigor, motivating students, and saving faculty time. Stylus."
+      ],
+      "link": "gbda402-proposal",
+      "marks": {
+       "GBDA 310": "Done or not done (Assignment 1)",
+       "GBDA 402": "Approved or rejected; full, partial, or no credit",
+       "MSCI 543": "Satisfactory or redo",
+       "MSCI 630": "Class activities graded on completion"
+      }
+     },
+     {
+      "name": "Resubmission",
+      "desc": "Work that misses the bar can be fixed and handed in again.",
+      "refs": [],
+      "link": "policies",
+      "marks": {
+       "GBDA 402": "Rejected proposals resubmitted within forty-eight hours",
+       "MSCI 543": "Resubmit until it passes",
+       "MSCI 630": "One regrade for work handed in by the suggested deadline"
+      }
+     },
+     {
+      "name": "Flexible deadlines",
+      "desc": "Some room on deadlines, set out in the course outline.",
+      "refs": [],
+      "link": "policies",
+      "marks": {
+       "GBDA 210": "One assignment up to two weeks late, any reason",
+       "MSCI 543": "In-class exercises up to a week late, no penalty",
+       "MSCI 630": "Suggested and fixed deadlines"
+      }
+     },
+     {
+      "name": "Lowest scores dropped",
+      "desc": "The lowest few scores do not count.",
+      "refs": [],
+      "link": null,
+      "marks": {
+       "GBDA 210": "Lowest class activity dropped; best four of five assignments",
+       "GBDA 310": "Lowest four quizzes dropped",
+       "GBDA 410": "One class activity can be missed",
+       "MSCI 630": "Lowest three class activities dropped"
+      }
+     },
+     {
+      "name": "Grading contract",
+      "desc": "Students and the teaching team agree in class on how grading works.",
+      "refs": [],
+      "link": "policies",
+      "marks": {
+       "MSCI 630": "Grading by an in-class contract"
+      }
+     },
+     {
+      "name": "AI-aware assessment",
+      "desc": "Clear rules on AI use, and paper exams once AI was doing the hard parts of projects.",
+      "refs": [],
+      "link": null,
+      "marks": {
+       "GBDA 310": "AI policy in the syllabus, pointed to from the Assignment 1 brief",
+       "GBDA 410": "AI allowed, with an acknowledgments section",
+       "MSCI 543": "My Teaching page: when AI did the hard parts of projects, I moved the course to paper exams"
+      }
+     }
+    ]
+   }
+  ]
+ },
+ "policies": [
+  {
+   "course": "MSCI 630",
+   "term": "Winter 2023",
+   "paras": [
+    [
+     "Class Activities",
+     "The classes will be interactive, and each lecture will have one grade from one or more activities. The lowest three grades will be dropped."
+    ],
+    [
+     "Extensions",
+     "You will have suggested deadlines and fixed deadlines. Please complete your assignments before the suggested deadlines. If you do, the instruction staff will re-mark one re-submissions. We will not penalize you for submission till the “Last possible submission date”, this date is set in stone and no extensions can be provided beyond the date. We strongly encourage you to follow the suggested deadlines – work usually gets busy towards the end of the course or the beginning of reading week."
+    ],
+    [
+     "Grading",
+     "Grading will be carried out based on an in-class contract that the students and instruction staff agree on. Our goal is to enable you to do better and learn with each feedback cycle. If you need more details, reach out to the instruction staff. If you have a request for regrading, please let Ali know ([the TA] cannot regrade). Note that regrading would be from scratch – and your grade could go up or down."
+    ]
+   ]
+  },
+  {
+   "course": "MSCI 543",
+   "term": "Spring 2023",
+   "paras": [
+    [
+     "Assignments",
+     "There will be regular assignments in MSCI 543, but you have some autonomy over how you engage with these. The assignments will not be graded, they are either satisfactory (pass) or unsatisfactory (fail/redo). If you do not submit a satisfactory assignment, you will be given feedback and have the opportunity to resubmit the assignment until you do pass it (or until the course ends, whichever comes first). You will earn full marks for each assignment that you complete to a satisfactory level, as determined by the teaching staff."
+    ],
+    [
+     "In-Class Exercises",
+     "You are expected to be able to complete in-class activities in tutorial under the supervision of the instructor in class or in tutorial under supervision of the TA, but they will be due on the Sunday each week. No penalty will be incurred for late submissions up to one week."
+    ]
+   ]
+  }
+ ]
+}

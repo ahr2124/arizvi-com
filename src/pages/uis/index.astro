@@ -1,0 +1,274 @@
+---
+// src/pages/uis/index.astro  →  arizvi.com/uis
+// For the UIS search (Clinical Assistant or Associate Professor, Engineering Technology; founding faculty for the BAS-ET):
+// laid out in the order of UIS's own BAS-ET page: how I'd build, teach and measure the program (my 4 steps), 9 courses
+// I could teach by name (each with the closest course at 3 Illinois public programs), where they could sit in UIS's own degree
+// requirements, a course I'd build first with a sample of how 1 lab would be measured for ABET, how I'd run
+// work-based learning on UIS's 4 pathways, and how new technology gets into a course.
+// Not linked from the nav; sends noindex.
+// Each section has the layout that suits what it holds (Ali, 10 Nov 2026: "remove the mock class for UIS, and try to
+// use the 'right' layout for each section"): the 4 steps across the page, the courses as cards, the degree in UIS's own 4 groups side by side, the course as a 15-week schedule,
+// the ABET sample as a row of 5, the charter as a checklist beside the prose and the 4 pathways side by side.
+// There is no class to try on this page any more; lab 2 (the gauge study) is named in weeks 8-9 of the course.
+// The map of UIS's 9 "What You'll Learn" outcomes against the weeks came off the same night (Ali, 10 Nov 2026: "remove
+// what you'll learn from the UIS site completely - super hard to understand").
+// UIS Blue marks where I come in (Ali, 10 Nov 2026: "use the accent color where needed"): the step tags, the bars on the
+// schedule, the boxes on the checklist, and the courses I could teach among UIS's own groups. Everything else is black.
+// UIS's own structure and names are from its BAS-ET program page and fact sheet (rev. Aug 2026, linked from that
+// page), read 10 Nov 2026: the 9 outcomes, Degree Requirements at a Glance, the 4 pathways, the Do - Reflect -
+// Improve cycle, the 2+2 pathway, the program objectives and the certifications. The 2026-27 catalogue has no
+// entry for the program yet, so the placements in `glance` are a first guess from the names alone.
+// Comparable courses, codes and titles as published, read 10 Nov 2026: Illinois State's Engineering Technology major
+// sheet (2023-24), Eastern Illinois's BS in Engineering Technology required coursework page, and Northern Illinois's
+// BS in Engineering Technology (Applied Manufacturing Technology) transfer guides.
+// UIS facts are from the posting (Req 1288), the Board of Trustees item of 19 March 2026 (120 credit hours; in person, online
+// and blended; traditional, transfer and working students) and UIS's 2027-28 calendar (15 weeks of classes, then finals).
+// The Illinois Manufacturers' Association and IMEC voiced support for the BAS-ET at UIS in October (UIS News).
+// ABET: the 5 baccalaureate student outcomes are Criterion 3.B of ETAC's 2026-27 criteria; outcome 4 is tests,
+// measurements and experiments, with the results used to improve processes. Read 10 Nov 2026.
+// The course is my proposal and is labelled as one; the numbers in its labs are invented so they can be checked.
+// An arrow in the prose is written -&#8288;> (a word joiner between the 2 characters), so a line never ends on the hyphen.
+import Base from '../../layouts/Base.astro';
+import Section from '../../components/Section.astro';
+
+const steps = [
+  ['Build the course backward from the outcome.', 'The outcome is what graduates can do for the employers who hire them. So I start with fieldwork: interviews and site visits with employers, the way I do my research. Then I build each course backward from what they need.'],
+  ['Personalize within a defined structure.', 'Everyone gets the same foundations. After that, I meet students where they are. Many will come from community colleges or from work, so I would map what carries over with the community college faculty.'],
+  ['Learn on real problems.', 'Courses run hands-on in the lab, and placements run on employers\' problems. I am a pilot, and pilots love checklists. The lab runs the same way. Equipment is checked before each use, each task has a written procedure, and every test is logged.'],
+  ['Test the teaching itself.', 'We set the measures before the first students arrive and keep them the same every year: on arrival, in each course, at each placement, and after graduation. Then we sit down together, compare cohorts and see what worked and what did not. We would use the same numbers as the program\'s evidence for ABET.'],
+];
+
+// 9 courses I could teach, by name. `like` is the closest course at Illinois State (TEC), Eastern Illinois (EGT, TEC)
+// and Northern Illinois (TECH), in each university's own code and title, joined with " · "; each card lists them one
+// to a line with the university first. `from` is what I have taught or built.
+const named = [
+  {
+    title: 'Introduction to engineering technology',
+    line: 'Students build something small as a team, and learn the design process and lab safety along the way.',
+    like: 'Eastern Illinois EGT 1413 Introduction to Engineering Technology',
+    from: 'I taught Introduction to UX at Waterloo (GBDA 210), and requirements engineering to non-engineers.',
+  },
+  {
+    title: 'Statistics and computing',
+    line: 'Students work in spreadsheets, write their first script and learn the statistics the later labs use.',
+    like: 'Illinois State MQM 100 Statistical Reasoning · Eastern Illinois TEC 1323 Computer Applications for Technology',
+    from: 'I taught data analytics and statistics at Waterloo (MSCI 630, GBDA 310).',
+  },
+  {
+    title: 'Engineering project management',
+    line: 'Each team plans its own build: the scope, the bill of materials, the critical path and the risks.',
+    like: 'Illinois State TEC 320 Project Management · Eastern Illinois TEC 3414 Project Management · Northern Illinois TECH 496 Industrial Project Management',
+    from: 'I taught project management in 2 Waterloo courses (GBDA 310, GBDA 402).',
+    link: { href: '#course', text: 'The 15 weeks are below' },
+  },
+  {
+    title: 'Quality systems and measurement',
+    line: 'Students measure real parts in class, then use their own readings to learn gauge R&R, control charts, capability and sampling plans.',
+    like: 'Illinois State TEC 313 Quality Systems for Technology · Eastern Illinois EGT 4843 Statistical Quality and Reliability · Northern Illinois TECH 391 Industrial Quality Control',
+    from: 'At Amazon, A/B tests decided which Alexa features we shipped.',
+  },
+  {
+    title: 'Engineering economics and cost analysis',
+    line: 'Students design to a cost, decide whether to make or buy, work out the payback and write the business case for a piece of equipment.',
+    like: 'Illinois State TEC 330 Applied Economic Analysis for Technologists · Eastern Illinois EGT 4503 Engineering Technology Cost Analysis',
+    from: 'My GBDA 402 students built the business case. I built SecureCheck-N for about $100 a unit, against $1,000 for comparable systems.',
+  },
+  {
+    title: 'Human factors and ergonomics',
+    line: 'Students learn how to design a workstation and a task, how to measure work, and why people skip steps. Then they redesign a real task and time it.',
+    like: 'Eastern Illinois EGT 3803 Engineering Technology Ergonomics · Northern Illinois TECH 434 Human Factors in Industrial Accident Prevention · Northern Illinois TECH 442 Work Simplification & Measurement',
+    from: 'My PhD is in Management Science and Engineering, with a thesis in human-computer interaction, on top of an industrial engineering degree. I taught user research in GBDA 310.',
+  },
+  {
+    title: 'Managing technological systems',
+    line: 'Students learn how a plant is organized, from flow, capacity, scheduling and inventory to the people who run it.',
+    like: 'Illinois State TEC 270 Managing Technological Systems · Illinois State TEC 392 Manufacturing Organization and Management · Eastern Illinois EGT 4943 Manufacturing Management',
+    from: 'I am an industrial engineer by training (a BTech, then an MS in Engineering Management Systems at Columbia), with over a decade in industry.',
+  },
+  {
+    title: 'Systems integration and data capture',
+    line: 'Students learn how sensors and interfaces work and what data they produce. They wire a sensor to a tablet, log its readings and write the test plan.',
+    like: 'Eastern Illinois EGT 3763 Automation and Data Capture',
+    from: 'SecureCheck-N reads an infrared sensor over Bluetooth on any tablet. At Amazon I owned Alexa Orchestration.',
+  },
+  {
+    title: 'Capstone and placements',
+    line: 'Students work on an employer\'s problem under a signed charter. They have a working result by midterm and present the final one with the employer in the room.',
+    like: 'Eastern Illinois EGT 4704 Engineering Technology Capstone · Eastern Illinois TEC 4275 Internship · Illinois State TEC 398A02 Professional Practice: Internship in Technology',
+    from: 'I ran Waterloo\'s Undergraduate Capstone Seminar (GBDA 402) on live client projects.',
+    link: { href: '#wbl', text: 'How I would run a placement is below' },
+  },
+];
+
+// UIS's "Degree Requirements at a Glance" (fact sheet, rev. Aug 2026): each group and its courses in UIS's words,
+// then where the courses from `named` could sit. `mine` is [course in bold, the words after it].
+const glance: { g: string; theirs: string; mine: [string, string][] }[] = [
+  { g: 'Programming', theirs: 'Computer Programming Concepts 1 & 2', mine: [['', 'Colleagues would teach these. My labs would put them to work on real readings.']] },
+  { g: 'Math / Science', theirs: 'Calculus I & Discrete Structures', mine: [['Statistics and computing', ' would sit beside these.']] },
+  { g: 'Engineering Core', theirs: 'Engineering for High Tech, Statics & Dynamics and Materials, Measurements and Safety', mine: [['Introduction to engineering technology', ' could be the first build in Engineering for High Tech, and '], ['Quality systems and measurement', ' could cover the measurement and safety work.']] },
+  { g: 'Hands-On', theirs: 'Applied Engineering Helix, plus the Industry-Partnered Capstone', mine: [['Engineering project management', ', '], ['Systems integration and data capture', ', '], ['Engineering economics and cost analysis', ', '], ['Human factors and ergonomics', ' and '], ['Managing technological systems', ' could run as courses or units in the Helix, and '], ['Capstone and placements', ' could be the Capstone.']] },
+];
+
+// UIS's 4 pathways to the degree (fact sheet, rev. Aug 2026), by UIS's names, with how the charter would run on each.
+// ABET ETAC Criterion 5: credit for co-op needs an academic component evaluated by program faculty.
+const pathways = [
+  { p: 'On-Campus (Campus Studio)', line: 'The employer\'s problem comes to the lab, and the mentor joins the stand-up by video.' },
+  { p: 'Progressive Placement', line: 'Each placement takes on a bigger problem, and its charter starts from the last reflection.' },
+  { p: 'Full Immersion Co-op', line: 'Each work term gets a new charter, signed before it starts. The graded reflection is the faculty-evaluated part ABET asks for when co-op earns credit.' },
+  { p: 'Engineering Residency', line: 'The student\'s own job is the site, and the supervisor signs as mentor. Lectures are short videos and campus time is all lab, in an evening section.' },
+];
+
+// The course I'd offer to build first: 15 weeks (UIS's fall term), each adding a piece of the final deliverable.
+// `a` and `b` are the block's first and last week, for its bar on the schedule.
+const weeks = [
+  { w: 'Weeks 1-2', a: 1, b: 2, title: 'What a technical project is', line: 'Safety orientation comes first. Then students learn to set the scope, write requirements and identify the stakeholders. Each student writes a 1-page requirements sheet from a user interview.' },
+  { w: 'Weeks 3-4', a: 3, b: 4, title: 'Design to cost', line: 'Students build a bill of materials and weigh the trade-offs, including make or buy. Lab 1: a kiosk\'s parts cost $90 against a $100 target, and marketing wants a $25 battery and an $18 stand. Teams decide what to cut.' },
+  { w: 'Weeks 5-6', a: 5, b: 6, title: 'Schedules', line: 'Students learn the critical path, buffers and the weekly stand-up. They mark the critical path on their own schedule and keep a stand-up sheet.' },
+  { w: 'Week 7', a: 7, b: 7, title: 'Review and midterm', line: 'Students write a project memo from a scenario, on paper.' },
+  { w: 'Weeks 8-9', a: 8, b: 9, title: 'Measurement and quality', line: 'Students check whether the gauge can be trusted (a gauge R&R study), then build control charts. Both are part of Lean Six Sigma, one of the certifications on your fact sheet. The gauge study is lab 2.' },
+  { w: 'Weeks 10-11', a: 10, b: 11, title: 'Systems integration', line: 'Students learn interfaces, test plans and failure modes. They write an interface list and an integration test plan, then run the plan on their build in the lab.' },
+  { w: 'Week 12', a: 12, b: 12, title: 'Ethics, product safety and societal impact', line: 'Each student writes a 1-page decision record that states the trade-off.' },
+  { w: 'Weeks 13-15', a: 13, b: 15, title: 'The employer project', line: 'Teams present the charter, the plan and the tested build to the employer\'s mentor, then write a short reflection.' },
+];
+
+// How 1 lab in that course would be measured: a sample of the evidence it would hand to the program for ABET.
+const measure = [
+  { k: 'Outcome', line: 'ABET ETAC student outcome 4: run standard tests and measurements, and use the results to improve a process.' },
+  { k: 'Task', line: 'Lab 2. Each student runs the gauge study and writes 1 page: can these parts ship?' },
+  { k: 'Measure', line: 'I would score that page on a 4-level rubric. A colleague scores 10 of them too, to check the rubric.' },
+  { k: 'Target', line: '70% of students reach level 3 or above. I would set the target with the director and keep it the same every year.' },
+  { k: 'Review', line: 'Each summer we compare cohorts, change 1 thing and log it.' },
+];
+
+const TERM = 15;
+// A block of weeks as a bar on a 15-week track, with a hair of white either side so 2 blocks side by side read as 2.
+const bar = (a: number, b: number) => `left: calc(${((a - 1) / TERM) * 100}% + 1px); width: calc(${((b - a + 1) / TERM) * 100}% - 2px)`;
+const mid = (w: number) => `left: ${((w - 0.5) / TERM) * 100}%`;
+const wk = Array.from({ length: TERM }, (_, i) => i + 1);
+const unis = (like: string) => like.split(' · ').map((x) => x.match(/^(Illinois State|Eastern Illinois|Northern Illinois) (.*)$/)!.slice(1));
+const uisColours: [string, string] = ['#003366', '#003366']; // UIS Blue, from the university's brand page
+---
+<Base title="UIS" description="What Ali Rizvi could teach as founding faculty for the Bachelor of Applied Science in Engineering Technology at the University of Illinois Springfield, and how he teaches." noindex accent={uisColours} rail>
+  <header class="page-head">
+    <div class="intro-grid">
+      <div class="text">
+        <h1>Teaching engineering technology at <mark>UIS</mark></h1>
+        <p>As one of the founding faculty, I would help build the BAS-ET with partners (all of you, employers and the students), teach it in the lab, and measure every cohort. This page is a sample of how. The course shells and a lot of the groundwork are already done, and I would build on them.</p>
+      </div>
+      <div class="photo"><img src="/media/headshot.jpg" alt="Ali Rizvi" width="400" height="500" /></div>
+    </div>
+  </header>
+
+  <Section title="In my 4 steps" id="approach">
+    <ol class="principles steps across">
+      {steps.map(([head, line]) => <li><strong>{head}</strong> {line}</li>)}
+    </ol>
+  </Section>
+
+  <Section title="Courses I could teach" id="courses">
+    <div class="grid"><div class="span-8">
+      <p>You already have the course list. To be specific about what I could teach, here are 9 courses, from year 1 to the capstone. Each shows the closest course at Illinois State, Eastern Illinois or Northern Illinois, and what I have taught or built that backs it up.</p>
+    </div></div>
+    <ul class="exhibits courses">
+      {named.map((c) => (
+        <li class="course">
+          <h3>{c.title}</h3>
+          <p>{c.line}</p>
+          <dl class="course-facts">
+            <dt class="label">Elsewhere</dt>
+            <dd><ul class="unis">{unis(c.like).map(([u, t]) => <li><b>{u}</b> {t}</li>)}</ul></dd>
+            <dt class="label">I bring</dt>
+            <dd>{c.from}</dd>
+          </dl>
+          {c.link && <p class="sample"><a href={c.link.href}>{c.link.text}</a></p>}
+        </li>
+      ))}
+    </ul>
+  </Section>
+
+  <Section title="Where these courses could sit" id="plan">
+    <div class="grid"><div class="span-8">
+      <p>Your fact sheet gives the degree requirements at a glance. This is my first guess, from the names alone, at where these courses could sit. I would check it with the associate director. The courses I could teach are in bold.</p>
+    </div></div>
+    <ul class="cols c4 picks">
+      {glance.map((r) => (
+        <li>
+          <strong>{r.g}</strong>
+          <p class="who"><span class="label">Your fact sheet</span>{r.theirs}</p>
+          <p>{r.mine.map(([b, t]) => <>{b && <strong>{b}</strong>}{t}</>)}</p>
+        </li>
+      ))}
+    </ul>
+  </Section>
+
+  <Section title="Engineering project management and systems integration" id="course">
+    <div class="grid"><div class="span-8">
+      <p>This is the course I would offer to build first. It runs hands-on in the program's new lab and ends in a tested build for a real employer problem. Every lab runs the same cycle: requirement -&#8288;> build to a cost -&#8288;> test -&#8288;> iterate.</p>
+    </div></div>
+    <div class="sched" style={`--slots: ${TERM}`}>
+      <div class="sched-row g-head" aria-hidden="true">
+        <span></span><span></span>
+        <div class="g-track">{wk.map((w) => <span class:list={['g-wk', 'label', { 'narrow-hide': w % 2 === 0 }]} style={mid(w)}>{w}</span>)}</div>
+      </div>
+      <ol class="sched-rows">
+        {weeks.map((k) => (
+          <li class="sched-row">
+            <div class="label">{k.w}</div>
+            <div class="sched-text">
+              <span class="title">{k.title}</span>
+              <p>{k.line}</p>
+            </div>
+            <div class="g-track" aria-hidden="true"><span class="g-bar" style={bar(k.a, k.b)}></span></div>
+          </li>
+        ))}
+      </ol>
+    </div>
+    <div class="grid"><div class="span-8">
+      <p class="muted" style="margin-top: 1.5rem;">Lab numbers are invented so they can be checked by hand. Labs are pass or redo, and the midterm is on paper.</p>
+    </div></div>
+    <p class="goals-sub" id="measure"><strong>How I would measure lab 2</strong> · a sample of the evidence for ABET</p>
+    <ol class="cols c5">
+      {measure.map((m) => (
+        <li>
+          <strong>{m.k}</strong>
+          <p>{m.line}</p>
+        </li>
+      ))}
+    </ol>
+  </Section>
+
+  <Section title="How I would run a placement" id="wbl">
+    <div class="beside">
+      <p>I would start with warm contacts: the program's industry partners, the Illinois Manufacturers' Association and IMEC (both back the program), the chambers of commerce, and U of I alumni who founded companies. I would visit each site before a student does.</p>
+      <div class="charter">
+        <p><strong>Every placement starts with a <span class="nb">1-page</span> charter.</strong> The student, the employer's mentor and I sign it by week 3. It covers:</p>
+        <ul class="checks">
+          <li>the problem</li>
+          <li>access and safety rules</li>
+          <li>what the employer gets back</li>
+          <li>how we will know it worked</li>
+          <li>a plan B</li>
+        </ul>
+      </div>
+      <p>The university signs its agreement with the employer first, and the charter becomes the student's learning plan.</p>
+      <p>Each student has a weekly stand-up, a midterm check-in and a final presentation with the employer. The grade comes from the deliverable, the mentor's feedback and a short reflection. This is how I would run your Do -&#8288;> Reflect -&#8288;> Improve cycle.</p>
+      <p>For 2+2 transfer students, I would map what carries over with the community college faculty. For techX, I would bring the same employer problems, sized for dual credit.</p>
+    </div>
+    <p class="goals-sub" id="pathways"><strong>On your 4 pathways</strong> · the same charter on each</p>
+    <ul class="cols c4">
+      {pathways.map((r) => (
+        <li>
+          <strong>{r.p}</strong>
+          <p>{r.line}</p>
+        </li>
+      ))}
+    </ul>
+  </Section>
+
+  <Section title="How new technology gets into a course" id="current">
+    <div class="grid"><div class="span-8">
+      <p>Each year I would rebuild 1 unit in each course around a problem a company has right now, with its permission. I see those problems at the venture fund where I lead research, and I would hear them from the placement mentors.</p>
+      <p>The first one would be for Quality systems and measurement: an AI inspector (a camera and a model that passes or fails each part). Students test it like the calipers in lab 2, against parts with a known answer, then decide when a person still has to check.</p>
+    </div></div>
+  </Section>
+</Base>

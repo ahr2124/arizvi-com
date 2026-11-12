@@ -1,0 +1,141 @@
+---
+import '../styles/global.css';
+import PageNav from '../components/PageNav.astro';
+// accent: a school page (/bucknell, /tulane, /uis) and its 2 colours. up: on a school sub-page, the way back to the page
+// above it, shown at the top of the in-page nav. image: the picture a link preview shows (defaults to the site card).
+// invert: the scheme reversed, white on black. Only the 404 page uses it. preload: the page's biggest picture, when the
+// browser would find it late (a CSS background, a video poster), so it is fetched first.
+// rail: a school page whose sections run to the right edge (/uis) keeps its in-page nav as the rail of dashes.
+// pageNav: the in-page nav on a page that is not a school page (the home page: Ali, 11 Nov 2026, "landing page needs
+// right nav too").
+interface Props { title: string; description?: string; noindex?: boolean; accent?: [string, string]; up?: [string, string]; rail?: boolean; pageNav?: boolean; image?: string; invert?: boolean; preload?: string }
+const { title, noindex = false, accent, up, rail = false, pageNav = false, image, invert = false, preload, description = 'Ali Rizvi - educator. PhD, University of Waterloo. AI and interactive systems for the other 80%.' } = Astro.props;
+const path = Astro.url.pathname;
+const pageTitle = title === 'Ali Rizvi' ? title : `${title} - Ali Rizvi`;
+const notFound = path.replace(/\/$/, '') === '/404';
+const canonical = new URL(path, Astro.site);
+const shareImage = new URL(image ?? '/media/share.png', Astro.site);
+const scholar = 'https://scholar.google.com/citations?user=ngAHmhEAAAAJ&hl=en&oi=ao';
+const email = 'ali.rizvi@uwaterloo.ca';
+// Teaching first (Ali, 11 Nov 2026: the site leans into teaching; "educator instead of researcher"). Work and Projects
+// were one page twice over, so Work went (Ali, 11 Nov 2026: "teaching, projects, about"). Resources came in next to
+// Teaching the same night (Ali: "Resrouces fet its own place on the main nav bar up top").
+const nav = [
+  ['/teaching/', 'Teaching'],
+  ['/resources/', 'Resources'],
+  ['/projects/', 'Projects'],
+  ['/about/', 'About'],
+];
+const footerNav: [string, [string, string][]][] = [
+  ['Teaching', [
+    ['/teaching/', 'Teaching'],
+    ['/teaching/#philosophy', 'Teaching philosophy'],
+    ['/teaching/#courses', 'What I teach'],
+    ['/teaching/#mentoring', 'Mentoring'],
+    ['/teaching/#students', 'What students said'],
+    ['/resources/', 'Teaching resources'],
+  ]],
+  ['Projects', [
+    ['/projects/', 'Projects'],
+    ['/projects/scramble/', 'Proteus → Scramble Deck'],
+    ['/projects/bodhika/', 'Bodhika Labs'],
+    ['/projects/phd/', 'Constrained spaces'],
+    ['/projects/experimentation/', 'Experimentation on small traffic'],
+  ]],
+  ['Research', [
+    ['/projects/#publications', 'Publications'],
+    [scholar, 'Google Scholar'],
+  ]],
+  ['More', [
+    ['/about/', 'About'],
+    ['/attitude/', 'About the mark'],
+  ]],
+];
+const updated = new Date().toLocaleDateString('en-CA', { year: 'numeric', month: 'long' });
+const current = (href: string) =>
+  (href === '/' ? path === '/' : path.startsWith(href)) ? 'page' : undefined;
+const ext = (href: string) => href.startsWith('http');
+// Section colours (Ali, 12 Nov 2026: "Except for the homepage, every other page should have an accent colour ... a massive
+// refresh with this new amazing identity without repeating colours"). Each section has one highlighter colour, set here
+// from the path as data-tone on the body; the colours are in global.css. Each school keeps a light tint of its own colour.
+// The home page has Bucknell's orange (Ali, 12 Nov 2026: "im ok using orange here given that only bukcnell sees
+// bucknell"), set by its exact path since every path starts with "/". The 404 page has none.
+const tones: [string, string][] = [
+  ['/teaching/', 'teaching'], ['/resources/', 'resources'], ['/projects/', 'projects'],
+  ['/about/', 'about'], ['/attitude/', 'about'], ['/license/', 'about'],
+  ['/bucknell/', 'bucknell'], ['/tulane/', 'tulane'], ['/uis/', 'uis'],
+];
+const tone = invert ? undefined : path === '/' ? 'home' : tones.find(([p]) => (path.endsWith('/') ? path : `${path}/`).startsWith(p))?.[1];
+---
+<!doctype html>
+<html lang="en-CA" class={invert ? 'inverse' : undefined}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex" />}
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon.ico" sizes="16x16" />
+    {!notFound && <link rel="canonical" href={canonical} />}
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Ali Rizvi" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    {!notFound && <meta property="og:url" content={canonical} />}
+    <meta property="og:image" content={shareImage} />
+    {!image && <meta property="og:image:width" content="1200" />}
+    {!image && <meta property="og:image:height" content="630" />}
+    {!image && <meta property="og:image:alt" content="Ali Rizvi. AI and interactive systems for the other 80%." />}
+    <meta name="twitter:card" content="summary_large_image" />
+    {preload && <link rel="preload" href={preload} as="image" fetchpriority="high" />}
+    <link rel="preload" href="/fonts/CooperHewitt-Book.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/CooperHewitt-Semibold.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/CooperHewitt-Medium.woff2" as="font" type="font/woff2" crossorigin />
+    <script is:inline defer src="https://cloud.umami.is/script.js" data-website-id="5919cb1d-b858-44d6-91ef-4e808d62faec" data-domains="arizvi.com"></script>
+  </head>
+  <body class={accent ? 'school' : undefined} data-tone={tone} style={accent ? `--accent: ${accent[0]}; --accent-2: ${accent[1]};` : undefined}>
+    <a class="skip" href="#main">Skip to content</a>
+    <div class="container">
+      <header class="site-header">
+        <div class="brand">
+          <a class="mark-link" href="/attitude/" aria-label="About the mark"><img class="mark" src={invert ? '/media/mark-inverse.svg' : '/media/mark.svg'} alt="" width="28" height="28" /></a>
+          <a class="wordmark" href="/">Ali Rizvi</a>
+        </div>
+        <nav class="label" aria-label="Primary">
+          {nav.map(([href, label]) => <a href={href} aria-current={current(href)}>{label}</a>)}
+        </nav>
+      </header>
+      <main id="main"><slot /></main>
+    </div>
+    {(accent || pageNav) && <PageNav up={up} rail={rail} />}
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <img class="mark" src={invert ? '/media/mark.svg' : '/media/mark-inverse.svg'} alt="" width="36" height="36" />
+            <p class="wordmark">Ali Rizvi</p>
+            <p class="footer-line">AI and interactive systems for the other 80%.</p>
+            <p class="footer-contact"><a href={`mailto:${email}`}>{email}</a></p>
+          </div>
+          {footerNav.map(([heading, links]) => (
+            <nav class="footer-col" aria-label={heading}>
+              <p class="label">{heading}</p>
+              <ul>
+                {links.map(([href, label]) => (
+                  <li>{ext(href)
+                    ? <a href={href} target="_blank" rel="noopener">{label}</a>
+                    : <a href={href}>{label}</a>}</li>
+                ))}
+              </ul>
+            </nav>
+          ))}
+        </div>
+        <div class="footer-base label">
+          <p>© {new Date().getFullYear()} Ali Rizvi · <a href="/license/">CC BY-ND 4.0</a></p>
+          <p>Updated {updated}</p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

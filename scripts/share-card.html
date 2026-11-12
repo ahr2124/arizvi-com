@@ -1,0 +1,43 @@
+<!doctype html>
+<!-- The picture a link preview shows (public/media/share.png, 1200 x 630). Open this file in a browser window of that
+     size and take a screenshot, or run the 2 lines in the README. Same type and rules as the site: black on white. -->
+<html lang="en-CA">
+<meta charset="utf-8">
+<title>Share card</title>
+<style>
+  @font-face { font-family: 'Cooper Hewitt'; src: url('../public/fonts/CooperHewitt-Semibold.woff2') format('woff2'); font-weight: 600; }
+  @font-face { font-family: 'Cooper Hewitt'; src: url('../public/fonts/CooperHewitt-Bold.woff2') format('woff2'); font-weight: 700; }
+  @font-face { font-family: 'Cooper Hewitt'; src: url('../public/fonts/CooperHewitt-Book.woff2') format('woff2'); font-weight: 400; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body { width: 1200px; height: 630px; padding: 56px 72px 52px; background: #fff; color: #000; font-family: 'Cooper Hewitt', Helvetica, Arial, sans-serif; display: flex; flex-direction: column; -webkit-font-smoothing: antialiased; }
+  header { display: flex; align-items: center; gap: 22px; padding-bottom: 34px; border-bottom: 4px solid #000; }
+  header svg { width: 56px; height: 56px; display: block; }
+  header p { margin: 0; font-weight: 700; font-size: 30px; text-transform: uppercase; letter-spacing: 0.14em; }
+  h1 { margin: auto 0 0; font-weight: 600; font-size: 84px; letter-spacing: -0.02em; line-height: 1.06; white-space: nowrap; }
+  footer { margin-top: 40px; font-size: 30px; }
+</style>
+<body>
+  <header>
+    <svg viewBox="0 0 100 100" aria-hidden="true">
+      <defs><clipPath id="hx"><path d="M92 50 L71 86.4 L29 86.4 L8 50 L29 13.6 L71 13.6 Z"/></clipPath></defs>
+      <g clip-path="url(#hx)"><g transform="translate(0 18)">
+        <rect x="-80" y="-130" width="260" height="180" fill="#fff"/>
+        <rect x="-80" y="50" width="260" height="180" fill="#000"/>
+        <path d="M38 38 H62 M42 26 H58" stroke="#000" stroke-width="2"/>
+        <path d="M44 44 H56 M44 32 H56" stroke="#000" stroke-width="1.2"/>
+        <path d="M38 62 H62 M42 74 H58" stroke="#fff" stroke-width="2"/>
+        <path d="M44 56 H56 M44 68 H56" stroke="#fff" stroke-width="1.2"/>
+      </g></g>
+      <path d="M50 15.6 L46 22.6 H54 Z" fill="#000"/>
+      <g fill="#000" stroke="#fff" stroke-width="2" paint-order="stroke">
+        <rect x="27" y="47" width="15" height="6"/><rect x="58" y="47" width="15" height="6"/><circle cx="50" cy="50" r="3.5"/>
+      </g>
+      <path d="M92 50 L71 86.4 L29 86.4 L8 50 L29 13.6 L71 13.6 Z" fill="none" stroke="#000" stroke-width="4" stroke-linejoin="miter"/>
+    </svg>
+    <p>Ali Rizvi</p>
+  </header>
+  <h1>AI and interactive systems<br>for the other 80%.</h1>
+  <footer>arizvi.com</footer>
+</body>
+</html>

@@ -1,0 +1,24 @@
+---
+// Header for a /bucknell course page: title, what students leave with, then the catalogue's fields
+// (credit, offering line, prerequisites, restriction, requirement group) followed by mine.
+import { arrows, students, type Course } from '../data/bucknell';
+interface Props { course: Course; facts?: [string, string][] }
+const { course, facts = [] } = Astro.props;
+const rows: [string, string][] = [
+  ['Credit', '1 Credit'],
+  ['Offered', course.offered.replace(/^Offered /, '')],
+  ['Prerequisites', course.prereqs ?? 'None'],
+  ...(course.restriction ? [['Restriction', course.restriction] as [string, string]] : []),
+  ['Requirement', course.where],
+  ['Students', students(course)],
+  ["When I could teach it", course.when],
+  ...facts,
+];---
+<header class="page-head course-head">
+  <h1>{course.title}</h1>
+  <p class="tagline">{arrows(course.pageLine ?? course.line, true)}</p>
+  <div class="grid"><div class="span-8"><slot /></div></div>
+  <div class="kv course-kv">
+    {rows.map(([k, v]) => (<><p class="label">{k}</p><p>{v}</p></>))}
+  </div>
+</header>

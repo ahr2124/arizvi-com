@@ -1,0 +1,14 @@
+---
+// A student's comment, quoted as written, with where it is from underneath on 2 lines: course · term, then the
+// question it answers, with ", in part" when only part of the comment is quoted (so a lone word never wraps onto a
+// line of its own). size: 'big' for the 2-sentence one that opens the home page's Teaching section and /teaching/,
+// 'step' for the one beside each of the 4 steps on /teaching/, 'row' for What students said on /teaching/: the label on the
+// left, the comment on the right, one per row (Ali, 12 Nov 2026: "can you rearrange these things? it looks messy").
+import type { StudentComment } from '../data/students';
+interface Props { comment: StudentComment; size?: 'big' | 'step' | 'row' }
+const { comment, size } = Astro.props;
+---
+<figure class:list={['quote', size]}>
+  <blockquote><p>"{comment.text}"</p></blockquote>
+  <figcaption class="label"><span>{[comment.course, comment.term].filter(Boolean).join(' · ')}</span><span>{comment.where}{comment.excerpt ? ', in part' : ''}</span></figcaption>
+</figure>
