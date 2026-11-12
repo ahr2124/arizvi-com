@@ -134,7 +134,7 @@ export const grades = [
 
 export const people = [
   { name: 'Ali Rizvi', role: 'Teacher' },
-  { name: '[Service Learning Assistant]', role: 'Service Learning Assistant, from the Center for Public Service. Runs the site orientation and collects the service timesheets.' },
+  { name: '[Service Learning Assistant]', role: 'From the Center for Public Service. Runs the site orientation and collects the service timesheets.' },
   { name: '[Partner contact]', role: `Observer, from ${partner}` },
 ];
 
