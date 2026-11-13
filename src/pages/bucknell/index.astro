@@ -1,179 +1,62 @@
 ---
 // src/pages/bucknell/index.astro  →  arizvi.com/bucknell
-// Hub for the Bucknell business analytics search. Each section has the layout that suits what it holds, as on /uis
-// (Ali, 10 Nov 2026: "Check out the new V of the UIS site, with accent color used across the board, nicer layouts, and
-// enhanced readability. Lets try the same for these two? Lets vary layouts and make this readable and somewhat fun"):
-// the 4 steps across the page under number tags, the 4 courses as cards, the catalogue's requirement groups side by
-// side, the learning goals as a map against the 4 courses, and the classes to try as tiles.
-// Bucknell blue marks where I come in: the step tags, the course codes, the courses I could teach among the catalogue's
-// groups, the marks on the goals map and the weeks on the class tiles. Bucknell orange is the header line.
-// Each course has its own page. Not linked from the nav; sends noindex.
-// Codes, titles, offering lines, requirement groups and learning goals are from Bucknell's 2026-27 catalogue.
+// For the Bucknell business analytics search (Analytics & Operations Management, Freeman College of Management).
+// Rebuilt on 13 Nov 2026 the way /tulane was (Ali: "Let's build this like we built Tulane and only keep the data
+// visualization course and put it into a shell that feels like moodle"). In order: the 4 steps across the page under
+// number tags, carrying his methods, with a line on generative AI under them; then one course in full (a section of
+// ANOP 270 on its current outline, taught in Tableau), laid out the way it would sit in Moodle (MoodleShell.astro,
+// content in src/data/bucknell270.ts). The other courses and their pages came off the same day.
+// Bucknell's orange (the section colour) marks where Ali comes in: the step tags, where you are in the course shell,
+// what the sample student has done, and a rubric's best level.
+// Numbers up to two digits are words in the copy; digits stay for course codes, data, the week labels and points in
+// the course shell, and the scores (1 or 0).
+// Not linked from the nav; sends noindex.
+// Bucknell facts, read 13 Nov 2026: ANOP 270's title, credit, description and prerequisites from the 2026-27
+// catalogue's ANOP course listing (coursecatalog.bucknell.edu/courses/anop/); ANOP 270 or HUMN 270 in the Business
+// Analytics Major Requirements from the major's catalogue page.
+// The readers and the guest judge are not named: they are placeholders.
 import Base from '../../layouts/Base.astro';
 import Section from '../../components/Section.astro';
-import { arrows, courses, students, bucknellColours } from '../../data/bucknell';
+import MoodleShell from '../../components/MoodleShell.astro';
+import { bucknellColours } from '../../data/bucknell';
 
-const byNumber = [...courses].sort((a, b) => a.code.localeCompare(b.code));
-const cols = byNumber.map((c) => c.code);
-
+// The 4 steps Ali teaches by, each carrying the methods he describes for them (as on /tulane).
 const steps = [
-  ['Build the course backward from the outcome.', 'The outcome is what students can do by the end of the term. In ANOP 102, that is a model a manager could audit and a 2-page memo. So I start there, and the memo is built in pieces through the term.'],
-  ['Personalize within a defined structure.', 'Everyone gets the same foundations, on the department\'s outline. After that, I meet students where they are, and each student applies the methods to a decision they choose.'],
-  ['Learn on real problems.', 'Projects run on real data, and in ANOP 400 on a real client\'s problem. Most of the sample classes on this page use small, invented businesses, so the numbers can be checked by hand.'],
-  ['Test the teaching itself.', 'Every course gets midterm feedback, and I would make changes before the term ends. At the end of each term, we would sit down together and compare sections.'],
-];
-
-// The catalogue's groups for the major and the minor, side by side. `mine` marks a course I could teach.
-const groups: { g: string; note?: string; rows: { c: string; t: string; mine?: boolean }[] }[] = [
-  { g: 'Core Requirements', rows: [
-    { c: 'MATH 201', t: 'Calculus I, or MATH 192' },
-    { c: 'STAT 216', t: 'Statistics I' },
-    { c: 'ANOP 203', t: 'Introduction to Programming for Business Analytics, or CSCI 203' },
-  ] },
-  { g: 'Major Requirements', note: 'ANOP 400 is the Culminating Experience.', rows: [
-    { c: 'ANOP 270', t: 'Data Visualization for Business Analytics, or HUMN 270' },
-    { c: 'ANOP 330', t: 'Predictive Analytics: Machine Learning Fundamentals for Business', mine: true },
-    { c: 'ANOP 350', t: 'Predictive Analytics: Forecasting & Simulation' },
-    { c: 'ANOP 370', t: 'Prescriptive Analytics: Decision Modeling & Optimization, or MATH 358' },
-    { c: 'ANOP 400', t: 'Business Analytics Practicum', mine: true },
-  ] },
-  { g: 'Minor: required', rows: [
-    { c: 'ANOP 102', t: 'Spreadsheet Modeling & Data Analysis', mine: true },
-    { c: 'ANOP 270', t: 'Data Visualization for Business Analytics' },
-    { c: 'ANOP 330', t: 'Predictive Analytics: Machine Learning Fundamentals for Business', mine: true },
-  ] },
-  { g: 'Minor: 2 from the list', rows: [
-    { c: 'ANOP 203', t: 'Introduction to Programming for Business Analytics' },
-    { c: 'ANOP 242', t: 'Database Management and Applied Data Analysis' },
-    { c: 'ANOP 302', t: 'Financial Decision Modeling using Spreadsheets', mine: true },
-    { c: 'ANOP 311', t: 'Supply Chain Analytics' },
-    { c: 'ANOP 350', t: 'Predictive Analytics: Forecasting & Simulation' },
-    { c: 'ANOP 370', t: 'Prescriptive Analytics: Decision Modeling & Optimization' },
-  ] },
-];
-
-// Freeman's 3 learning goals and the 5 the major adds, by their own names or first words, with where each is taught
-// and which of the 4 courses teach it (for the map).
-const goalMap = [
-  { group: 'Freeman College', rows: [
-    { head: 'Analysis', where: 'ANOP 102: a model a manager can audit, and a 2-page memo.', in: ['ANOP 102'] },
-    { head: 'Integrity', where: 'ANOP 102, week 11: the memo says which data it left out, and why.', in: ['ANOP 102'] },
-    { head: 'Morality', where: 'ANOP 400: the data agreement, and customer IDs removed before files reach students.', in: ['ANOP 400'] },
-  ] },
-  { group: 'Business Analytics majors will', rows: [
-    { head: 'Understand and critically apply the methods', where: 'ANOP 330, weeks 4 and 8: testing on unseen data, and pricing a cutoff.', in: ['ANOP 330'] },
-    { head: 'Bridge technical teams and stakeholders', where: 'ANOP 400: client teams, a signed charter, and a final presentation to the client.', in: ['ANOP 400'] },
-    { head: 'Evaluate and quantify uncertainty and risk', where: 'ANOP 102, week 6: breakeven ranges. ANOP 302, week 12: simulation.', in: ['ANOP 102', 'ANOP 302'] },
-    { head: 'Commit to ethical decision-making', where: 'ANOP 102, week 8, and ANOP 330: who signs off on a model\'s decision.', in: ['ANOP 102', 'ANOP 330'] },
-    { head: 'Personal continuous improvement', where: 'Pass-or-redo labs, and graded reflection in ANOP 400.', in: ['ANOP 102', 'ANOP 302', 'ANOP 330', 'ANOP 400'] },
-  ] },
-];
-
-const cards = [
-  { code: 'ANOP 102', week: 'Week 3', href: '/bucknell/anop-102/#pivot', title: 'Cleaning a sales export before the pivot table', line: 'Three errors in a coffee cart\'s sales change which location sold more.' },
-  { code: 'ANOP 102', week: 'Week 6', href: '/bucknell/anop-102/#breakeven', title: 'How wrong can the forecast be?', line: 'Students map a taco truck\'s profit at every price and volume.' },
-  { code: 'ANOP 102', week: 'Week 8', href: '/bucknell/anop-102/#llm', title: 'Using a chatbot\'s probabilities in a decision', line: 'Students decide how many croissants to bake from an LLM\'s forecast.' },
-  { code: 'ANOP 102', week: 'Week 11', href: '/bucknell/anop-102/#regression', title: 'Fitting a line to 12 weeks of ad spend', line: 'One race weekend decides whether a bike shop\'s ads pay.' },
-  { code: 'ANOP 330', week: 'Week 4', href: '/bucknell/anop-330/#overfit', title: 'Testing a model on days it has not seen', line: 'Students fit ice-cream sales on 16 days and test the model on the 8 held back.' },
-  { code: 'ANOP 330', week: 'Week 8', href: '/bucknell/anop-330/#threshold', title: 'Choosing the cutoff for a retention offer', line: 'Students find that the most accurate cutoff makes no money.' },
-  { code: 'ANOP 302', week: 'Week 12', href: '/bucknell/anop-302/#try', title: 'Pricing an option by simulation', line: 'Students see how many simulated paths it takes to match Black-Scholes.' },
+  ['Build the course backward from the outcome.', 'I start from what students should be able to do when the course ends, then plan each week and each assessment backward from it. Every brief follows TILT (its purpose, the task, and the criteria), and I grade key pieces with specifications: each spec is met or not yet, 1 or 0.'],
+  ['Personalize within a defined structure.', 'Everyone gets the same foundations. We start on a worked example and move to real problems with feedback midway, and by the end students solve semi-structured problems alone or in teams. I scaffold each step so that first-generation students and students whose first language is not English do well.'],
+  ['Learn on real problems.', 'The problems come from open data such as the CFPB\'s consumer complaints, and from industry partners and my own industry work. Guest speakers bring more of them into the room. I prepare each speaker beforehand, and when students lose the thread, I step in with questions.'],
+  ['Test the teaching itself.', 'The real problems midway are formative assessments. They show whether the teaching has worked while there is still time to change it. For mid-course feedback, students get fifteen minutes in class to answer three questions anonymously (what should I start, continue, and stop doing?), and I leave the room. At Bucknell I would run it in Moodle.'],
 ];
 ---
-<Base title="Bucknell" description="The courses Ali Rizvi could teach in Bucknell's Analytics & Operations Management department, and how he teaches them." noindex accent={bucknellColours} rail>
+<Base title="Bucknell" description="How Ali Rizvi would teach in Bucknell's Analytics & Operations Management department, with one section of ANOP 270 (data visualization, in Tableau) laid out in full." noindex accent={bucknellColours} rail>
   <header class="page-head">
     <div class="intro-grid">
       <div class="text">
         <h1>Teaching analytics at <mark>Bucknell</mark></h1>
         <p>This page is a sample of how I could teach. I would work with the professors who teach these courses now to understand the students and see what works and what does not. Then I would build on what is already there.</p>
+        <p>I spent over a decade in industry before my PhD, including leading AI and analytics teams at Morgan Stanley and on Amazon Alexa.</p>
+        <p>We talked about the department needing more sections of data visualization, so the course I lay out in full is one section of ANOP&nbsp;270, taught in Tableau.</p>
       </div>
       <div class="photo"><img src="/media/headshot.jpg" alt="Ali Rizvi" width="400" height="500" /></div>
     </div>
   </header>
 
-  <Section title="In my 4 steps" id="approach">
+  <Section title="How I teach" id="approach">
     <ol class="principles steps across">
       {steps.map(([head, line]) => <li><strong>{head}</strong> {line}</li>)}
     </ol>
+    <div class="grid after-steps"><div class="span-8">
+      <p><strong>Generative AI.</strong> Where students will use it at work, they use it in my courses too, and they disclose which tools and prompts they used and write a short reflection on what changed. Specific parts of that disclosure are graded 1 or 0. Where students need the fundamentals without it, the checks are on paper. I have also built generative AI modules into other courses, so that students learn to use it within each subject.</p>
+    </div></div>
   </Section>
 
-  <Section title="Courses I could teach" id="courses">
+  <Section title="A section of ANOP 270, in Tableau" id="course">
     <div class="grid"><div class="span-8">
-      <p>Based on the posting, I have focused on 3 areas: spreadsheet modeling and analysis, machine learning, and project-based capstone courses. These 4 courses cover them. Each has its own page, with a full pack (syllabus, weekly plan and rubrics) for colleagues to review.</p>
+      <p>Here is a draft of how I could run one section of Data Visualization for Business Analytics on its current outline. I would settle the grading with the professors who teach it now, so that sections stay comparable, and check with whoever teaches HUMN&nbsp;270, since majors can take either. The content follows the catalog: the principles of data visualization and data preparation, and software for presenting data in tables, charts, and dashboards. Students work in Tableau Desktop and Tableau Prep, and end with two dashboards for a reader who has a decision to make.</p>
+      <p>The course starts on a worked example, a flower farm that has to give up one market day a week, and <a href="#mdl-worked">you can try it</a> in the first section. Midway, it runs as a case competition: every team gets the same real data and the same question, I coach each team on how to prepare and how to present, and a guest judges. By the end, each team has picked its own reader and built for them.</p>
+      <p>Below is the section as it might look in Moodle.</p>
     </div></div>
-    <ul class="exhibits courses two">
-      {byNumber.map((c) => (
-        <li class="course">
-          <p class="code">{c.code}</p>
-          <h3><a href={`/bucknell/${c.slug}/`}>{c.title}</a></h3>
-          <p>{arrows(c.line)}</p>
-          <dl class="course-facts">
-            <dt class="label">In the catalog</dt>
-            <dd>1 Credit. {c.offered}.{c.prereqs && ` Prerequisites: ${c.prereqs}.`}</dd>
-            <dt class="label">Students</dt>
-            <dd>{students(c)}</dd>
-            <dt class="label">When</dt>
-            <dd>{c.when}</dd>
-          </dl>
-          <p class="sample"><a href={`/bucknell/${c.slug}/`}>{c.sample}&nbsp;→</a></p>
-        </li>
-      ))}
-    </ul>
+    <MoodleShell />
   </Section>
 
-  <Section title="Where they sit in the major" id="requirements">
-    <div class="grid"><div class="span-8">
-      <p>These are the catalog's groups for the Business Analytics major and minor. The courses I could teach are in bold.</p>
-    </div></div>
-    <ul class="cols c4 sits">
-      {groups.map((g) => (
-        <li>
-          <strong>{g.g}</strong>
-          <ul class="sit">
-            {g.rows.map((r) => <li class:list={{ mine: r.mine }}><span class="nb">{r.c}</span> {r.t}</li>)}
-          </ul>
-          {g.note && <p class="who">{g.note}</p>}
-        </li>
-      ))}
-    </ul>
-  </Section>
-
-  <Section title="Learning Goals" id="goals">
-    <div class="grid"><div class="span-8">
-      <p>These are Freeman's 3 goals and the 5 the major adds, with where my sample courses teach each one.</p>
-    </div></div>
-    <div class="gmap" style={`--n: ${cols.length}`}>
-      <div class="gmap-row gmap-head" aria-hidden="true">
-        <span></span>
-        {cols.map((c) => <span class="label">{c}</span>)}
-      </div>
-      {goalMap.map((grp) => (
-        <>
-          <p class="gmap-group">{grp.group}</p>
-          <ul class="gmap-rows">
-            {grp.rows.map((r) => (
-              <li class="gmap-row">
-                <div class="o-text"><strong>{r.head}</strong><p>{r.where}</p></div>
-                {cols.map((c) => <span class="gmap-cell" aria-hidden="true">{r.in.includes(c) && <span class="gmap-dot"></span>}</span>)}
-              </li>
-            ))}
-          </ul>
-        </>
-      ))}
-    </div>
-  </Section>
-
-  <Section title="Try a class" id="try">
-    <div class="grid"><div class="span-8">
-      <p>Each one runs in your browser, the way it runs in class. Pick one!</p>
-    </div></div>
-    <ul class="cols c4 tiles">
-      {cards.map((k) => (
-        <li>
-          <span class="label tile-tag">{k.code} · {k.week}</span>
-          <a class="tile-title" href={k.href}>{k.title}&nbsp;→</a>
-          <p>{k.line}</p>
-        </li>
-      ))}
-    </ul>
-  </Section>
 </Base>

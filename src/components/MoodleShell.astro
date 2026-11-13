@@ -1,0 +1,391 @@
+---
+// A course laid out the way it would sit in Moodle, in the site's own look (Ali, 13 Nov 2026: "put it into a shell
+// that feels like moodle"). What a student sees in a Moodle course: a breadcrumb, the Course, Participants and Grades
+// tabs, the course index down the side, and the course page itself: a General section, then one section per topic
+// with its activities, each with its type, its dates and its completion mark. One page (the worked example, with its
+// widget) and one assignment (with its submission status and rubric) are opened up, and so are the syllabus and the
+// announcements. No logos, icons or Moodle colours: black on white, the one typeface, and the section colour for
+// where you are, what is done and a rubric's best level.
+// Without JavaScript every panel shows, one after another, and the tabs and the course index jump to each. With it,
+// one panel shows at a time, the breadcrumb follows, and the address keeps the panel (/bucknell/#mdl-grades), so a
+// link can open one. On a tablet or a phone the course index is left out, as Moodle closes its drawer, and the
+// sections are on the course page. In print every panel shows.
+// The content is in src/data/bucknell270.ts. The shell follows src/components/CourseShell.astro (Canvas, on /tulane).
+import MakeoverDemo from './MakeoverDemo.astro';
+import { course, now, topics, groups, bundles, outcomes, announcements, grades, people, makeover, worked } from '../data/bucknell270';
+
+const tabs = [['mdl-course', 'Course'], ['mdl-participants', 'Participants'], ['mdl-grades', 'Grades']];
+const items = topics.flatMap((t) => t.items);
+const dated = items.filter((i) => i.week).sort((a, b) => a.week! - b.week!);
+const pts = (n?: number) => (n === undefined ? '' : `${n} pt${n === 1 ? '' : 's'}`);
+const meta = (i: { week?: number; pts?: number; note?: string }) => [i.week && `Due week ${i.week}`, pts(i.pts), i.note].filter(Boolean).join(' · ');
+// The sample student's completion marks at week ten: everything in a finished section, and anything due before now.
+const done = (ti: number, i: { week?: number }) => (i.week !== undefined ? i.week < now : Number(topics[ti].weeks.match(/(\d+)$/)![1]) <= now);
+const general = [
+  { type: 'Forum', title: 'Announcements', href: '#mdl-announcements' },
+  { type: 'Page', title: 'Syllabus', href: '#mdl-syllabus' },
+  { type: 'Forum', title: 'Course questions', text: 'Questions about the course go here, so that the answer helps everyone.' },
+];
+---
+<div class="mdl" data-mdl>
+  <div class="mdl-top">
+    <nav class="mdl-crumbs" aria-label="Breadcrumb">
+      <ol data-crumbs><li><a href="#mdl-course">{course.code}</a></li></ol>
+    </nav>
+    <p class="mdl-term">{course.section} · {course.term}</p>
+  </div>
+  <nav class="mdl-tabs" aria-label="Course">
+    <ul>{tabs.map(([id, t]) => <li><a href={`#${id}`}><span>{t}</span></a></li>)}</ul>
+  </nav>
+  <div class="mdl-body">
+    <nav class="mdl-index" aria-label="Course index">
+      <p class="label">Course index</p>
+      <ul>
+        <li><a href="#mdl-s0">General</a></li>
+        {topics.map((t) => <li><a href={`#${t.id}`}>{t.short}<span class="mdl-meta">{t.weeks}</span></a></li>)}
+      </ul>
+    </nav>
+    <div class="mdl-main">
+
+      <div class="mdl-panel" id="mdl-course" data-tab="mdl-course">
+        <h3 tabindex="-1">{course.title}</h3>
+        <div class="mdl-card">
+          <p class="label">{course.code} · {course.section}</p>
+          <p>{course.line}</p>
+          <p><strong>The project.</strong> {course.project}</p>
+        </div>
+        <p class="mdl-note">The completion marks are a sample student's, at week ten.</p>
+
+        <section class="mdl-sec" id="mdl-s0">
+          <h4 class="mdl-sec-head"><span class="mdl-sec-name">General</span></h4>
+          <ul class="mdl-items">
+            {general.map((i) => (
+              <li>
+                <span class="mdl-type label">{i.type}</span>
+                <span class="mdl-what">{i.href ? <a href={i.href}>{i.title}</a> : <span>{i.title}</span>}{i.text && <span class="mdl-desc">{i.text}</span>}</span>
+                <span class="mdl-meta"></span>
+                <span class="mdl-state"></span>
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        {topics.map((t, ti) => (
+          <details class="mdl-sec" id={t.id} open={ti === 0}>
+            <summary class="mdl-sec-head"><span class="mdl-sec-name">{t.name}</span><span class="mdl-meta">{t.weeks}</span></summary>
+            <p class="mdl-sec-text">{t.text}</p>
+            <ul class="mdl-items">
+              {t.items.map((i) => (
+                <li>
+                  <span class="mdl-type label">{i.type}</span>
+                  <span class="mdl-what">{i.href ? <a href={i.href}>{i.title}</a> : <span>{i.title}</span>}{i.text && <span class="mdl-desc">{i.text}</span>}</span>
+                  <span class="mdl-meta">{meta(i)}</span>
+                  <span class="mdl-state">{done(ti, i) ? <span class="mdl-pill is-done">Done</span> : <span class="mdl-pill">To do</span>}</span>
+                </li>
+              ))}
+            </ul>
+          </details>
+        ))}
+      </div>
+
+      <div class="mdl-panel" id="mdl-participants" data-tab="mdl-participants" data-crumb="Participants">
+        <h3 tabindex="-1">Participants</h3>
+        <table class="mdl-table">
+          <thead><tr><th scope="col">Name</th><th scope="col">Roles</th><th scope="col">In this course</th></tr></thead>
+          <tbody>{people.map((p) => <tr><td>{p.name}</td><td>{p.role}</td><td>{p.note}</td></tr>)}</tbody>
+        </table>
+        <p class="mdl-sub">Groups</p>
+        <p>Students, in project teams of three or four. Each team picks its own reader.</p>
+        <ul class="mdl-chips">{['Team 1', 'Team 2', 'Team 3', 'Team 4', 'Team 5', 'Team 6'].map((t) => <li class="chip">{t}</li>)}</ul>
+      </div>
+
+      <div class="mdl-panel" id="mdl-grades" data-tab="mdl-grades" data-crumb="Grades">
+        <h3 tabindex="-1">Grades</h3>
+        <p class="mdl-sub">From bundles to letter grades</p>
+        <ul class="mdl-bundles">{bundles.map((b) => <li><span class="mdl-grade">{b.g}</span><p>{b.line}</p></li>)}</ul>
+        <p class="mdl-sub">Grade categories</p>
+        <ul class="mdl-cats">{groups.map((g) => <li><strong>{g.name}</strong> <span class="mdl-meta">{g.bundle} · {items.filter((i) => i.group === g.name).length} {items.filter((i) => i.group === g.name).length === 1 ? 'item' : 'items'}</span></li>)}</ul>
+        <p class="mdl-sub">User report: a sample student, at week ten</p>
+        <table class="mdl-table">
+          <thead><tr><th scope="col">Grade item</th><th scope="col">Grade</th><th scope="col">Range</th><th scope="col">Feedback</th></tr></thead>
+          <tbody>{grades.map((r) => <tr><td>{r.name}<span class="mdl-meta mdl-due">{r.cat} · Week {r.week}</span></td><td class="nb">{r.grade}</td><td class="nb">{r.range}</td><td>{r.feedback}</td></tr>)}</tbody>
+        </table>
+        <p class="mdl-note">The course total is hidden. Bundle so far: on track for B, with every C piece graded so far complete and the first paper check complete.</p>
+      </div>
+
+      <div class="mdl-panel" id="mdl-syllabus" data-tab="mdl-course" data-index="mdl-s0" data-crumb="General|Syllabus">
+        <p class="mdl-kind label">Page</p>
+        <h3 tabindex="-1">Syllabus</h3>
+        <p class="mdl-sub">The course</p>
+        <p>An introduction to the principles of data visualization and data preparation, and to software for preparing data and presenting it in tables, charts, and dashboards. In this section the software is Tableau Desktop and Tableau Prep. Prerequisite: ANOP 102 or ENGR 215 or ENGR 226 or MATH 216 or STAT 216 or MATH 227 or STAT 227 or PSYC 215.</p>
+        <p class="mdl-sub">The project</p>
+        <p>Each team of three or four builds two dashboards for one reader who has a decision to make. Each dashboard has four worksheets, and between them the two use a filter, a parameter, a drill-down, and one analysis in the view (a trend line or a median). You hand in the drawings on paper first, then a packaged workbook with the data embedded (.twbx).</p>
+        <p class="mdl-sub">What you will be able to do</p>
+        <p>By the last week, each team hands its reader two dashboards they can use and a one-page guide. Working backward from that, you will learn to:</p>
+        <ol class="mdl-list">{outcomes.map((o) => <li>{o}</li>)}</ol>
+        <p class="mdl-sub">How this course works</p>
+        <p>Every assignment states its purpose, the task, and the criteria, and comes with a finished example on practice data. Each spec is 1 or 0, and a piece that is not yet complete can be revised once, within a week. Your letter grade is the bundle you complete (see <a href="#mdl-grades">Grades</a>). I meet each team every week.</p>
+        <p class="mdl-sub" id="mdl-syllabus-ai">Generative AI</p>
+        <p>You may use generative AI on the labs and the project, as you would at work. Disclose it on every piece: the tools, the prompts, how you checked the output, and a short reflection on what changed. A piece made with AI and not disclosed is incomplete. The paper checks are on paper, without AI.</p>
+        <p class="mdl-sub">Mid-course feedback</p>
+        <p>In week eight, in class and anonymous: what should I start, continue, and stop doing?</p>
+        <p class="mdl-sub">Course summary</p>
+        <table class="mdl-table">
+          <thead><tr><th scope="col">Due</th><th scope="col">Details</th></tr></thead>
+          <tbody>{dated.map((i) => <tr><td class="nb">Week {i.week}</td><td>{i.title}{i.pts !== undefined && <span class="mdl-meta"> · {pts(i.pts)}</span>}</td></tr>)}</tbody>
+        </table>
+        <p class="mdl-back"><a href="#mdl-course">← Back to the course</a></p>
+      </div>
+
+      <div class="mdl-panel" id="mdl-announcements" data-tab="mdl-course" data-index="mdl-s0" data-crumb="General|Announcements">
+        <p class="mdl-kind label">Forum</p>
+        <h3 tabindex="-1">Announcements</h3>
+        {announcements.map((a) => (
+          <article class="mdl-post">
+            <p class="mdl-post-title">{a.title}</p>
+            <p class="mdl-meta">Ali Rizvi · {a.week}</p>
+            <p>{a.body}</p>
+          </article>
+        ))}
+        <p class="mdl-back"><a href="#mdl-course">← Back to the course</a></p>
+      </div>
+
+      <div class="mdl-panel" id="mdl-worked" data-tab="mdl-course" data-index="mdl-s1" data-crumb={`${topics[0].short}|Worked example`}>
+        <p class="mdl-kind label">Page</p>
+        <h3 tabindex="-1">{worked.title}</h3>
+        {worked.intro.map((p) => <p>{p}</p>)}
+        <p class="mdl-sub">Try it</p>
+        <ol class="mdl-tries">{worked.tries.map((x) => <li><strong>{x.do}</strong> {x.see}</li>)}</ol>
+        <MakeoverDemo />
+        <p class="mdl-coda">{worked.coda} <a href="#mdl-a-makeover">Open the lab&nbsp;→</a></p>
+        <p class="mdl-back"><a href="#mdl-course">← Back to the course</a></p>
+      </div>
+
+      <div class="mdl-panel" id="mdl-a-makeover" data-tab="mdl-course" data-index="mdl-s3" data-crumb={`${topics[2].short}|${makeover.title}`}>
+        <p class="mdl-kind label">Assignment</p>
+        <h3 tabindex="-1">{makeover.title}</h3>
+        <dl class="mdl-facts">
+          <div><dt class="label">Opened</dt><dd>{makeover.opened}</dd></div>
+          <div><dt class="label">Due</dt><dd>{makeover.due}</dd></div>
+          <div><dt class="label">Points</dt><dd>{makeover.points}</dd></div>
+          <div><dt class="label">File types</dt><dd>{makeover.types}</dd></div>
+        </dl>
+        <p class="mdl-sub">Purpose</p>
+        <p>{makeover.purpose}</p>
+        <p class="mdl-sub">Task</p>
+        <ol class="mdl-list">{makeover.task.map((t) => <li>{t}</li>)}</ol>
+        <p class="mdl-sub">Criteria</p>
+        <p>{makeover.criteria}</p>
+        <table class="mdl-table mdl-status">
+          <caption class="label">Submission status · a sample student</caption>
+          <tbody>
+            <tr><th scope="row">Submission status</th><td>Submitted for grading</td></tr>
+            <tr><th scope="row">Grading status</th><td>Graded</td></tr>
+            <tr><th scope="row">File submissions</th><td>{makeover.files}</td></tr>
+            <tr><th scope="row">Grade</th><td>{makeover.points} / {makeover.points} · Complete</td></tr>
+          </tbody>
+        </table>
+        <table class="mdl-table mdl-rubric">
+          <caption class="label">Grading criteria</caption>
+          <thead><tr><th scope="col">Criterion</th><th scope="col">Levels</th><th scope="col">Points</th></tr></thead>
+          <tbody>
+            {makeover.rubric.map(([name, desc]) => (
+              <tr>
+                <td><strong>{name}</strong> {desc}</td>
+                <td><span class="mdl-rate top">1 point · Complete</span><span class="mdl-rate">0 points · Not yet</span></td>
+                <td class="nb">1</td>
+              </tr>
+            ))}
+          </tbody>
+          <tfoot><tr><td colspan="2">Total points</td><td>{makeover.points}</td></tr></tfoot>
+        </table>
+        <p class="mdl-back"><a href="#mdl-course">← Back to the course</a></p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<style>
+  .mdl { margin-top: 1.25rem; border: 2px solid #000; background: #fff; font-size: 16px; }
+  .mdl p { max-width: 66ch; }
+  .mdl-top { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 16px; padding: 12px 18px 8px; }
+  .mdl-crumbs ol { list-style: none; margin: 0; padding: 0; max-width: none; display: flex; flex-wrap: wrap; gap: 0 8px; font-weight: 600; }
+  /* The breadcrumb's items are written by the script, so their rules are global (inside .mdl-crumbs). */
+  .mdl-crumbs :global(li) { margin: 0; }
+  .mdl-crumbs :global(li + li)::before { content: '/'; margin-right: 8px; font-weight: 400; }
+  .mdl-crumbs :global(a) { text-decoration: none; }
+  .mdl-crumbs :global(a:hover) { text-decoration: underline; }
+  .mdl-term { margin: 0 0 0 auto; color: rgba(0, 0, 0, 0.6); font-size: 14px; }
+
+  /* The tabs across the top: Course, Participants, Grades. */
+  .mdl-tabs { border-bottom: 1px solid #000; padding: 0 10px; }
+  .mdl-tabs ul { list-style: none; margin: 0; padding: 0; max-width: none; display: flex; flex-wrap: wrap; }
+  .mdl-tabs li { margin: 0; }
+  .mdl-tabs a { display: block; padding: 8px 10px 6px; border-bottom: 4px solid transparent; color: #000; text-decoration: none; }
+  .mdl-tabs a:hover { background: var(--hl-soft, #eee); }
+  .mdl-tabs a[aria-current] { border-bottom-color: #000; font-weight: 600; }
+  .mdl-tabs a[aria-current] span { background: linear-gradient(transparent 52%, var(--hl, #ccc) 52%); }
+
+  /* The course index down the side. */
+  .mdl-body { display: grid; grid-template-columns: 13.5rem minmax(0, 1fr); }
+  .mdl-index { border-right: 1px solid rgba(0, 0, 0, 0.25); padding: 14px 0; }
+  .mdl-index .label { margin: 0 0 6px; padding: 0 16px; }
+  .mdl-index ul { list-style: none; margin: 0; padding: 0; max-width: none; }
+  .mdl-index li { margin: 0; }
+  .mdl-index a { display: block; padding: 6px 12px 6px 12px; border-left: 4px solid transparent; color: #000; text-decoration: none; font-size: 15px; line-height: 1.3; }
+  .mdl-index a:hover { background: var(--hl-soft, #eee); }
+  .mdl-index a[aria-current] { border-left-color: #000; font-weight: 600; background: var(--hl-soft, #eee); }
+  .mdl-index .mdl-meta { display: block; font-size: 12px; font-weight: 400; }
+
+  .mdl-main { min-width: 0; padding: 18px 22px 24px; }
+  .mdl-panel h3 { margin: 0 0 14px; font-size: 1.35rem; outline: none; }
+  .mdl-kind { margin: 0 0 2px; font-size: 12px; letter-spacing: 0.1em; }
+  .mdl-panel + .mdl-panel { margin-top: 2rem; padding-top: 1.25rem; border-top: 1px solid #000; }
+  .mdl.js .mdl-panel:not(.is-on) { display: none; }
+  .mdl.js .mdl-panel + .mdl-panel { margin-top: 0; padding-top: 0; border-top: 0; }
+  .mdl-sub { margin: 1.25rem 0 0.4rem; font-weight: 600; }
+  .mdl-panel > h3 + .mdl-sub { margin-top: 0; }
+  .mdl-list { margin: 0 0 1em; }
+  .mdl-meta { color: rgba(0, 0, 0, 0.6); font-size: 14px; }
+  .mdl-note { margin: 12px 0 0; color: rgba(0, 0, 0, 0.6); font-size: 14px; }
+  .mdl-back { margin-top: 1.25rem; }
+
+  /* The course page: the course card, with the band in the section colour, then the sections. */
+  .mdl-card { border: 2px solid #000; box-shadow: inset 0 8px 0 var(--hl, #ccc); padding: 22px 18px 6px; }
+  .mdl-card .label { margin-bottom: 6px; }
+  .mdl-sec { border: 1px solid #000; margin-top: 12px; }
+  .mdl-sec-head { display: grid; grid-template-columns: 1ch minmax(0, 1fr) auto; align-items: baseline; gap: 2px 12px; margin: 0; padding: 10px 14px; background: var(--hl-soft, #f2f2f2); font-size: 1rem; font-weight: 600; }
+  h4.mdl-sec-head { grid-template-columns: minmax(0, 1fr); }
+  summary.mdl-sec-head { cursor: pointer; list-style: none; }
+  summary.mdl-sec-head::-webkit-details-marker { display: none; }
+  summary.mdl-sec-head::before { content: '+'; font-weight: 400; }
+  .mdl-sec[open] > summary.mdl-sec-head::before { content: '−'; }
+  .mdl-sec-head .mdl-meta { font-weight: 400; white-space: nowrap; }
+  .mdl .mdl-sec-text { max-width: none; margin: 0; padding: 10px 14px; border-top: 1px solid #000; }
+  .mdl-items { list-style: none; margin: 0; padding: 0; max-width: none; }
+  .mdl-items li { display: grid; grid-template-columns: 6.2rem minmax(0, 1fr) auto 3.9rem; align-items: baseline; gap: 2px 12px; margin: 0; padding: 9px 14px; border-top: 1px solid rgba(0, 0, 0, 0.2); }
+  .mdl-type { font-size: 12px; letter-spacing: 0.1em; }
+  .mdl-desc { display: block; margin-top: 2px; color: rgba(0, 0, 0, 0.6); font-size: 14px; }
+  .mdl-items .mdl-meta { text-align: right; white-space: nowrap; }
+  .mdl-state { text-align: right; }
+  /* The completion mark. Pills are the one rounded element on the site. */
+  .mdl-pill { display: inline-block; padding: 2px 9px 1px; border: 1px solid rgba(0, 0, 0, 0.45); border-radius: 999px; font-size: 12px; line-height: 1.4; white-space: nowrap; color: rgba(0, 0, 0, 0.6); }
+  .mdl-pill.is-done { border-color: #000; background: var(--hl, #ccc); color: #000; }
+
+  .mdl-chips { list-style: none; margin: 8px 0 0; padding: 0; max-width: none; display: flex; flex-wrap: wrap; gap: 8px; }
+  .mdl-chips li { margin: 0; }
+  .mdl-post { border-top: 1px solid rgba(0, 0, 0, 0.2); padding: 12px 0 2px; }
+  .mdl-post-title { margin: 0; font-weight: 600; }
+  .mdl-post .mdl-meta { margin: 2px 0 8px; }
+  .mdl-tries { margin: 0 0 1.25rem; }
+  .mdl-coda { margin-top: 1.25rem; }
+
+  .mdl-bundles, .mdl-cats { list-style: none; margin: 0; padding: 0; max-width: none; }
+  .mdl-bundles li { display: grid; grid-template-columns: 2.6rem minmax(0, 1fr); gap: 12px; align-items: start; margin: 0; padding: 8px 0; border-top: 1px solid rgba(0, 0, 0, 0.2); }
+  .mdl-bundles p { margin: 0; }
+  .mdl-grade { display: inline-block; padding: 5px 9px 3px; background: var(--hl, #ccc); font-weight: 600; font-size: 1.2rem; line-height: 1; }
+  .mdl-cats li { margin: 0; padding: 6px 0; border-top: 1px solid rgba(0, 0, 0, 0.2); display: flex; flex-wrap: wrap; gap: 2px 12px; align-items: baseline; }
+
+  .mdl-table { width: 100%; border-collapse: collapse; font-size: 15px; }
+  .mdl-table caption { text-align: left; padding: 18px 0 6px; }
+  .mdl-table th, .mdl-table td { text-align: left; vertical-align: top; padding: 7px 12px 7px 0; border-top: 1px solid rgba(0, 0, 0, 0.2); }
+  .mdl-table thead th { font-weight: 600; border-top: 0; border-bottom: 1px solid #000; }
+  .mdl-table tfoot td { font-weight: 600; border-top: 1px solid #000; }
+  .mdl-status th { width: 11rem; font-weight: 600; }
+  .mdl-status tr:first-child th, .mdl-status tr:first-child td { border-top: 1px solid #000; }
+  .mdl-due { display: block; font-size: 13px; }
+  .mdl-rate { display: block; width: fit-content; margin: 0 0 4px; padding: 3px 7px 2px; border: 1px solid #000; font-size: 13px; white-space: nowrap; }
+  .mdl-rate.top { background: var(--hl, #ccc); }
+  .mdl-facts { display: flex; flex-wrap: wrap; gap: 8px 28px; margin: 0 0 6px; padding: 10px 0; border-top: 1px solid #000; border-bottom: 1px solid #000; }
+  .mdl-facts dd { margin: 2px 0 0; }
+
+  /* A tablet: the course index is left out, as Moodle closes its drawer (the sections are on the course page), and
+     each activity's dates sit under its title. */
+  @media (max-width: 1023px) {
+    .mdl-body { grid-template-columns: minmax(0, 1fr); }
+    .mdl-index { display: none; }
+    .mdl-items li { grid-template-columns: 6.2rem minmax(0, 1fr) auto; }
+    .mdl-items .mdl-type { grid-column: 1; grid-row: 1; }
+    .mdl-items .mdl-what { grid-column: 2; grid-row: 1; }
+    .mdl-items .mdl-meta { grid-column: 2; grid-row: 2; text-align: left; white-space: normal; }
+    .mdl-items .mdl-state { grid-column: 3; grid-row: 1; }
+  }
+  /* A phone: the tabs stay in view, and each row stacks, with the completion mark beside the activity's type. */
+  @media (max-width: 767px) {
+    .mdl-top { padding: 10px 14px 6px; }
+    .mdl-term { margin-left: 0; }
+    .mdl-tabs { padding: 0 4px; position: sticky; top: 0; z-index: 3; background: #fff; }
+    .mdl-main { padding: 14px 14px 20px; }
+    .mdl-items li { grid-template-columns: minmax(0, 1fr) auto; padding: 9px 12px; }
+    .mdl-items .mdl-state { grid-column: 2; grid-row: 1; }
+    .mdl-items .mdl-what { grid-column: 1 / -1; grid-row: 2; }
+    .mdl-items .mdl-meta { grid-column: 1 / -1; grid-row: 3; }
+    .mdl-sec-head { grid-template-columns: 1ch minmax(0, 1fr); padding: 10px 12px; }
+    .mdl-sec-head .mdl-meta { grid-column: 2; }
+    h4.mdl-sec-head { grid-template-columns: minmax(0, 1fr); }
+    .mdl .mdl-sec-text { padding: 10px 12px; }
+    .mdl-table th, .mdl-table td { padding-right: 8px; }
+    .mdl-status th { width: 7.5rem; }
+  }
+  @media print {
+    .mdl.js .mdl-panel:not(.is-on) { display: block; }
+    .mdl-tabs, .mdl-index { display: none; }
+    .mdl-body { grid-template-columns: minmax(0, 1fr); }
+    .mdl-sec:not([open]) > :not(summary) { display: block; }
+  }
+</style>
+
+<script>
+  // One panel at a time. The tabs, the course index, the breadcrumb and any link to a panel (or to something inside
+  // one, such as a section of the course page) open it; the address keeps it, so a link from elsewhere opens it too.
+  const shell = document.querySelector<HTMLElement>('[data-mdl]');
+  if (shell) {
+    const panels = [...shell.querySelectorAll<HTMLElement>('.mdl-panel')];
+    const tabs = [...shell.querySelectorAll<HTMLAnchorElement>('.mdl-tabs a')];
+    const index = [...shell.querySelectorAll<HTMLAnchorElement>('.mdl-index a')];
+    const crumbs = shell.querySelector<HTMLOListElement>('[data-crumbs]')!;
+    const home = crumbs.firstElementChild!.cloneNode(true);
+    const mark = (links: HTMLAnchorElement[], id?: string) => {
+      for (const a of links) {
+        if (id && a.getAttribute('href') === `#${id}`) a.setAttribute('aria-current', 'page');
+        else a.removeAttribute('aria-current');
+      }
+    };
+    // el: what was asked for (a panel, or something inside one). Its panel shows; the tab, the course index and the
+    // breadcrumb follow.
+    const show = (panel: HTMLElement, el: HTMLElement = panel) => {
+      for (const p of panels) p.classList.toggle('is-on', p === panel);
+      mark(tabs, panel.dataset.tab ?? panel.id);
+      const sec = el.closest<HTMLElement>('.mdl-sec');
+      mark(index, panel.dataset.index ?? sec?.id);
+      const parts = (panel.dataset.crumb ?? '').split('|').filter(Boolean);
+      crumbs.replaceChildren(home.cloneNode(true));
+      parts.forEach((t, i) => {
+        const li = document.createElement('li');
+        if (i < parts.length - 1) { const a = document.createElement('a'); a.href = `#${panel.dataset.index ?? panel.dataset.tab ?? panel.id}`; a.textContent = t; li.append(a); }
+        else { li.textContent = t; li.setAttribute('aria-current', 'page'); }
+        crumbs.append(li);
+      });
+    };
+    const target = (id: string) => { const el = id ? document.getElementById(id) : null; const p = el?.closest<HTMLElement>('.mdl-panel'); return p && shell.contains(p) ? { el: el!, p } : null; };
+    const open = (t: { el: HTMLElement; p: HTMLElement }) => {
+      show(t.p, t.el);
+      if (t.el instanceof HTMLDetailsElement) t.el.open = true;
+      if (t.el !== t.p) t.el.scrollIntoView({ block: 'start' });
+      else if (shell.getBoundingClientRect().top < 0) shell.scrollIntoView({ block: 'start' });
+    };
+    shell.classList.add('js');
+    const first = target(decodeURIComponent(location.hash.slice(1)));
+    if (first) { open(first); if (first.el === first.p) shell.scrollIntoView({ block: 'start' }); } else show(panels[0]);
+    shell.addEventListener('click', (e) => {
+      const a = (e.target as Element).closest?.<HTMLAnchorElement>('a[href^="#mdl-"]'); if (!a) return;
+      const t = target(decodeURIComponent(a.getAttribute('href')!.slice(1))); if (!t) return;
+      e.preventDefault();
+      open(t);
+      history.replaceState(null, '', a.getAttribute('href'));
+      if (t.el === t.p && !a.closest('.mdl-tabs')) t.p.querySelector<HTMLElement>('h3')?.focus({ preventScroll: true });
+    });
+    window.addEventListener('hashchange', () => { const t = target(decodeURIComponent(location.hash.slice(1))); if (t) open(t); });
+  }
+</script>

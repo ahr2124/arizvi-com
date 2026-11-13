@@ -1,0 +1,189 @@
+---
+// The worked example in ANOP 270, as a widget: a flower farm sells at 3 farmers' markets and has to give up 1 market
+// day a week. The first chart (June totals by market) points at Mill Street. Per market day, Riverside is last; with
+// the weekday added, it is Riverside's Tuesdays. Then the axis: with Include zero off, the gap is drawn many times
+// larger than it is.
+// June, 16 market days: Riverside Tuesdays 380 + 420 + 390 + 410 = $1,600 and Fridays 610 + 590 + 620 + 580 = $2,400
+// (8 days, $4,000, $500 a day); Hilltop Saturdays 640 + 660 + 630 + 670 = $2,600 ($650 a day); Mill Street Sundays
+// 540 + 560 + 530 + 570 = $2,200 ($550 a day). Markets are listed as Tableau would sort them, A to Z.
+// Colour is data colour, as in the other class widgets: blue for the bars as drawn, aqua for the one you are after.
+const days: { market: string; day: string; sales: number[] }[] = [
+  { market: 'Hilltop', day: 'Sat', sales: [640, 660, 630, 670] },
+  { market: 'Mill Street', day: 'Sun', sales: [540, 560, 530, 570] },
+  { market: 'Riverside', day: 'Tue', sales: [380, 420, 390, 410] },
+  { market: 'Riverside', day: 'Fri', sales: [610, 590, 620, 580] },
+];
+---
+<div class="demo vdemo" data-vdemo data-days={JSON.stringify(days)}>
+  <div class="vdemo-controls">
+    <div>
+      <p class="label" id="vdemo-m">Measure</p>
+      <div class="demo-pills" role="group" aria-labelledby="vdemo-m">
+        <button type="button" data-measure="sum" aria-pressed="true">SUM(Sales)</button>
+        <button type="button" data-measure="avg" aria-pressed="false">AVG(Sales)</button>
+      </div>
+    </div>
+    <div>
+      <p class="label" id="vdemo-r">Rows</p>
+      <div class="demo-pills" role="group" aria-labelledby="vdemo-r">
+        <button type="button" data-rows="market" aria-pressed="true">Market</button>
+        <button type="button" data-rows="day" aria-pressed="false">Market, Weekday</button>
+      </div>
+    </div>
+    <div>
+      <p class="label" id="vdemo-a">Axis</p>
+      <div class="demo-pills" role="group" aria-labelledby="vdemo-a">
+        <button type="button" data-zero aria-pressed="true">Include zero</button>
+      </div>
+    </div>
+    <div>
+      <p class="label" id="vdemo-f">Finish</p>
+      <div class="demo-pills" role="group" aria-labelledby="vdemo-f">
+        <button type="button" data-finish aria-pressed="false">Sort and highlight</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="vdemo-main">
+    <div class="vdemo-data">
+      <p class="label">The data · June, 16 market days</p>
+      <table class="vdemo-table">
+        <thead><tr><th>Market</th><th>Day</th><th class="num">Wk 1</th><th class="num">Wk 2</th><th class="num">Wk 3</th><th class="num">Wk 4</th></tr></thead>
+        <tbody>
+          {days.map((d) => (
+            <tr><td>{d.market}</td><td>{d.day}</td>{d.sales.map((v) => <td class="num">${v}</td>)}</tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <div class="vdemo-view">
+      <p class="label">The view</p>
+      <p class="vdemo-title" data-title>Sheet 1</p>
+      <div data-bars></div>
+      <div class="vdemo-axis" aria-hidden="true"><span></span><div><span data-lo>$0</span><span data-hi></span></div><span></span></div>
+    </div>
+  </div>
+
+  <dl class="demo-readout">
+    <div><dt class="label">Shortest bar</dt><dd data-out="name"></dd></div>
+    <div><dt class="label" data-out="unit">June total</dt><dd data-out="value"></dd></div>
+    <div><dt class="label">Longest ÷ shortest, as drawn</dt><dd data-out="drawn"></dd></div>
+    <div><dt class="label">Longest ÷ shortest, in the numbers</dt><dd data-out="real"></dd></div>
+  </dl>
+  <p class="demo-note" aria-live="polite" data-note></p>
+
+  <p class="demo-q"><strong>Your turn:</strong> with SUM on and the weekday added, the chart also points at Tuesday. Why do the totals work here?</p>
+  <details>
+    <summary class="label">Answer</summary>
+    <p>Each bar now covers 4 market days, so a total and an average rank them the same way. By market, Riverside's bar covered 8.</p>
+  </details>
+</div>
+
+<style is:global>
+  /* The ANOP 270 worked example. The bars are written by the script, so these rules are global. */
+  .vdemo-controls { display: flex; flex-wrap: wrap; gap: 16px 32px; }
+  .vdemo-main { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 24px var(--gutter); margin-top: 24px; align-items: start; }
+  .vdemo-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 14px; }
+  .vdemo-table th, .vdemo-table td { border-bottom: 1px solid #000; padding: 5px 6px 5px 0; text-align: left; white-space: nowrap; }
+  .vdemo-table th { font-weight: 500; font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; }
+  .vdemo-table .num { text-align: right; padding-right: 0; padding-left: 6px; }
+  .vdemo-title { margin: 8px 0 4px; min-height: 2.6em; color: rgba(0, 0, 0, 0.6); }
+  .vdemo-title.claim { color: #000; font-weight: 600; font-size: 1.1rem; letter-spacing: -0.01em; line-height: 1.25; }
+  .vdemo-bar, .vdemo-axis { display: grid; grid-template-columns: 8.6rem minmax(0, 1fr) 3.6rem; gap: 10px; align-items: center; }
+  .vdemo-bar { margin-top: 10px; font-size: 15px; }
+  .vdemo.done .vdemo-bar.ans { font-weight: 600; }
+  .vdemo-name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .vdemo-track { height: 22px; border-left: 1px solid #000; }
+  .vdemo-fill { display: block; height: 100%; background: #2a78d6; transition: width 150ms; }
+  .vdemo.done .vdemo-fill { background: #c9c8c2; }
+  .vdemo.done .vdemo-bar.ans .vdemo-fill { background: #1baf7a; }
+  .vdemo-val { text-align: right; white-space: nowrap; }
+  .vdemo-axis { margin-top: 8px; font-size: 13px; color: rgba(0, 0, 0, 0.6); }
+  .vdemo-axis div { display: flex; justify-content: space-between; border-top: 1px solid #000; padding-top: 4px; }
+  .vdemo-axis .cut { color: #000; font-weight: 600; }
+  .vdemo .demo-readout dd { font-size: 1.35rem; }
+  @media (max-width: 767px) {
+    .vdemo-main { grid-template-columns: minmax(0, 1fr); }
+    .vdemo-bar, .vdemo-axis { grid-template-columns: 7.2rem minmax(0, 1fr) 3.4rem; gap: 8px; }
+    .vdemo-bar { font-size: 14px; }
+    .vdemo-table { font-size: 13px; }
+  }
+  @media (prefers-reduced-motion: reduce) { .vdemo-fill { transition: none; } }
+</style>
+
+<script>
+  type Day = { market: string; day: string; sales: number[] };
+  type Bar = { name: string; total: number; n: number };
+  const money = (v: number) => '$' + Math.round(v).toLocaleString('en-US');
+  const times = (v: number) => `${Math.round(v * 10) / 10}×`;
+  // Where the axis starts when Include zero is off: a round number just under the shortest bar, as Tableau picks one.
+  const CUT: Record<string, number> = { 'sum|market': 2000, 'sum|day': 1500, 'avg|market': 480, 'avg|day': 380 };
+  const HEAD: Record<string, string> = {
+    'sum|market': 'Mill Street sold the least in June: $2,200',
+    'avg|market': 'Riverside makes the least per market day: $500',
+    'sum|day': 'Tuesdays at Riverside sold the least in June: $1,600',
+    'avg|day': 'Give up Tuesdays at Riverside: $400 a market day, the lowest of the four',
+  };
+  const NOTE: Record<string, string> = {
+    'sum|market': 'June totals by market. Mill Street is the shortest bar, so it looks like the day to give up. Riverside ran 8 market days, and the other two ran 4 each.',
+    'avg|market': 'Sales per market day. Riverside drops to last, at $500 a day. It runs on two different days, though.',
+    'sum|day': 'June totals by market day. Each bar now covers 4 market days, so the totals can be compared. Tuesdays at Riverside are the shortest bar.',
+    'avg|day': 'Sales per market day, by weekday. Tuesdays at Riverside make $400 and Fridays make $600. Tuesday is the day to give up, and Friday is her second-best day.',
+  };
+
+  document.querySelectorAll<HTMLElement>('[data-vdemo]').forEach((root) => {
+    const days: Day[] = JSON.parse(root.dataset.days!);
+    const $ = <T extends Element>(s: string) => root.querySelector<T>(s)!;
+    const state = { measure: 'sum', rows: 'market', zero: true, finish: false };
+
+    function bars(): Bar[] {
+      const sum = (a: number[]) => a.reduce((s, v) => s + v, 0);
+      if (state.rows === 'day') return days.map((d) => ({ name: `${d.market} · ${d.day}`, total: sum(d.sales), n: d.sales.length }));
+      const by = new Map<string, Bar>();
+      for (const d of days) {
+        const b = by.get(d.market) ?? { name: d.market, total: 0, n: 0 };
+        b.total += sum(d.sales); b.n += d.sales.length;
+        by.set(d.market, b);
+      }
+      return [...by.values()];
+    }
+
+    function draw() {
+      const key = `${state.measure}|${state.rows}`;
+      const list = bars().map((b) => ({ name: b.name, v: state.measure === 'sum' ? b.total : b.total / b.n }));
+      const max = Math.max(...list.map((b) => b.v)), min = Math.min(...list.map((b) => b.v));
+      const lo = state.zero ? 0 : CUT[key];
+      if (state.finish) list.sort((a, b) => b.v - a.v);
+      root.classList.toggle('done', state.finish);
+      $('[data-bars]').innerHTML = list.map((b) =>
+        `<div class="vdemo-bar${b.v === min ? ' ans' : ''}"><span class="vdemo-name">${b.name}</span><span class="vdemo-track"><span class="vdemo-fill" style="width:${(((b.v - lo) / (max - lo)) * 100).toFixed(1)}%"></span></span><span class="vdemo-val">${money(b.v)}</span></div>`).join('');
+      const short = list.find((b) => b.v === min)!;
+      const title = $<HTMLElement>('[data-title]');
+      title.textContent = state.finish ? HEAD[key] : 'Sheet 1';
+      title.classList.toggle('claim', state.finish);
+      const loEl = $<HTMLElement>('[data-lo]');
+      loEl.textContent = money(lo);
+      loEl.classList.toggle('cut', !state.zero);
+      $('[data-hi]').textContent = money(max);
+      $('[data-out=name]').textContent = short.name;
+      $('[data-out=unit]').textContent = state.measure === 'sum' ? 'June total' : 'Per market day';
+      $('[data-out=value]').textContent = money(min);
+      $('[data-out=drawn]').textContent = times((max - lo) / (min - lo));
+      $('[data-out=real]').textContent = times(max / min);
+      $('[data-note]').textContent = NOTE[key] + (state.zero ? '' : ` The axis now starts at ${money(lo)}, so the longest bar is drawn ${times((max - lo) / (min - lo)).replace('×', '')} times as long as the shortest. In the numbers it is ${times(max / min).replace('×', '')} times.`);
+    }
+
+    const press = (sel: string, on: (b: HTMLButtonElement) => boolean) =>
+      root.querySelectorAll<HTMLButtonElement>(sel).forEach((b) => b.setAttribute('aria-pressed', String(on(b))));
+    root.addEventListener('click', (e) => {
+      const b = (e.target as Element).closest?.<HTMLButtonElement>('button'); if (!b || !root.contains(b)) return;
+      if (b.dataset.measure) { state.measure = b.dataset.measure; press('[data-measure]', (x) => x.dataset.measure === state.measure); }
+      else if (b.dataset.rows) { state.rows = b.dataset.rows; press('[data-rows]', (x) => x.dataset.rows === state.rows); }
+      else if ('zero' in b.dataset) { state.zero = !state.zero; press('[data-zero]', () => state.zero); }
+      else if ('finish' in b.dataset) { state.finish = !state.finish; press('[data-finish]', () => state.finish); }
+      else return;
+      draw();
+    });
+    draw();
+  });
+</script>
