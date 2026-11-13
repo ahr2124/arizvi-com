@@ -1,0 +1,2234 @@
+<!doctype html>
+<html lang="en-CA">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Weather abbreviation lookup - Ali Rizvi</title>
+<meta name="description" content="Type an aviation weather abbreviation, or paste a whole line, and read it in plain English or French. Every meaning comes from MANAB, 5th edition.">
+<link rel="canonical" href="https://arizvi.com/ablookup/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ali Rizvi">
+<meta property="og:title" content="Weather abbreviation lookup">
+<meta property="og:description" content="Type an aviation weather abbreviation, or paste a whole line, and read it in plain English or French.">
+<meta property="og:url" content="https://arizvi.com/ablookup/">
+<meta property="og:image" content="https://arizvi.com/media/share.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="preload" href="/fonts/CooperHewitt-Semibold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/CooperHewitt-Book.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+/* One file, like /slotravel. Cooper Hewitt (SIL OFL) comes from the site's /fonts/. The look follows VOICE.md: one
+   typeface, black on white, 2px rules above sections and 1px between rows, pills as the one rounded element, and one
+   highlighter colour that is always behind black text. This page's colour is aqua, which no other section uses. */
+@font-face { font-family: 'Cooper Hewitt'; src: url('/fonts/CooperHewitt-Book.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Cooper Hewitt'; src: url('/fonts/CooperHewitt-Medium.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Cooper Hewitt'; src: url('/fonts/CooperHewitt-Semibold.woff2') format('woff2'); font-weight: 600; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Cooper Hewitt'; src: url('/fonts/CooperHewitt-Bold.woff2') format('woff2'); font-weight: 700; font-style: normal; font-display: swap; }
+
+:root {
+  --font: 'Cooper Hewitt', Helvetica, Arial, sans-serif;
+  --max: 1400px;
+  --pad: 24px;
+  --hl: #7DE3F4;
+  --hl-soft: #DDF6FB;
+  --big: clamp(1.4rem, 1rem + 2vw, 2.15rem);
+  --col: 62rem;
+}
+@media (min-width: 768px) { :root { --pad: 48px; } }
+
+* { box-sizing: border-box; }
+html { background: #fff; color: #000; font-family: var(--font); font-weight: 400; font-size: 18px; line-height: 1.5; font-variant-numeric: tabular-nums; -webkit-font-smoothing: antialiased; -webkit-text-size-adjust: 100%; }
+body { margin: 0; }
+a { color: inherit; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.15em; }
+:focus-visible { outline: 2px solid #000; outline-offset: 3px; }
+.container { max-width: var(--max); margin: 0 auto; padding-left: var(--pad); padding-right: var(--pad); }
+.label { font-weight: 500; font-size: 13px; text-transform: uppercase; letter-spacing: 0.14em; line-height: 1.4; margin: 0; }
+.muted { color: rgba(0, 0, 0, 0.6); }
+[hidden] { display: none !important; }
+.skip { position: absolute; z-index: 40; top: 0; left: var(--pad); transform: translateY(-110%); padding: 10px 14px; background: #000; color: #fff; font-weight: 500; font-size: 13px; text-transform: uppercase; letter-spacing: 0.14em; line-height: 1.4; text-decoration: none; }
+.skip:focus { transform: none; }
+
+/* Header: the site's mark and name, with the language where the menu would be */
+.site-header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px 32px; padding: 24px 0; border-bottom: 4px solid var(--hl); }
+.brand { display: inline-flex; align-items: center; gap: 12px; }
+.brand .mark-link { display: block; line-height: 0; }
+.brand .mark { width: 28px; height: 28px; display: block; }
+.wordmark { font-weight: 700; font-size: 15px; text-transform: uppercase; letter-spacing: 0.14em; line-height: 28px; text-decoration: none; position: relative; top: 1px; }
+.lang { display: flex; gap: 8px; }
+
+/* Pills: everything you can press that is not a word in the answer */
+.pill { font: 500 13px/1.4 var(--font); text-transform: uppercase; letter-spacing: 0.14em; color: #000; background: #fff; border: 1px solid #000; border-radius: 999px; padding: 5px 14px; margin: 0; cursor: pointer; white-space: nowrap; max-width: 100%; overflow: hidden; text-overflow: ellipsis; -webkit-appearance: none; appearance: none; }
+.pill:hover { background: var(--hl-soft); }
+.pill[aria-pressed='true'] { background: var(--hl); }
+@media (pointer: coarse) { .pill { padding: 10px 16px; } }
+
+/* Opening */
+.intro { padding-top: clamp(2.5rem, 6vw, 4.5rem); }
+h1 { font-weight: 600; font-size: clamp(2.3rem, 6vw, 4.6rem); letter-spacing: -0.02em; line-height: 1.05; margin: 0; max-width: 15ch; overflow-wrap: break-word; }
+html[lang^='fr'] h1 { max-width: 19ch; }
+mark { background: linear-gradient(transparent 56%, var(--hl) 56%); color: inherit; padding: 0 0.06em; -webkit-box-decoration-break: clone; box-decoration-break: clone; white-space: nowrap; }
+.lede { margin: 1.5rem 0 0; max-width: 58ch; }
+
+/* The line you type. It is set as large as the answer under it, so the two read as the same line twice. */
+.tool { margin-top: clamp(2rem, 4vw, 3rem); max-width: var(--col); }
+.strip { border: 2px solid #000; padding: 14px 18px 16px; }
+.strip:focus-within { box-shadow: 0 0 0 4px var(--hl); }
+.strip label { display: block; margin-bottom: 8px; }
+.strip textarea { display: block; width: 100%; min-height: 1.25em; border: 0; border-radius: 0; padding: 0; margin: 0; background: transparent; color: #000; font: 600 var(--big)/1.25 var(--font); letter-spacing: 0.01em; text-transform: uppercase; resize: none; overflow: hidden; outline: none; -webkit-appearance: none; appearance: none; }
+.strip textarea::placeholder { color: rgba(0, 0, 0, 0.6); font-weight: 400; text-transform: none; letter-spacing: 0; }
+.tries { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 14px; }
+.tries .label { margin-right: 4px; }
+.tries .clear { margin-left: auto; }
+
+/* Sections */
+.section { margin-top: clamp(2.5rem, 5vw, 4rem); }
+.section-head { display: flex; justify-content: space-between; align-items: center; gap: 16px; min-height: 48px; border-top: 2px solid #000; padding-top: 10px; }
+.section-head h2 { margin: 0; }
+
+/* The answer */
+.plain { font-size: var(--big); line-height: 1.3; margin: 0.9rem 0 0; max-width: 30em; white-space: pre-wrap; overflow-wrap: anywhere; }
+.plain ol { margin: 0; padding-left: 1.3em; white-space: normal; }
+.plain ol li + li { margin-top: 0.3em; }
+.plain .quiet { font-size: 18px; line-height: 1.5; white-space: normal; }
+.plain .u { color: rgba(0, 0, 0, 0.6); }
+.plain .alt { font: inherit; letter-spacing: inherit; color: inherit; background: none; border: 0; border-radius: 0; padding: 0; margin: 0; cursor: pointer; text-align: inherit; text-decoration: underline dotted; text-decoration-thickness: 2px; text-underline-offset: 0.2em; -webkit-appearance: none; appearance: none; }
+.plain .alt:hover { background: var(--hl-soft); }
+.hint { font-size: 15px; margin: 1.1rem 0 0; max-width: 62ch; }
+.hint + .hint { margin-top: 0.4rem; }
+
+/* Word by word: the manual's own three columns */
+.rows { width: 100%; border-collapse: collapse; margin-top: 0.4rem; }
+.rows th { text-align: left; font-weight: 500; font-size: 13px; text-transform: uppercase; letter-spacing: 0.14em; line-height: 1.4; padding: 8px 24px 10px 0; }
+.rows td { vertical-align: top; padding: 12px 24px 12px 0; border-top: 1px solid #000; overflow-wrap: anywhere; }
+.rows td:first-child { width: 22%; min-width: 10.5rem; white-space: nowrap; }
+.rows td:last-child, .rows th:last-child { padding-right: 0; }
+.rows td:last-child { color: rgba(0, 0, 0, 0.6); }
+.rows .sub th { padding-top: 2.2rem; border-top: 1px solid #000; }
+.rows tbody:first-of-type tr:first-child td { border-top-width: 1px; }
+.code { display: inline-block; background: var(--hl); color: #000; font: 600 18px/1.5 var(--font); letter-spacing: 0.02em; padding: 0 7px; border: 0; border-radius: 0; margin: 0; }
+button.code { cursor: pointer; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.15em; -webkit-appearance: none; appearance: none; }
+button.code:hover { background: var(--hl-soft); }
+@media (max-width: 639px) {
+  .rows thead { position: absolute; left: -9999px; }
+  .rows, .rows tbody, .rows tr, .rows td, .rows .sub th { display: block; width: auto; }
+  .rows tr { padding: 12px 0; border-top: 1px solid #000; }
+  .rows td { padding: 0; border: 0; }
+  .rows td:first-child { width: auto; min-width: 0; white-space: normal; }
+  .rows td + td { margin-top: 6px; }
+  .rows td:last-child { font-size: 16px; }
+  .rows .sub { padding: 2rem 0 10px; }
+  .rows .sub th { padding: 0; border: 0; }
+}
+
+/* How it reads */
+.how { margin: 1rem 0 0; padding-left: 1.3em; max-width: 62ch; }
+.how li + li { margin-top: 0.4em; }
+
+/* Footer: the site's black band, with the source */
+.site-footer { background: #000; color: #fff; margin-top: clamp(4rem, 8vw, 7rem); padding: 48px 0 36px; font-size: 15px; }
+.site-footer p { margin: 0 0 0.9em; max-width: 78ch; }
+.site-footer .home { margin: 2rem 0 0; }
+.site-footer .wordmark { top: 0; }
+.site-footer a:focus-visible { outline-color: #fff; }
+
+@media print {
+  .skip, .lang, .tries, #copy, .hint, #how-section, .site-footer .home { display: none !important; }
+  .site-header { border-bottom: 2px solid #000; }
+  mark, .code { background: none; }
+  .site-footer { background: none; color: #000; }
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#q" id="skip">Skip to the lookup</a>
+<div class="container">
+  <header class="site-header">
+    <div class="brand">
+      <a class="mark-link" href="https://arizvi.com/attitude/" aria-label="About the mark"><img class="mark" src="/media/mark.svg" alt="" width="28" height="28"></a>
+      <a class="wordmark" href="https://arizvi.com/">Ali Rizvi</a>
+    </div>
+    <div class="lang" role="group" aria-label="Language / Langue">
+      <button type="button" class="pill" data-lang="en" lang="en" aria-pressed="true">English</button>
+      <button type="button" class="pill" data-lang="fr" lang="fr" aria-pressed="false">Français</button>
+    </div>
+  </header>
+
+  <main id="main">
+    <div class="intro">
+      <h1 id="h1">Canadian weather shorthand, in <mark>plain words</mark>.</h1>
+      <p class="lede" id="lede">Type one abbreviation or paste a whole line from a GFA, a TAF or a forecast discussion. Every meaning comes from MANAB, the manual of word abbreviations (5th edition, September 2026).</p>
+    </div>
+
+    <section class="tool" aria-labelledby="q-label">
+      <div class="strip">
+        <label class="label" id="q-label" for="q">Abbreviation or line</label>
+        <textarea id="q" rows="1" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" placeholder="Type or paste here"></textarea>
+      </div>
+      <div class="tries">
+        <span class="label" id="try-label">Try</span>
+        <span id="examples" style="display:contents"></span>
+        <button type="button" class="pill clear" id="clear">Clear</button>
+      </div>
+      <noscript><p>This page needs JavaScript to look things up.</p></noscript>
+    </section>
+
+    <section class="section" aria-labelledby="plain-h">
+      <div class="section-head">
+        <h2 class="label" id="plain-h">In plain words</h2>
+        <button type="button" class="pill" id="copy">Copy</button>
+      </div>
+      <div class="plain" id="plain" aria-live="polite"></div>
+      <p class="hint muted" id="hint-alt" hidden></p>
+      <p class="hint muted" id="hint-unknown" hidden></p>
+    </section>
+
+    <section class="section" id="words-section" aria-labelledby="words-h" hidden>
+      <div class="section-head"><h2 class="label" id="words-h">Word by word</h2></div>
+      <table class="rows" id="rows"></table>
+    </section>
+
+    <section class="section" id="how-section" aria-labelledby="how-h">
+      <div class="section-head"><h2 class="label" id="how-h">How it reads</h2></div>
+      <ol class="how" id="how"></ol>
+    </section>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="container">
+    <p id="src1"></p>
+    <p id="src2"></p>
+    <p id="src3"></p>
+    <p class="home"><a class="wordmark" href="https://arizvi.com/">arizvi.com</a></p>
+  </div>
+</footer>
+
+<!-- The list, copied from MANAB (Manual of Word Abbreviations), 5th edition, September 2026, Environment and Climate
+     Change Canada: the section "Alphabetical order of abbreviations", all 1,592 rows in the manual's order and wording,
+     typos included. One row per line: abbreviation|English|French. For a new edition, replace these lines. -->
+<script type="text/plain" id="manab">
+A/A|Air-to-Air|Air-air
+A/G|Air-to-Ground|Air-sol
+AB|Alberta|Alberta
+ABT|About|À peu-près
+ABV|Above|Au-dessus
+AC|Altocumulus|Altocumulus
+ACC|Altocumulus Castellanus|Altocumulus Castellanus
+ACC|Area Control Centre|Centre de contrôle régional
+ACFT|Aircraft|Aéronef, avion
+ACLT|Accelerate|Accélérer
+ACLTD|Accelerated|Accéléré(e, s, es)
+ACLTG|Accelerating|Accélérant
+ACLTN|Acceleration|Accélération
+ACPT|Accept, Accepted|Accepter, accepté(e, s, es)
+ACPTG|Accepting|Acceptant
+ACPY|Accompany|Accompagner
+ACPYD|Accompanied|Accompagné(e, s, es)
+ACPYG|Accompanying|Accompagnant
+ACRD|Accord|Accord
+ACRDG|According|Selon
+ACRDGLY|Accordingly|En conséquence, par conséquent
+ACRS|Across|À travers
+ACT|Active|Actif
+ACTLY|Actively|Activement
+ACYC|Anticyclonic|Anticyclonique
+ACYCLY|Anticyclonically|Circulation anticyclonique
+AD|Aerodrome(s)|Aérodrome(s)
+ADDN|Addition, Additional|Addition, additionnel
+ADJ|Adjacent(s)|Adjacent(s)
+ADVCTN|Advection|Advection
+ADVN|Advance|Avancer
+ADVND|Advanced|Avancé(e, s, es)
+ADVNG|Advancing|Avançant
+ADVNMT|Advancement|Avancement
+ADZ|Advise|Conseiller
+ADZD|Advised|Conseillé(e, s, es)
+ADZG|Advising|Conseillant
+ADZRY|Advisory|Avis
+AFCT|Affect|Affecter
+AFCTD|Affected|Affecté(e, s, es)
+AFCTG|Affecting|Affectant
+AFL|Above Freezing Layer|Couche au dessus du niveau de congélation
+AFT|After|Après
+AFTN|Afternoon|Après-midi
+AG|Above Ground|Au-dessus du sol
+AGL|Above Ground Level|Au-dessus du niveau du sol
+AGN|Again|Encore
+AGR|Agree|En accord, être d'accord
+AGRD|Agreed|Accepté(e, s, es)
+AGRG|Agreeing|Acceptant
+AGRMT|Agreement|Accord
+AHD|Ahead|En avant
+AIREP|Air Report|Compte rendu en vol
+AIRMET|Aviation Weather Advisory|Avis météorologique pour l'aviation
+AIRMS|Air Mass|Masse d'air
+AIRMSS|Air Masses|Masses d'air
+AK|Alaska|Alaska
+AL|Alabama|Alabama
+ALF|Aloft|En altitude
+ALG|Along|Le long de
+ALQDS|All Quadrants|Tous les quadrants
+ALSK PNHDL|Alaska Panhandle|Extrême sud de l'Alaska
+ALT|Altitude|Altitude
+ALTHO|Although|Bien que
+ALTM|Altimeter|Altimètre
+ALTN|Alternate(s)|Aéroport(s) de dégagement
+ALUTN|Aleutian|Aléoutiennes
+ANTISL|Anticosti Island|Île d’Anticosti
+AMD|Amend, Amended|Modifier, modifié(e, s, es)
+AMDG|Amending|Modifiant
+AMDT|Amendment|Modification
+AMDTS|Amendments|Modifications
+AMP|Amplify|Amplifier
+AMPD|Amplified|Amplifié(e, s, es)
+AMPG|Amplifying|Amplifiant
+AMPLTD|Amplitude|Amplitude
+AMPN|Amplification|Amplification
+AMSL|Above Mean Sea Level|Au-dessus du niveau moyen de la mer
+AMT|Amount (clouds)|Nébulosité, étendue des nuages
+ANAL|Analyze, Analysis|Analyse, analyser
+ANALD|Analyzed|Analysé(e, s, es)
+ANALG|Analyzing|Analysant
+ANTCPT|Anticipate|Anticiper
+ANTCPTD|Anticipated|Anticipé(e, s, es)
+ANTCPTG|Anticipating|Anticipant
+ANTCPTN|Anticipation|Anticipation
+AP|Airport(s)|Aéroport(s)
+AP|Anomalous Propagation|Propagation anormale
+APCH|Approach|Approche/approcher
+APCHBL|Approachable|Approchable
+APCHD|Approached|Approché(e, s, es)
+APCHG|Approaching|Approchant
+APPR|Appear|Sembler
+APPRD|Appeared|A semblé
+APPRG|Appearing|Semblant
+APPRNC|Appearance|Apparence, apparition
+APR|April|Avril
+APRNT|Apparent|Apparent
+APRNTLY|Apparently|Apparemment
+APRX|Approximate, Approximately|Approximatif, approximativement
+APRXN|Approximation|Approximation
+AR|Arkansas|Arkansas
+ARND|Around|Autour
+ARNG|Arrange|Prenez des dispositions pour
+ARNGD|Arranged|Arrangé(e, s, es)
+ARNGG|Arranging|Organisant
+ARNGMT|Arrangement|Arrangement
+ARR|Arrival, Arrive|Arrivée, Arriver
+ARRD|Arrived|Arrivé(e, s, es)
+ARRG|Arriving|Arrivant
+ARTC|Arctic|Arctique
+AS|Altostratus|Altostratus
+ASAP|As Soon As Possible|Dès que possible
+ASC|Ascend, Ascended, Ascending|Monter, s'élever, ayant monté, s'étant élevé(e, s, es), montant, s'élevant
+ASL|Above Sea Level|Au-dessus du niveau de la mer
+ASNT|Ascent|Ascension
+ASOCT|Associate|Associer
+ASOCTD|Associated|Associé(e, s, es)
+ASOCTG|Associating|Associant
+ASOCTN|Association|Association
+AT …|At (followed by time)|À (suivi de l’heure)
+ATLC|Atlantic|Atlantique
+ATMOS|Atmosphere|Atmosphère
+ATND|Attend|Assister à
+ATNDD|Attended|Assisté(e, s, es) à
+ATNDG|Attending|Assistant à
+ATTM|At This Time|À ce moment
+AUG|August|Août
+AURBO|Aurora Borealis|Aurore boréale
+AUTO|Automatic|Automatique
+AUTOLY|Automatically|Automatiquement
+AVBL|Available|Disponible
+AVG|Average|Moyen(ne)
+AVGD|Averaged|En moyenne à
+AVGG|Averaging|Faire la moyenne
+AVLPEN|Avalon Peninsula|Péninsule d’Avalon
+AVTN|Aviation|Aviation
+AWOS|Automated Weather Observing System|Système automatisé d’observations météorologiques
+AZ|Arizona|Arizona
+BACLIN|Baroclinic|Barocline
+BACLINLY|Baroclinically|Baroclinement, barocliniquement
+BACLINTY|Baroclinicity|Baroclinicité
+BAFBA|Baffin Bay|Baie de Baffin
+BAFDY|Bay of Fundy|Baie de Fundy
+BAFISLD|Baffin Island|Île de Baffin
+BARO|Barometer|Baromètre
+BAROLY|Barometrically|Barométriquement
+BATROP|Barotropic|Barotrope
+BATROPLY|Barotropically|Barotropiquement
+BC|British Columbia|Colombie Britannique
+BCFG|Fog Patches|Bancs de brouillard
+BCK|Back|Reculer
+BCKD|Backed|Reculé(e, s, es)
+BCKG|Backing|Reculant
+BCN|Beacon|Radiophare
+BCS|Because|Parce que
+BCST|Broadcast|Émission radio/télé
+BDA|Bermuda|Bermudes
+BDR|Border|Frontière
+BDRS|Borders|Frontières
+BDRY|Boundary(ies)|Limite(s)
+BECM|Become, Became|Devenir, devint
+BECMG|Becoming|Devenant
+BFR|Before|Avant
+BFRTS|Beaufort Sea|Mer de Beaufort
+BGN|Begin, Began|Commencer, à commencé
+BGNG|Beginning|Débutant
+BHND|Behind|Derrière
+BKN|Broken|Fragmenté(e, s, es)
+BKNG|Breaking|Fragmentant
+BL|Blowing|Souffler
+BLD|Build|Développer
+BLDG|Building|Développant
+BLDU|Blowing Dust|Chasse-poussière élevée
+BLDUP|Buildup|Se développer, augmenter
+BLDUPS|Buildups|Accumulations
+BLK|Block|Bloc
+BLKS|Blocks|Blocs
+BLN|Balloon|Ballon
+BLNS|Balloons|Ballons
+BLSA|Blowing Sand|Chasse-sable élevée
+BLSN|Blowing Snow|Poudrerie
+BLT|Built|Développé(e, s, es), conçu(e, s, es)
+BLW|Below|Au-dessous
+BND|Band|Bande
+BNDS|Bands|Bandes
+BNKISL|Banks Island|Île Banks
+BNTH|Beneath|Sous
+BOVC|Base of Overcast|Base du ciel couvert
+BR|Mist|Brume
+BRD|Broad|Large, évasé
+BRDLY|Broadly|Généralement
+BRDN|Broaden|Élargir
+BRDNG|Broadening|Élargissant
+BRDR|Broader|Plus grand
+BRF|Brief, Short|Bref, court
+BRFLY|Briefly|Brièvement
+BRK|Break|Éclaircie
+BRKS|Breaks|Éclaircies
+BTL|Between Layers|Entre les couches
+BTN|Between|Entre
+BTR|Better|Meilleur
+BULL|Bulletin|Bulletin
+BULLS|Bulletins|Bulletins
+BYD|Beyond|Au-delà
+C|Celsius (Degrees)|Celsius (degrés)
+CA|California|Californie
+CAA|Cold Air Advection|Advection d'air froid
+CAN|Canada, Canadian|Canada, Canadien(ne)
+CAPBR|Cape Breton Island|Île du Cape-Breton
+CARIB|Caribbean|Antilles
+CASCDS|Cascades|Cascades
+CASHLD|Canadian Shield|Bouclier canadien
+CAT|Category(ies)|Catégorie(s)
+CAT|Clear Air Turbulence|Turbulence en atmosphère claire
+CB|Cumulonimbus|Cumulonimbus
+CBTSTR|Cabot Strait|Détroit de Cabot
+CC|Cirrocumulus|Cirrocumulus
+CCT|Circuit|Circuit
+CCTS|Circuits|Circuits
+CF|Cumulus Fractus|Cumulus Fractus
+CH|Channel(s)|Canal, canaux
+CHG|Change|Change, changement
+CHGD|Changed|Changé(e, s, es)
+CHGG|Changing|Changeant
+CHGS|Changes|Changes, changements
+CHLRBA|Chaleur Bay|Baie-des-Chaleurs
+CHNC|Chance|Chance
+CHNCS|Chances|Chances
+CI|Cirrus|Cirrus
+CIG|Ceiling|Plafond
+CIGS|Ceilings|Plafonds
+CIV|Civil|Civil
+CLD|Cloud(s)|Nuage(s)
+CLD AND WX|Clouds and Weather|Nuages et temps
+CLR|Clear|Clair, dégagé
+CLR|Clear type of ice formation|Formation de glace limpide
+CLRD|Cleared|Dégagé(e, s, es)
+CLRG|Clearing|Dégageant
+CLRLY|Clearly|Clairement
+CLSD|Close, Closed, Closing|Fermer/près, fermé(e, s, es), fermant
+CLSLY|Closely|De près
+CM|Centimeter(s)|Centimètre(s)
+CMA|Comma|Virgule
+CMAH|Comma Head|Tête de la virgule nuageuse
+CMAS|Commas|Virgules
+CMASC|Comma Shape Cloud|Virgule nuageuse
+CMNC|Commence|Commence
+CMNCD|Commenced|Commencé(e, s, es)
+CMNCG|Commencing|Commençant, débutant
+CMNCMT|Commencement|Commencement, début
+CMPL|Complete, Completed, Completion|Complet, compléter, complété(e, s, es), achèvement
+CMPLG|Completing|Complétant
+CMPLLY|Completely|Complètement
+CMPLX|Complex|Complexe
+CMPTR|Computer|Ordinateur
+CNL|Cancel, Cancelled, Cancelling, Cancellation|Annuler, annulé(e, s, es), annulant, annulation
+CNCLSN|Conclusion|Conclusion
+CNCLSNS|Conclusions|Conclusions
+CNFLNC|Confluence|Confluence
+CNFLNT|Confluent|Confluent
+CNTR|Centre|Centre
+CNTRD|Centred|Centré(e, s, es)
+CNTRG|Centering|Centrant
+CNTRL|Central|Central
+CNTRLY|Centrally|Centralement
+CNTRS|Centres|Centres
+CO|Colorado|Colorado
+COM|Communications|Communications
+COND|Condition(s)|Condition(s)
+CONFID|Confident, Confidence|Confiant, confiance
+CONS|Continuing, Continuous|Continuant, continu
+CONT|Continue, Continues|Continuer, continué(e, s, es)
+CONTR|Contour|Contour, isoligne
+CONTRAILS|Condensation Trails|Trainnées de condensation
+CONTRS|Contours|Contours, isolignes
+CONVRG|Converge|Converger
+CONVRGD|Converged|Convergé(e, s ,es)
+CONVRGG|Converging|Convergeant
+CONVRGNC|Convergence|Convergence
+COR|Correct, Correction, Corrected|Correct(e), correction, corrigé(e, s, es)
+CORG|Correcting|Corrigeant
+COV|Cover, Covered, Covering|Couvert, couvert(e, s, es), couvrant
+CRCLT|Circulate|Circuler
+CRCLTD|Circulated|Circulé(e, s, es)
+CRCLTG|Circulating|Circulant
+CRCLTN|Circulation|Circulation
+CRNGLF|Coronation Gulf|Golfe du Couronnement
+CRNT|Current|Courant
+CRNTLY|Currently|Maintenant, en ce moment
+CRSPND|Correspond|Correspondre
+CRSPNDD|Corresponded|Correspondu(e, s ,es)
+CRSPNDG|Corresponding|Correspondant
+CRSPNDLY|Correspondingly|En conséquence
+CRSPNDNC|Correspondence|Correspondance
+CRV|Curve|Courbe
+CRVS|Curves|Courbes
+CS|Cirrostratus|Cirrostratus
+CSDRBL|Considerable|Considérable
+CSDRBLY|Considerably|Considérablement
+CST|Coast|Côte
+CSTLMTNS|Coastal Mountains|Chaine côtière
+CSTLPSS|Coastal Passes|Cols côtiers
+CSTS|Coasts|Côtes
+CT|Connecticut|Connecticut
+CTC|Contact|Contact
+CTCD|Contacted|Contacté(e, s, es)
+CTCG|Contacting|Contactant
+CTCS|Contacts|Contacts
+CTL|Control|Contrôle
+CTLD|Controlled|Contrôlé(e, s, es)
+CTLG|Controlling|Contrôlant
+CTN|Caution|Prudence
+CU|Cumulus|Cumulus
+CVCTN|Convection|Convection
+CVCTV|Convective|Convectif
+CVCTVLY|Convectively|Par convection
+CYC|Cyclonic|Cyclonique
+CYCGNS|Cyclogenesis|Cyclogénèse
+CYCLYS|Cyclonically|De manière cyclonique
+CYCLYS|Cyclolysis|Cyclolyse
+CYPHL|Cypress Hills|Collines de Cyprès
+DABRK|Daybreak|Aube
+DALGT|Daylight|Lumière du jour
+DAM|Decametre(s)|Décamètre(s)
+DATM|Daytime|Jour
+DB|Dry Bulb|Thermomètre sec
+DBL|Double|Double
+DBLD|Doubled|Doublé(e, s, es)
+DBLG|Doubling|Doublant
+DBT|Doubt|Doute
+DBTD|Doubted|Douté(e, s, es)
+DBTFL|Doubtful|Douteux
+DBTG|Doubting|Doutant
+DBTS|Doubts|Doutes
+DC|District of Columbia|District de Columbia
+DCLRT|Decelerate|Ralentir
+DCLRTD|Decelerated|Ralenti(e, s, es)
+DCLRTN|Deceleration|Ralentissement
+DCLTRG|Decelerating|Ralentissant
+DCT|Direct|Direct
+DCTD|Directed|Dirigé(e, s, es)
+DCTG|Directing|Dirigeant
+DCTLY|Directly|Directement
+DCTN|Direction|Direction
+DDG|Dodging|Évitant
+DE|Delaware|Delaware
+DEC|December|Décembre
+DECID|Decide|Décider
+DECIDD|Decided|Décidé(e, s, es)
+DECIDG|Deciding|Décidant
+DECIDN|Decision|Décision
+DEG|Degree(s)|Degré(s)
+DES|Descend, descended, Descending, Descent,|Descendre, décendu(e, s, es), descendant, descente,
+DEV|Deviation, Deviate, Deviated, Deviating|Déviation, dévier, dévié, déviant
+DFCLT|Difficult|Difficile
+DFCLTY|Difficulty|Difficulté
+DFNT|Definite|Défini, précis
+DFNTLY|Definitively|Définitivement
+DFT|Draft|Ébauche, courant (d'air)
+DFTS|Drafts|Ébauches, courants (d'air)
+DFZN|Deformation Zone|Zone de déformation
+DIAG|Diagnosis, Diagnose|Diagnostic
+DIAGD|Diagnosed|Diagnostiqué(e, s, es)
+DIAGG|Diagnosing|Diagnostiquant
+DIF|Diffuse, Diffused, Diffusing, Diffusely|Diffus, diffus(e, es), diffusant, diffusément
+DIFLNC|Diffluence|Diffluence
+DIFLNT|Diffluent|Diffluent
+DISAPRNC|Disappearance|Disparition
+DISEM|Disseminate|Disséminer
+DISEMD|Disseminated|Disséminé(e, s, es)
+DISEMG|Disseminating|Disséminant
+DISEMN|Dissemination|Dissémination
+DIST|Distant, Distance|Distant(e, s, es), distance, éloigné(e, s, es)
+DISTR|Distribute|Distribuer, diffuser
+DISTRD|Distributed|Distribué, diffusé(e, s, es), réparti(e, s, es)
+DISTRG|Distributing|Distribuant, diffusant, répartissant
+DISTRN|Distribution|Distribution, diffusion, répartition
+DIVRG|Diverge|Diverger
+DIVRGD|Diverged|Divergé(e, s, es)
+DIVRGG|Diverging|Divergeant
+DIVRGNC|Divergence|Divergence
+DIVRGT|Divergent|Divergent
+DKTS|Dakotas|Dakotas
+DLA|Delay, Delayed, Delaying|Retard, retardé(e, s, es), retardant
+DLT|Delete|Rayer
+DLTD|Deleted|Rayé(e, s, es)
+DLTG|Deleting|Rayant
+DLTN|Deletion|Suppression
+DLY|Daily|Quotidien
+DMNT|Dominant|Dominant
+DMNTD|Dominated|Dominé(e, s, es)
+DMNTG|Dominating|Dominant
+DMNTGLY|Dominantly|De façon dominante
+DMNTS|Dominants|Dominants
+DMSH|Diminish|Diminuer
+DMSHD|Diminished|Diminué(e, s, es)
+DMSHG|Diminishing|Diminuant
+DN|Down|Sous
+DNDFT|Downdraft|Courant d'air descendant
+DNG|Danger, Dangerous|Danger, dangereux
+DNGLY|Dangerously|Dangereusement
+DNS|Dense|Dense
+DNSLP|Downslope|Descendant la pente
+DNSLY|Densly|Très, à forte densité
+DNSR|Denser|Plus dense
+DNSTRM|Downstream|Aval, descendre le
+DNWND|Downwind|Sous le vent
+DOM|Domestic|Intérieur
+DOMLY|Domestically|Intérieurement
+DP|Deep|Profond
+DP|Dew Point|Point de rosée
+DPCT|Depict|Décrire
+DPCTD|Depicted|Décrit(e, s, es)
+DPCTG|Depicting|Décrivant
+DPCTN|Depiction|Représentation
+DPCTNS|Depictions|Représentations
+DPLR|Doppler (Radar)|Doppler (radar)
+DPLY|Deeply|Profondément
+DPN|Deepen|Creuser (se)
+DPNG|Deepening|S'approfondissant
+DPR|Deeper|Plus profond
+DPT|Depth|Profondeur
+DRDU|Drifting Dust|Chasse-poussière
+DRFT|Drift, Drifting|Dériver, dérive
+DRFTS|Drifts|Dériver, dérives
+DRSN|Drifting Snow|Chasse-neige basse
+DS|Dust Storm|Tempête de poussière
+DSAPR|Disappear|Disparaître
+DSAPRD|Disappeared|Disparu(e, s, es)
+DSAPRG|Disappearing|Disparaissant
+DSCRB|Describe|Décrire
+DSCRBD|Described|Décrit(e, s, es)
+DSCRBG|Describing|Décrivant
+DSCRBN|Description|Description
+DSCS|Discuss|Discuter
+DSCSD|Discussed|Discuté(e, s, es)
+DSCSG|Discussing|Discutant
+DSCSN|Discussion|Discussion
+DSH|Dashed|Pointillé(e, s ,es)
+DSIPT|Dissipate|Dissiper
+DSIPTD|Dissipated|Dissipé(e, s, es)
+DSIPTG|Dissipating|Se dissipant
+DSIPTN|Dissipation|Dissipation
+DSPLC|Displace|Déplacer
+DSPLCD|Displaced|Déplacé(e, s, es)
+DSPLCG|Displacing|Déplaçant
+DSPLCNT|Displacement|Déplacement
+DSPR|Disperse|Disperser
+DSPRD|Dispersed|Dispersé(e, s, es)
+DSPRG|Dispersing|Dispersant
+DSPRL|Dispersal|Dispersion
+DSPRNT|Dispersement|Dispersement
+DSTBNC|Disturbance|Perturbation
+DSTBNCS|Disturbances|Perturbations
+DTCT|Detect|Détecter
+DTCTD|Detected|Détecté(e, s, es)
+DTCTG|Detecting|Détectant
+DTCTN|Detection|Détection
+DTCTR|Detector|Détecteur
+DTCTRS|Detectors|Détecteurs
+DTRM|Determine|Déterminer
+DTRMD|Determined|Déterminé(e, s, es)
+DTRMG|Determining|Déterminant
+DTRMN|Determination|Détermination, délimitation
+DTRT|Deteriorate, Deteriorated, Deteriorating|Détériorer, détérioré(e, s, es), se détériorant
+DTRTN|Deterioration|Détérioration
+DU|Dust|Poussière
+DUPLCT|Duplicate|Copie
+DUPLCTD|Duplicated|Copié(e, s, es)
+DUPLCTG|Duplicating|Copiant
+DUPLCTN|Duplication|Reproduction, répétition
+DUPLCTS|Duplicates|Copies
+DUR|Duration|Durée
+DURC|During Climb|En montée
+DURD|During Descent|En descente
+DRG|During|Durant, pendant
+DVD|Divide|Séparer, partager
+DVDD|Divided|Divisé(e, s, es)
+DVDG|Dividing|Divisant
+DVDN|Division|Division
+DVLP|Develop|Développer
+DVLPD|Developed|Developpé(e, s, es)
+DVLPG|Developing|Se développant
+DVLPMT|Development|Développement
+DVSST|Davis Strait|Détroit de Davis
+DZ|Drizzle|Bruine
+E|East, Eastern longitude|Est, Longitude est
+ECTP|Echo Top|Sommet de l'écho
+ECTPS|Echo Tops|Sommets de l'écho
+EFCT|Effect|Effet, résultat, en vigueur
+EFCTD|Effected|Affecté(e, s, es)
+EFCTG|Effecting|Affectant
+EFCTS|Effects|Effets, résultats, en vigueur
+ELEV|Elevation, Elevate|Élévation
+ELEVD|Eleveted|Élevé(e, s, es)
+ELEVG|Eleveting|Élevant
+ELISL|Ellesmere Island|Île Ellesmere
+ELSW|Elsewhere|Ailleurs
+EM|Emission|Émission
+EMBD|Embed, Embedded|Incorporer, Encastré(e, s, es)
+ENDD|Ended|Terminé(e, s, es)
+ENDG|Ending|Se terminant
+ENE|East-Northeast|Est-nord-est
+ENHNC|Enhance, Enhancement|Rehausser, rehaussement
+ENHNCD|Enhanced|Rehaussé(e, s, es)
+ENHNCG|Enhancing|Rehaussant
+ENR|En-Route|En route
+ENTR|Entire|Entier
+ENTRLY|Entirely|Entièrement
+ENUF|Enough|Assez
+EQPT|Equipment|Équipement
+ER|Here|Ici
+ELY|Easterly|Venant de l'est, de l'est
+ERLY|Early|Tôt
+ERN|Eastern|Est, à l'est
+ESE|East-Southeast|Est-sud-est
+ESPLY|Especially|Spécialement
+EST|Estimate, Estimated, Estimating, Estimation|Estimer, estimé(e, s, es), estimant, estimation
+EVAP|Evaporation, Evaporate, Evaporated, Evaporating|Évaporation, s'évaporer, évaporé(e, s, es), s'évaporant
+EVDNC|Evidence|Évidence
+EVE|Evening|Soir
+EV|Every|Chaque
+EXC|Except|Excepté
+EXCN|Exception|Exception
+EXTD|Extend, Extended, Extending|Prolonger, prolongé(e, s, es), prolongeant
+EXTDN|Extention|Prolongement
+EXP|Expect, Expected, Expecting, Expectation|Attendre, s'attendre à, attendu(e, s, es), s'attendre à ce que, attente
+FAC|Facilities|Installations et services
+FALG|Falling|À la baisse
+FAX|Facsimile(s)|Fac-similé(s)
+FC|Funnel Cloud|Nuage en entonnoir
++FC|Tornado(es)|Tornade(s)
++FC|Waterspout(s) (METAR)|Trombe(s) marine(s) (METAR)
+FCST|Forecast(s)|Prévision(s)
+FCSTG|Forecasting|Prévoyant
+FCSTR|Forecaster|Prévisionniste
+FCSTRS|Forecasters|Prévisionnistes
+FEAT|Feature|Caractéristique
+FEATS|Features|Caractéristiques
+FEB|February|Février
+FEW|Few|Quelques
+FG|Fog|Brouillard
+FIC|Flight Information Centre|Centre d'information de vol
+FIL|Fill|Combler, remplir
+FILD|Filled|Rempli(e, s, es)
+FILG|Filling|Remplissant
+FIR|Flight Information Region|Région d'information de vol
+FIS|Flight Information Service|Service d'information de vol
+FL|Flight Level|Niveau de vol
+FL|Florida|Floride
+FLD|Field(s)|Champ(s), terrain(s)
+FLO|Flow|Écoulement
+FLOD|Flowed|S'étant écoulé(e, s, es)
+FLOG|Flowing|S'écoulant
+FLRY|Flurry|Averse de neige
+FLRYS|Flurries|Averses de neige
+FLT|Flight(s)|Vol(s), envolée(s)
+FLUC|Fluctuate, Fluctuated, Fluctuating, Fluctuation|Fluctuer, fluctué(e, s, es), fluctuant, fluctuation
+FLW|Follow, Followed, Following|Suivre, suivi(e, s, es), suivant
+FLY|Fly, Flying|Voler, volant
+FM|From|De (venant de)
+FRONT|Front(s)|Front(s)
+FNTGNS|Frontogenesis|Frontogénèse
+FNTLYS|Frontolysis|Frontolyse
+FPL|Flight Plan(s)|Plan(s) de vol
+FREQ|Frequency|Fréquence
+FRI|Friday|Vendredi
+FRM|Form|Forme
+FRMD|Formed|Formé(e, s, es)
+FRMG|Forming|Formant
+FRMS|Forms|Formes
+FRMT|Format|Format
+FRMTS|Formats|Formats
+FROIN|Frost On The Indicator|Givre sur l'indicateur
+FROPA|Frontal Passage|Passage frontal
+FRQ|Frequent|Fréquent
+FRQLY|Frequently|Fréquemment
+FRTHR|Farther, Further|Plus loin, davantage
+FSS|Flight Service Station(s)|Station(s) d'information de vol
+FST|First|Premier
+FSTFR|Forest Fire(s)|Feu(x) de forêt
+FT|Feet, Foot|Pied(s)
+FTHLS|Foothills|Contreforts des rocheuses
+FU|Smoke|Fumée
+FUNC|Function|Fonction
+FUNCS|Functions|Fonctions
+FUTR|Future|Futur
+FWD|Forward|Devant, vers l'avant
+FXBSN|Foxe Basin|Bassin de Foxe
+FYI|For Your Information|À titre de renseignement
+FZ|Freeze, Freezing|Geler, gelant
+FZDZ|Freezing Drizzle|Bruine se congelant
+FZFG|Freezing Fog|Brouillard verglaçant
+FZLVL|Freezing Level|Niveau de congélation
+FZN|Frozen|Gelé
+FZRA|Freezing Rain|Pluie verglaçante
+G|Gust (METAR, TAF)|Rafale (METAR, TAF)
+G/A|Ground-To-Air|Sol-air
+GA|Georgia|Georgie
+GASTR|Georgia Strait|Détroit de Géorgie
+GBRLK|Great Bear Lake|Grand Lac de l'Ours
+GD|Guide|Guide
+GDD|Guided|Guidé(e, s, es)
+GDG|Guiding|Guidant
+GDNC|Guidance|Conseil
+GEN|General|Général
+GENLY|Generally|Généralement
+GENOT|General Notice|Avis général
+GFA|Graphic Area Forecast|Prévision de zone en format graphique
+GGNBA|Georgian Bay|Baie Georgienne
+GLF|Gulf|Golfe
+GLFALSK|Gulf of Alaska|Golfe de l'Alaska
+GLFMEX|Gulf of Mexico|Golfe du Mexique
+GLFSTLAWR|Gulf of St. Lawrence|Golfe du Saint-Laurent
+GND|Ground|Sol
+GP|Glide Path|Alignement de descente
+GR|Hail|Grêle
+GRAD|Gradient|Gradient
+GRBNKS|Grand Banks|Grand Bancs
+GRDL|Gradual|Graduel
+GRDLY|Gradually|Graduellement
+GRNLD|Greenland|Groenland
+GRP|Group(S)|Groupe(s)
+GRPD|Grouped|Groupé(e, s, es)
+GRPG|Grouping|Groupant (regroupant)
+GRT|Great|Grand
+GRTLKS|Great Lakes|Grands lacs
+GRTLY|Greatly|Grandement
+GS|Snow Pellets|Neige roulée
+GSPPEN|Gaspé Peninsula|Gaspésie
+GSTY|Gusty|En rafale
+GSVLK|Great Slave Lake|Grand lac des Esclaves
+GUD|Good|Bon
+GV|Give|Donner
+GVG|Giving|Donnant
+GVN|Given|Étant donné que
+H|High|Haut, anticyclone
+HBR|Harbour|Port
+HBRS|Harbours|Ports
+HCH|Hatched|Hachuré(e, s, es)
+HCSTR|Hecate Strait|Détroit d’Hecate
+HDD|Headed|Se dirigeant vers
+HDG|Head|Tête
+HDG|Heading(s)|En-tête(s), se dirigeant vers
+HEMIS|Hemisphere(s)|Hémisphère(s)
+HGT|Height(s)|Hauteur(s)
+HIDGW|Haida Gwaii|Haïda Gwaïi
+HIST|History|Histoire
+HISTLY|Historically|Historiquement
+HLF|Half|Demi, moitié
+HLSTO|Hailstone|Grêlon
+HLSTOS|Hailstones|Grêlons
+HLTP|Hill Top|Sommet de colline
+HLTPS|Hill Tops|Sommet de collines
+HNC|Hence|Par conséquent
+HND|Hundred|Cent, centaine
+HNDS|Hundreds|Centaines
+HODO|Hodograph|Hodographe
+HODOS|Hodographs|Hodographes
+HOL|Holiday(s)|Congé(s), vacances
+HPA|Hectopascal(s)|Hectopascal(s)
+HR|Hour(s)|Heure(s)
+HRZN|Horizon|Horizon
+HRZNTL|Horizontal|Horizontal
+HRZNTLY|Horizontally|Horizontalement
+HSNBA|Hudson Bay|Baie d'Hudson
+HSNSTR|Hudson Strait|Détroit d’Hudson
+HTG|Heating|Chaleur
+HURCN|Hurricane(s)|Ouragan(s)
+HVY|Heavy|Lourd, fort
+HVYLY|Heavily|Fortement
+HWVR|However|Cependant
+HYR|Higher, Highly|Plus haut, Hautement
+HZ|Haze|Brume sèche
+IA|Iowa|Iowa
+IC|Ice Crystals|Cristaux de glace
+ICE|Icing|Givrage
+ICEIC|Icing In Cloud|Givrage dans les nuages
+ICEIP|Icing In Precipitation|Givrage dans les précipitations
+ID|Idaho|Idaho
+ID|Identifier(s), Identify, Identification|Identificateur(s), identifier, identité
+IDG|Identifying|Identifiant
+IFR|Instrument Flight Rules|Règles de vol aux instruments
+IL|Illinois|Ilinois
+IMPR|Improve, Improved, Improving|Améliorer, Amélioré(e, s, es), Améliorant
+IMPRMT|Improvement|Amélioration
+IMPRMTS|Improvements|Améliorations
+IMPT|Important|Important
+IMPTLY|Importantly|D'importance
+IMT|Immediate, Immediately|Immédiat, Immédiatement
+IN|Indiana|Indiana
+INC|In Cloud|Dans les nuages
+INCL|Include|Inclure
+INCLD|Included|Inclu(e, s, es)
+INCLG|Including|Incluant
+INCLN|Inclusion|Inclusion
+INCOMP|Incomplete|Incomplet
+INCOMPLY|Incompletely|Incomplètement
+INCR|Increase|Augmenter, augmentation
+INCRD|Increased|Augmenté(e, s, es)
+INCRG|Increasing|Augmentant
+INCRGLY|Increasingly|De plus en plus
+INDC|Indicate|Indiquer
+INDCD|Indicated|Indiqué(e, s, es)
+INDCG|Indicating|Indiquant
+INDCN|Indication|Indication
+INDEF|Indefinite|Indéfini
+INDEFLY|Indefinitely|Indéfiniment
+INFLNC|Influence|Influence
+INFLNCD|Influenced|Influencé(e, s, es)
+INFLNCG|Influencing|Influençant
+INFO|Information|Information, renseignements
+INFR|Inferior|Inférieur
+INOP|Inoperative|Inopérant, défectueux
+INSTBY|Instability|Instabilité
+INSTD|Instead|Plutôt, au lieu de
+INSTR|Instrument(s)|Instrument(s)
+INT|Intersection(s)|Intersection(s)
+INTL|International|International
+INTLLY|Internationally|Internationalement
+INTMT|Intermittent|Intermittent
+INTMTLY|Intermittently|De façon intermittente
+INTR|Interior|Intérieur
+INTRP|Interrupt, Interruption, Interrupted|Interrompre, interruption, Interrompu(e, s, es)
+INTRPG|Interrupting|Interrompant
+INTS|Intense|Intense
+INTSF|Intensify, Intensifying, Intensified|Intensifier (s’intensifier), s'intensifiant, s’est/se sont intensifié(e, s, es)
+INTSLY|Intensely|Intensément
+INTSTN|Intensification|Intensification
+INTST|Intensity|Intensité
+INVD|Invade|Envahir
+INVDD|Invaded|Est/sont envahi(e, s, es)
+INVDG|Invading|Envahissant
+INVDN|Invasion|Invasion
+INVRN|Inversion|Inversion
+IR|Infrared|Infrarouge
+ISBR|Isobar|Isobare
+ISBRS|Isobars|Isobares
+ISLD|Island|Île
+ISLDS|Islands|Îles
+ISOL|Isolate, Isolated, Isolating, Isolation|Isoler, isolé(e, s, es), isolant, isolation
+ISOTRM|Isotherm|Isotherme
+ISOTRMS|Isotherms|Isothermes
+JAN|January|Janvier
+JCTN|Junction|Jonction
+JCTNS|Junctions|Jonctions
+JDFSTR|Juan De Fuca Strait|Détroit Juan de Fuca
+JMSBA|James Bay|Baie James
+JTST|Jetstream|Courant-jet
+JUL|July|Juillet
+JUN|June|Juin
+KG|Kilogram(s)|Kilogramme(s)
+KHZ|Kilohertz(s)|Kilohertz(s)
+KM|Kilometer(s)|Kilomètre(s)
+KMH|Kilometers Per Hour|Kilomètre à l'heure
+KPA|Kilopascal(s)|Kilopascal(s)
+KS|Kansas|Kansas
+KT|Knot(s)|Nœud(s)
+KTKMT|Kitikmeot|Kitikmeot
+KVLQ|Kivalliq|Kivalliq
+KY|Kentucky|Kentucky
+L|Low|Dépression, bas(e, es)
+LA|Louisiana|Lousiane
+LABRDR|Labrador|Labrador
+LAN|Inland|Intérieur des terres
+LAT|Latitude|Latitude
+LCA|Local, Locally, location, located|Local, localement, emplacement, situé(e, s, es)
+LD|Land|Terre, atterrir
+LDD|Landed|Atterri(e, s, es) (au sol)
+LDG|Landing|Atterrissage
+LEE|Lee (Wind)|Sous le vent
+LEN|Length|Longeur
+LENT|Lenticular|Lenticulaire
+LFT|Lift|Soulèvement
+LFTD|Lifted|Soulevé(e, s, es)
+LFTG|Lifting|Soulevant
+LG|Long|Long
+LGR|Longer|Plus long
+LGRG|Long Range|À long terme
+LGRGMT|Long Range Mountains|Monts Long Range
+LGT|Light|Léger, lumière
+LGWV|Longwave|Grande onde
+LGWVS|Longwaves|Grandes ondes
+LI|Lifted Index|Indice de soulèvement
+LIFR|Low IFR|IFR inférieur
+LINE|Line(s)|Ligne(s)
+LK|Lake|Lac
+LKATH|Lake Athabasca|Lac Athabasca
+LKER|Lake Erie|Lac Érié
+LKHRN|Lake Huron|Lac Huron
+LKLY|Likely|Probablement
+LKON|Lake Ontario|Lac Ontario
+LKS|Lakes|Lacs
+LKSUPR|Lake Superior|Lac Supérieur
+LKWPG|Lake Winnipeg|Lac Winnipeg
+L LVL JET|Low Level Jet|Jet à bas niveau
+L LVL WS|Low Level Wind Shear|Cisaillement du vent à bas niveaux
+LONG|Longitude|Longitude
+LRG|Large|Grand
+LRGLY|Largely|Grandement
+LRGR|Larger|Plus grand
+LT|Limit|Limite
+LTD|Limited|Limité(e, s, es)
+LTG|Limiting|Limitant
+LTGCC|Lightning Cloud to Cloud|Éclair de nuage à nuage
+LTGCG|Lightning Cloud to Ground|Éclair de nuage au sol
+LTGCGICCC|Lightning Cloud to Ground, Intra-Cloud and Cloud to Cloud|Éclair de nuage au sol, intranuageux et de nuage à nuage
+LTGIC|Lightning Intra-Cloud|Éclair intranuageux
+LTL|Little|Peu, petit
+LTNG|Lightning|Éclair, foudre
+LTNGS|Lightnings|Éclaires, foudres
+LTR|Later|Plus tard
+LTS|Limits|Limites
+LV|Light And Variable|Léger et variable
+LVE|Leave, Leaving|Partir, partant de
+LVL|Level(s)|Niveau(x), uni
+LWR|Lower|Plus bas, inférieur
+LYR|Layer(s), Layered|Couche(s), en couches
+M|Meter(s)|Mètre(s)
+MA|Massachusetts|Massachusetts
+MAG|Magnetic|Magnétique
+MAINT|Maintenance|Entretien
+MANL|Manual|Manuel
+MANLS|Manuals|Manuels
+MAR|March|Mars
+MAX|Maximum|Maximum
+MAY|May|Mai
+MB|Manitoba|Manitoba
+MB|Millibar(s)|Millibar(s)
+MCKNZ|Mackenzie|Mackenzie
+MD|Maryland|Maryland
+MDFY|Modify|Modifier
+MDFYD|Modified|Modifié(e, s, es)
+MDFYG|Modifying|Modifiant
+MDFYN|Modification|Modification
+ME|Maine|Maine
+MECH|Mechanical|Mécanique
+MECHLY|Mechanically|Mécaniquement
+MESO|Mesoscale|Moyenne échelle
+MET|Meteorological|Météorologique
+METAR|Aerodrome Routine Meteorological Report|Message d'observation météorologique régulière d'aérodrome
+MHZ|Megahertz(s)|Mégahertz(s)
+MI|Michigan|Michigan
+MID|Middle|Milieu
+MIDNGT|Midnight|Minuit
+MIFG|Shallow Fog|Couche mince de brouillard
+MIN|Minute(s)|Minute(s)
+MISD|Missed|Manqué(e, s, es)
+MISG|Missing|Manquant, absent
+MISSIRVR|Mississippi River|Rivière Mississippi
+MN|Minnesota|Minnesota
+MNLD|Mainland|Continent
+MNLY|Mainly|Principalement
+MNM|Minimum|Minimum
+MNT|Monitor, Monitored|Contrôle, contrôlé(e, s, es)
+MNTN|Maintain, Maintained, Maintaining|Maintenir, maintenu(e, s, es), maintenant
+MO|Missouri|Missouri
+MOD|Moderate, Moderated, Moderating, Moderation|Modéré, modéré(e, s, es), modérant, modération
+MON|Monday|Lundi
+MOTN|Motion|Mouvement
+MOV|Move, Moving, Movement|(Se) Déplacer, se déplaçant, mouvement,
+MOVD|Moved|S'est/se sont déplacé(e, s, es)
+MPH|Miles Per Hour|Milles à l'heure
+MPS|Metre Per Second|Mètres par seconde
+MRG|Merge|Joindre, réunir
+MRGD|Merged|Joint(e, s, es)
+MRGG|Merging|Se joignant
+MRGL|Marginal|Marginal
+MRGLY|Marginally|Marginalement
+MRNG|Morning|Matin, matinée
+MRTM|Maritime|Maritime
+MRTMS|Maritime provinces|Provinces maritimes
+MS|Mississippi|Mississippi
+MSG|Message(s)|Message(s)
+MSL|Mean Sea Level|Niveau moyen de la mer
+MSR|Measure|Mesure
+MSRD|Measured|Mesuré(e, s, es)
+MSRG|Measuring|Mesurant
+MSRNT|Measurement|Mesure
+MSRNTS|Measurements|Mesures
+MSRS|Measures|Mesures
+MST|Moist|Humide
+MSTLY|Mostly|Généralement
+MSTR|Moisture|Humidité
+MT|Montana|Montana
+MT|Mountain(s)|Montagne(s)
+MTU|Metric Units|Unités métriques
+MTW|Mountain Waves|Ondes orographiques
+MVFR|Marginal VFR|VFR marginal
+MWO|Meteorological Watch Office(s)|Centre(s) de veille météorologique
+MX|Mixed type of ice formation (white and clear)|Formation de glace mêlée (opaque et limpide)
+MXG|Mixing|Mélangeant, de mélange
+MXTR|Mixture|Mélange
+N|North or Northern latitude|Nord, Latitude nord
+NAM|North America|Amérique du Nord
+NAT|North Atlantic|Nord Atlantique
+NAV|Navigation|Navigation
+NB|New Brunswick|Nouveau-Brunswick
+NBRLDSTR|Northumberland Strait|Détroit de Northumberland
+NC|No Change|Pas de changement
+NC|North Carolina|Caroline du Nord
+ND|North Dakota|Dakota du Nord
+NE|Nebraska|Nebraska
+NE|Northeast|Nord-est
+NEC|Necessary|Nécessaire
+NECLY|Necessarily|Nécessairement
+NEG|Negative|Négatif
+NEGLY|Negatively|Négativement
+NELY|Northeasterly|Venant du nord-est, du nord-est
+NERN|Northeastern|Nord-est, au nord-est
+NEWENG|New England|Nouvelle-Angleterre
+NF|Newfoundland|Terre-Neuve
+NGT|Night(s)|Nuit
+NGTM|Nighttime|Durant la nuit
+NH|New Hampshire|New hampshire
+NIL|None|Aucun
+NJ|New Jersey|New Jersey
+NL|Newfoundland and Labrador|Terre-Neuve-et-Labrador
+NLY|Northerly|Venant du nord, du nord
+NM|Nautical Mile(s)|Mille(s) marin(s)
+NM|New Mexico|Nouveau Mexique
+NML|Normal|Normal
+NMLY|Normally|Normalement
+NMRS|Numerous|Nombreux
+NNE|North-Northeast|Nord-nord-est
+NNW|North-Northwest|Nord-nord-ouest
+NOV|November|Novembre
+NP|North Pole|Pôle Nord
+NR|Near|Près
+NR|Number(s)|Nombre(s)
+NRG|Nearing|Approchant
+NRLY|Nearly|Presque
+NRN|Northern|Nord, au nord
+NRSTR|Nares Strait|Détroit de Nares
+NRW|Narrow|Étroit
+NS|Nimbostratus|Nimbostratus
+NS|Nova Scotia|Nouvelle-Écosse
+NSW|Nil Significant Weather|Pas de temps significatif
+NT|Northwest Territories|Territoires du Nord-Ouest
+NTFY|Notify|Notifier
+NTFYD|Notified|Notifié(e, s,es)
+NTFYG|Notifying|Notifiant
+NTFYN|Notification|Notification
+NU|Nunavut|Nunavut
+NUMCL|Numerical|Numérique
+NUMCLY|Numerically|Numériquement
+NV|Nevada|Nevada
+NVA|Negative Vorticity Advection|Advection négative de tourbillon
+NW|Northwest|Nord-ouest
+NWLY|Northwesterly|Venant du nord-ouest, du nord-ouest
+NWRN|Northwestern|Nord-ouest, au nord-ouest
+NXT|Next|Suivant
+NY|New York|New York
+O/R|On Request|Sur demande
+OBS|Observe, Observed Observation(s),|Observer, observé(e, s, es), observation(s)
+OBSC|Obscure, Obscured, Obscuring|Obscurcir, obscurci(e, s, es), obscurcissant
+OBSCN|Obscuration|Obscurcissement
+OBST|Obstruct, Obstacle(s)|Obstruer, obstacle(s)
+OBSTD|Obstructed|Obstrué(e, s, es)
+OBSTG|Obstructing|Obstruant
+OBSTN|Obstruction|Obstruction
+OCLD|Occlude, Occluded|Occlure, occlu(e, s, es)
+OCLDG|Occluding|D'occlusion
+OCLN|Occlusion|Occlusion
+OCLNS|Occlusions|Occlusions
+OCN|Ocean|Océan
+OCNL|Occasional, Occasionally|Occasionnel, occasionnellement
+OCNS|Oceans|Océans
+OCR|Occur|Se produire
+OCRD|Occurred|S'étant produit(e, s, es)
+OCRG|Occurring|Se produisant
+OCRNC|Occurrence|Manifestation
+OCT|October|Octobre
+OFSHR|Offshore|Au large
+OH|Ohio|Ohio
+OHD|Overhead|Au-dessus, dans le ciel
+OK|Oklahoma|Oklahoma
+ON|Ontario|Ontario
+ONSHR|Onshore|Venant du large
+OPN|Open, Opened, Opening|Ouvrir, ouvert(e, s, es), ouvrant
+OPNLY|Openly|Ouvertement
+OPR|Operator(s)|Exploitant(s)
+OPS|Operation(s)|Exploitation(s) ou vols
+OPSD|Operated|Exploité(e, s, es)
+OPSG|Operating|Exploitant
+OR|Oregon|Oregon
+ORGPHC|Orographic|Orographique
+ORGPHCLY|Orographically|Orographiquement
+ORGZ|Organize|Organiser
+ORGZD|Organized|Organisé(e, s, es)
+ORGZG|Organizing|Organisant
+ORGZN|Organization|Organisation
+ORIG|Original|Original
+ORIGLY|Originally|À l'origine
+ORIGS|Originals|Originals
+ORIGT|Originate|Venir de, provenir de
+ORIGTD|Originated|Venu(e, s, es)
+ORIGTG|Originating|Venant
+ORNT|Orient|Orienter, s’orienter
+ORNTD|Oriented|Orienté(e, s, es)
+ORNTG|Orienting|Orientant, s'orientant
+ORNTN|Orientation|Orientation
+OTLK|Outlook|Aperçu
+OTP|On Top|Au-dessus
+OTWZ|Otherwise|Autrement
+OVC|Overcast|Couvert
+OVR|Over|Au-dessus
+OVRLD|Over The Land|Sur la terre
+OVRLP|Overlap|Chevauchement
+OVRLY|Overly|Trop
+OVRN|Overrun|Envahir, déborder
+OVRND|Overrunned|Envahi(e, s ,es), débordé(e, s, es)
+OVRNG|Overrunning|Envahissant, débordant
+OVRNGT|Overnight|Pendant la nuit
+OVRSEA|Over the Sea|Sur la mer
+OVRSTRS|Over the Straits|Sur les détroits
+P|Polar|Polaire
+PA|Pennsylvania|Pennsylvanie
+PAC|Pacific|Pacifique
+PARA|Paragraph|Paragraphe
+PARL|Parallel|Parallèle
+PATN|Pattern|Configuration
+PATNS|Patterns|Configurations
+PCD|Proceed, Proceeding|Procéder, aller, procédant, allant
+PCPN|Precipitation|Précipitations
+PCRGN|Peace River Region|Région de la Rivière-de-la-Paix
+PD|Period|Période
+PDMT|Predominate, Predominant|Prédominer, prédominant
+PDMTD|Predominated|Prédominé(e, s, es)
+PDMTG|Predominating|Prédominant
+PDMTLY|Predominantly|De façon prédominante
+PDS|Periods|Périodes
+PE|Prince Edward Island|Île du Prince Édouard
+PER|Performance|Performance
+PERM|Permanent|Permanent
+PERMLY|Permanently|De façon permanente
+PGTSND|Puget Sound|Puget Sound
+PHS|Phase(s)|Phase(s)
+PIBAL|Pilot Balloon Observation|Observation ballon pilote
+PIREP|Pilot Report(s)|Message(s) de pilote
+PIX|Picture|Image, photo
+PIXS|Pictures|Images, photos
+PL|Ice Pellets|Granules de glace
+PLS|Please|S'il vous plaît
+PNHDL|Panhandle|Bande de terre
+PO|Dust Whirls|Tourbillon de poussière
+PO|Sand Whirls|Tourbillon de sable
+POS|Positive|Positif
+POSLY|Positively|Positivement
+POSS|Possible, Possibly|Possible, Possiblement
+PRCPL|Principal|Principal
+PRCPLY|Principally|Principalement
+PRCTN|Precaution|Précaution
+PRCTNS|Precautions|Précautions
+PRECD|Precede|Précéder
+PRECDD|Preceded|Précédé(e, s, es)
+PRECDG|Preceding|Précédant
+PRECDNC|Precedence|Préséance, priorité
+PRELIM|Preliminary|Préliminaire
+PREP|Prepare|Préparer
+PREPD|Prepared|Préparé(e, s, es)
+PREPG|Preparing|Préparant
+PREPN|Preparation|Préparation
+PRES|Pressure|Pression
+PRESFR|Pressure Falling Rapidly|Pression en baisse rapide
+PRESRR|Pressure Rising Rapidly|Pression en hausse rapide
+PREV|Previous|Précédent, antérieur
+PREVLY|Previously|Antérieurement
+PRFG|Fog Covering Part of the Aerodrome|Brouillard sur une partie de l'aérodrome
+PRFR|Prefer|Préférer
+PRFRD|Preferred|Préféré(e, s, es)
+PRFRG|Preferring|Préférant
+PRFRLY|Preferably|Préférablement
+PRFRNC|Preference|Préférence
+PRI|Primary|Primaire
+PRIMLY|Primarily|Essentiellement
+PROB|Probability|Probabilité
+PROC|Procedure(s)|Procédure(s)
+PROG|Prognosis, Prognostic|Pronostic, pronostique
+PROV|Provisional, Provisionally|Provisoir, provisoirement
+PRSNT|Present|Présent, présenter
+PRSNTLY|Presently|Présentement
+PRST|Persist|Persister
+PRSTD|Persisted|Persisté(e, s, es)
+PRSTG|Persisting|Persistant
+PRSTNC|Persistence|Persistance
+PRVD|Provide|Fournir
+PRVDD|Provided|Fourni(e, s, es)
+PRVDG|Providing|Fournissant
+PRVDN|Provision|Provision
+PSG|Passage, Passing|Passage, passant
+PSN|Position(s)|Position(s)
+PT|Point|Point
+PTCH|Patch|Nappe, banc
+PTCHS|Patches|Nappes, bancs
+PTCHY|Patchy|En nappes, en bancs
+PTLY|Partly|Partiellement
+PTN|Portion|Portion
+PTNL|Potential|Potentiel
+PTNLY|Potentially|Potentiellement
+PTNS|Portions|Portions
+PTS|Points|Points
+PUB|Public|Publique
+PUBLY|Publicly|Publiquement
+PVA|Positive Vorticity Advection|Advection positive de tourbillon
+PVL|Prevail|Prévaloir, dominer
+PVLD|Prevailed|Prévalu(e, s, es), dominé(e, s, es)
+PVLG|Prevailing|Dominant
+PVLNC|Prevalence|Prédominance
+PVLT|Prevalent|Courant, répandu
+PWR|Power|Puissance
+QC|Quebec|Québec
+QCHSND|Queen Charlotte Sound|Bassin de la Reine-Charlotte
+QCHSTR|Queen Charlotte Strait|Détroit de la Reine-Charlotte
+QNTY|Quantity|Quantité
+QNTYTV|Quantitative|Quantitatif, quantitative
+QNTYTVLY|Quantitatively|Quantitativement
+QPF|Quantitative Precipitation Forecast|Prévision des quantités de précipitations
+QTR|Quarter|Quart
+QTRS|Quarters|Quarts
+QUAD|Quadrant(s)|Quadrant(s)
+RA|Rain|Pluie
+RAD|Radius|Rayon
+RADN|Radiation|Rayonnement
+RADNS|Radiations|Rayonnements
+RAG|Ragged|Déchiqueté(e, s, es)
+RAOB|Radiosonde Observation|Radiosondage
+RAREP|Radar Report|Message de radar
+RAREPS|Radar Reports|Messages de radar
+RAWIN|Upper Wind From Radiosonde Observation|Vents en altitude par radiosondage
+RCH|Reach, Reached, Reaching|Atteindre, atteint(e), atteignant
+RCKY|Rockies|Rocheuses
+RCMD|Recommend|Recommander
+RCMDD|Recommended|Recommandé(e, s, es)
+RCMDG|Recommending|Recommandant
+RCMDN|Recommendation|Recommandation
+RCPTN|Reception|Réception
+RDG|Ridge|Crête
+RDGS|Ridges|Crêtes
+RDL|Radial|Radial
+RDO|Radio|Radio
+RDOACT|Radioactive|Radioactif
+RDR|Radar|Radar
+RE|Recent|Récent
+REC|Receive, Received, Receiving, Receiver|Recevoir, reçu(e, s, es), recevant, récepteur
+REF|Reference|Référence
+REFS|References|Références
+REG|Regular|Régulier
+REGLY|Regularly|Régulièrement
+REP|Report(s), Reported, Reporting|Rapport(s), rapporté(e, s, es), rapportant
+REQ|Request(s), Rerquested|Demande(s), demander, demandé(e, s,es)
+RFC|Reflect|Refléter
+RFCD|Reflected|Reflété(e, s, es)
+RFCG|Reflecting|Reflétant
+RFCN|Reflection|Réflexion
+RFCNS|Reflections|Réflexions
+RFRM|Reform|Réformer
+RFRMS|Reforms|Réformer
+RG|Range(s)|Portée(s), étendue(s)
+RGN|Region|Région
+RGNS|Regions|Régions
+RH|Relative Humidity|Humidité relative
+RI|Rhode Island|Rhode Island
+RIME|Rime icing|Givre blanc
+RLA|Relay|Relayer
+RLAD|Relayed|Relayé(e, s, es)
+RLAG|Relaying|Relayant
+RLBL|Reliable|Fiable
+RLBLY|Reliably|De façon fiable
+RLS|Release|Libérer, lâcher
+RLSD|Released|Libéré(e, s, es)
+RLSG|Releasing|Libérant
+RLTV|Relative|Relatif
+RLTVLY|Relatively|Relativement
+RMK|Remark(s)|Remarque(s)
+RMN|Remain|Demeurer, rester
+RMND|Remained|Resté(e, s, es)
+RMNG|Remaining|Restant
+ROFOR|Route Forecast|Prévision de route
+ROFORS|Route Forecasts|Prévisions de route
+ROT|Rotate|Tourner, pivoter
+ROTD|Rotated|Tourné(e, s, es)
+ROTG|Rotating|En rotation
+ROTN|Rotation|Rotation
+RPD|Rapid|Rapide
+RPDLY|Rapidly|Rapidement
+RPLC|Replace, Replaced,|Remplacer, remplacé(e, s, es)
+RPLCG|Replacing|Remplaçant
+RPLCNT|Replacement|Remplacement
+RPT|Repeat|Répéter
+RPTD|Repeated|Répété(e, s, es)
+RPTG|Repeating|Se répétant
+RPTLY|Repeatedly|En répétition
+RQR|Require|Nécessiter, exiger
+RQRD|Required|Nécessité(e, s, es), exigé(e, s, es)
+RQRG|Requiring|Nécessitant, exigeant
+RQRMT|Requirement|Exigence, besoin
+RRT|Rainfall Rate|Taux de chute de pluie
+RSG|Rising|Montant, à la hausse
+RSN|Reason|Raison
+RSNS|Reasons|Raisons
+RSTR|Restrict|Restreindre
+RSTRD|Restricted|Restreint(e, s, es) à
+RSTRG|Restricting|Restreignant
+RSTRN|Restriction|Restriction
+RSTRNS|Restrictions|Restrictions
+RTE|Route(s)|Route(s)
+RTHR|Rather|Plutôt
+RTN|Return, Returned, Returning|Retour, retourner, revenir, revenu(e, s, es), revenant
+RUF|Rough|Rude, rugeux
+RUFLY|Roughly|Rudement
+RVR|Runway Visual Range|Portée visuelle de piste
+RVS|Revise|Réviser
+RVSD|Revised|Révisé(e, s, es)
+RVSG|Revising|Révisant
+RVSN|Revision|Révision
+RWY|Runway(s)|Piste(s) d'aérodrome
+S|South, Southern latitude|Sud, latitude sud
+SA|Sand|Sable
+SAR|Search And Rescue|Recherches et sauvetage
+SAT|Satellite|Satellite
+SAT|Saturday|Samedi
+SATCOM|Satellite Communication|Communication par satellite
+SATS|Satellites|Satellites
+SBJV|Subjective|Subjectif
+SBJVLY|Subjectively|Subjectivement
+SBSD|Subside|S’apaiser, en subsidence
+SBSDD|Subsided|S’est/se sont apaisé(e, s, es)
+SBSDG|Subsiding|S'apaisant
+SBSDNC|Subsidence|Subsidence
+SC|South Carolina|Caroline du Sud
+SC|Stratocumulus|Stratocumulus
+SCND|Second (Next)|Deuxième, second
+SCT|Scattered, Scatter|Épars, disperser
+SCTG|Scattering|Se dispersant
+SD|South Dakota|Dakota du Sud
+SE|Southeast|Sud-est
+SEC|Second (Time)|Seconde
+SECN|Section(s)|Section(s)
+SECT|Sector(s)|Secteur(s)
+SEL|Select|Sélectionner
+SELD|Selected|Sélectionné(e, s, es)
+SELG|Selecting|Sélectionnant
+SELN|Selection|Sélection
+SELY|Southeasterly|Du sud-est
+SEP|September|Septembre
+SER|Service(s), served, servicing|Service(s), déservi(e, s, es), entretien
+SERN|Southeastern|Dans le sud-est, au sud-est
+SETG|Setting|Réglage, calage (altimètre)
+SETL|Settle|S’établir
+SETLD|Settled|S'étant établi(e, s, es)
+SETLG|Settling|S'établissant
+SEV|Severe|Fort, violent
+SF|Stratus Fractus|Stratus fractus
+SFC|Surface(s)|Surface(s)
+SG|Snow Grains|Neige en grains
+SGL|Signal(s)|Signal(s)
+SH|Shower(s)|Averse(s)
+SHFT|Shift|Changement, saute
+SHFTD|Shifted|Changé(e, s, es)
+SHFTG|Shifting|Changeant
+SHGR|Hail Shower(s)|Averse(s) de grêle
+SHGS|Snow Pellet Shower(s)|Averse(s) de neige roulée
+SHLW|Shallow|Peu profond, peu épais
+SHPL|Ice Pellet Shower(s)|Averse(s) de granules de glace
+SHR|Shore|Rive
+SHRA|Rain Shower(s)|Averse(s) de pluie
+SHRS|Shores|Rives
+SHRTLY|Shortly|Sous peu
+SHSN|Snow Shower(s)|Averse(s) de neige
+SHTDN|Shutdown|Arrêt
+SHUD|Should|Devrait
+SI|Stability Index|Indice de stabilité
+SIG|Significant|Significatif
+SIGLY|Significantly|Significativement
+SIGMET|Information Concerning En-Route Weather Phenomena Which May Affect The Safety Of Aircraft Operations|Renseignements relatifs aux phénomènes météorologiques en route qui peuvent affecter la sécurité de vol
+SIGNTR|Signature|Signature
+SIGNTRS|Signatures|Signatures
+SIGWX|Significant Weather|Temps significatif
+SIMUL|Simultaneous, Simultaneously|Simultané, simultanément
+SITU|Situation|Situation
+SITUS|Situations|Situations
+SK|Saskatchewan|Saskatchewan
+SK|Sky Condition (PIREP)|État du ciel (PIREP)
+SKC|Sky Clear|Ciel dégagé
+SKED|Schedule(s)|Horaire(s)
+SKED|Scheduled|Prévu(e, s, es) pour, à l'horaire
+SKED|Scheduling|Mettre à l'horaire
+SLGT|Slight|Léger, peu
+SLGTLY|Slightly|Légèrement
+SLKRS|Selkirks Mountains|Monts Selkirks
+SLP|Sea Level Pressure|Pression au niveau de la mer
+SLP|Slope|Pente
+SLPD|Sloped|En pente
+SLPG|Sloping|Allant en pente
+SLW|Slow, Slowed, Slowing, Slowly|Lent, ralenti(e, s, es), ralentissant, lentement
+SLY|Southerly|Venant du sud, du sud
+SM|Statute Mile(s)|Mille(s) terrestre(s)
+SML|Small|Petit
+SMRY|Summary|Sommaire
+SMTH|Smooth|Doux
+SMTM|Sometimes|Parfois
+SMWHT|Somewhat|Quelque peu
+SN|Snow|Neige
+SNFL|Snowfall|Chute de neige
+SNFLS|Snowfalls|Chutes de neige
+SNSQ|Snow Squall(s)|Bourrasque(s) de neige
+SPD|Speed|Vitesse
+SPECI|Aerodrome Special Meteorological Report|Message d'observation météorologique spéciale d'aérodrome
+SPECI|Specials|Spécial (spéciaux)
+SPKL|Sprinkle|Arroser
+SPKLD|Sprinkled|Parsemé(e, s, es)
+SPKLG|Sprinkling|Parsemant
+SPKLS|Sprinkles|Arroser, parsemer
+SPRD|Spread|Répandre
+SPRDD|Spreaded|Répandu(e, s ,es)
+SPRDG|Spreading|Se répandant
+SPRL|Spiral|Spirale
+SPRLD|Spiralled|Tourné(e, s, es) en vrille
+SPRLG|Spiralling|Tournant en vrille
+SPRLS|Spirals|Spirales
+SQ|Squall(s)|Grain(s)
+SQL|Squall Line(s)|Ligne(s) de grains
+SQNC|Sequence|Séquence
+SR|Sunrise|Lever du soleil
+SRC|Source|Source
+SRCS|Sources|Sources
+SRG|Short Range|Court terme
+SRN|Southern|Dans le sud, au sud
+SS|Sandstorm|Tempête de sable
+SS|Sunset|Coucher du soleil
+SSE|South-Southeast|Sud-sud-est
+SSW|South-Southwest|Sud-sud-ouest
+SSWX|Summer Severe Weather|Temps violent d'été
+ST|Stratus|Stratus
+STAG|Stagnant|Stagnant, inactif
+STAGS|Stagnants|Stagnants, inactives
+STATS|Statistics|Statistiques
+STBL|Stable|Stable
+STD|Standard(s)|Standard(s), norme(s)
+STDY|Steady|Constant
+STDYLY|Steadily|De façon constante
+STF|Stratiform|Stratiforme
+STFD|Staffed|Avec personnel
+STG|Strong|Fort
+STGLY|Strongly|Fortement
+STGR|Stronger|Plus fort
+STGT|Strength|Force
+STGTN|Strengthen|Renforcer
+STGTND|Strengthened|Renforcé(e, s, es)
+STGTNG|Strengthening|Renforçant
+STLAWR|St. Lawrence|St-Laurent
+STM|Storm|Tempête
+STMS|Storms|Tempêtes
+STN|Station(s)|Station(s)
+STNR|Stationary|Stationnaire
+STP|Stop|Arrêter, s’arrêter, arrêt
+STPD|Stopped|Arrêté(e, s, es)
+STPG|Stopping|Arrêtant, s'arrêtant
+STPL|Stippled|Pointillé(e, s, es)
+STR|Strait|Détroit
+STRBI|Strait of Belle Isle|Détroit de Belle Île
+STRM|Stream|Courant, découler
+STRMD|Streamed|Découlé(e, s, es)
+STRMG|Streaming|Découlant
+STRMS|Streams|Courants, découler
+STRS|Straits|Détroits
+SUG|Suggest|Suggérer
+SUGD|Suggested|Suggéré(e, s ,es)
+SUGG|Suggesting|Suggérant
+SUGN|Suggestion|Suggestion
+SUN|Sunday|Dimanche
+SUP|Supplement(s) (AIP)|Supplément(s) (AIP)
+SUPPLD|Supplemented|Complémenté(e, s, es)
+SUPPLG|Supplementing|Complémentant
+SUPR|Superior|Supérieur
+SUPRT|Support|Appui, soutien
+SUPRTD|Supported|Soutenu(e, s, es)
+SUPRTG|Supporting|Soutenant
+SUPSD|Supersede|Remplacer
+SUPSDD|Superseded|Remplacé(e, s, es)
+SUPSDG|Superseding|Remplaçant
+SVRL|Several|Plusieurs
+SW|Southwest|Sud-ouest
+SWLY|Southwesterly|Venant du sud-ouest, du sud ouest
+SWRN|Southwestern|Dans le sud-ouest, au sud-ouest
+SWV|Shortwave|Onde courte
+SWVS|Shortwaves|Ondes courtes
+SYNO|Synopsis, Synoptic|Synoptique, situation
+SYS|System(s)|Système(s)
+T|Temperature(s)|Température(s)
+TAF|Aerodrome Forecast(s)|Prévision(s) d'aérodrome
+TC|Tropical Cyclone(s)|Cyclone(s) tropical(aux)
+TCU|Towering Cumulus|Cumulus bourgeonnant
+TDA|Today|Aujourd'hui
+TECH|Technician|Technicien
+TECHL|Technical|Technique
+TECHLY|Technically|Techniquement
+TECHS|Technicians|Techniciens
+TECR|Technical Reason(s)|Raison(s) technique(s)
+TEL|Telephone(s)|Téléphone(s)
+TELECOM|Telecommunication|Télécommunication
+TEMPO|Temporary|Temporaire
+TEPHI|Tephigram|Téphigramme
+TEPHIS|Tephigrams|Téphigrammes
+TFC|Traffic|Trafic
+THK|Thick|Épais
+THKN|Thicken|Épaissir, épaississant
+THKNG|Thickening|S'épaississant
+THKR|Thicker|Plus épais
+THN|Thin|Mince
+THNC|Thence|De là
+THNG|Thinning|S'amincissant
+THNR|Thinner|Plus mince
+THRFTR|Thereafter|Par la suite
+THRML|Thermal|Thermique
+THRMLS|Thermals|Ascendances thermiques
+THRMLY|Thermally|Thermiquement
+THRU|Through|À travers
+THRUT|Throughout|Partout, pour toute la durée
+THSD|Thousand|Mille, millier
+THSDS|Thousands|Milles, milliers
+THU|Thursday|Jeudi
+TIL|Until|Jusqu'à
+TKOF|Take-Off|Décollage
+TLTP|Teletype|Téléscripteur
+TMW|Tomorrow|Demain
+TN|Minimum Temperature (TAF)|Température minimale (TAF)
+TN|Tennessee|Tennessee
+TNDCY|Tendency|Tendance
+TNGT|Tonight|Ce soir, cette nuit
+TOP|Cloud Top(s)|Sommet(s) de Nuage
+TPG|Topping|Surmontant
+TR|Trace|Trace
+TR|Track(s), Tracked, Tracking|Route(s), suivi(e, s, es), suivant
+TRAJ|Trajectory|Trajectoire
+TRAJS|Trajectories|Trajectoires
+TRANS|Transmit, Transmitted, Transmitting, Transmission|Transmettre, transmis(e, es), transmettant, transmission
+TRML|Terminal|Aérogare, aérodrome
+TRMLS|Terminals|Aérogares, aérodromes
+TRNMT|Torngat Mountains|Monts Torngat
+TROF|Trough(s)|Creux, dépression(s)
+TROP|Tropopause|Tropopause
+TROPCL|Tropical|Tropical
+TROWAL|Trough Of Warm Air Aloft|Langue d'air chaud en altitude
+TRRN|Terrain|Terrain
+TRS|Traces|Traces
+TS|Thunderstorm(s)|Orage(s)
+TSFR|Transfer|Transférer
+TSFRD|Transferred|Transféré(e, s, es)
+TSFRG|Transferring|Transférant
+TUE|Tuesday|Mardi
+TUKPEN|Tuktoyaktuk Peninsula|Péninsule de Tuktoyaktuk
+TURB|Turbulence|Turbulence
+TWB|Transcribed Weather Broadcast|Émission radio transcrite
+TWD|Toward|Vers
+TWLGT|Twilight|Pénombre
+TWRG|Towering|Bourgeonnant
+TX|Maximum Temperature (TAF)|Température maximal (TAF)
+TX|Texas|Texas
+TYP|Type Of Aircraft|Type d'aéronef
+TYPH|Typhoon(s)|Typhon(s)
+UA|Routine PIREP|PIREP régulier
+UA|Upper Air|En altitude
+UAS|Routine PIREPs|PIREPs réguliers
+UFN|Until Further Notice|Jusqu'à nouvel avis
+UNA|Unable|Incapable, dans l'impossibilité
+UNAVBL|Unavailable|Non disponible
+UNGBA|Ungava Bay|Baie d’Ungava
+UNL|Unlimited|Illimité(e, s, es)
+UNLK|Unlike|Contrairement à
+UNLKLY|Unlikely|Improbable
+UNLS|Unless|À moins que
+UNREL|Unreliable|Douteux, peu fiable
+UNRELY|Unreliably|De façon douteuse (peu fiable)
+UNSETL|Unsettle|Perturber, incertain
+UNSETLD|Unsettled|Perturbé(e, s, es)
+UNSKED|Unscheduled|Imprévu, spécial
+UNSTBL|Unstable|Instable
+UNSTDY|Unsteady|Irrégulier, non constant
+UP|Unidentified precipitation (used in automated METAR/SPECI)|Précipitation non identifiée (utilisé dans les METAR et les SPECI automatiques)
+UPDFT|Updraft|Courant d'air ascendant
+UPDFTS|Updrafts|Courants d'air ascendant
+UPR|Upper|Supérieur, plus élevé
+UPSLP|Upslope|Montant la pente
+UPSTRM|Upstream|En amont
+UPWND|Upwind|En amont
+URG|Urgent|Urgent
+URGLY|Urgently|De toute urgence
+USBL|Usable|Utilisable
+UT|Utah|Utah
+UTC|Universal Time Coordinated|Temps universel coordonné
+UUA|Urgent PIREP|PIREP urgent
+UUAS|Urgent PIREPs|PIREPs urgents
+VA|Virginia|Virginie
+VA|Volcanic Ash|Cendre volcaniques
+VC|Vicinity (of the aerodrome)|Dans les environs (de l’aérodrome)
+VCBLDU|Blowing Dust In The Vicinity|Chasse-poussière élevée dans les environs
+VCBLSA|Blowing Sand In Vicinity|Chasse-sable élevée dans les environs
+VCBLSN|Blowing Snow In Vicinity|Poudrerie dans les environs
+VCDS|Duststorm In Vicinity|Tempête de poussière dans les environs
+VCFG|Fog (Any Type) In Vicinity|Brouillard dans les environs
+VCPO|Dust Whirls in Vicinity|Tourbillon de poussière dans les environs
+VCPO|Sand Whirls in Vicinity|Tourbillon de sable dans les environs
+VCSH|Shower (Any Type) in Vicinity|Averse dans les environs
+VCSS|Sandstorm in Vicinity|Tempête de sable dans les environs
+VER|Vertical, Vertically|Vertical, verticalement
+VFR|Visual Flight Rules|Règles de vol à vue
+VFY|Verify|Vérifier
+VFYD|Verified|Vérifié(e, s, es)
+VFYG|Verifying|Vérifiant
+VFYN|Verification|Vérification
+VIA|By way of, Via|Via, passant par
+VICISL|Victoria Island|Île de Victoria
+VIS|Visibility|Visibilité
+VISBL|Visible|Visible
+VISL|Visual|Visuel
+VISLY|Visually|Visuellement
+VLNT|Violent|Violent
+VLNTLY|Violently|Violament
+VLY|Valley|Vallée
+VLYS|Valleys|Vallées
+VORT|Vorticity|Tourbillon
+VPR|Vapour|Vapeur
+VR|Veer|Virer (mouvement dextrogyre)
+VRB|Variable|Variable
+VRBLY|Variably|Variablement
+VRD|Veered|Qui a viré(e), qui ont viré(es)
+VRG|Veering|Virant
+VRISL|Vancouver Island|Île de Vancouver
+VRTN|Variation|Variation
+VRTNS|Variations|Variations
+VRY|Very|Très
+VT|Vermont|Vermont
+VV|Vertical Visibility|Visibilité verticale
+W|West or Western longitude|Ouest, longitude ouest
+WA|Washington|Washington
+WAA|Warm Air Advection|Advection d'air chaud
+WB|Wet Bulb|Thermomètre mouillé
+WDLY|Widely|Très, grandement
+WDR|Wider|Plus grand
+WDSPR|Widespread|Étendu(e, s, es)
+WED|Wednesday|Mercredi
+WI|Wisconsin|Wisconsin
+WI|Within|Dans
+WID|Wide, Width|Large, largeur
+WIND|Wind|Vent
+WK|Weak|Faible
+WKN|Weaken, Weakening|Faiblir, s'affaiblir, s'affaiblissant
+WKR|Weaker|Plus faible
+WLY|Westerly|De l'ouest
+WNW|West-Northwest|Ouest-nord-ouest
+WO|Without|Sans
+WRM|Warm|Chaud
+WRMG|Warming|Se réchauffant
+WRMR|Warmer|Plus chaud
+WRN|Western|Dans l'ouest
+WRN|Warn|Avertir
+WRNG|Warning|Avertissement
+WRS|Worse|Pire
+WRSN|Worsen|Empirer
+WRSNG|Worsening|Empirant
+WS|Wind Shear|Cisaillement du vent
+WSHFT|Wind Shift|Changement de direction du vent
+WSPD|Wind Speed|Vitesse de vent
+WSW|West-Southwest|Ouest-sud-ouest
+WSWX|Winter Severe Weather|Temps d'hiver rigoureux
+WT|Weight|Poids
+WTR|Water|Eau
+WTRS|Waters|Eaux
+WTSPT|Waterspout(s)|Trombe(s) marine(s)
+WV|Wave|Vague, onde
+WVS|Waves|Vagues, ondes
+WX|Weather|Conditions du temps
+WY|Wyoming|Wyoming
+XNG|Crossing|Croisement
+XPND|Expand|Augmenter, augmentation
+XPNDD|Expanded|Augmenté(e, s, es), agrandi(e, s, es)
+XPNDG|Expanding|Augmentant
+XPNDN|Expansion|Augmentation
+XPOS|Expose|Expose
+XPOSD|Exposed|Exposé(e, s, es)
+XPOSG|Exposing|Exposant
+XTNSV|Extensive|Vaste, considérable
+XTNSVLY|Extensively|Considérablement
+XTRAP|Extrapolation|Extrapolation
+XTRM|Extreme|Extrême
+XTRMLY|Extremely|Extrêmement
+YDA|Yesterday|Hier
+YT|Yukon|Yukon
+Z|Zulu (UTC) Universal Time Coordinated|Zulu (UTC) temps universel coordonné
+</script>
+
+<script>
+(function () {
+  'use strict';
+
+  // ---------- The manual ----------
+  var ENTRIES = document.getElementById('manab').textContent.trim().split('\n').map(function (line, i) {
+    var p = line.split('|');
+    // "AT …" is the manual's way of writing AT followed by a time
+    return { i: i, a: p[0], en: p[1], fr: p[2], key: p[0] === 'AT …' ? 'AT' : p[0] };
+  });
+  var BY = new Map();
+  ENTRIES.forEach(function (e) { if (!BY.has(e.key)) BY.set(e.key, []); BY.get(e.key).push(e); });
+
+  // ---------- Reading choices that are mine, not the manual's ----------
+  // Names that keep their capitals in a sentence (by the manual's English wording).
+  var PLACE = new Set('Alberta|Alaska|Alabama|Alaska Panhandle|Aleutian|Anticosti Island|Arkansas|Arctic|Atlantic|Avalon Peninsula|Arizona|Baffin Bay|Bay of Fundy|Baffin Island|British Columbia|Bermuda|Beaufort Sea|Banks Island|California|Canada, Canadian|Cape Breton Island|Caribbean|Cascades|Canadian Shield|Cabot Strait|Chaleur Bay|Colorado|Coastal Mountains|Connecticut|Cypress Hills|District of Columbia|Delaware|Dakotas|Davis Strait|Ellesmere Island|Florida|Foxe Basin|Georgia|Georgia Strait|Great Bear Lake|Georgian Bay|Gulf of Alaska|Gulf of Mexico|Gulf of St. Lawrence|Grand Banks|Greenland|Great Lakes|Gaspé Peninsula|Great Slave Lake|Hecate Strait|Haida Gwaii|Hudson Bay|Hudson Strait|Iowa|Idaho|Illinois|Indiana|Juan De Fuca Strait|James Bay|Kansas|Kitikmeot|Kivalliq|Kentucky|Louisiana|Labrador|Long Range Mountains|Lake Athabasca|Lake Erie|Lake Huron|Lake Ontario|Lake Superior|Lake Winnipeg|Massachusetts|Manitoba|Mackenzie|Maryland|Maine|Michigan|Mississippi River|Minnesota|Missouri|Maritime provinces|Mississippi|Montana|North America|North Atlantic|New Brunswick|Northumberland Strait|North Carolina|North Dakota|Nebraska|New England|Newfoundland|New Hampshire|New Jersey|Newfoundland and Labrador|New Mexico|North Pole|Nares Strait|Nova Scotia|Northwest Territories|Nunavut|Nevada|New York|Ohio|Oklahoma|Ontario|Oregon|Pennsylvania|Pacific|Peace River Region|Prince Edward Island|Puget Sound|Quebec|Queen Charlotte Sound|Queen Charlotte Strait|Rockies|Rhode Island|South Carolina|South Dakota|Saskatchewan|Selkirks Mountains|St. Lawrence|Strait of Belle Isle|Tennessee|Torngat Mountains|Tuktoyaktuk Peninsula|Texas|Ungava Bay|Utah|Virginia|Victoria Island|Vancouver Island|Vermont|Washington|Wisconsin|Wyoming|Yukon'.split('|'));
+  var CAL = new Set('January|February|March|April|May|June|July|August|September|October|November|December|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday'.split('|'));
+  var KEEP = new Set(['Celsius', 'Doppler', 'Zulu']);
+  // Units: plural after a number above 1.
+  var UNITS = new Set('SM NM KT FT KM M CM HR MIN SEC MB HPA KPA KMH MPH MPS DEG KG DAM MHZ KHZ C Z'.split(' '));
+  // Plain connecting words that forecasters spell out. [English, French]
+  var CONN = { AND: ['and', 'et'], OR: ['or', 'ou'], WITH: ['with', 'avec'], OF: ['of', 'de'], TO: ['to', 'à'], IN: ['in', 'dans'], ON: ['on', 'sur'], FROM: ['from', 'de'], FOR: ['for', 'pour'], BY: ['by', 'par'], THEN: ['then', 'puis'], BUT: ['but', 'mais'] };
+  // OR and IN are also Oregon and Indiana in the manual. In a forecast they are nearly always the plain word, so that
+  // comes first and the state is the other choice. ON stays Ontario first.
+  var CONN_FIRST = new Set(['OR', 'IN']);
+  // Where one abbreviation has 2 entries, the one a weather line usually means comes first.
+  var FIRST_ENTRY = { SC: 'Stratocumulus', NS: 'Nimbostratus', FL: 'Flight Level', NE: 'Northeast', NM: 'Nautical Mile(s)', VA: 'Volcanic Ash', WI: 'Within', NC: 'No Change', MT: 'Mountain(s)', ID: 'Identifier(s), Identify, Identification', CAT: 'Clear Air Turbulence', HDG: 'Heading(s)' };
+  // Where one entry lists several forms, the form a weather line usually means comes first. [English, French]
+  var FIRST_VARIANT = { EMBD: ['embedded', 'encastré'], ISOL: ['isolated', 'isolé'], OBSC: ['obscured', 'obscurci'], MOV: ['moving', 'se déplaçant'], EXP: ['expected', 'attendu'], EST: ['estimated', 'estimé'], REP: ['reported', 'rapporté'], CLSD: ['closed', 'fermé'], AMD: ['amended', 'modifié'], CNL: ['cancelled', 'annulé'], DLA: ['delayed', 'retardé'], LCA: ['locally', 'localement'], INTSF: ['intensifying', "s'intensifiant"], WKN: ['weakening', "s'affaiblissant"], DTRT: ['deteriorating', 'se détériorant'], IMPR: ['improving', 'améliorant'], CONS: ['continuous', 'continu'], FLUC: ['fluctuating', 'fluctuant'], COV: ['covered', 'couvert'] };
+  // Entries that read better in a sentence as something shorter than the manual's wording. [English, French]
+  var READ_AS = { Z: ['Zulu (UTC)', 'Zulu (UTC)'], N: ['north', 'nord'], W: ['west', 'ouest'], SIGMET: ['SIGMET', 'SIGMET'], AIRMET: ['AIRMET', 'AIRMET'], METAR: ['METAR', 'METAR'], SPECI: ['SPECI', 'SPECI'], TAF: ['TAF', 'TAF'] };
+  // Weather groups as the METAR code builds them, so +TSRA and -SHRASN can be read from their parts.
+  var WXRE = /^(VC)?(MI|BC|PR|DR|BL|SH|TS|FZ)?(DZ|RA|SN|SG|IC|PL|GR|GS|UP|BR|FG|FU|VA|DU|SA|HZ|PO|SQ|FC|SS|DS)*$/;
+
+  var EXAMPLES = ['TROWAL', 'OCNL TCU WITH ISOL CB GVG 2SM +SHRA', 'LCA MVFR CIGS IN BR TIL 15Z THEN IMPR'];
+  var PDF = 'https://publications.gc.ca/collections/collection_2026/eccc/En56-238-1-2026.pdf';
+
+  // ---------- The page's own words ----------
+  var T = {
+    en: {
+      title: 'Weather abbreviation lookup - Ali Rizvi',
+      skip: 'Skip to the lookup',
+      h1: 'Canadian weather shorthand, in <mark>plain words</mark>.',
+      lede: 'Type one abbreviation or paste a whole line from a GFA, a TAF or a forecast discussion. Every meaning comes from MANAB, the manual of word abbreviations (5th edition, September 2026).',
+      label: 'Abbreviation or line', placeholder: 'Type or paste here', tryIt: 'Try', clear: 'Clear',
+      plain: 'In plain words', copy: 'Copy', copied: 'Copied',
+      words: 'Word by word', abbr: 'Abbreviation', en: 'English', fr: 'French',
+      empty: 'Type an abbreviation or a line above and the plain words show up here.',
+      hintAlt: 'A dotted underline means the manual gives more than one meaning. Tap the word to switch.',
+      altTitle: 'More than one meaning. Press to switch.',
+      unknown: 'Left as written, since the manual does not list them: ',
+      nonePrefix: function (q) { return 'No entry is spelled ' + q + '. These start with it.'; },
+      noneFound: function (q) { return 'No abbreviation is spelled ' + q + '. These entries mention it.'; },
+      noneFuzzy: function (q) { return 'No entry is spelled ' + q + '. These are one letter away.'; },
+      none: function (q) { return 'MANAB has no entry for ' + q + '.'; },
+      close: 'Starts the same', found: 'Found in the meanings', near: 'One letter away',
+      heavy: 'heavy', light: 'light',
+      how: 'How it reads',
+      howList: [
+        'It reads word for word, so the grammar is rough.',
+        'Words the manual does not list stay as you typed them. MANAB leaves out dictionary abbreviations, metric units and WMO data designators.',
+        'A plus or minus sign in front of weather reads as heavy or light. That part comes from the METAR code, the rest from MANAB.',
+        'For anything that matters, check <a href="' + PDF + '">the manual itself</a>.'
+      ],
+      src1: 'Source: MANAB - Manual of Word Abbreviations, 5th edition, September 2026, Environment and Climate Change Canada (Cat. No. En56-238/1-2026-PDF).',
+      src2: '© His Majesty the King in Right of Canada, as represented by the Minister of the Environment, Climate Change and Nature, 2026.',
+      src3: 'The abbreviation list on this page is a copy of the one in that official work. This page was not produced in affiliation with, or with the endorsement of, the Government of Canada.'
+    },
+    fr: {
+      title: 'Recherche d’abréviations météo - Ali Rizvi',
+      skip: 'Aller à la recherche',
+      h1: 'Les abréviations météo canadiennes, en <mark>mots simples</mark>.',
+      lede: 'Tapez une abréviation ou collez une ligne entière d’une GFA, d’un TAF ou d’une discussion de prévision. Chaque sens vient de MANAB, le manuel d’abréviations de mots (5e édition, septembre 2026).',
+      label: 'Abréviation ou ligne', placeholder: 'Tapez ou collez ici', tryIt: 'Essayez', clear: 'Effacer',
+      plain: 'En mots simples', copy: 'Copier', copied: 'Copié',
+      words: 'Mot à mot', abbr: 'Abréviation', en: 'Anglais', fr: 'Français',
+      empty: 'Tapez une abréviation ou une ligne ci-dessus et les mots simples s’affichent ici.',
+      hintAlt: 'Un soulignement pointillé indique que le manuel donne plus d’un sens. Touchez le mot pour changer.',
+      altTitle: 'Plus d’un sens. Appuyez pour changer.',
+      unknown: 'Laissés tels quels, puisque le manuel ne les donne pas : ',
+      nonePrefix: function (q) { return 'Aucune entrée ne s’écrit ' + q + '. Celles-ci commencent ainsi.'; },
+      noneFound: function (q) { return 'Aucune abréviation ne s’écrit ' + q + '. Ces entrées en parlent.'; },
+      noneFuzzy: function (q) { return 'Aucune entrée ne s’écrit ' + q + '. Celles-ci sont à une lettre près.'; },
+      none: function (q) { return 'MANAB n’a pas d’entrée pour ' + q + '.'; },
+      close: 'Même début', found: 'Trouvé dans les définitions', near: 'À une lettre près',
+      heavy: 'fort', light: 'faible',
+      how: 'Comment lire le résultat',
+      howList: [
+        'La lecture se fait mot à mot, donc la grammaire reste approximative.',
+        'Les mots absents du manuel restent tels que vous les avez tapés. MANAB exclut les abréviations du dictionnaire, les unités métriques et les indicatifs de données de l’OMM.',
+        'Un signe plus ou moins devant un phénomène se lit fort ou faible. Cette partie vient du code METAR, le reste de MANAB.',
+        'Pour tout ce qui compte, vérifiez dans <a href="' + PDF + '">le manuel lui-même</a>.'
+      ],
+      src1: 'Source : MANAB - Manuel d’abréviations de mots, 5e édition, septembre 2026, Environnement et Changement climatique Canada (No de cat. En56-238/1-2026-PDF).',
+      src2: '© Sa Majesté le Roi du chef du Canada, représenté par la ministre de l’Environnement, du Changement climatique et de la Nature, 2026.',
+      src3: 'La liste d’abréviations de cette page est une copie de celle de cet ouvrage officiel. Cette page n’a pas été produite en association avec le gouvernement du Canada ni avec son appui.'
+    }
+  };
+
+  // ---------- State ----------
+  var lang = 'en';
+  var choice = new Map();      // which meaning is showing for a word that has several
+  var plainText = '';          // what Copy copies
+  var untouched = false;       // the line is still the example the page opened with
+  var $ = function (id) { return document.getElementById(id); };
+  var q = $('q');
+
+  // ---------- From the manual's wording to a word in a sentence ----------
+  function variants(text) {   // "Accept, Accepted" -> 2 forms; commas inside brackets do not split
+    var out = [], depth = 0, cur = '';
+    for (var k = 0; k < text.length; k++) {
+      var ch = text[k];
+      if (ch === '(') depth++; else if (ch === ')') depth = Math.max(0, depth - 1);
+      if (ch === ',' && depth === 0) { out.push(cur); cur = ''; } else cur += ch;
+    }
+    out.push(cur);
+    return out.map(function (s) { return s.trim(); }).filter(Boolean);
+  }
+  function strip(v, plural) {  // "Cloud(s)" -> "Cloud", or "Clouds" after a number above 1; "Amount (clouds)" -> "Amount"
+    var s = v;
+    if (plural) s = s.replace(/y\(ies\)/gi, 'ies').replace(/al\(aux\)/gi, 'aux').replace(/\((s|x|es)\)/gi, '$1');
+    return s.replace(/\s*\([^)]*\)/g, ' ').replace(/\s+/g, ' ').trim();
+  }
+  function recase(s, proper) {  // the manual capitalizes every English word; a sentence does not
+    if (proper) return s;
+    return s.split(' ').map(function (w) { return (/^[A-Z]{2,}s?$/.test(w) || KEEP.has(w)) ? w : w.toLowerCase(); }).join(' ');
+  }
+  function optionsFor(entry, plural) {
+    var proper = PLACE.has(entry.en) || (lang === 'en' && CAL.has(entry.en));
+    var seen = new Set(), out = [];
+    variants(entry[lang]).forEach(function (v) {
+      var t = recase(strip(v, plural), proper);
+      if (t && !seen.has(t.toLowerCase())) { seen.add(t.toLowerCase()); out.push(t); }
+    });
+    return out;
+  }
+  function manualSeg(src, key, ctx) {
+    ctx = ctx || {};
+    var L = lang === 'en' ? 0 : 1;
+    var entries = BY.get(key).slice();
+    var pick = FIRST_ENTRY[key];
+    if (key === 'MB' && ctx.afterNumber) pick = 'Millibar(s)';
+    if (pick) entries.sort(function (a, b) { return (b.en === pick) - (a.en === pick); });
+    var opts = [];
+    entries.forEach(function (e, n) {
+      var vs = optionsFor(e, ctx.plural);
+      var fv = FIRST_VARIANT[key];
+      if (fv) { var at = vs.findIndex(function (v) { return v.toLowerCase() === fv[L]; }); if (at > 0) vs.unshift(vs.splice(at, 1)[0]); }
+      if (n === 0 && READ_AS[key]) { var r = READ_AS[key][L]; vs = [r].concat(vs.filter(function (v) { return v.toLowerCase() !== r.toLowerCase(); })); }
+      vs.forEach(function (t) { opts.push({ t: t }); });
+    });
+    if (CONN[key]) { var c = { t: CONN[key][L] }; if (CONN_FIRST.has(key)) opts.unshift(c); else opts.push(c); }
+    return { src: src, kind: 'm', opts: opts, entries: BY.get(key) };
+  }
+  function seg(kind, src, text) { return { src: src, kind: kind, opts: [{ t: text === undefined ? src : text }] }; }
+  function wx(U) {   // TSRA -> TS + RA, SHRASN -> SHRA + SN
+    if (!U || !WXRE.test(U)) return null;
+    var segs = [], at = 0;
+    while (at < U.length) {
+      var hit = null;
+      for (var n = 6; n >= 2; n -= 2) { var p = U.substr(at, n); if (p.length === n && BY.has(p) && WXRE.test(p)) { hit = p; break; } }
+      if (!hit) return null;
+      segs.push(manualSeg(hit, hit)); at += hit.length;
+    }
+    return segs;
+  }
+  function above1(n) {   // "3-6" and "2" take a plural; "1" and "1/2" do not
+    if (n.indexOf('-') > -1) return true;
+    var f = n.split('/');
+    var v = f.length === 2 ? parseFloat(f[0]) / parseFloat(f[1]) : parseFloat(n);
+    return v > 1;
+  }
+  var NUM = /^\d[\d.,:\/-]*$/;
+  function decodeCore(raw, ctx, inner) {
+    var U = raw.toUpperCase(), m;
+    if (BY.has(U)) return [manualSeg(raw, U, ctx)];
+    if (CONN[U]) return [seg('w', raw, CONN[U][lang === 'en' ? 0 : 1])];
+    if (NUM.test(U)) return [seg('n', raw)];
+    if ((m = U.match(/^([+-])([A-Z]{2,})$/))) { var w = wx(m[2]); if (w) return [seg('c', m[1], m[1] === '+' ? T[lang].heavy : T[lang].light)].concat(w); }
+    if ((m = U.match(/^(\d+(?:[.\/]\d+)?(?:-\d+(?:[.\/]\d+)?)?)([A-Z]{1,3})$/)) && UNITS.has(m[2]) && BY.has(m[2])) return [seg('n', m[1]), manualSeg(m[2], m[2], { plural: above1(m[1]), afterNumber: true })];
+    if ((m = U.match(/^(\d{2,3})G(\d{2,3})KT$/))) return [seg('n', m[1]), manualSeg('G', 'G'), seg('n', m[2]), manualSeg('KT', 'KT', { plural: true })];
+    if ((m = U.match(/^(FL|RWY)(\d{2,3}[LRC]?)$/))) return [manualSeg(m[1], m[1]), seg('n', m[2])];
+    if (!inner && /[\/-]/.test(U)) {   // SCT-BKN, BKN/OVC
+      var segs = [], hits = 0;
+      raw.split(/([\/-])/).forEach(function (p) {
+        if (p === '/' || p === '-') segs.push(seg('g', p));
+        else if (p) { var s = decodeCore(p, null, true); if (s.some(function (x) { return x.kind === 'm'; })) hits++; segs = segs.concat(s); }
+      });
+      if (hits) return segs;
+    }
+    var c = wx(U);
+    if (c && c.length > 1) return c;
+    return [seg('u', raw)];
+  }
+  function decode(text) {
+    var parts = text.split(/(\s+)/).filter(function (p) { return p !== ''; });
+    var toks = parts.map(function (p) {
+      if (/^\s+$/.test(p)) return { ws: p };
+      var m = p.match(/^([("'\[«]*)(.*?)([.,;:!?)"'\]»]*)$/);
+      return { lead: m[1], core: m[2], trail: m[3] };
+    });
+    var words = toks.filter(function (t) { return t.ws === undefined; });
+    var out = [], prevNum = null;
+    for (var i = 0; i < toks.length; i++) {
+      var t = toks[i];
+      if (t.ws !== undefined) { out.push(t); continue; }
+      if (!t.core) { out.push({ lead: t.lead, segs: [], trail: t.trail }); continue; }
+      // the manual's few entries of 2 or 3 words: ALSK PNHDL, CLD AND WX, L LVL JET, L LVL WS
+      var wi = words.indexOf(t), joined = null;
+      for (var n = 3; n >= 2 && !joined; n--) {
+        var run = words.slice(wi, wi + n);
+        if (run.length < n) continue;
+        var clean = run.every(function (r, k) { return (k === n - 1 || !r.trail) && (k === 0 || !r.lead); });
+        var key = run.map(function (r) { return r.core.toUpperCase(); }).join(' ');
+        if (clean && BY.has(key)) joined = { run: run, key: key };
+      }
+      if (joined) {
+        var last = joined.run[joined.run.length - 1];
+        out.push({ lead: t.lead, segs: [manualSeg(joined.key, joined.key)], trail: last.trail });
+        i = toks.indexOf(last); prevNum = null; continue;
+      }
+      var U = t.core.toUpperCase();
+      var ctx = prevNum !== null ? { afterNumber: true, plural: UNITS.has(U) && above1(prevNum) } : null;
+      var segs = decodeCore(t.core, ctx, false);
+      out.push({ lead: t.lead, segs: segs, trail: t.trail });
+      prevNum = (segs.length === 1 && segs[0].kind === 'n') ? segs[0].src : null;
+    }
+    return out;
+  }
+
+  // ---------- Looking for something close when nothing matches ----------
+  function fold(s) { return s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[’]/g, "'"); }
+  function oneAway(a, b) {
+    if (Math.abs(a.length - b.length) > 1) return false;
+    var i = 0, j = 0, edits = 0;
+    while (i < a.length && j < b.length) {
+      if (a[i] === b[j]) { i++; j++; continue; }
+      if (++edits > 1) return false;
+      if (a.length > b.length) i++; else if (a.length < b.length) j++; else { i++; j++; }
+    }
+    return edits + (a.length - i) + (b.length - j) <= 1;
+  }
+  function suggest(text) {
+    var U = text.trim().toUpperCase(), single = !/\s/.test(U), res;
+    if (single) {
+      res = ENTRIES.filter(function (e) { return e.key.indexOf(U) === 0; });
+      if (res.length) return { how: 'nonePrefix', head: 'close', entries: res.slice(0, 14) };
+    }
+    var f = fold(text.trim());
+    if (f.length >= 3) {
+      res = ENTRIES.map(function (e) {
+        var en = fold(e.en), fr = fold(e.fr), at = Math.min(en.indexOf(f) < 0 ? 999 : en.indexOf(f), fr.indexOf(f) < 0 ? 999 : fr.indexOf(f));
+        return { e: e, at: at, len: Math.min(e.en.length, e.fr.length) };
+      }).filter(function (r) { return r.at < 999; }).sort(function (a, b) { return (a.at > 0) - (b.at > 0) || a.len - b.len || a.e.i - b.e.i; });
+      if (res.length) return { how: 'noneFound', head: 'found', entries: res.slice(0, 20).map(function (r) { return r.e; }) };
+    }
+    if (single && U.length >= 2) {
+      res = ENTRIES.filter(function (e) { return oneAway(U, e.key); });
+      if (res.length) return { how: 'noneFuzzy', head: 'near', entries: res.slice(0, 10) };
+    }
+    return { how: 'none', head: null, entries: [] };
+  }
+
+  // ---------- Drawing ----------
+  function el(tag, cls, text) { var n = document.createElement(tag); if (cls) n.className = cls; if (text !== undefined) n.textContent = text; return n; }
+  function row(e, pressable) {
+    var tr = el('tr'), td = el('td'), code;
+    if (pressable) { code = el('button', 'code', e.a); code.type = 'button'; code.addEventListener('click', function () { setLine(e.key); q.focus(); }); }
+    else code = el('span', 'code', e.a);
+    td.appendChild(code); tr.appendChild(td);
+    var first = el('td', null, lang === 'en' ? e.en : e.fr), second = el('td', null, lang === 'en' ? e.fr : e.en);
+    first.lang = lang; second.lang = lang === 'en' ? 'fr' : 'en';
+    tr.appendChild(first); tr.appendChild(second);
+    return tr;
+  }
+  function table(groups) {   // groups: [{head, entries, pressable}]
+    var t = $('rows'), tx = T[lang];
+    t.textContent = '';
+    var thead = el('thead'), hr = el('tr');
+    [tx.abbr, lang === 'en' ? tx.en : tx.fr, lang === 'en' ? tx.fr : tx.en].forEach(function (h) { var th = el('th', null, h); th.scope = 'col'; hr.appendChild(th); });
+    thead.appendChild(hr); t.appendChild(thead);
+    var any = false;
+    groups.forEach(function (g) {
+      if (!g.entries.length) return;
+      any = true;
+      var tb = el('tbody');
+      if (g.head) { var sr = el('tr', 'sub'), sh = el('th', null, g.head); sh.colSpan = 3; sh.scope = 'colgroup'; sr.appendChild(sh); tb.appendChild(sr); }
+      g.entries.forEach(function (e) { tb.appendChild(row(e, g.pressable)); });
+      t.appendChild(tb);
+    });
+    $('words-section').hidden = !any;
+  }
+  function update(keepFocus) {
+    var tx = T[lang], plain = $('plain'), text = q.value;
+    var focusKey = keepFocus && document.activeElement && document.activeElement.dataset ? document.activeElement.dataset.k : null;
+    plain.textContent = '';
+    $('hint-alt').hidden = true; $('hint-unknown').hidden = true;
+    $('copy').hidden = false;
+    plainText = '';
+    if (!text.trim()) {
+      plain.appendChild(el('p', 'quiet muted', tx.empty)); plain.firstChild.style.margin = '0';
+      $('copy').hidden = true; table([]); return;
+    }
+    var toks = decode(text);
+    var words = toks.filter(function (t) { return t.segs && t.segs.length; });
+    var manual = [];
+    words.forEach(function (t) { t.segs.forEach(function (s) { if (s.kind === 'm') manual.push(s); }); });
+
+    // Nothing from the manual in it: look for something close.
+    if (!manual.length) {
+      var shown = text.trim().toUpperCase(), s = suggest(text);
+      plain.appendChild(el('p', 'quiet', tx[s.how](shown))); plain.firstChild.style.margin = '0';
+      $('copy').hidden = true;
+      table([{ head: s.head ? tx[s.head] : null, entries: s.entries, pressable: true }]);
+      return;
+    }
+
+    // One abbreviation on its own: the manual's wording, in full.
+    var only = words.length === 1 && words[0].segs.length === 1 && words[0].segs[0].kind === 'm' ? words[0].segs[0] : null;
+    if (only && BY.has(only.src.toUpperCase())) {
+      var es = only.entries;
+      if (es.length === 1) { plain.textContent = es[0][lang]; plainText = es[0][lang]; }
+      else {
+        var ol = el('ol');
+        es.forEach(function (e) { ol.appendChild(el('li', null, e[lang])); });
+        plain.appendChild(ol);
+        plainText = es.map(function (e, n) { return (n + 1) + '. ' + e[lang]; }).join('\n');
+      }
+      var key = only.src.toUpperCase();
+      var more = ENTRIES.filter(function (e) { return e.key !== key && e.key.indexOf(key) === 0; }).slice(0, 8);
+      table([{ head: null, entries: es }, { head: tx.close, entries: more, pressable: true }]);
+      return;
+    }
+
+    // A line: word by word.
+    var cap = true, hasAlt = false, unknown = [], used = [], seen = new Set();
+    toks.forEach(function (t, ti) {
+      if (t.ws !== undefined) { var nl = t.ws.indexOf('\n') > -1; plain.appendChild(document.createTextNode(nl ? '\n' : ' ')); if (nl) cap = true; return; }
+      if (t.lead) plain.appendChild(document.createTextNode(t.lead));
+      t.segs.forEach(function (sg, si) {
+        var prev = t.segs[si - 1];
+        if (si > 0 && sg.kind !== 'g' && prev.kind !== 'g') plain.appendChild(document.createTextNode(' '));
+        var k = ti + '.' + si + ':' + sg.src + ':' + lang, n = sg.opts.length;
+        var word = sg.opts[(choice.get(k) || 0) % n].t;
+        if (cap && sg.kind !== 'u' && sg.kind !== 'n' && sg.kind !== 'g') word = word.charAt(0).toUpperCase() + word.slice(1);
+        if (sg.kind !== 'g') cap = false;
+        if (n > 1) {
+          hasAlt = true;
+          var b = el('button', 'alt', word);
+          b.type = 'button'; b.dataset.k = k;
+          b.title = sg.opts.map(function (o) { return o.t; }).join(' / ');
+          b.setAttribute('aria-description', tx.altTitle);
+          b.addEventListener('click', function () { choice.set(k, ((choice.get(k) || 0) + 1) % n); update(true); });
+          plain.appendChild(b);
+        } else if (sg.kind === 'u') plain.appendChild(el('span', 'u', word));
+        else plain.appendChild(document.createTextNode(word));
+        if (sg.kind === 'm') sg.entries.forEach(function (e) { if (!seen.has(e.i)) { seen.add(e.i); used.push(e); } });
+        if (sg.kind === 'u' && /[A-Za-zÀ-ÿ]{2}/.test(sg.src) && unknown.indexOf(sg.src.toUpperCase()) < 0) unknown.push(sg.src.toUpperCase());
+      });
+      if (t.trail) { plain.appendChild(document.createTextNode(t.trail)); if (/[.!?]/.test(t.trail)) cap = true; }
+    });
+    plainText = plain.textContent;
+    if (hasAlt) { $('hint-alt').textContent = tx.hintAlt; $('hint-alt').hidden = false; }
+    if (unknown.length) { $('hint-unknown').textContent = tx.unknown + unknown.join(', '); $('hint-unknown').hidden = false; }
+    table([{ head: null, entries: used }]);
+    if (focusKey) { var again = plain.querySelector('[data-k="' + focusKey.replace(/"/g, '\\"') + '"]'); if (again) again.focus(); }
+  }
+  function chrome() {   // everything on the page that is not the answer
+    var tx = T[lang];
+    document.documentElement.lang = lang === 'en' ? 'en-CA' : 'fr-CA';
+    document.title = tx.title;
+    $('skip').textContent = tx.skip;
+    $('h1').innerHTML = tx.h1; $('lede').textContent = tx.lede;
+    $('q-label').textContent = tx.label; q.placeholder = tx.placeholder;
+    $('try-label').textContent = tx.tryIt; $('clear').textContent = tx.clear;
+    $('plain-h').textContent = tx.plain; $('copy').textContent = tx.copy;
+    $('words-h').textContent = tx.words; $('how-h').textContent = tx.how;
+    var how = $('how'); how.textContent = '';
+    tx.howList.forEach(function (h) { var li = el('li'); li.innerHTML = h; how.appendChild(li); });
+    $('src1').textContent = tx.src1; $('src2').textContent = tx.src2; $('src3').textContent = tx.src3;
+    document.querySelectorAll('[data-lang]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.lang === lang)); });
+  }
+  function grow() { q.style.height = 'auto'; q.style.height = q.scrollHeight + 'px'; }
+  function setLine(v) { q.value = v; untouched = false; choice.clear(); grow(); update(); }
+  function setLang(l, save) {
+    lang = l === 'fr' ? 'fr' : 'en';
+    if (save) { try { localStorage.setItem('ablookup-lang', lang); } catch (e) { /* private mode: the choice lasts for this visit */ } }
+    chrome(); update();
+  }
+
+  // ---------- Wiring ----------
+  EXAMPLES.forEach(function (ex) {
+    var b = el('button', 'pill ex', ex.length > 24 ? ex.slice(0, 22).trim() + '…' : ex);
+    b.type = 'button'; b.title = ex; b.setAttribute('aria-label', ex);
+    b.addEventListener('click', function () { setLine(ex); });
+    $('examples').appendChild(b);
+  });
+  document.querySelectorAll('[data-lang]').forEach(function (b) { b.addEventListener('click', function () { setLang(b.dataset.lang, true); }); });
+  q.addEventListener('input', function () { untouched = false; choice.clear(); grow(); update(); });
+  q.addEventListener('focus', function () { if (untouched) q.select(); });
+  $('clear').addEventListener('click', function () { setLine(''); q.focus(); });
+  $('copy').addEventListener('click', function () {
+    var b = $('copy'), done = function () { b.textContent = T[lang].copied; setTimeout(function () { b.textContent = T[lang].copy; }, 1600); };
+    var fallback = function () {
+      var ta = el('textarea'); ta.value = plainText; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select();
+      try { document.execCommand('copy'); done(); } catch (e) { /* nothing to copy with: the text is on the page to select */ }
+      document.body.removeChild(ta);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(plainText).then(done, fallback); else fallback();
+  });
+  window.addEventListener('resize', grow);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(grow);
+
+  // The language: ?lang= first, then the last choice on this browser, then the browser's own language.
+  var params = new URLSearchParams(location.search), first = params.get('lang'), saved = null;
+  try { saved = localStorage.getItem('ablookup-lang'); } catch (e) { /* no storage: fall through */ }
+  var start = (first || saved || navigator.language || 'en').toLowerCase().indexOf('fr') === 0 ? 'fr' : 'en';
+  // The line: ?q= if the link carries one, else the second example, so the page opens with an answer on it.
+  var given = params.get('q');
+  q.value = given !== null ? given : EXAMPLES[1];
+  untouched = given === null;
+  setLang(start, false);
+  grow();
+})();
+</script>
+</body>
+</html>
