@@ -30,6 +30,7 @@ Fields for each collection are in `src/content.config.ts`.
 - `headshot.jpg` (800×1000) on the home page; `mark.svg` is the nav mark.
 - `projects/` card backgrounds are 720 wide with a 1px blur. The cards show them under a 3px blur and a white veil, so they can be small.
 - `share.png` (1200×630) is the picture a link preview shows (the `og:image` tag in `src/layouts/Base.astro`). It is a screenshot of `scripts/share-card.html`. A case study shows its own cover instead.
+- `cursor/` is the small plane that stands in for the pointer on /attitude: `plane.svg` heads northwest (where the arrow would be) and `plane-up.svg` heads north (over links and buttons). Each has a PNG at 32 and at 64px, made from the SVG (`rsvg-convert -w 64 -h 64 plane.svg -o plane-2x.png`). The rule is at the end of the style block in `src/pages/attitude.astro`.
 - `ruffle.jpg` is the photo on the 404 page. Its edges are faded to black in the file, so it has no frame on the black page.
 - Favicons: `public/favicon.svg` (primary) and `public/favicon.ico` (fallback).
 - A case study's cover video (`video:`) starts by script, muted, and only while it is on screen; it waits for a tap for visitors who asked for less motion or less data, and on phones, since an iPhone never says whether it is on mobile data (`src/components/Cover.astro`).

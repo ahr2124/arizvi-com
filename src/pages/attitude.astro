@@ -4,6 +4,7 @@
 // Laid out like the other main pages (Ali, 11 Nov 2026: "make attitude a nice format like you've done with other pages"):
 // the instrument where home has the photo, a section for each part of the mark with its figure beside the text, the
 // in-page nav on the right, and the videos as cards, each over its own frame blurred under white.
+// The pointer on this page is a small plane (Ali, 12 Nov 2026); the rule is at the end of the style block below.
 import Base from '../layouts/Base.astro';
 import Section from '../components/Section.astro';
 
@@ -211,6 +212,18 @@ const HEX = 'M92 50 L71 86.4 L29 86.4 L8 50 L29 13.6 L71 13.6 Z';
   }
   @media (prefers-reduced-motion: reduce) {
     .ball { transform: translate(0, 18px); }
+  }
+  /* The pointer is a small plane, seen from above, on this page only (Ali, 12 Nov 2026). It heads northwest where the
+     arrow would be, and north over anything you can press, where the hand would be. The nose is the hotspot. Black
+     with a white edge, so it shows on the page, the videos and the black footer. Each has 2 rules: the SVG for every
+     browser, then the PNGs at 32 and 64px for the ones that take an image-set, so a Retina screen gets the 64px file. */
+  :global(html) {
+    cursor: url('/media/cursor/plane.svg') 4 4, auto;
+    cursor: -webkit-image-set(url('/media/cursor/plane.png') 1x, url('/media/cursor/plane-2x.png') 2x) 4 4, auto;
+  }
+  :global(a[href]), :global(button), :global(summary), :global(label) {
+    cursor: url('/media/cursor/plane-up.svg') 16 2, pointer;
+    cursor: -webkit-image-set(url('/media/cursor/plane-up.png') 1x, url('/media/cursor/plane-up-2x.png') 2x) 16 2, pointer;
   }
 </style>
 
