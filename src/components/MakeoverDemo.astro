@@ -170,7 +170,7 @@ const days: { market: string; day: string; sales: number[] }[] = [
       $('[data-out=value]').textContent = money(min);
       $('[data-out=drawn]').textContent = times((max - lo) / (min - lo));
       $('[data-out=real]').textContent = times(max / min);
-      $('[data-note]').textContent = NOTE[key] + (state.zero ? '' : ` The axis now starts at ${money(lo)}, so the longest bar is drawn ${times((max - lo) / (min - lo)).replace('×', '')} times as long as the shortest. In the numbers it is ${times(max / min).replace('×', '')} times.`);
+      $('[data-note]').textContent = NOTE[key] + (state.zero ? '' : ` The axis now starts at ${money(lo)}, so the longest bar is drawn ${times((max - lo) / (min - lo)).replace('×', '')} times as long as the shortest. The numbers say ${times(max / min).replace('×', '')} times.`);
     }
 
     const press = (sel: string, on: (b: HTMLButtonElement) => boolean) =>
