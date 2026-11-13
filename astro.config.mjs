@@ -18,13 +18,11 @@ export default defineConfig({
     '/work/secure-check-n/': '/projects/secure-check-n/',
     '/work/amazon/': '/projects/amazon/',
     // /bucknell became one course in a course shell on 13 Nov 2026 ("only keep the data visualization course"), so the
-    // four course pages and their packs land on it.
+    // course pages that came off, and their packs, land on it. ANOP 330 came back the same morning and has its own page.
     '/bucknell/anop-102/': '/bucknell/',
     '/bucknell/anop-102/pack/': '/bucknell/',
     '/bucknell/anop-302/': '/bucknell/',
     '/bucknell/anop-302/pack/': '/bucknell/',
-    '/bucknell/anop-330/': '/bucknell/',
-    '/bucknell/anop-330/pack/': '/bucknell/',
     '/bucknell/anop-400/': '/bucknell/',
     '/bucknell/anop-400/pack/': '/bucknell/',
   },

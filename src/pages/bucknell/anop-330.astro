@@ -1,0 +1,103 @@
+---
+// src/pages/bucknell/anop-330.astro  →  arizvi.com/bucknell/anop-330
+// ANOP 330: the term week by week and 2 classes to try. Not linked from the nav; sends noindex.
+import Base from '../../layouts/Base.astro';
+import Section from '../../components/Section.astro';
+import CourseHeader from '../../components/CourseHeader.astro';
+import FourSteps from '../../components/FourSteps.astro';
+import CourseNav from '../../components/CourseNav.astro';
+import ThresholdDemo from '../../components/ThresholdDemo.astro';
+import OverfitDemo from '../../components/OverfitDemo.astro';
+import TermFigure from '../../components/TermFigure.astro';
+import HandedIn from '../../components/HandedIn.astro';
+import ClassPlan from '../../components/ClassPlan.astro';
+import { classes } from '../../data/classes';
+import { pack } from '../../data/packs/anop-330';
+import { course, bucknellColours } from '../../data/bucknell';
+
+const c = course('anop-330');
+
+// The term. Each week: the method, the business question it answers, and the class to try where there is one.
+// Three units, each with a figure in the margin.
+const units = [
+  { n: 1, from: 1, to: 4, weeks: 'Weeks 1-4', name: 'Predicting, honestly', line: 'Framing, leakage, regression, and data the model never saw' },
+  { n: 2, from: 5, to: 8, weeks: 'Weeks 5-8', name: 'Classifiers and their costs', line: 'Logistic regression, trees, ensembles, and the cutoff as a business call' },
+  { n: 3, from: 9, to: 14, weeks: 'Weeks 9-14', name: 'In the world', line: 'Clusters, fairness, LLMs, monitoring, and the project' },
+];
+const weeks: { w: number; topic: string; build: string; try?: string }[] = [
+  { w: 1, topic: 'Framing a prediction', build: 'What exactly are we predicting, could we know it in time, and what would we do differently? Python and pandas refresher, a first train/test split.' },
+  { w: 2, topic: 'Data preparation and leakage', build: 'Features that would not exist at decision time. The lab hides a leak and the class finds it.' },
+  { w: 3, topic: 'Regression, revisited', build: 'Linear regression with many features: reading it and predicting with it are different jobs.' },
+  { w: 4, topic: 'Overfitting and cross-validation', build: 'Will it work next quarter? Holding data out, and holding it out 5 times, before any model gets trusted.', try: 'overfit' },
+  { w: 5, topic: 'Logistic regression', build: 'Probabilities instead of labels, and the confusion matrix.' },
+  { w: 6, topic: 'Decision trees', build: 'How a tree splits, and why it is the model a manager can read.' },
+  { w: 7, topic: 'Ensembles', build: 'Random forests average many trees to steady the prediction; gradient boosting adds small trees one at a time to fix what the last ones missed.' },
+  { w: 8, topic: 'Evaluation and thresholds', build: 'Precision, recall and the cost of each kind of mistake, with the cutoff chosen on validation data. Then uplift: ranking customers by how much the offer would change what they do.', try: 'threshold' },
+  { w: 9, topic: 'Clustering', build: 'k-means segmentation, choosing k, and groups we did not define.' },
+  { w: 10, topic: 'Fairness and the loop', build: 'Who is harmed when it is wrong, and what a person signs off on before it ships.' },
+  { w: 11, topic: 'LLMs in the workflow', build: "Embeddings and zero-shot classification as features. Where a model drafts and a person decides." },
+  { w: 12, topic: 'Deployment and monitoring', build: 'Drift, and how we know when a model stops working. Every project ships with a model card.' },
+  { w: 13, topic: 'Project work', build: "Each team's model, scored on a term of data the team never saw." },
+  { w: 14, topic: 'Project presentations', build: 'Pitch a model to a decision-maker: what it predicts, what acting on it costs, and when to stop trusting it.' },
+];
+---
+<Base title="ANOP 330" description="ANOP 330, Machine Learning Fundamentals for Business, as Ali Rizvi could teach a section at Bucknell - the term week by week, with 2 classes you can try." noindex accent={bucknellColours} up={['/bucknell/', 'Teaching at Bucknell']}>
+  <CourseHeader course={c} facts={[
+    ['Format', '14 weeks, 2 classes of 75 minutes each week'],
+    ['Tools', 'Python in Jupyter, with pandas and scikit-learn.'],
+  ]}>
+    <p class="practice"><span class="label">A sample</span>ANOP 330 already runs, and its outline comes first. I would start by asking the professor who teaches it what works.</p>
+  </CourseHeader>
+
+  <FourSteps steps={[
+    'Each team ends by pitching a model to a decision-maker: what it predicts, what acting on it costs, and when to stop trusting it.',
+    'Everyone works in Python, and each team picks its own problem and dataset.',
+    'At Amazon I owned Alexa Orchestration, where Fire TV and Echo read the German "weiter" differently. Week 5 starts there: a model returns probabilities, and the system decides what to do with them.',
+    'Week 8 opens with midterm feedback. Projects are scored on data the team never saw, and I would compare the scores each time the course runs.',
+  ]} />
+
+  <Section title="Week by week" id="term">
+    {units.map((u) => (
+      <div class="unit grid">
+        <div class="unit-side">
+          <TermFigure course="330" unit={u.n} />
+          <p class="label">{u.weeks}</p>
+          <h3>{u.name}</h3>
+          <p class="unit-line">{u.line}</p>
+        </div>
+        <ul class="rows compact unit-weeks">
+          {weeks.filter((x) => x.w >= u.from && x.w <= u.to).map((x) => (
+            <li class="grid">
+              <div class="label">Week {x.w}</div>
+              <div class="body">
+                <span class="title">{x.topic}</span>
+                <p>{x.build}{x.try && <> <a href={`#${x.try}`}>{x.try === 'overtime' ? 'Read the class below.' : 'Try it below.'}</a></>}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))}
+  </Section>
+
+  
+  <Section title="Choosing the cutoff for a retention offer" id="threshold">
+    <ClassPlan plan={classes.threshold} course={c.slug}>
+      <p>Your subscription business has 1,000 customers, and 100 will cancel next month. A model scores each one's risk. A retention offer costs $20, and each customer kept is worth $200. How many of the riskiest should get it?</p>
+      <p>Each square is a customer, riskiest first. The slider sets how far down the list the offers go. Then I change what the offer costs: the best cutoff moves, and the accuracy stays the same.</p>
+    </ClassPlan>
+    <ThresholdDemo />
+  </Section>
+
+  <Section title="Testing a model on days it has not seen" id="overfit">
+    <ClassPlan plan={classes.overfit} course={c.slug}>
+      <p>An ice-cream stand logged 24 days of sales and temperatures. 16 days are on the chart, and 8 are held back. The slider sets how much the curve can bend, and the more it bends, the better it fits the 16.</p>
+      <p>Pairs call out the curve they would ship, and most pick a wiggly one. Then we show the 8 days.</p>
+    </ClassPlan>
+    <OverfitDemo />
+  </Section>
+
+  <HandedIn pack={pack} />
+
+  <CourseNav current={c.slug} />
+</Base>

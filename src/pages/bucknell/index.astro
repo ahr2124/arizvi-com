@@ -5,7 +5,8 @@
 // visualization course and put it into a shell that feels like moodle"). In order: the 4 steps across the page under
 // number tags, carrying his methods, with a line on generative AI under them; then one course in full (a section of
 // ANOP 270 on its current outline, taught in Tableau), laid out the way it would sit in Moodle (MoodleShell.astro,
-// content in src/data/bucknell270.ts). The other courses and their pages came off the same day.
+// content in src/data/bucknell270.ts); then ANOP 330, machine learning, as a card that opens its own page (the other
+// course pages came off that day, and this one came back the same morning: "can you put the ML course back?").
 // Bucknell's orange (the section colour) marks where Ali comes in: the step tags, where you are in the course shell,
 // what the sample student has done, and a rubric's best level.
 // Numbers up to two digits are words in the copy; digits stay for course codes, data, the week labels and points in
@@ -18,7 +19,7 @@
 import Base from '../../layouts/Base.astro';
 import Section from '../../components/Section.astro';
 import MoodleShell from '../../components/MoodleShell.astro';
-import { bucknellColours } from '../../data/bucknell';
+import { bucknellColours, course } from '../../data/bucknell';
 
 // The 4 steps Ali teaches by, each carrying the methods he describes for them (as on /tulane).
 const steps = [
@@ -27,8 +28,15 @@ const steps = [
   ['Learn on real problems.', 'The problems come from open data such as the CFPB\'s consumer complaints, and from industry partners and my own industry work. Guest speakers bring more of them into the room. I prepare each speaker beforehand, and when students lose the thread, I step in with questions.'],
   ['Test the teaching itself.', 'The real problems midway are formative assessments. They show whether the teaching has worked while there is still time to change it. For mid-course feedback, students get fifteen minutes in class to answer three questions anonymously (what should I start, continue, and stop doing?), and I leave the room. At Bucknell I would run it in Moodle.'],
 ];
+
+// ANOP 330, on its own page, with the 2 classes to try there.
+const ml = course('anop-330');
+const classes = [
+  { week: 'Week 4', href: '/bucknell/anop-330/#overfit', title: 'Testing a model on days it has not seen', line: 'Students fit ice-cream sales on 16 days and test the model on the 8 held back.' },
+  { week: 'Week 8', href: '/bucknell/anop-330/#threshold', title: 'Choosing the cutoff for a retention offer', line: 'Students find that the most accurate cutoff makes no money.' },
+];
 ---
-<Base title="Bucknell" description="How Ali Rizvi would teach in Bucknell's Analytics & Operations Management department, with one section of ANOP 270 (data visualization, in Tableau) laid out in full." noindex accent={bucknellColours} rail>
+<Base title="Bucknell" description="How Ali Rizvi would teach in Bucknell's Analytics & Operations Management department, with one section of ANOP 270 (data visualization, in Tableau) laid out in full, and ANOP 330 (machine learning)." noindex accent={bucknellColours} rail>
   <header class="page-head">
     <div class="intro-grid">
       <div class="text">
@@ -59,4 +67,43 @@ const steps = [
     <MoodleShell />
   </Section>
 
+  <Section title="Machine learning: ANOP 330" id="ml">
+    <div class="grid"><div class="span-8">
+      <p>I could also teach a section of ANOP&nbsp;330. It has its own page, with two classes you can try and a full pack (syllabus, weekly plan, and rubrics) for colleagues to review.</p>
+    </div></div>
+    <ul class="exhibits courses two">
+      <li class="course">
+        <p class="code">{ml.code}</p>
+        <h3><a href={`/bucknell/${ml.slug}/`}>{ml.title}</a></h3>
+        <p>{ml.line}</p>
+        <p>At Amazon I owned Alexa Orchestration, and at Morgan Stanley my team deployed AI models to compliance users. I would teach from both.</p>
+        <dl class="course-facts">
+          <dt class="label">In the catalog</dt>
+          <dd>1 Credit. {ml.offered}. Prerequisites: {ml.prereqs}.</dd>
+          <dt class="label">Students</dt>
+          <dd>{ml.who}</dd>
+          <dt class="label">When</dt>
+          <dd>{ml.when}</dd>
+        </dl>
+        <p class="sample"><a href={`/bucknell/${ml.slug}/`}>The term, week by week&nbsp;→</a></p>
+      </li>
+      <li class="course">
+        <p class="label">Two classes to try</p>
+        {classes.map((k) => (
+          <div class="ml-class">
+            <span class="label tile-tag">{ml.code} · {k.week}</span>
+            <a class="tile-title" href={k.href}>{k.title}&nbsp;→</a>
+            <p>{k.line}</p>
+          </div>
+        ))}
+      </li>
+    </ul>
+  </Section>
+
 </Base>
+
+<style>
+  /* The 2 classes beside the ANOP 330 card. */
+  .ml-class { margin-top: 18px; }
+  .ml-class p { margin: 0; }
+</style>

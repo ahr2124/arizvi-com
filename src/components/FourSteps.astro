@@ -1,0 +1,18 @@
+---
+// The 4 steps Ali teaches by, applied to one course: a numbered list in his own words for each step.
+// Used on the /bucknell course pages, right under the header.
+interface Props { steps: [string, string, string, string]; label?: string }
+const { steps, label = 'How I could teach it' } = Astro.props;
+const heads = [
+  'Build the course backward from the outcome.',
+  'Personalize within a defined structure.',
+  'Learn on real problems.',
+  'Test the teaching itself.',
+];
+---
+<section class="section" id="steps">
+  <div class="section-head"><h2>{label}</h2></div>
+  <ol class="principles steps across">
+    {heads.map((h, i) => <li><strong>{h}</strong> <Fragment set:html={steps[i]} /></li>)}
+  </ol>
+</section>

@@ -1,0 +1,27 @@
+---
+// At the foot of the ANOP 330 page and its pack: the 2 courses on /bucknell. ANOP 270 is the section laid out in full on
+// the main page; ANOP 330 has its own page.
+import { courses } from '../data/bucknell';
+interface Props { current?: string }
+const { current } = Astro.props;
+---
+<nav class="course-nav" aria-label="Courses on the Bucknell page">
+  <p class="label">The courses on this page</p>
+  <ul>
+    <li>
+      <a href="/bucknell/#course">
+        <span class="label">ANOP 270</span>
+        <span class="t">Data Visualization for Business Analytics</span>
+      </a>
+    </li>
+    {courses.map((c) => (
+      <li>
+        <a href={`/bucknell/${c.slug}/`} aria-current={c.slug === current ? 'page' : undefined}>
+          <span class="label">{c.code}</span>
+          <span class="t">{c.title}</span>
+        </a>
+      </li>
+    ))}
+  </ul>
+  {current && <p class="label back"><a href="/bucknell/">How I teach, and a section in full&nbsp;→</a></p>}
+</nav>
