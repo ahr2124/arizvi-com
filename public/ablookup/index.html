@@ -15,6 +15,7 @@
 <meta property="og:image" content="https://arizvi.com/media/share.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#ffffff">
+<meta name="color-scheme" content="light">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="preload" href="/fonts/CooperHewitt-Semibold.woff2" as="font" type="font/woff2" crossorigin>
@@ -52,12 +53,14 @@ a { color: inherit; text-decoration: underline; text-decoration-thickness: 1px; 
 .skip:focus { transform: none; }
 
 /* Header: the site's mark and name, with the language where the menu would be */
-.site-header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px 32px; padding: 24px 0; border-bottom: 4px solid var(--hl); }
+.site-header { display: flex; justify-content: space-between; align-items: center; gap: 12px 32px; padding: 24px 0; border-bottom: 4px solid var(--hl); }
 .brand { display: inline-flex; align-items: center; gap: 12px; }
 .brand .mark-link { display: block; line-height: 0; }
 .brand .mark { width: 28px; height: 28px; display: block; }
 .wordmark { font-weight: 700; font-size: 15px; text-transform: uppercase; letter-spacing: 0.14em; line-height: 28px; text-decoration: none; position: relative; top: 1px; }
 .lang { display: flex; gap: 8px; }
+.lang .short { display: none; }
+@media (max-width: 479px) { .lang .long { display: none; } .lang .short { display: inline; } }
 
 /* Pills: everything you can press that is not a word in the answer */
 .pill { font: 500 13px/1.4 var(--font); text-transform: uppercase; letter-spacing: 0.14em; color: #000; background: #fff; border: 1px solid #000; border-radius: 999px; padding: 5px 14px; margin: 0; cursor: pointer; white-space: nowrap; max-width: 100%; overflow: hidden; text-overflow: ellipsis; -webkit-appearance: none; appearance: none; }
@@ -76,12 +79,13 @@ mark { background: linear-gradient(transparent 56%, var(--hl) 56%); color: inher
 .tool { margin-top: clamp(2rem, 4vw, 3rem); max-width: var(--col); }
 .strip { border: 2px solid #000; padding: 14px 18px 16px; }
 .strip:focus-within { box-shadow: 0 0 0 4px var(--hl); }
-.strip label { display: block; margin-bottom: 8px; }
+.strip-top { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; margin-bottom: 8px; }
+.clear { color: #000; background: none; border: 0; border-radius: 0; padding: 8px 0 8px 16px; margin: -8px 0; cursor: pointer; font-family: var(--font); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.2em; -webkit-appearance: none; appearance: none; }
 .strip textarea { display: block; width: 100%; min-height: 1.25em; border: 0; border-radius: 0; padding: 0; margin: 0; background: transparent; color: #000; font: 600 var(--big)/1.25 var(--font); letter-spacing: 0.01em; text-transform: uppercase; resize: none; overflow: hidden; outline: none; -webkit-appearance: none; appearance: none; }
 .strip textarea::placeholder { color: rgba(0, 0, 0, 0.6); font-weight: 400; text-transform: none; letter-spacing: 0; }
 .tries { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 14px; }
 .tries .label { margin-right: 4px; }
-.tries .clear { margin-left: auto; }
+#examples { display: contents; }
 
 /* Sections */
 .section { margin-top: clamp(2.5rem, 5vw, 4rem); }
@@ -92,7 +96,7 @@ mark { background: linear-gradient(transparent 56%, var(--hl) 56%); color: inher
 .plain { font-size: var(--big); line-height: 1.3; margin: 0.9rem 0 0; max-width: 30em; white-space: pre-wrap; overflow-wrap: anywhere; }
 .plain ol { margin: 0; padding-left: 1.3em; white-space: normal; }
 .plain ol li + li { margin-top: 0.3em; }
-.plain .quiet { font-size: 18px; line-height: 1.5; white-space: normal; }
+.plain .quiet { font-size: 18px; line-height: 1.5; white-space: normal; margin: 0; }
 .plain .u { color: rgba(0, 0, 0, 0.6); }
 .plain .alt { font: inherit; letter-spacing: inherit; color: inherit; background: none; border: 0; border-radius: 0; padding: 0; margin: 0; cursor: pointer; text-align: inherit; text-decoration: underline dotted; text-decoration-thickness: 2px; text-underline-offset: 0.2em; -webkit-appearance: none; appearance: none; }
 .plain .alt:hover { background: var(--hl-soft); }
@@ -135,7 +139,7 @@ button.code:hover { background: var(--hl-soft); }
 .site-footer a:focus-visible { outline-color: #fff; }
 
 @media print {
-  .skip, .lang, .tries, #copy, .hint, #how-section, .site-footer .home { display: none !important; }
+  .skip, .lang, .tries, .clear, #copy, .hint, #how-section, .site-footer .home { display: none !important; }
   .site-header { border-bottom: 2px solid #000; }
   mark, .code { background: none; }
   .site-footer { background: none; color: #000; }
@@ -151,8 +155,8 @@ button.code:hover { background: var(--hl-soft); }
       <a class="wordmark" href="https://arizvi.com/">Ali Rizvi</a>
     </div>
     <div class="lang" role="group" aria-label="Language / Langue">
-      <button type="button" class="pill" data-lang="en" lang="en" aria-pressed="true">English</button>
-      <button type="button" class="pill" data-lang="fr" lang="fr" aria-pressed="false">Français</button>
+      <button type="button" class="pill" data-lang="en" lang="en" aria-label="English" aria-pressed="true"><span class="long">English</span><span class="short">EN</span></button>
+      <button type="button" class="pill" data-lang="fr" lang="fr" aria-label="Français" aria-pressed="false"><span class="long">Français</span><span class="short">FR</span></button>
     </div>
   </header>
 
@@ -164,13 +168,15 @@ button.code:hover { background: var(--hl-soft); }
 
     <section class="tool" aria-labelledby="q-label">
       <div class="strip">
-        <label class="label" id="q-label" for="q">Abbreviation or line</label>
+        <div class="strip-top">
+          <label class="label" id="q-label" for="q">Abbreviation or line</label>
+          <button type="button" class="label clear" id="clear">Clear</button>
+        </div>
         <textarea id="q" rows="1" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" placeholder="Type or paste here"></textarea>
       </div>
       <div class="tries">
         <span class="label" id="try-label">Try</span>
-        <span id="examples" style="display:contents"></span>
-        <button type="button" class="pill clear" id="clear">Clear</button>
+        <span id="examples"></span>
       </div>
       <noscript><p>This page needs JavaScript to look things up.</p></noscript>
     </section>
@@ -201,7 +207,6 @@ button.code:hover { background: var(--hl-soft); }
   <div class="container">
     <p id="src1"></p>
     <p id="src2"></p>
-    <p id="src3"></p>
     <p class="home"><a class="wordmark" href="https://arizvi.com/">arizvi.com</a></p>
   </div>
 </footer>
@@ -1865,12 +1870,11 @@ Z|Zulu (UTC) Universal Time Coordinated|Zulu (UTC) temps universel coordonné
       howList: [
         'It reads word for word, so the grammar is rough.',
         'Words the manual does not list stay as you typed them. MANAB leaves out dictionary abbreviations, metric units and WMO data designators.',
-        'A plus or minus sign in front of weather reads as heavy or light. That part comes from the METAR code, the rest from MANAB.',
+        'A plus or minus sign in front of weather reads as heavy or light, and wind and cloud groups are split the way METAR and TAF build them. The words come from MANAB.',
         'For anything that matters, check <a href="' + PDF + '">the manual itself</a>.'
       ],
-      src1: 'Source: MANAB - Manual of Word Abbreviations, 5th edition, September 2026, Environment and Climate Change Canada (Cat. No. En56-238/1-2026-PDF).',
-      src2: '© His Majesty the King in Right of Canada, as represented by the Minister of the Environment, Climate Change and Nature, 2026.',
-      src3: 'The abbreviation list on this page is a copy of the one in that official work. This page was not produced in affiliation with, or with the endorsement of, the Government of Canada.'
+      src1: 'Source: MANAB - Manual of Word Abbreviations, 5th edition, September 2026, Environment and Climate Change Canada (Cat. No. En56-238/1-2026-PDF). © His Majesty the King in Right of Canada, as represented by the Minister of the Environment, Climate Change and Nature, 2026.',
+      src2: 'The abbreviation list on this page is a copy of the one in that official work. This page was not produced in affiliation with, or with the endorsement of, the Government of Canada.'
     },
     fr: {
       title: 'Recherche d’abréviations météo - Ali Rizvi',
@@ -1894,12 +1898,11 @@ Z|Zulu (UTC) Universal Time Coordinated|Zulu (UTC) temps universel coordonné
       howList: [
         'La lecture se fait mot à mot, donc la grammaire reste approximative.',
         'Les mots absents du manuel restent tels que vous les avez tapés. MANAB exclut les abréviations du dictionnaire, les unités métriques et les indicatifs de données de l’OMM.',
-        'Un signe plus ou moins devant un phénomène se lit fort ou faible. Cette partie vient du code METAR, le reste de MANAB.',
+        'Un signe plus ou moins devant un phénomène se lit fort ou faible, et les groupes de vent et de nuages sont découpés comme les codes METAR et TAF les construisent. Les mots viennent de MANAB.',
         'Pour tout ce qui compte, vérifiez dans <a href="' + PDF + '">le manuel lui-même</a>.'
       ],
-      src1: 'Source : MANAB - Manuel d’abréviations de mots, 5e édition, septembre 2026, Environnement et Changement climatique Canada (No de cat. En56-238/1-2026-PDF).',
-      src2: '© Sa Majesté le Roi du chef du Canada, représenté par la ministre de l’Environnement, du Changement climatique et de la Nature, 2026.',
-      src3: 'La liste d’abréviations de cette page est une copie de celle de cet ouvrage officiel. Cette page n’a pas été produite en association avec le gouvernement du Canada ni avec son appui.'
+      src1: 'Source : MANAB - Manuel d’abréviations de mots, 5e édition, septembre 2026, Environnement et Changement climatique Canada (No de cat. En56-238/1-2026-PDF). © Sa Majesté le Roi du chef du Canada, représenté par la ministre de l’Environnement, du Changement climatique et de la Nature, 2026.',
+      src2: 'La liste d’abréviations de cette page est une copie de celle de cet ouvrage officiel. Cette page n’a pas été produite en association avec le gouvernement du Canada ni avec son appui.'
     }
   };
 
@@ -1944,8 +1947,10 @@ Z|Zulu (UTC) Universal Time Coordinated|Zulu (UTC) temps universel coordonné
     ctx = ctx || {};
     var L = lang === 'en' ? 0 : 1;
     var entries = BY.get(key).slice();
+    if (ctx.countable) entries = entries.filter(function (e) { return /\(s\)/i.test(e.en); });
     var pick = FIRST_ENTRY[key];
     if (key === 'MB' && ctx.afterNumber) pick = 'Millibar(s)';
+    if (key === 'SK' && ctx.pirep) pick = 'Sky Condition (PIREP)';
     if (pick) entries.sort(function (a, b) { return (b.en === pick) - (a.en === pick); });
     var opts = [];
     entries.forEach(function (e, n) {
@@ -1953,10 +1958,10 @@ Z|Zulu (UTC) Universal Time Coordinated|Zulu (UTC) temps universel coordonné
       var fv = FIRST_VARIANT[key];
       if (fv) { var at = vs.findIndex(function (v) { return v.toLowerCase() === fv[L]; }); if (at > 0) vs.unshift(vs.splice(at, 1)[0]); }
       if (n === 0 && READ_AS[key]) { var r = READ_AS[key][L]; vs = [r].concat(vs.filter(function (v) { return v.toLowerCase() !== r.toLowerCase(); })); }
-      vs.forEach(function (t) { opts.push({ t: t }); });
+      vs.forEach(function (t) { opts.push({ t: t, e: e }); });
     });
     if (CONN[key]) { var c = { t: CONN[key][L] }; if (CONN_FIRST.has(key)) opts.unshift(c); else opts.push(c); }
-    return { src: src, kind: 'm', opts: opts, entries: BY.get(key) };
+    return { src: src, kind: 'm', opts: opts, entries: entries };
   }
   function seg(kind, src, text) { return { src: src, kind: kind, opts: [{ t: text === undefined ? src : text }] }; }
   function wx(U) {   // TSRA -> TS + RA, SHRASN -> SHRA + SN
@@ -1982,15 +1987,27 @@ Z|Zulu (UTC) Universal Time Coordinated|Zulu (UTC) temps universel coordonné
     if (BY.has(U)) return [manualSeg(raw, U, ctx)];
     if (CONN[U]) return [seg('w', raw, CONN[U][lang === 'en' ? 0 : 1])];
     if (NUM.test(U)) return [seg('n', raw)];
+    // TOPS, LYRS, KTS: the manual writes these once, as Top(s), Layer(s), Knot(s)
+    var stem = U.slice(0, -1);
+    if (U.length > 2 && U.charAt(U.length - 1) === 'S' && BY.has(stem) && BY.get(stem).some(function (e) { return /\(s\)/i.test(e.en); })) return [manualSeg(raw, stem, { plural: true, countable: true })];
     if ((m = U.match(/^([+-])([A-Z]{2,})$/))) { var w = wx(m[2]); if (w) return [seg('c', m[1], m[1] === '+' ? T[lang].heavy : T[lang].light)].concat(w); }
+    if ((m = U.match(/^(\d{3}|VRB)(\d{2,3})(?:G(\d{2,3}))?KT$/))) {   // 28012G22KT, VRB03KT
+      var wind = m[1] === 'VRB' ? [manualSeg('VRB', 'VRB')] : [seg('n', m[1]), manualSeg('DEG', 'DEG', { plural: true })];
+      wind.push(seg('n', m[2]));
+      if (m[3]) wind.push(manualSeg('G', 'G'), seg('n', m[3]));
+      return wind.concat([manualSeg('KT', 'KT', { plural: true })]);
+    }
     if ((m = U.match(/^(\d+(?:[.\/]\d+)?(?:-\d+(?:[.\/]\d+)?)?)([A-Z]{1,3})$/)) && UNITS.has(m[2]) && BY.has(m[2])) return [seg('n', m[1]), manualSeg(m[2], m[2], { plural: above1(m[1]), afterNumber: true })];
     if ((m = U.match(/^(\d{2,3})G(\d{2,3})KT$/))) return [seg('n', m[1]), manualSeg('G', 'G'), seg('n', m[2]), manualSeg('KT', 'KT', { plural: true })];
-    if ((m = U.match(/^(FL|RWY)(\d{2,3}[LRC]?)$/))) return [manualSeg(m[1], m[1]), seg('n', m[2])];
+    if ((m = U.match(/^(FL|RWY|VV)(\d{2,3}[LRC]?)$/))) return [manualSeg(m[1], m[1]), seg('n', m[2])];
+    if ((m = U.match(/^FM(\d{4,6})$/))) return [manualSeg('FM', 'FM'), seg('n', m[1])];
+    if ((m = U.match(/^(FEW|SCT|BKN|OVC)(\d{3})(CB|TCU)?$/))) return [manualSeg(m[1], m[1]), seg('n', m[2])].concat(m[3] ? [manualSeg(m[3], m[3])] : []);
     if (!inner && /[\/-]/.test(U)) {   // SCT-BKN, BKN/OVC
       var segs = [], hits = 0;
+      var field = raw.charAt(0) === '/';
       raw.split(/([\/-])/).forEach(function (p) {
         if (p === '/' || p === '-') segs.push(seg('g', p));
-        else if (p) { var s = decodeCore(p, null, true); if (s.some(function (x) { return x.kind === 'm'; })) hits++; segs = segs.concat(s); }
+        else if (p) { var s = decodeCore(p, field ? { pirep: true } : null, true); if (s.some(function (x) { return x.kind === 'm'; })) hits++; segs = segs.concat(s); }
       });
       if (hits) return segs;
     }
@@ -2101,11 +2118,11 @@ Z|Zulu (UTC) Universal Time Coordinated|Zulu (UTC) temps universel coordonné
     var focusKey = keepFocus && document.activeElement && document.activeElement.dataset ? document.activeElement.dataset.k : null;
     plain.textContent = '';
     $('hint-alt').hidden = true; $('hint-unknown').hidden = true;
-    $('copy').hidden = false;
+    $('copy').hidden = false; $('clear').hidden = false;
     plainText = '';
     if (!text.trim()) {
-      plain.appendChild(el('p', 'quiet muted', tx.empty)); plain.firstChild.style.margin = '0';
-      $('copy').hidden = true; table([]); return;
+      plain.appendChild(el('p', 'quiet muted', tx.empty));
+      $('copy').hidden = true; $('clear').hidden = true; table([]); return;
     }
     var toks = decode(text);
     var words = toks.filter(function (t) { return t.segs && t.segs.length; });
@@ -2115,7 +2132,7 @@ Z|Zulu (UTC) Universal Time Coordinated|Zulu (UTC) temps universel coordonné
     // Nothing from the manual in it: look for something close.
     if (!manual.length) {
       var shown = text.trim().toUpperCase(), s = suggest(text);
-      plain.appendChild(el('p', 'quiet', tx[s.how](shown))); plain.firstChild.style.margin = '0';
+      plain.appendChild(el('p', 'quiet', tx[s.how](shown)));
       $('copy').hidden = true;
       table([{ head: s.head ? tx[s.head] : null, entries: s.entries, pressable: true }]);
       return;
@@ -2124,7 +2141,7 @@ Z|Zulu (UTC) Universal Time Coordinated|Zulu (UTC) temps universel coordonné
     // One abbreviation on its own: the manual's wording, in full.
     var only = words.length === 1 && words[0].segs.length === 1 && words[0].segs[0].kind === 'm' ? words[0].segs[0] : null;
     if (only && BY.has(only.src.toUpperCase())) {
-      var es = only.entries;
+      var es = BY.get(only.src.toUpperCase());   // the manual's own order
       if (es.length === 1) { plain.textContent = es[0][lang]; plainText = es[0][lang]; }
       else {
         var ol = el('ol');
@@ -2147,7 +2164,7 @@ Z|Zulu (UTC) Universal Time Coordinated|Zulu (UTC) temps universel coordonné
         var prev = t.segs[si - 1];
         if (si > 0 && sg.kind !== 'g' && prev.kind !== 'g') plain.appendChild(document.createTextNode(' '));
         var k = ti + '.' + si + ':' + sg.src + ':' + lang, n = sg.opts.length;
-        var word = sg.opts[(choice.get(k) || 0) % n].t;
+        var opt = sg.opts[(choice.get(k) || 0) % n], word = opt.t;
         if (cap && sg.kind !== 'u' && sg.kind !== 'n' && sg.kind !== 'g') word = word.charAt(0).toUpperCase() + word.slice(1);
         if (sg.kind !== 'g') cap = false;
         if (n > 1) {
@@ -2160,8 +2177,10 @@ Z|Zulu (UTC) Universal Time Coordinated|Zulu (UTC) temps universel coordonné
           plain.appendChild(b);
         } else if (sg.kind === 'u') plain.appendChild(el('span', 'u', word));
         else plain.appendChild(document.createTextNode(word));
-        if (sg.kind === 'm') sg.entries.forEach(function (e) { if (!seen.has(e.i)) { seen.add(e.i); used.push(e); } });
-        if (sg.kind === 'u' && /[A-Za-zÀ-ÿ]{2}/.test(sg.src) && unknown.indexOf(sg.src.toUpperCase()) < 0) unknown.push(sg.src.toUpperCase());
+        // the table follows the sentence: one row for the meaning that is showing
+        if (opt.e && !seen.has(opt.e.i)) { seen.add(opt.e.i); used.push(opt.e); }
+        var bare = sg.src.toUpperCase().replace(/^[^A-Z0-9À-Ý]+|[^A-Z0-9À-Ý]+$/g, '');
+        if (sg.kind === 'u' && /[A-ZÀ-Ý]{2}/.test(bare) && unknown.indexOf(bare) < 0) unknown.push(bare);
       });
       if (t.trail) { plain.appendChild(document.createTextNode(t.trail)); if (/[.!?]/.test(t.trail)) cap = true; }
     });
@@ -2183,7 +2202,7 @@ Z|Zulu (UTC) Universal Time Coordinated|Zulu (UTC) temps universel coordonné
     $('words-h').textContent = tx.words; $('how-h').textContent = tx.how;
     var how = $('how'); how.textContent = '';
     tx.howList.forEach(function (h) { var li = el('li'); li.innerHTML = h; how.appendChild(li); });
-    $('src1').textContent = tx.src1; $('src2').textContent = tx.src2; $('src3').textContent = tx.src3;
+    $('src1').textContent = tx.src1; $('src2').textContent = tx.src2;
     document.querySelectorAll('[data-lang]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.lang === lang)); });
   }
   function grow() { q.style.height = 'auto'; q.style.height = q.scrollHeight + 'px'; }
