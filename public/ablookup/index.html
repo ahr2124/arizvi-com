@@ -1830,16 +1830,18 @@ Z|Zulu (UTC) Universal Time Coordinated|Zulu (UTC) temps universel coordonné
   // Units: plural after a number above 1.
   var UNITS = new Set('SM NM KT FT KM M CM HR MIN SEC MB HPA KPA KMH MPH MPS DEG KG DAM MHZ KHZ C Z'.split(' '));
   // Plain connecting words that forecasters spell out. [English, French]
-  var CONN = { AND: ['and', 'et'], OR: ['or', 'ou'], WITH: ['with', 'avec'], OF: ['of', 'de'], TO: ['to', 'à'], IN: ['in', 'dans'], ON: ['on', 'sur'], FROM: ['from', 'de'], FOR: ['for', 'pour'], BY: ['by', 'par'], THEN: ['then', 'puis'], BUT: ['but', 'mais'] };
+  var CONN = { AND: ['and', 'et'], OR: ['or', 'ou'], WITH: ['with', 'avec'], OF: ['of', 'de'], TO: ['to', 'à'], IN: ['in', 'dans'], ON: ['on', 'sur'], FROM: ['from', 'de'], FOR: ['for', 'pour'], BY: ['by', 'par'], THEN: ['then', 'puis'], BUT: ['but', 'mais'],
+    VALID: ['valid', 'valide'], AREA: ['area', 'zone'], AREAS: ['areas', 'zones'], BASE: ['base', 'base'], BASES: ['bases', 'bases'], ALSO: ['also', 'aussi'], ONLY: ['only', 'seulement'], NOT: ['not', 'pas'], NO: ['no', 'aucun'],
+    NEAR: ['near', 'près de'], OVER: ['over', 'au-dessus de'], ABOVE: ['above', 'au-dessus de'], BELOW: ['below', 'au-dessous de'], AFTER: ['after', 'après'], BEFORE: ['before', 'avant'], UNTIL: ['until', "jusqu'à"], DURING: ['during', 'pendant'], ALONG: ['along', 'le long de'], DUE: ['due', 'dû'], WILL: ['will', 'va'] };
   // OR and IN are also Oregon and Indiana in the manual. In a forecast they are nearly always the plain word, so that
   // comes first and the state is the other choice. ON stays Ontario first.
   var CONN_FIRST = new Set(['OR', 'IN']);
   // Where one abbreviation has 2 entries, the one a weather line usually means comes first.
   var FIRST_ENTRY = { SC: 'Stratocumulus', NS: 'Nimbostratus', FL: 'Flight Level', NE: 'Northeast', NM: 'Nautical Mile(s)', VA: 'Volcanic Ash', WI: 'Within', NC: 'No Change', MT: 'Mountain(s)', ID: 'Identifier(s), Identify, Identification', CAT: 'Clear Air Turbulence', HDG: 'Heading(s)' };
   // Where one entry lists several forms, the form a weather line usually means comes first. [English, French]
-  var FIRST_VARIANT = { EMBD: ['embedded', 'encastré'], ISOL: ['isolated', 'isolé'], OBSC: ['obscured', 'obscurci'], MOV: ['moving', 'se déplaçant'], EXP: ['expected', 'attendu'], EST: ['estimated', 'estimé'], REP: ['reported', 'rapporté'], CLSD: ['closed', 'fermé'], AMD: ['amended', 'modifié'], CNL: ['cancelled', 'annulé'], DLA: ['delayed', 'retardé'], LCA: ['locally', 'localement'], INTSF: ['intensifying', "s'intensifiant"], WKN: ['weakening', "s'affaiblissant"], DTRT: ['deteriorating', 'se détériorant'], IMPR: ['improving', 'améliorant'], CONS: ['continuous', 'continu'], FLUC: ['fluctuating', 'fluctuant'], COV: ['covered', 'couvert'] };
+  var FIRST_VARIANT = { EMBD: ['embedded', 'encastré'], ISOL: ['isolated', 'isolé'], OBSC: ['obscured', 'obscurci'], MOV: ['moving', 'se déplaçant'], EXP: ['expected', 'attendu'], EST: ['estimated', 'estimé'], REP: ['reported', 'rapporté'], CLSD: ['closed', 'fermé'], AMD: ['amended', 'modifié'], CNL: ['cancelled', 'annulé'], DLA: ['delayed', 'retardé'], LCA: ['locally', 'localement'], INTSF: ['intensifying', "s'intensifiant"], WKN: ['weakening', "s'affaiblissant"], DTRT: ['deteriorating', 'se détériorant'], IMPR: ['improving', 'améliorant'], CONS: ['continuous', 'continu'], FLUC: ['fluctuating', 'fluctuant'], COV: ['covered', 'couvert'], H: ['high', 'anticyclone'], HVY: ['heavy', 'fort'], LWR: ['lower', 'inférieur'] };
   // Entries that read better in a sentence as something shorter than the manual's wording. [English, French]
-  var READ_AS = { Z: ['Zulu (UTC)', 'Zulu (UTC)'], N: ['north', 'nord'], W: ['west', 'ouest'], SIGMET: ['SIGMET', 'SIGMET'], AIRMET: ['AIRMET', 'AIRMET'], METAR: ['METAR', 'METAR'], SPECI: ['SPECI', 'SPECI'], TAF: ['TAF', 'TAF'] };
+  var READ_AS = { Z: ['Zulu (UTC)', 'Zulu (UTC)'], N: ['north', 'nord'], W: ['west', 'ouest'], MX: ['mixed', 'mêlé'], IFR: ['IFR', 'IFR'], VFR: ['VFR', 'VFR'], SIGMET: ['SIGMET', 'SIGMET'], AIRMET: ['AIRMET', 'AIRMET'], METAR: ['METAR', 'METAR'], SPECI: ['SPECI', 'SPECI'], TAF: ['TAF', 'TAF'] };
   // Weather groups as the METAR code builds them, so +TSRA and -SHRASN can be read from their parts.
   var WXRE = /^(VC)?(MI|BC|PR|DR|BL|SH|TS|FZ)?(DZ|RA|SN|SG|IC|PL|GR|GS|UP|BR|FG|FU|VA|DU|SA|HZ|PO|SQ|FC|SS|DS)*$/;
 
@@ -1868,9 +1870,10 @@ Z|Zulu (UTC) Universal Time Coordinated|Zulu (UTC) temps universel coordonné
       heavy: 'heavy', light: 'light',
       how: 'How it reads',
       howList: [
-        'It reads word for word, so the grammar is rough.',
-        'Words the manual does not list stay as you typed them. MANAB leaves out dictionary abbreviations, metric units and WMO data designators.',
-        'A plus or minus sign in front of weather reads as heavy or light, and wind and cloud groups are split the way METAR and TAF build them. The words come from MANAB.',
+        'The words come from MANAB. Rules then put them in order, so a line reads as a sentence. In French, describing words move after the noun and agree with it: ISOL CB reads cumulonimbus isolés.',
+        'A bare number after TOPS, CIGS, FZLVL, ABV or BLW, or inside a cloud group, is a height in hundreds of feet. TOPS 80 reads cloud tops at 8,000 feet.',
+        'A number with SM is a visibility and a number with Z is a time in UTC. A plus or minus sign in front of weather reads as heavy or light.',
+        'Words the manual does not list stay as you typed them.',
         'For anything that matters, check <a href="' + PDF + '">the manual itself</a>.'
       ],
       src1: 'Source: MANAB - Manual of Word Abbreviations, 5th edition, September 2026, Environment and Climate Change Canada (Cat. No. En56-238/1-2026-PDF). © His Majesty the King in Right of Canada, as represented by the Minister of the Environment, Climate Change and Nature, 2026.',
@@ -1896,9 +1899,10 @@ Z|Zulu (UTC) Universal Time Coordinated|Zulu (UTC) temps universel coordonné
       heavy: 'fort', light: 'faible',
       how: 'Comment lire le résultat',
       howList: [
-        'La lecture se fait mot à mot, donc la grammaire reste approximative.',
-        'Les mots absents du manuel restent tels que vous les avez tapés. MANAB exclut les abréviations du dictionnaire, les unités métriques et les indicatifs de données de l’OMM.',
-        'Un signe plus ou moins devant un phénomène se lit fort ou faible, et les groupes de vent et de nuages sont découpés comme les codes METAR et TAF les construisent. Les mots viennent de MANAB.',
+        'Les mots viennent de MANAB. Des règles les mettent ensuite en ordre pour que la ligne se lise comme une phrase. En français, les adjectifs passent après le nom et s’accordent : ISOL CB se lit cumulonimbus isolés.',
+        'Un nombre seul après TOPS, CIGS, FZLVL, ABV ou BLW, ou dans un groupe de nuages, est une hauteur en centaines de pieds. TOPS 80 se lit sommets de nuage à 8\u00a0000 pieds.',
+        'Un nombre suivi de SM est une visibilité et un nombre suivi de Z est une heure UTC. Un signe plus ou moins devant un phénomène se lit fort ou faible.',
+        'Les mots absents du manuel restent tels que vous les avez tapés.',
         'Pour tout ce qui compte, vérifiez dans <a href="' + PDF + '">le manuel lui-même</a>.'
       ],
       src1: 'Source : MANAB - Manuel d’abréviations de mots, 5e édition, septembre 2026, Environnement et Changement climatique Canada (No de cat. En56-238/1-2026-PDF). © Sa Majesté le Roi du chef du Canada, représenté par la ministre de l’Environnement, du Changement climatique et de la Nature, 2026.',
@@ -1928,7 +1932,7 @@ Z|Zulu (UTC) Universal Time Coordinated|Zulu (UTC) temps universel coordonné
   function strip(v, plural) {  // "Cloud(s)" -> "Cloud", or "Clouds" after a number above 1; "Amount (clouds)" -> "Amount"
     var s = v;
     if (plural) s = s.replace(/y\(ies\)/gi, 'ies').replace(/al\(aux\)/gi, 'aux').replace(/\((s|x|es)\)/gi, '$1');
-    return s.replace(/\s*\([^)]*\)/g, ' ').replace(/\s+/g, ' ').trim();
+    return s.replace(/^\(se\)\s*/i, 'se ').replace(/\s*\([^)]*\)/g, ' ').replace(/\s+/g, ' ').trim();
   }
   function recase(s, proper) {  // the manual capitalizes every English word; a sentence does not
     if (proper) return s;
@@ -1961,9 +1965,13 @@ Z|Zulu (UTC) Universal Time Coordinated|Zulu (UTC) temps universel coordonné
       vs.forEach(function (t) { opts.push({ t: t, e: e }); });
     });
     if (CONN[key]) { var c = { t: CONN[key][L] }; if (CONN_FIRST.has(key)) opts.unshift(c); else opts.push(c); }
-    return { src: src, kind: 'm', opts: opts, entries: entries };
+    return { src: src, kind: 'm', key: key, plural: !!ctx.plural, pre: ctx.pre || null, opts: opts, entries: entries };
   }
-  function seg(kind, src, text) { return { src: src, kind: kind, opts: [{ t: text === undefined ? src : text }] }; }
+  function seg(kind, src, text, more) {
+    var s = { src: src, kind: kind, opts: [{ t: text === undefined || text === null ? src : text }] };
+    if (more) Object.keys(more).forEach(function (k) { s[k] = more[k]; });
+    return s;
+  }
   function wx(U) {   // TSRA -> TS + RA, SHRASN -> SHRA + SN
     if (!U || !WXRE.test(U)) return null;
     var segs = [], at = 0;
@@ -1982,26 +1990,29 @@ Z|Zulu (UTC) Universal Time Coordinated|Zulu (UTC) temps universel coordonné
     return v > 1;
   }
   var NUM = /^\d[\d.,:\/-]*$/;
+  var tafLine = false;   // the line is a TAF, so 1318/1424 is its valid period
   function decodeCore(raw, ctx, inner) {
     var U = raw.toUpperCase(), m;
     if (BY.has(U)) return [manualSeg(raw, U, ctx)];
     if (CONN[U]) return [seg('w', raw, CONN[U][lang === 'en' ? 0 : 1])];
+    if (tafLine && (m = U.match(/^(\d\d)(\d\d)\/(\d\d)(\d\d)$/)) && +m[1] >= 1 && +m[1] <= 31 && +m[2] <= 24 && +m[3] >= 1 && +m[3] <= 31 && +m[4] <= 24) return [seg('n', raw, period(m[1], m[2], m[3], m[4]))];
     if (NUM.test(U)) return [seg('n', raw)];
     // TOPS, LYRS, KTS: the manual writes these once, as Top(s), Layer(s), Knot(s)
     var stem = U.slice(0, -1);
     if (U.length > 2 && U.charAt(U.length - 1) === 'S' && BY.has(stem) && BY.get(stem).some(function (e) { return /\(s\)/i.test(e.en); })) return [manualSeg(raw, stem, { plural: true, countable: true })];
     if ((m = U.match(/^([+-])([A-Z]{2,})$/))) { var w = wx(m[2]); if (w) return [seg('c', m[1], m[1] === '+' ? T[lang].heavy : T[lang].light)].concat(w); }
     if ((m = U.match(/^(\d{3}|VRB)(\d{2,3})(?:G(\d{2,3}))?KT$/))) {   // 28012G22KT, VRB03KT
-      var wind = m[1] === 'VRB' ? [manualSeg('VRB', 'VRB')] : [seg('n', m[1]), manualSeg('DEG', 'DEG', { plural: true })];
-      wind.push(seg('n', m[2]));
-      if (m[3]) wind.push(manualSeg('G', 'G'), seg('n', m[3]));
-      return wind.concat([manualSeg('KT', 'KT', { plural: true })]);
+      var wind = [manualSeg('WIND', 'WIND')].concat(m[1] === 'VRB' ? [manualSeg('VRB', 'VRB')] : [seg('n', m[1]), manualSeg('DEG', 'DEG', { plural: true })]);
+      wind.push(seg('n', m[2], null, { pre: ['at ', 'à '] }), manualSeg('KT', 'KT', { plural: true }));
+      if (m[3]) wind.push(manualSeg('G', 'G'), seg('n', m[3]), manualSeg('KT', 'KT', { plural: true }));
+      return wind;
     }
     if ((m = U.match(/^(\d+(?:[.\/]\d+)?(?:-\d+(?:[.\/]\d+)?)?)([A-Z]{1,3})$/)) && UNITS.has(m[2]) && BY.has(m[2])) return [seg('n', m[1]), manualSeg(m[2], m[2], { plural: above1(m[1]), afterNumber: true })];
-    if ((m = U.match(/^(\d{2,3})G(\d{2,3})KT$/))) return [seg('n', m[1]), manualSeg('G', 'G'), seg('n', m[2]), manualSeg('KT', 'KT', { plural: true })];
+    if ((m = U.match(/^(\d{2,3})G(\d{2,3})KT$/))) return [seg('n', m[1]), manualSeg('KT', 'KT', { plural: true }), manualSeg('G', 'G'), seg('n', m[2]), manualSeg('KT', 'KT', { plural: true })];
+    if ((m = U.match(/^P(\d+)SM$/))) return [seg('n', m[1], null, { pre: ['more than ', 'plus de '] }), manualSeg('SM', 'SM', { plural: true })];   // a TAF's P6SM
     if ((m = U.match(/^(FL|RWY|VV)(\d{2,3}[LRC]?)$/))) return [manualSeg(m[1], m[1]), seg('n', m[2])];
-    if ((m = U.match(/^FM(\d{4,6})$/))) return [manualSeg('FM', 'FM'), seg('n', m[1])];
-    if ((m = U.match(/^(FEW|SCT|BKN|OVC)(\d{3})(CB|TCU)?$/))) return [manualSeg(m[1], m[1]), seg('n', m[2])].concat(m[3] ? [manualSeg(m[3], m[3])] : []);
+    if ((m = U.match(/^FM(\d{4,6})$/))) return [manualSeg('FM', 'FM'), seg('n', m[1], null, { fm: true })];
+    if ((m = U.match(/^(FEW|SCT|BKN|OVC)(\d{3})(CB|TCU)?$/))) return [manualSeg(m[1], m[1]), seg('n', m[2], null, { ht: ['at ', 'à '] })].concat(m[3] ? [manualSeg(m[3], m[3])] : []);
     if (!inner && /[\/-]/.test(U)) {   // SCT-BKN, BKN/OVC
       var segs = [], hits = 0;
       var field = raw.charAt(0) === '/';
@@ -2016,6 +2027,7 @@ Z|Zulu (UTC) Universal Time Coordinated|Zulu (UTC) temps universel coordonné
     return [seg('u', raw)];
   }
   function decode(text) {
+    tafLine = /(^|\s)(TAF|TEMPO|BECMG|PROB\d\d)(\s|$)/i.test(text);
     var parts = text.split(/(\s+)/).filter(function (p) { return p !== ''; });
     var toks = parts.map(function (p) {
       if (/^\s+$/.test(p)) return { ws: p };
@@ -2049,6 +2061,271 @@ Z|Zulu (UTC) Universal Time Coordinated|Zulu (UTC) temps universel coordonné
       prevNum = (segs.length === 1 && segs[0].kind === 'n') ? segs[0].src : null;
     }
     return out;
+  }
+
+  // ---------- Sentence rules ----------
+  // The manual gives the words. These rules put them in order, so a line reads as a sentence. Each rule fires only on
+  // words it knows, and only while a word shows its first meaning. Everything else stays word for word.
+  var und = function (s) { return s.replace(/_/g, ' '); };
+  // Describing words, with the French form. a = after the noun in French, b = before it; i = never changes form;
+  // p = the noun after it is plural.
+  var ADJ = {};
+  ('ISOL:a:isolé OCNL:a:occasionnel FRQ:a:fréquent SCT:a:épars BKN:a:fragmenté OVC:a:couvert FEW:b:quelques:ip NMRS:b:nombreux:p SVRL:b:plusieurs:ip WDSPR:a:étendu XTNSV:b:vaste PTCHY:a:en_nappes:i EMBD:a:encastré OBSC:a:obscurci ' +
+   'LGT:a:léger MOD:a:modéré SEV:b:fort HVY:b:fort STG:b:fort WK:b:faible INTS:a:intense SLGT:a:léger ' +
+   'SHLW:a:peu_profond DP:a:profond THK:a:épais THN:a:mince DNS:a:dense LRG:b:grand SML:b:petit BRD:a:large NRW:a:étroit ' +
+   'UPR:a:supérieur LWR:a:inférieur SFC:a:de_surface:i LYR:a:en_couches:i MX:a:mêlé ' +
+   'STNR:a:stationnaire STBL:a:stable UNSTBL:a:instable MST:a:humide WRM:a:chaud RPD:a:rapide STDY:a:constant VRB:a:variable GSTY:a:en_rafale:i INTMT:a:intermittent CONS:a:continu BRF:a:bref TEMPO:a:temporaire MRGL:a:marginal SIG:a:significatif CVCTV:a:convectif STF:a:stratiforme CYC:a:cyclonique ACYC:a:anticyclonique ' +
+   'MVFR:a:VFR_marginal:i IFR:a:IFR:i VFR:a:VFR:i LIFR:a:IFR_inférieur:i ' +
+   "NLY:a:du_nord:i NELY:a:du_nord-est:i ELY:a:de_l'est:i SELY:a:du_sud-est:i SLY:a:du_sud:i SWLY:a:du_sud-ouest:i WLY:a:de_l'ouest:i NWLY:a:du_nord-ouest:i")
+    .split(' ').forEach(function (p) { var a = p.split(':'); ADJ[a[0]] = { pos: a[1], fr: und(a[2]), inv: /i/.test(a[3] || ''), many: /p/.test(a[3] || '') }; });
+  // Nouns, with their French gender. P = a cloud type, plural in French once it has a cover (cumulus fragmentés);
+  // E = plural unless counted (showers, thunderstorms, gusts); p = already plural; c = takes un or une.
+  var NOUN = {};
+  ('CU:m:P CB:m:P TCU:m:P ACC:m:P AC:m:P AS:m:P CI:m:P CC:m:P CS:m:P NS:m:P SC:m:P ST:m:P CF:m:P SF:m:P CLD:m:P ' +
+   'RA:f SN:f DZ:f BR:f FG:m HZ:f FU:f GR:f GS:f SG:f PL:m:p IC:m:p VA:f DU:f SA:m ' +
+   'TS:m:E SH:f:E SHRA:f:E SHSN:f:E SHGR:f:E SHGS:f:E SHPL:f:E SNSQ:f:E SQ:m:E FZRA:f FZDZ:f FZFG:m BLSN:f DRSN:f BLDU:f BLSA:f ' +
+   'TURB:f ICE:m RIME:m CAT:f WS:m PCPN:f:p ' +
+   'CIG:m:c CIGS:m:p VIS:f:c TOP:m:c LYR:f:c WIND:m G:f:E FLO:m:c ' +
+   'TROF:m:c RDG:f:c L:f:c H:m:c FRONT:m:c FROPA:m:c AIRMS:f:c LINE:f:c SQL:f:c SFC:f LTNG:m:P')
+    .split(' ').forEach(function (p) { var a = p.split(':'); NOUN[a[0]] = { g: a[1], f: a[2] || '' }; });
+  var PLURAL = { G: ['gusts', 'rafales'], TCU: [null, 'cumulus bourgeonnants'], LTNG: [null, 'éclairs'] };   // where the manual shows no plural
+  // A bare number after one of these is a height in hundreds of feet. [English link, French link]
+  var HEIGHT_AFTER = { TOP: ['at ', 'à '], FZLVL: ['at ', 'à '], BOVC: ['at ', 'à '], BASE: ['at ', 'à '], BASES: ['at ', 'à '], CIG: ['', 'de '], CIGS: ['', 'de '], ABV: ['', 'de '], BLW: ['', 'de '], BTN: ['', ''] };
+  var LEVELS = new Set(['AGL', 'ASL', 'AMSL', 'MSL']);
+  var COMPASS = new Set('N NNE NE ENE E ESE SE SSE S SSW SW WSW W WNW NW NNW'.split(' '));
+  var MOVING = new Set('MOV MOVD DRFT SPRDG ADVNG SHFTG'.split(' '));
+  // French: northern Ontario is "le nord de l'Ontario"
+  var REGION = { NRN: 'nord', SRN: 'sud', ERN: 'est', WRN: 'ouest', NERN: 'nord-est', NWRN: 'nord-ouest', SERN: 'sud-est', SWRN: 'sud-ouest', CNTRL: 'centre' };
+  var DE_AFTER = new Set(['OVR', 'ABV', 'BLW', 'NR', 'AHD', 'BYD']);                 // au-dessus de, près de
+  var THE_AFTER = new Set(['BHND', 'THRU', 'ACRS', 'TWD', 'BFR', 'AFT', 'DRG', 'BNTH']);   // derrière le, avant la
+  // French: a province's article, and how "in" is said for it
+  var PROV = { AB: ["l'", 'en '], BC: ['la ', 'en '], MB: ['le ', 'au '], NB: ['le ', 'au '], NS: ['la ', 'en '], NT: ['les ', 'dans les '], NU: ['le ', 'au '], ON: ["l'", 'en '], PE: ["l'", "à l'"], QC: ['le ', 'au '], SK: ['la ', 'en '], YT: ['le ', 'au '], NL: ['', 'à '], NF: ['', 'à '] };
+  // French: other places take their article from the first word of the name
+  var GEO = { Baie: 'la ', Lac: 'le ', 'Détroit': 'le ', 'Île': "l'", Golfe: 'le ', Mer: 'la ', 'Péninsule': 'la ', Monts: 'les ', Bassin: 'le ', Collines: 'les ', 'Rivière': 'la ', 'Région': 'la ', Chaine: 'la ', Grand: 'le ', Grands: 'les ', Bouclier: 'le ', 'Extrême': "l'", 'Amérique': "l'", 'Pôle': 'le ', Nouvelle: 'la ', Provinces: 'les ', Rocheuses: 'les ', Cascades: 'les ', Antilles: 'les ', Bermudes: 'les ', 'Aléoutiennes': 'les ', Atlantique: "l'", Pacifique: 'le ', Arctique: "l'", Groenland: 'le ', Labrador: 'le ', 'Gaspésie': 'la ', Mackenzie: 'le ', Dakotas: 'les ', Canada: 'le ', St: 'le ', Nord: 'le ', Kitikmeot: 'le ', Kivalliq: 'le ' };
+  var FEM = { 'épais': 'épaisse', bas: 'basse', bref: 'brève' };
+
+  function agree(lemma, g, plural) {   // isolé -> isolées, léger -> légère, marginal -> marginaux
+    var words = lemma.split(' '), w = words.pop();
+    if (g === 'f') {
+      if (FEM[w]) w = FEM[w];
+      else if (/er$/.test(w)) w = w.slice(0, -2) + 'ère';
+      else if (/el$/.test(w)) w += 'le';
+      else if (/eux$/.test(w)) w = w.slice(0, -1) + 'se';
+      else if (/if$/.test(w)) w = w.slice(0, -1) + 've';
+      else if (!/e$/.test(w)) w += 'e';
+    }
+    if (plural && !/[sx]$/.test(w)) w = /al$/.test(w) ? w.slice(0, -2) + 'aux' : w + 's';
+    return words.concat(w).join(' ');
+  }
+  function vowel(w) { return /^[aeiouyàâäéèêëîïôöûüh]/i.test(w); }
+  function group(n) { return String(n).replace(/\B(?=(\d{3})+$)/g, lang === 'en' ? ',' : ' '); }
+  function height(src) {   // 80 -> 8,000 feet; 3-8 -> 300 to 800 feet; four digits or more are feet already
+    var parts = src.split('-');
+    if (!parts.every(function (p) { return /^\d{1,5}$/.test(p); })) return null;
+    return parts.map(function (p) { return group(p.length <= 3 ? parseInt(p, 10) * 100 : parseInt(p, 10)); }).join(lang === 'en' ? ' to ' : ' à ') + (lang === 'en' ? ' feet' : ' pieds');
+  }
+  function ordinal(n) { var v = n % 100; return n + ((v > 10 && v < 14) ? 'th' : (['th', 'st', 'nd', 'rd'][n % 10] || 'th')); }
+  function clock(d) {   // 15 -> 15:00 UTC; 1740 -> 17:40 UTC; 131740 -> the 13th at 17:40 UTC
+    var day = null, h, m = '00';
+    if (d.length === 6) { day = +d.slice(0, 2); h = d.slice(2, 4); m = d.slice(4); } else if (d.length === 4) { h = d.slice(0, 2); m = d.slice(2); } else if (d.length === 2) h = d; else return null;
+    if (!/^\d+$/.test(d) || +h > 24 || +m > 59 || (day !== null && (day < 1 || day > 31))) return null;
+    var t = lang === 'en' ? h + ':' + m + ' UTC' : h + ' h' + (m === '00' ? '' : ' ' + m) + ' UTC';
+    if (day === null) return { t: t };
+    return { t: lang === 'en' ? 'the ' + ordinal(day) + ' at ' + t : 'le ' + day + ' à ' + t, day: day };
+  }
+  function period(d1, h1, d2, h2) {   // a TAF's 1318/1424
+    return lang === 'en' ? 'from the ' + ordinal(+d1) + ' at ' + h1 + ':00 UTC to the ' + ordinal(+d2) + ' at ' + h2 + ':00 UTC' : 'du ' + (+d1) + ' à ' + h1 + ' h UTC au ' + (+d2) + ' à ' + h2 + ' h UTC';
+  }
+  function dePlace(art, name) { return (art === 'le ' ? 'du ' : art === 'les ' ? 'des ' : art ? 'de ' + art : vowel(name) ? "d'" : 'de ') + name; }
+  function the(np, w) { return np.plural ? 'les ' : vowel(w) ? "l'" : np.g === 'f' ? 'la ' : 'le '; }
+  function ofThe(np, w) { return np.plural ? 'des ' : vowel(w) ? "de l'" : np.g === 'f' ? 'de la ' : 'du '; }
+  function some(np, w) {   // des averses, de fortes averses, une forte pluie, de la pluie, du brouillard
+    if (np.plural) return np.pre ? (vowel(w) ? "d'" : 'de ') : 'des ';
+    if (np.count || np.pre) return np.g === 'f' ? 'une ' : 'un ';
+    return vowel(w) ? "de l'" : np.g === 'f' ? 'de la ' : 'du ';
+  }
+
+  function compose(toks) {
+    var L = lang === 'en' ? 0 : 1, fr = lang === 'fr';
+    // 1. One flat list of words. A clause ends at punctuation or a new line, and no rule reaches across that.
+    var its = [], clause = 0;
+    toks.forEach(function (t, ti) {
+      if (t.ws !== undefined) { if (t.ws.indexOf('\n') > -1) { its.push({ br: true }); clause++; } return; }
+      if (t.lead) clause++;
+      if (!t.segs.length) its.push({ punct: t.lead + t.trail });
+      t.segs.forEach(function (sg, si) {
+        var k = ti + '.' + si + ':' + sg.src + ':' + lang, n = sg.opts.length, at = (choice.get(k) || 0) % n, opt = sg.opts[at];
+        its.push({ sg: sg, k: k, n: n, opt: opt, text: opt.t, kind: sg.kind, key: sg.kind === 'm' && at === 0 ? sg.key : null, up: sg.src.toUpperCase(), ti: ti, clause: clause,
+          lead: si === 0 ? t.lead : '', trail: si === t.segs.length - 1 ? t.trail : '', pre: sg.pre ? sg.pre[L] : '', hide: false, place: !!(opt.e && PLACE.has(opt.e.en)) });
+      });
+      if (t.trail) clause++;
+    });
+    its.forEach(function (it, i) { it.i = i; });
+    function near(it, d) {   // the word before or after, in the same clause
+      for (var j = it.i + d; j >= 0 && j < its.length; j += d) { var x = its[j]; if (!x.sg || x.clause !== it.clause) return null; if (!x.hide) return x; }
+      return null;
+    }
+    function drop(it) {   // a word that another word now says; its full stop or bracket moves to a neighbour
+      var a;
+      it.hide = true;
+      if (it.trail) { for (a = it.i - 1; a >= 0 && its[a].sg && its[a].hide; a--); if (a >= 0 && its[a].sg) { its[a].trail += it.trail; it.trail = ''; } }
+      if (it.lead) { for (a = it.i + 1; a < its.length && its[a].sg && its[a].hide; a++); if (a < its.length && its[a].sg) { its[a].lead = it.lead + its[a].lead; it.lead = ''; } }
+    }
+    var word = function (x, w) { return !!x && x.kind === 'w' && x.up === w; };
+    var isIn = function (x) { return !!x && x.key === 'IN'; };
+    var isWx = function (x) { return !!x && !!x.key && x.key !== 'VC' && WXRE.test(x.key); };
+
+    // 2. SCT-BKN reads "scattered to broken"
+    its.forEach(function (it) {
+      if (it.kind !== 'g' || it.up !== '-') return;
+      var a = its[it.i - 1], b = its[it.i + 1];
+      if (a && b && a.kind === 'm' && b.kind === 'm' && a.ti === it.ti && b.ti === it.ti) it.text = fr ? ' à ' : ' to ';
+    });
+
+    // 3. Times: 15Z is 15:00 UTC, FM140200 is from the 14th at 02:00 UTC
+    its.forEach(function (it) {
+      if (it.kind !== 'n') return;
+      var nx = near(it, 1), pv = near(it, -1), c;
+      if (nx && nx.key === 'Z' && nx.ti === it.ti) {
+        var parts = it.sg.src.split('-').map(clock);
+        if (!parts.every(Boolean)) return;
+        it.text = parts.map(function (p) { return p.t; }).join(fr ? ' à ' : ' to '); it.time = true; drop(nx);
+        if (fr && word(pv, 'BY')) pv.text = "d'ici";
+      } else if (it.sg.fm && pv && (c = clock(it.sg.src))) {
+        it.time = true;
+        if (fr) { pv.text = c.day ? 'à partir' : 'à partir de'; it.text = c.t.replace(/^le /, 'du '); } else it.text = c.t;
+      }
+    });
+
+    // 4. Numbers: a number with SM is a visibility, with KT a speed, and a bare one after TOPS or CIGS is a height
+    its.forEach(function (it) {
+      if (it.kind !== 'n' || it.time) return;
+      var nx = near(it, 1), pv = near(it, -1), src = it.sg.src;
+      if (nx && nx.kind === 'm' && UNITS.has(nx.sg.key) && nx.sg.key !== 'Z') {
+        it.unit = nx.sg.key;
+        it.text = it.text.replace(/(\d)-(\d)/, '$1' + (fr ? ' à ' : ' to ') + '$2');
+        if (it.unit === 'SM') {
+          var said = !!pv && pv.key === 'VIS', given = !!pv && (pv.key === 'GVG' || word(pv, 'WITH'));
+          it.pre = (fr ? (said ? 'de ' : given ? 'une visibilité de ' : 'visibilité de ') : (said ? '' : 'visibility ')) + it.pre;
+          var after = near(nx, 1); if (after) after.afterVis = true;
+        }
+        if (it.unit === 'KT' && pv && pv.key && !it.pre) {
+          if (COMPASS.has(pv.key) || MOVING.has(pv.key)) it.pre = fr ? 'à ' : 'at ';
+          else if (pv.key === 'G') it.pre = fr ? (/-/.test(src) ? 'de ' : 'à ') : 'of ';
+        }
+        return;
+      }
+      var link = it.sg.ht || (pv && pv.key && HEIGHT_AFTER[pv.key]) || (pv && pv.kind === 'w' && HEIGHT_AFTER[pv.up]) || null;
+      var level = !!nx && !!nx.key && LEVELS.has(nx.key);
+      var second = word(pv, 'AND') && !!near(pv, -1) && near(pv, -1).height;
+      if (!link && !level && !second) return;
+      var h = height(src); if (!h) return;
+      it.text = h; it.height = true;
+      if (link) it.pre = link[L] + it.pre;
+    });
+
+    // 5. Small links between two words
+    its.forEach(function (it) {
+      if (!it.sg) return;
+      var nx = near(it, 1), pv = near(it, -1);
+      if (it.key === 'FL' && pv && pv.key === 'TOP') it.pre = fr ? 'au ' : 'at ';                          // tops at flight level 180
+      if (fr && it.key && COMPASS.has(it.key) && pv && pv.key && MOVING.has(pv.key)) it.text = 'vers ' + (vowel(it.text) ? "l'" : 'le ') + it.text;   // se déplaçant vers l'est
+      if (isWx(it) && isWx(pv) && pv.ti === it.ti && its[it.i - 1] === pv) it.pre = fr ? 'et ' : 'and ';      // TSRA: thunderstorms and rain
+      if (fr && word(it, 'DUE') && word(nx, 'TO')) { it.text = 'en raison'; nx.text = 'de'; }
+      if (word(pv, 'WILL') && it.key && FIRST_VARIANT[it.key] && it.sg.opts[1]) it.text = it.sg.opts[1].t;     // will move, as the manual lists it first
+    });
+
+    // 6. French places: le nord de l'Ontario, au-dessus de l'Alberta, au Nouveau-Brunswick
+    if (fr) its.forEach(function (it) {
+      if (!it.sg || !it.place) return;
+      var pv = near(it, -1), P = PROV[it.sg.key], name = it.text;
+      var art = P ? P[0] : (GEO[name.split(/[ -]/)[0]] || '');
+      var reg = pv && pv.key && REGION[pv.key] ? pv : null, before = its[pv ? pv.i - 1 : -1];
+      if (reg) {
+        var r = REGION[reg.key], core = r + ' ' + dePlace(art, name), pp = near(reg, -1);
+        if (pp && pp.key && DE_AFTER.has(pp.key)) { reg.text = (vowel(r) ? "de l'" : 'du ') + core; pp.done = true; }
+        else if (isIn(pp) || (pp && pp.key && THE_AFTER.has(pp.key))) reg.text = (vowel(r) ? "l'" : 'le ') + core;
+        else reg.text = core;
+        reg.done = true; drop(it); it.mode = 'de';
+      } else if (pv && pv.key && DE_AFTER.has(pv.key)) { it.text = dePlace(art, name); it.mode = 'de'; pv.done = true; }
+      else if (isIn(pv)) { if (P) { drop(pv); it.text = P[1] + name; } else it.text = art + name; it.mode = 'in'; }
+      else if ((word(pv, 'AND') || (pv && pv.key === 'OR')) && before && before.mode) {                  // ... et du Québec
+        it.mode = before.mode; it.text = it.mode === 'de' ? dePlace(art, name) : P ? P[1] + name : art + name;
+      }
+    });
+
+    // 7. A noun with its describing words. English keeps the order. French puts most of them after the noun and
+    //    makes them agree: ISOL CB is cumulonimbus isolés, +SHRA is fortes averses de pluie.
+    var isAdj = function (x) { return !!x && !x.hide && !x.done && ((!!x.key && !!ADJ[x.key]) || x.kind === 'c'); };
+    var isNoun = function (x) { return !!x && !x.hide && !!x.key && !!NOUN[x.key]; };
+    var taken = new Set();
+    its.slice().forEach(function (it) {
+      if (!it.sg || it.hide || taken.has(it.k) || !(isAdj(it) || isNoun(it))) return;
+      var run = [it], j = it;
+      for (;;) {
+        var nx = near(j, 1);
+        if (!nx || !isAdj(j)) break;
+        if (nx.kind === 'g') { var b = near(nx, 1); if (isAdj(b) && b.ti === j.ti) { run.push(nx, b); j = b; continue; } break; }
+        if (isAdj(nx) || isNoun(nx)) { run.push(nx); j = nx; continue; }
+        break;
+      }
+      var head = run[run.length - 1];
+      if (!isNoun(head)) return;
+      run.forEach(function (x) { taken.add(x.k); });
+      var N = NOUN[head.key], adjs = run.slice(0, -1);
+      var plural = /p/.test(N.f) || head.sg.plural || /E/.test(N.f) || (fr && /P/.test(N.f)) || adjs.some(function (a) { return !!a.key && ADJ[a.key].many; });
+      if (plural && !/p/.test(N.f) && !head.sg.plural) head.text = (PLURAL[head.key] && PLURAL[head.key][L]) || manualSeg(head.sg.src, head.key, { plural: true }).opts[0].t;
+      var np = { head: head, g: N.g, plural: plural, pre: false, count: /c/.test(N.f) }, first = run[0];
+      if (fr && adjs.length === 1 && adjs[0].key === 'OVC' && /P/.test(N.f) && head.key !== 'CLD') {
+        adjs[0].text = 'ciel couvert de'; np.g = 'm'; np.plural = false; np.count = true;                  // OVC ST: ciel couvert de stratus
+      } else if (fr && adjs.length) {
+        var units = [], cur = null;
+        adjs.forEach(function (a) {
+          if (a.kind === 'g') { cur.push(a); cur.open = true; return; }
+          if (cur && cur.open) { cur.push(a); cur.open = false; } else { cur = [a]; units.push(cur); }
+          var A = a.kind === 'c' ? { pos: 'b', fr: a.up === '+' ? 'fort' : 'faible' } : ADJ[a.key];
+          a.text = A.inv ? A.fr : agree(A.fr, N.g, plural);
+          if (cur.length === 1) cur.pos = A.pos;
+        });
+        var front = units.filter(function (u) { return u.pos === 'b'; }), back = units.filter(function (u) { return u.pos !== 'b'; }).reverse();
+        var order = [].concat.apply([], front).concat([head], [].concat.apply([], back));
+        // the words go back into the same places in the new order, and any bracket stays on the outside
+        var slots = run.map(function (x) { return x.i; }), lead = run[0].lead, trail = head.trail, vis = run[0].afterVis;
+        order.forEach(function (x, n) { x.lead = ''; x.trail = ''; x.afterVis = false; x.i = slots[n]; its[slots[n]] = x; });
+        order[0].lead = lead; order[order.length - 1].trail = trail; order[0].afterVis = vis;
+        first = order[0]; np.pre = front.length > 0;
+      }
+      first.np = np;
+    });
+
+    // 8. The small words in front of a noun group. English: "in" between a visibility and its weather.
+    //    French: the article that "avec", "donnant", "dans", "au-dessus" and the like need.
+    its.forEach(function (it) {
+      if (!it.sg || it.hide || it.kind === 'g') return;
+      var np = it.np, pv = near(it, -1), w = it.text.split(' ')[0];
+      if (it.afterVis && (np ? isWx(np.head) || it.kind === 'c' : isWx(it))) { it.pre = (fr ? 'dans ' + (np ? the(np, w) : '') : 'in ') + it.pre; return; }
+      if (!fr || !pv) return;
+      if (np) {
+        if (pv.key === 'GVG' || word(pv, 'WITH')) it.pre = some(np, w) + it.pre;
+        else if (isIn(pv) || (pv.key && THE_AFTER.has(pv.key))) it.pre = the(np, w) + it.pre;
+        else if (pv.key && DE_AFTER.has(pv.key) && !pv.done) { it.pre = ofThe(np, w) + it.pre; pv.done = true; }
+      } else if (pv.key && DE_AFTER.has(pv.key) && !pv.done && !it.height && !it.done) {
+        it.pre = (it.kind === 'm' && vowel(w) ? "d'" : 'de ') + it.pre; pv.done = true;                     // près de YEG
+      }
+    });
+
+    // 9. "rime icing" then "icing" says it once
+    var last = null;
+    its.forEach(function (it) {
+      if (!it.sg) { last = null; return; }
+      if (it.hide || it.kind === 'g') return;
+      if (last && last.kind === 'm' && it.kind === 'm' && !it.pre && last.clause === it.clause) {
+        var a = last.text.split(' ').pop().toLowerCase(), b = it.text.split(' ');
+        if (b[0].toLowerCase() === a) { b.shift(); if (b.length) it.text = b.join(' '); else drop(it); }
+      }
+      last = it;
+    });
+    return its;
   }
 
   // ---------- Looking for something close when nothing matches ----------
@@ -2155,34 +2432,37 @@ Z|Zulu (UTC) Universal Time Coordinated|Zulu (UTC) temps universel coordonné
       return;
     }
 
-    // A line: word by word.
-    var cap = true, hasAlt = false, unknown = [], used = [], seen = new Set();
-    toks.forEach(function (t, ti) {
-      if (t.ws !== undefined) { var nl = t.ws.indexOf('\n') > -1; plain.appendChild(document.createTextNode(nl ? '\n' : ' ')); if (nl) cap = true; return; }
-      if (t.lead) plain.appendChild(document.createTextNode(t.lead));
-      t.segs.forEach(function (sg, si) {
-        var prev = t.segs[si - 1];
-        if (si > 0 && sg.kind !== 'g' && prev.kind !== 'g') plain.appendChild(document.createTextNode(' '));
-        var k = ti + '.' + si + ':' + sg.src + ':' + lang, n = sg.opts.length;
-        var opt = sg.opts[(choice.get(k) || 0) % n], word = opt.t;
-        if (cap && sg.kind !== 'u' && sg.kind !== 'n' && sg.kind !== 'g') word = word.charAt(0).toUpperCase() + word.slice(1);
-        if (sg.kind !== 'g') cap = false;
-        if (n > 1) {
-          hasAlt = true;
-          var b = el('button', 'alt', word);
-          b.type = 'button'; b.dataset.k = k;
-          b.title = sg.opts.map(function (o) { return o.t; }).join(' / ');
-          b.setAttribute('aria-description', tx.altTitle);
-          b.addEventListener('click', function () { choice.set(k, ((choice.get(k) || 0) + 1) % n); update(true); });
-          plain.appendChild(b);
-        } else if (sg.kind === 'u') plain.appendChild(el('span', 'u', word));
-        else plain.appendChild(document.createTextNode(word));
-        // the table follows the sentence: one row for the meaning that is showing
-        if (opt.e && !seen.has(opt.e.i)) { seen.add(opt.e.i); used.push(opt.e); }
-        var bare = sg.src.toUpperCase().replace(/^[^A-Z0-9À-Ý]+|[^A-Z0-9À-Ý]+$/g, '');
-        if (sg.kind === 'u' && /[A-ZÀ-Ý]{2}/.test(bare) && unknown.indexOf(bare) < 0) unknown.push(bare);
-      });
-      if (t.trail) { plain.appendChild(document.createTextNode(t.trail)); if (/[.!?]/.test(t.trail)) cap = true; }
+    // A line: the words, then the rules that make a sentence of them.
+    var cap = true, fresh = true, glued = false, lastTok = -1, hasAlt = false, unknown = [], used = [], seen = new Set();
+    var say = function (t) { if (t) plain.appendChild(document.createTextNode(t)); };
+    var up = function (t) { return t.charAt(0).toUpperCase() + t.slice(1); };
+    compose(toks).forEach(function (it) {
+      if (it.br) { say('\n'); cap = true; fresh = true; glued = false; return; }
+      if (it.punct) { say((fresh ? '' : ' ') + it.punct); fresh = false; return; }
+      // the table follows the sentence: one row for each meaning that is showing
+      if (it.opt.e && !seen.has(it.opt.e.i)) { seen.add(it.opt.e.i); used.push(it.opt.e); }
+      var bare = it.up.replace(/^[^A-Z0-9À-Ý]+|[^A-Z0-9À-Ý]+$/g, '');
+      if (it.kind === 'u' && /[A-ZÀ-Ý]{2}/.test(bare) && unknown.indexOf(bare) < 0) unknown.push(bare);
+      if (it.hide) return;
+      var glue = it.kind === 'g', pre = it.pre, word = it.text;
+      if (!fresh && (it.ti !== lastTok || (!glue && !glued))) say(' ');
+      say(it.lead);
+      if (cap && !glue && (pre || (it.kind !== 'u' && it.kind !== 'n'))) { if (pre) pre = up(pre); else word = up(word); }
+      if (!glue) cap = false;
+      say(pre);
+      if (it.n > 1) {
+        hasAlt = true;
+        var b = el('button', 'alt', word), k = it.k, n = it.n;
+        b.type = 'button'; b.dataset.k = k;
+        b.title = it.sg.opts.map(function (o) { return o.t; }).join(' / ');
+        b.setAttribute('aria-description', tx.altTitle);
+        b.addEventListener('click', function () { choice.set(k, ((choice.get(k) || 0) + 1) % n); update(true); });
+        plain.appendChild(b);
+      } else if (it.kind === 'u') plain.appendChild(el('span', 'u', word));
+      else say(word);
+      say(it.trail);
+      if (/[.!?]/.test(it.trail)) cap = true;
+      fresh = false; glued = glue; lastTok = it.ti;
     });
     plainText = plain.textContent;
     if (hasAlt) { $('hint-alt').textContent = tx.hintAlt; $('hint-alt').hidden = false; }
