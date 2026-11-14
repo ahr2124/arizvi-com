@@ -17,5 +17,18 @@ export default defineConfig({
     '/work/experimentation/': '/projects/experimentation/',
     '/work/secure-check-n/': '/projects/secure-check-n/',
     '/work/amazon/': '/projects/amazon/',
+    // The Tulane and Bucknell pages are hidden (Ali, 13 Nov 2026: "hide the tulane and bucknell pages"). Their files
+    // sit in src/pages/_tulane and src/pages/_bucknell, which Astro leaves out of the build, and their old addresses
+    // land on Teaching.
+    '/tulane/': '/teaching/',
+    '/bucknell/': '/teaching/',
+    '/bucknell/anop-102/': '/teaching/',
+    '/bucknell/anop-102/pack/': '/teaching/',
+    '/bucknell/anop-302/': '/teaching/',
+    '/bucknell/anop-302/pack/': '/teaching/',
+    '/bucknell/anop-330/': '/teaching/',
+    '/bucknell/anop-330/pack/': '/teaching/',
+    '/bucknell/anop-400/': '/teaching/',
+    '/bucknell/anop-400/pack/': '/teaching/',
   },
 });
