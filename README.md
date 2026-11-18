@@ -18,7 +18,7 @@ Before writing or editing copy, read `VOICE.md`.
 
       python3 -I scripts/songs150.py "Most Streamed Spotify Songs 2024.csv" > src/data/songs150.ts
 
-  The CSV is not kept in the repository, and the page links to Kaggle for it. The script holds the cut and fixes the names the CSV garbles.
+  The CSV is not kept in the repository, and the page links to Kaggle for it. The script holds the cut (rows that are gaps in the source left out, then the top 150 by All Time Rank) and fixes the names the CSV garbles; it stops and lists any new garbled name. The shell's in-page links add to the browser's history, so Back walks the panels.
 - `/atmri/` is the Sector ALPHA ATCO assistant prototype. Not linked from the nav, sends `noindex`, and password protected: `public/atmri/index.html` is the app encrypted in the browser-decryptable form `scripts/protect.mjs` writes. Keep the plain source out of this public repo. To update or change the password:
       ATMRI_PASSWORD=... node scripts/protect.mjs path/to/source.html public/atmri/index.html "Sector ALPHA"
 - `/slotravel/` is a standalone microsite (`public/slotravel/index.html`, one file, sends `noindex`, not linked from the nav): 3 slow trips of 21 days each, with a split-flap departures board, a quiz and a boarding pass that emails Ali the pick. Its photos are hotlinked Wikimedia Commons thumbnails (only the 500, 960, 1280 and 1920 widths exist), credited in its footer.
