@@ -4,8 +4,9 @@
 // The 14 weeks, their topics and the labs come from the course pack (src/data/packs/anop-102.ts), so the shell and the
 // course page (/bucknell/anop-102/) agree. Week 11 is the week built out in full: before class, the 2 classes, and
 // after. Completion marks and grades are a sample student's, on the morning of class 2 in week 11.
-// The class follows his lesson plan of 17 Nov 2026 (intro, example, graph, build; the recap ends on LLMs); the 30
-// minutes he teaches on the visit are marked `core`. The data are in src/data/songs150.ts (cleaned on 17 Nov at his
+// The class follows his lesson plan of 17 Nov 2026 (intro, example, graph, build, then a recap; he took the chatbot out
+// of the recap that evening: "I don't think the chatbot recap is required"); the 30 minutes he teaches on the visit
+// are marked `core`. The data are in src/data/songs150.ts (cleaned on 17 Nov at his
 // word, after the cold reads: radio 0.83 -> 0.23 once playlists are in; song age P 0.09).
 // After the cold reads of 17 Nov: the model "points to" playlists and does not settle the budget (playlist counts
 // follow streams too, and neither input comes with a cost); round two is a judgement call on a P-value of 0.09; the
@@ -112,7 +113,7 @@ export const class2 = {
     { min: 5, who: 'room', core: true, title: 'The decision.', text: 'One budget: radio or playlists? Hands up for each. Our example is Flowers (2.03 billion streams, about 270,000 playlists, and 1.47 million radio plays).' },
     { min: 7, who: 'me', core: true, title: 'The graphs.', text: 'Three scatter charts in Excel, each with a trendline: streams by radio plays, streams by playlists, and radio plays by playlists. Radio seems to work. So do playlists. And the two rise together.' },
     { min: 12, who: 'you', core: true, title: 'Build it.', text: 'In pairs, run Regression in the ToolPak with radio and playlists together. Radio\'s coefficient falls from 0.83 to 0.23, and we read it as a sentence: holding playlists constant, 1,000 more radio plays go with about 230,000 more streams. So far, the model points to playlists. Then where it breaks: stations add songs that are already hits, playlists fill up with songs people already stream, and neither number comes with a cost. What would settle it is an experiment, like the one in week 10.' },
-    { min: 3, who: 'me', core: true, title: 'Recap.', text: 'A regression fits a weight to each input from examples. A chatbot runs on the same idea at a huge scale: it fits billions of weights to examples to predict the next word. Here is what one says when you type in the four clues.' },
+    { min: 3, who: 'me', core: true, title: 'Recap.', text: 'What the second input did: each coefficient is read holding the other input constant, and radio\'s shrank once playlists came in, because the two rise together.' },
     { min: 15, who: 'you', title: 'Round two.', text: 'Predict first: does a song\'s age add anything once playlists are in? Then add months since release. Its P-value is 0.09, and adjusted R squared goes up a little. Keep it or drop it? Pairs decide and say why, and we hear both sides.' },
     { min: 15, who: 'you', title: 'Design the test.', text: 'In threes, on paper: the experiment a label could run to settle radio against playlists. Which songs, which ones get the radio campaign, what you measure, what each option costs, and when you look.' },
     { min: 5, who: 'you', title: 'Exit ticket.', text: 'Two sentences on paper, as set out in the exit ticket in this week\'s section.' },
