@@ -47,6 +47,8 @@ const weeks = pack.weeks.map((w) => {
   return { w: w.w, topic: w.topic, items };
 });
 const isLabel = (i: Activity | Label): i is Label => 'label' in i;
+// The pack's grading rows point at a rubric and a sample "below" on its own page; here they stand alone.
+const gradingRows = [...pack.grading.map(([item, w, how]) => [item, w, how.replace(/\s*(Rubric|Sample) below\.\s*$/, '')]), ['Checks', '0%', 'The weekly three-question check. Practice, and not counted.']];
 const runs = pack.runs.filter(([k]) => ['Format', 'Before class', 'In class', 'The lab', 'Tools', 'Help'].includes(k));
 
 // Class 2's plan, with its minutes.
@@ -81,7 +83,7 @@ const who = { me: 'Me, at the front', you: 'You, working', room: 'The room, lapt
           <p>{course.line}</p>
           <p><strong>The project.</strong> {course.project}</p>
         </div>
-        <p class="mdl-note">{moment}</p>
+        <p class="mdl-note">{course.standing} {moment}</p>
 
         <section class="mdl-sec" id="mdl-s0">
           <h4 class="mdl-sec-head"><span class="mdl-sec-name">General</span></h4>
@@ -123,19 +125,19 @@ const who = { me: 'Me, at the front', you: 'You, working', room: 'The room, lapt
           <thead><tr><th scope="col">Name</th><th scope="col">Roles</th><th scope="col">In this course</th></tr></thead>
           <tbody>{people.map((p) => <tr><td>{p.name}</td><td>{p.role}</td><td>{p.note}</td></tr>)}</tbody>
         </table>
-        <p class="mdl-sub">Groups</p>
+        <h4 class="mdl-sub">Groups</h4>
         <p>Project teams of four, from week 4. Pairs for class work are set in class.</p>
         <ul class="mdl-chips">{['Team 1', 'Team 2', 'Team 3', 'Team 4', 'Team 5'].map((t) => <li class="chip">{t}</li>)}</ul>
       </div>
 
       <div class="mdl-panel" id="mdl-grades" data-tab="mdl-grades" data-crumb="Grades">
         <h3 tabindex="-1">Grades</h3>
-        <p class="mdl-sub">Grade categories</p>
+        <h4 class="mdl-sub">Grade categories</h4>
         <table class="mdl-table">
           <thead><tr><th scope="col">Category</th><th scope="col">Weight</th><th scope="col">How it is graded</th></tr></thead>
-          <tbody>{pack.grading.map(([item, w, how]) => <tr><td>{item}</td><td class="nb">{w}</td><td>{how}</td></tr>)}</tbody>
+          <tbody>{gradingRows.map(([item, w, how]) => <tr><td>{item}</td><td class="nb">{w}</td><td>{how}</td></tr>)}</tbody>
         </table>
-        <p class="mdl-sub">User report: a sample student, weeks 9 to 11</p>
+        <h4 class="mdl-sub">User report: a sample student, weeks 9 to 11</h4>
         <table class="mdl-table">
           <thead><tr><th scope="col">Grade item</th><th scope="col">Grade</th><th scope="col">Range</th><th scope="col">Feedback</th></tr></thead>
           <tbody>{grades.map((r) => <tr><td>{r.name}<span class="mdl-meta mdl-due">{r.cat} · Week {r.week}</span></td><td class="nb">{r.grade}</td><td class="nb">{r.range}</td><td>{r.feedback}</td></tr>)}</tbody>
@@ -144,7 +146,6 @@ const who = { me: 'Me, at the front', you: 'You, working', room: 'The room, lapt
       </div>
 
       <div class="mdl-panel" id="mdl-syllabus" data-tab="mdl-course" data-index="mdl-s0" data-crumb="General|Syllabus">
-        <p class="mdl-kind label">Page</p>
         <h3 tabindex="-1">Syllabus</h3>
         {pack.description.slice(0, 1).map((p) => <p>{p}</p>)}
         <dl class="mdl-runs">{runs.map(([k, v]) => <div><dt class="label">{k}</dt><dd>{v}</dd></div>)}</dl>
@@ -153,7 +154,6 @@ const who = { me: 'Me, at the front', you: 'You, working', room: 'The room, lapt
       </div>
 
       <div class="mdl-panel" id="mdl-announcements" data-tab="mdl-course" data-index="mdl-s0" data-crumb="General|Announcements">
-        <p class="mdl-kind label">Forum</p>
         <h3 tabindex="-1">Announcements</h3>
         {announcements.map((a) => (
           <article class="mdl-post">
@@ -166,79 +166,77 @@ const who = { me: 'Me, at the front', you: 'You, working', room: 'The room, lapt
       </div>
 
       <div class="mdl-panel" id="mdl-toolpak" data-tab="mdl-course" data-index={`mdl-w${now}`} data-crumb="Regression|Turn on the Analysis ToolPak">
-        <p class="mdl-kind label">Page</p>
         <h3 tabindex="-1">Turn on the Analysis ToolPak</h3>
         <p>The ToolPak comes with desktop Excel, switched off. Turn it on once, before class 1.</p>
         <div class="mdl-two">
-          <div><p class="mdl-sub">On Windows</p><ol class="mdl-list">{toolpak.windows.map((s) => <li>{s}</li>)}</ol></div>
-          <div><p class="mdl-sub">On a Mac</p><ol class="mdl-list">{toolpak.mac.map((s) => <li>{s}</li>)}</ol></div>
+          <div><h4 class="mdl-sub">On Windows</h4><ol class="mdl-list">{toolpak.windows.map((s) => <li>{s}</li>)}</ol></div>
+          <div><h4 class="mdl-sub">On a Mac</h4><ol class="mdl-list">{toolpak.mac.map((s) => <li>{s}</li>)}</ol></div>
         </div>
-        <p class="mdl-sub">Running a regression</p>
+        <h4 class="mdl-sub">Running a regression</h4>
         <ol class="mdl-list">{toolpak.run.map((s) => <li>{s}</li>)}</ol>
         <p class="mdl-back"><a href="#mdl-course">← Back to the course</a></p>
       </div>
 
       <div class="mdl-panel" id="mdl-check" data-tab="mdl-course" data-index={`mdl-w${now}`} data-crumb={`Regression|${check.title}`}>
-        <p class="mdl-kind label">Quiz</p>
         <h3 tabindex="-1">{check.title}</h3>
         <p>{check.intro}</p>
         <p class="mdl-note">Try it. Pick an answer and press Check.</p>
         {check.questions.map((q, qi) => (
-          <fieldset class="mdl-q" data-q data-right={q.right}>
+          <div class="mdl-q" role="group" aria-labelledby={`mdl-q${qi}-text`} data-q data-right={q.right}>
             <div class="mdl-q-info">
               <p class="mdl-q-n">Question {qi + 1}</p>
-              <p class="mdl-meta" data-state>Not yet answered</p>
-              <p class="mdl-meta">Marked out of 1.00</p>
+              <p class="mdl-meta" data-state aria-live="polite">Not yet answered</p>
+              <p class="mdl-meta">1 point</p>
             </div>
             <div class="mdl-q-body">
-              <legend>{q.q}</legend>
+              <p class="mdl-q-text" id={`mdl-q${qi}-text`}>{q.q}</p>
               <ul>
                 {q.options.map((o, oi) => (
                   <li><label><input type="radio" name={`mdl-q${qi}`} value={oi} /> <span>{String.fromCharCode(97 + oi)}. {o}</span></label></li>
                 ))}
               </ul>
               <button type="button" class="demo-btn" data-check>Check</button>
-              <div class="mdl-q-fb" data-fb hidden>
+              <div class="mdl-q-fb" data-fb hidden aria-live="polite">
                 <p class="mdl-q-verdict" data-verdict></p>
                 <p>{q.feedback}</p>
                 <p class="mdl-meta">The right answer: {String.fromCharCode(97 + q.right)}.</p>
               </div>
               <noscript><p class="mdl-meta">The right answer: {String.fromCharCode(97 + q.right)}. {q.feedback}</p></noscript>
             </div>
-          </fieldset>
+          </div>
         ))}
         <p class="mdl-back"><a href="#mdl-course">← Back to the course</a></p>
       </div>
 
       <div class="mdl-panel" id="mdl-class2" data-tab="mdl-course" data-index={`mdl-w${now}`} data-crumb={`Regression|${class2.title}`}>
-        <p class="mdl-kind label">Page</p>
         <h3 tabindex="-1">{class2.title}</h3>
         <p class="mdl-meta mdl-lede-meta">{class2.meta}</p>
         <p>{class2.intro}</p>
-        <p class="mdl-sub">By the end of class you can</p>
+        <p><strong>Bring.</strong> {class2.bring}</p>
+        <h4 class="mdl-sub">By the end of class you can</h4>
         <ol class="mdl-list">{class2.outcomes.map((o) => <li>{o}</li>)}</ol>
 
-        <p class="mdl-sub">The plan</p>
+        <h4 class="mdl-sub">The plan</h4>
         <div class="cls mdl-plan">
           <div class="cls-bar" aria-hidden="true">{steps.map((s) => <span class:list={[s.who, { 'is-core': s.core }]} style={`flex: ${s.min} ${s.min} 0`} />)}</div>
           <div class="mdl-core-bar" aria-hidden="true">{steps.map((s) => <span class:list={{ 'is-core': s.core }} style={`flex: ${s.min} ${s.min} 0`} />)}</div>
-          <p class="mdl-aside"><span class="mdl-core-sw" aria-hidden="true"></span>Marked: the 30 minutes I teach on my campus visit (minutes 5 to 35).</p>
+          <p class="mdl-aside"><span class="mdl-core-sw" aria-hidden="true"></span>Marked: the 30 minutes I teach on my campus visit (minutes 5 to 35). {class2.scope}</p>
           <ol class="cls-steps">
             {steps.map((s) => (
               <li class:list={{ 'is-core': s.core }}>
                 <span class="cls-min">{s.from}-{s.to}</span>
                 <span class={`sw ${s.who}`} aria-hidden="true" />
-                <span class="cls-text"><b>{s.title}</b> {s.text}</span>
+                <span class="cls-text"><span class="mdl-sr">{who[s.who]}{s.core && ', on the visit'}: </span><b>{s.title}</b> {s.text}</span>
               </li>
             ))}
           </ol>
           <p class="cls-legend">{(['me', 'you', 'room'] as const).map((k) => <span><span class={`sw ${k}`} aria-hidden="true" />{who[k]}</span>)}</p>
         </div>
 
-        <p class="mdl-sub">The data</p>
+        <h4 class="mdl-sub">The data</h4>
         <p>{class2.data} <a href={class2.source}>The dataset on Kaggle</a>.</p>
 
-        <p class="mdl-sub">Try it</p>
+        <h4 class="mdl-sub">Try it</h4>
         <ol class="mdl-tries">{class2.tries.map((x) => <li><strong>{x.do}</strong> {x.see}</li>)}</ol>
         <SongsDemo />
         <p class="mdl-coda"><a href="#mdl-lab11">Open lab 11&nbsp;→</a></p>
@@ -246,7 +244,6 @@ const who = { me: 'Me, at the front', you: 'You, working', room: 'The room, lapt
       </div>
 
       <div class="mdl-panel" id="mdl-lab11" data-tab="mdl-course" data-index={`mdl-w${now}`} data-crumb={`Regression|${lab11.title}`}>
-        <p class="mdl-kind label">Assignment</p>
         <h3 tabindex="-1">{lab11.title}</h3>
         <dl class="mdl-facts">
           <div><dt class="label">Opened</dt><dd>{lab11.opened}</dd></div>
@@ -254,13 +251,13 @@ const who = { me: 'Me, at the front', you: 'You, working', room: 'The room, lapt
           <div><dt class="label">Grading</dt><dd>{lab11.grading}</dd></div>
           <div><dt class="label">File types</dt><dd>{lab11.types}</dd></div>
         </dl>
-        <p class="mdl-sub">Purpose</p>
+        <h4 class="mdl-sub">Purpose</h4>
         <p>{lab11.purpose}</p>
-        <p class="mdl-sub">Task</p>
+        <h4 class="mdl-sub">Task</h4>
         <ol class="mdl-list">{lab11.task.map((t) => <li>{t}</li>)}</ol>
-        <p class="mdl-sub">Criteria</p>
+        <h4 class="mdl-sub">Criteria</h4>
         <p>{lab11.criteria}</p>
-        <div class="mdl-scroll">
+        <div class="mdl-scroll" tabindex="0" role="region" aria-label="Lab 11 rubric">
           <table class="mdl-table mdl-rubric">
             <caption class="label">Grading criteria</caption>
             <thead><tr><th scope="col">Criterion</th><th scope="col">2 points</th><th scope="col">1 point</th><th scope="col">0 points</th></tr></thead>
@@ -280,8 +277,8 @@ const who = { me: 'Me, at the front', you: 'You, working', room: 'The room, lapt
           <tbody>
             <tr><th scope="row">Submission status</th><td>No submission yet</td></tr>
             <tr><th scope="row">Grading status</th><td>Not graded</td></tr>
-            <tr><th scope="row">Time remaining</th><td>Due before class 1 of week 12</td></tr>
-            <tr><th scope="row">First page</th><td>The exit ticket from class 2, handed in on paper and scanned</td></tr>
+            <tr><th scope="row">Due</th><td>Before class 1 of week 12</td></tr>
+            <tr><th scope="row">First page</th><td>A photo of the exit ticket from class 2</td></tr>
           </tbody>
         </table>
         <p class="mdl-back"><a href="#mdl-course">← Back to the course</a></p>
@@ -326,11 +323,10 @@ const who = { me: 'Me, at the front', you: 'You, working', room: 'The room, lapt
 
   .mdl-main { min-width: 0; padding: 18px 22px 24px; }
   .mdl-panel h3 { margin: 0 0 14px; font-size: 1.35rem; outline: none; }
-  .mdl-kind { margin: 0 0 2px; font-size: 12px; letter-spacing: 0.1em; }
   .mdl-panel + .mdl-panel { margin-top: 2rem; padding-top: 1.25rem; border-top: 1px solid #000; }
   .mdl.js .mdl-panel:not(.is-on) { display: none; }
   .mdl.js .mdl-panel + .mdl-panel { margin-top: 0; padding-top: 0; border-top: 0; }
-  .mdl-sub { margin: 1.5rem 0 0.4rem; font-weight: 600; }
+  .mdl-sub { margin: 1.5rem 0 0.4rem; font-size: 1rem; font-weight: 600; line-height: 1.4; }
   .mdl-panel > h3 + .mdl-sub { margin-top: 0; }
   .mdl-list { margin: 0 0 1em; }
   .mdl-meta { color: rgba(0, 0, 0, 0.6); font-size: 14px; }
@@ -381,11 +377,11 @@ const who = { me: 'Me, at the front', you: 'You, working', room: 'The room, lapt
   .mdl-two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 var(--gutter, 24px); }
 
   /* The check: one question to a box, with Moodle's question info beside it. */
-  .mdl-q { display: grid; grid-template-columns: 8.5rem minmax(0, 1fr); gap: 0 18px; margin: 16px 0 0; padding: 14px 0 0; border: 0; border-top: 1px solid #000; min-width: 0; }
+  .mdl-q { display: grid; grid-template-columns: 8.5rem minmax(0, 1fr); gap: 0 18px; margin: 16px 0 0; padding: 14px 0 0; border-top: 1px solid #000; min-width: 0; }
   .mdl-q-info p { margin: 0; }
   .mdl-q-n { font-weight: 600; }
-  .mdl-q legend { float: left; width: 100%; padding: 0; margin: 0 0 8px; font-weight: 600; }
-  .mdl-q ul { clear: both; list-style: none; margin: 0 0 12px; padding: 0; max-width: none; }
+  .mdl-q-text { margin: 0 0 8px; font-weight: 600; }
+  .mdl-q ul { list-style: none; margin: 0 0 12px; padding: 0; max-width: none; }
   .mdl-q li { margin: 0; }
   .mdl-q label { display: grid; grid-template-columns: 20px minmax(0, 1fr); gap: 8px; padding: 5px 0; cursor: pointer; }
   .mdl-q input { margin: 4px 0 0; accent-color: #000; }
@@ -414,6 +410,9 @@ const who = { me: 'Me, at the front', you: 'You, working', room: 'The room, lapt
   .mdl-rubric tbody th { font-weight: 600; width: 8rem; }
   .mdl-rubric td.top { background: var(--hl-soft, #f2f2f2); }
   .mdl-scroll { overflow-x: auto; }
+  .mdl-scroll:focus-visible { outline: 2px solid #000; outline-offset: 2px; }
+  .mdl-sr { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+  .mdl-table td, .mdl-table th { overflow-wrap: anywhere; }
   .mdl-due { display: block; font-size: 13px; }
   .mdl-facts { display: flex; flex-wrap: wrap; gap: 8px 28px; margin: 0 0 6px; padding: 10px 0; border-top: 1px solid #000; border-bottom: 1px solid #000; }
   .mdl-facts dd { margin: 2px 0 0; }
@@ -448,9 +447,15 @@ const who = { me: 'Me, at the front', you: 'You, working', room: 'The room, lapt
     .mdl-runs div, .mdl-two, .mdl-q { grid-template-columns: minmax(0, 1fr); }
     .mdl-q-info { display: flex; flex-wrap: wrap; gap: 0 12px; margin-bottom: 6px; }
     .mdl-rubric { min-width: 560px; }
+    /* The tabs stay in view, so whatever a link opens lands below them. */
+    .mdl-sec, .mdl-panel, .mdl-panel [id] { scroll-margin-top: 56px; }
+  }
+  @media (max-width: 420px) {
+    .mdl-table .nb { white-space: normal; }
   }
   @media print {
     .mdl.js .mdl-panel:not(.is-on) { display: block; }
+    .mdl.js .mdl-panel + .mdl-panel { margin-top: 2rem; padding-top: 1.25rem; border-top: 1px solid #000; }
     .mdl-tabs, .mdl-index { display: none; }
     .mdl-body { grid-template-columns: minmax(0, 1fr); }
     .mdl-sec:not([open]) > :not(summary) { display: block; }
@@ -505,15 +510,22 @@ const who = { me: 'Me, at the front', you: 'You, working', room: 'The room, lapt
       const t = target(decodeURIComponent(a.getAttribute('href')!.slice(1))); if (!t) return;
       e.preventDefault();
       open(t);
-      history.replaceState(null, '', a.getAttribute('href'));
+      history.pushState(null, '', a.getAttribute('href'));
       if (t.el === t.p && !a.closest('.mdl-tabs')) t.p.querySelector<HTMLElement>('h3')?.focus({ preventScroll: true });
     });
     window.addEventListener('hashchange', () => { const t = target(decodeURIComponent(location.hash.slice(1))); if (t) open(t); });
+    // Back and Forward walk the panels opened inside the shell.
+    window.addEventListener('popstate', () => {
+      const t = target(decodeURIComponent(location.hash.slice(1))) ?? target(shell.dataset.start ?? '');
+      if (t) open(t);
+    });
+    window.addEventListener('beforeprint', () => shell.querySelectorAll('details').forEach((d) => { d.open = true; }));
     // Links to a panel from outside the shell (the page's own copy) open it too.
     document.addEventListener('click', (e) => {
+      if (e.defaultPrevented) return;
       const a = (e.target as Element).closest?.<HTMLAnchorElement>('a[href^="#mdl-"]'); if (!a || shell.contains(a)) return;
       const t = target(decodeURIComponent(a.getAttribute('href')!.slice(1))); if (!t) return;
-      e.preventDefault(); open(t); shell.scrollIntoView({ block: 'start' }); history.replaceState(null, '', a.getAttribute('href'));
+      e.preventDefault(); open(t); shell.scrollIntoView({ block: 'start' }); history.pushState(null, '', a.getAttribute('href'));
     });
 
     // The check: pick an answer, press Check, and the question says whether it is right, as Moodle's interactive
@@ -530,7 +542,7 @@ const who = { me: 'Me, at the front', you: 'You, working', room: 'The room, lapt
         fb.hidden = false;
         fb.classList.toggle('is-right', ok);
         q.querySelector<HTMLElement>('[data-verdict]')!.textContent = ok ? 'Correct' : 'Not quite';
-        state.textContent = ok ? 'Correct · Mark 1.00 out of 1.00' : 'Incorrect · Mark 0.00 out of 1.00';
+        state.textContent = ok ? 'Correct · 1 of 1 point' : 'Not quite · 0 of 1 point';
       });
     });
   }

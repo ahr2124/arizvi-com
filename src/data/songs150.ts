@@ -4,114 +4,117 @@
 export type Song = [string, string, number, number, number, number];
 export interface Coef { name: string; coef: number; se: number; t: number; p: number }
 export interface Model { r: number; r2: number; adj: number; n: number; rows: Coef[] }
-export const corrRadioPlaylists = 0.5;
+export const corrRadioPlaylists = 0.49;
+export const meanMonths = 7.9;
+// Without Flowers: radio alone, then radio with playlists in.
+export const withoutFlowers = { radio: 0.665, r2: 0.118, both: 0.172 };
 export const models: Record<'radio' | 'playlists' | 'both' | 'age', Model> = {
  "radio": {
-  "r": 0.487,
-  "r2": 0.237,
-  "adj": 0.232,
+  "r": 0.477,
+  "r2": 0.227,
+  "adj": 0.222,
   "n": 150,
   "rows": [
    {
     "name": "Intercept",
-    "coef": 314.3443,
-    "se": 29.5139,
-    "t": 10.65,
-    "p": 5.1e-20
+    "coef": 329.0334,
+    "se": 29.1134,
+    "t": 11.3,
+    "p": 9.625e-22
    },
    {
     "name": "AirPlay radio plays (thousands)",
-    "coef": 0.8677,
-    "se": 0.1279,
-    "t": 6.78,
-    "p": 2.6e-10
+    "coef": 0.8284,
+    "se": 0.1255,
+    "t": 6.6,
+    "p": 6.831e-10
    }
   ]
  },
  "playlists": {
-  "r": 0.776,
-  "r2": 0.603,
-  "adj": 0.6,
+  "r": 0.765,
+  "r2": 0.585,
+  "adj": 0.582,
   "n": 150,
   "rows": [
    {
     "name": "Intercept",
-    "coef": 143.3324,
-    "se": 25.8492,
-    "t": 5.54,
-    "p": 1.3e-07
+    "coef": 155.2096,
+    "se": 26.2987,
+    "t": 5.9,
+    "p": 2.356e-08
    },
    {
     "name": "Spotify playlists (thousands)",
-    "coef": 5.5828,
-    "se": 0.3726,
-    "t": 14.98,
-    "p": 1.8e-31
+    "coef": 5.4334,
+    "se": 0.3762,
+    "t": 14.44,
+    "p": 4.661e-30
    }
   ]
  },
  "both": {
-  "r": 0.784,
-  "r2": 0.615,
-  "adj": 0.61,
+  "r": 0.774,
+  "r2": 0.599,
+  "adj": 0.593,
   "n": 150,
   "rows": [
    {
     "name": "Intercept",
-    "coef": 138.9928,
-    "se": 25.6123,
-    "t": 5.43,
-    "p": 2.3e-07
+    "coef": 150.4948,
+    "se": 26.0361,
+    "t": 5.78,
+    "p": 4.307e-08
    },
    {
     "name": "AirPlay radio plays (thousands)",
-    "coef": 0.2284,
-    "se": 0.1056,
-    "t": 2.16,
-    "p": 0.032
+    "coef": 0.2328,
+    "se": 0.1041,
+    "t": 2.24,
+    "p": 0.02689
    },
    {
     "name": "Spotify playlists (thousands)",
-    "coef": 5.1179,
-    "se": 0.4262,
-    "t": 12.01,
-    "p": 1.4e-23
+    "coef": 4.9664,
+    "se": 0.426,
+    "t": 11.66,
+    "p": 1.184e-22
    }
   ]
  },
  "age": {
-  "r": 0.785,
-  "r2": 0.616,
-  "adj": 0.608,
+  "r": 0.779,
+  "r2": 0.606,
+  "adj": 0.598,
   "n": 150,
   "rows": [
    {
     "name": "Intercept",
-    "coef": 125.7556,
-    "se": 33.8744,
-    "t": 3.71,
-    "p": 0.00029
+    "coef": 116.5684,
+    "se": 32.6737,
+    "t": 3.57,
+    "p": 0.0004877
    },
    {
     "name": "AirPlay radio plays (thousands)",
-    "coef": 0.2258,
-    "se": 0.1059,
+    "coef": 0.221,
+    "se": 0.1037,
     "t": 2.13,
-    "p": 0.035
+    "p": 0.03479
    },
    {
     "name": "Spotify playlists (thousands)",
-    "coef": 4.9933,
-    "se": 0.4751,
-    "t": 10.51,
-    "p": 1.4e-19
+    "coef": 4.4928,
+    "se": 0.5067,
+    "t": 8.87,
+    "p": 2.421e-15
    },
    {
     "name": "Months since release",
-    "coef": 2.3688,
-    "se": 3.9556,
-    "t": 0.6,
-    "p": 0.55
+    "coef": 7.4794,
+    "se": 4.3998,
+    "t": 1.7,
+    "p": 0.09127
    }
   ]
  }
@@ -151,19 +154,14 @@ export const songs: Song[] = [
   ["Houdini", "Dua Lipa", 493.6, 45.3, 564.6, 7.2],
   ["If We Ever Broke Up", "Mae Stephens", 304.9, 43.9, 92.6, 16.1],
   ["euphoria", "Kendrick Lamar", 168.4, 17.2, 6.4, 1.5],
-  ["Panda Basi", "Mvua", 0.1, 0.2, 0.0, 16.1],
-  ["Mitu", "Maian", 0.1, 0.0, 0.1, 16.9],
   ["Supernova", "aespa", 69.7, 2.5, 0.7, 1.1],
   ["CARNIVAL", "¥$", 466.9, 53.8, 53.3, 4.2],
   ["What Was I Made For? [From The Motion Picture \"Barbie\"]", "Billie Eilish", 891.7, 114.6, 275.1, 11.1],
-  ["Babba", "Guy Mac", 0.0, 0.3, 0.0, 15.4],
   ["Shakira: Bzrp Music Sessions, Vol. 53", "Bizarrap", 946.9, 100.1, 165.7, 17.1],
-  ["The Way We Move - Extended Mix", "PowerDress", 0.0, 0.0, 0.1, 15.2],
   ["un x100to", "Grupo Frontera", 1008.5, 99.4, 73.5, 14.0],
   ["Sprinter", "Dave", 692.5, 199.8, 42.1, 12.5],
   ["CHIHIRO", "Billie Eilish", 169.4, 11.0, 1.0, 1.0],
   ["TQG", "KAROL G", 1024.4, 78.6, 149.6, 15.7],
-  ["Peekaboo", "Dave Angel", 0.0, 0.1, 0.0, 16.6],
   ["Ella Baila Sola", "Eslabon Armado", 1215.3, 129.5, 40.2, 15.0],
   ["Dance The Night - From Barbie The Album", "Dua Lipa", 860.0, 74.8, 759.2, 12.7],
   ["La Bebe - Remix", "Yng Lvcas", 1032.2, 94.9, 57.9, 15.0],
@@ -195,7 +193,6 @@ export const songs: Song[] = [
   ["vampire", "Olivia Rodrigo", 999.0, 90.8, 161.5, 11.5],
   ["Casca de Bala", "Thullio Milionário", 37.2, 2.1, 0.2, 3.5],
   ["I Don't Wanna Wait", "David Guetta", 114.6, 10.6, 86.8, 2.3],
-  ["Abc", "J Ross", 0.0, 0.0, 0.2, 16.0],
   ["(title unreadable in the source)", "FLI:P", 8.0, 2.0, 0.4, 14.3],
   ["SPOT!", "ZICO", 77.8, 3.4, 1.9, 1.6],
   ["Family Matters", "Drake", 72.3, 8.7, 1.5, 1.4],
@@ -233,10 +230,8 @@ export const songs: Song[] = [
   ["Used To Be Young", "Miley Cyrus", 205.5, 30.6, 419.6, 9.9],
   ["How Sweet", "NewJeans", 33.6, 1.9, 0.7, 0.7],
   ["Cupid - Twin Ver.", "FIFTY FIFTY", 861.4, 103.0, 152.0, 15.7],
-  ["Lil Somethin Somethin", "Vayah", 0.0, 0.0, 0.0, 15.2],
   ["Si No Quieres No", "Luis R Conriquez", 158.1, 5.4, 0.0, 3.2],
   ["Favorite Song", "Toosii", 186.6, 45.7, 200.8, 15.9],
-  ["Voz Emplumada del Monte", "Biomigrant", 0.0, 0.1, 0.0, 15.4],
   ["Is It Over Now? (Taylor's Version) (From The Vault)", "Taylor Swift", 406.8, 20.4, 337.3, 7.7],
   ["Corazón de Piedra", "Xavi", 172.2, 5.5, 1.9, 2.8],
   ["Praise Jah In The Moonlight", "YG Marley", 298.9, 50.1, 0.0, 5.6],
@@ -267,4 +262,12 @@ export const songs: Song[] = [
   ["Search & Rescue", "Drake", 337.9, 96.7, 119.7, 14.3],
   ["Coup du marteau", "Tam Sir", 24.9, 4.2, 2.3, 6.2],
   ["Los del Espacio", "LIT killah", 373.9, 53.7, 29.4, 12.5],
+  ["exes", "Tate McRae", 323.1, 27.3, 131.1, 6.9],
+  ["kompa pasión", "(artist unreadable in the source)", 29.5, 2.6, 0.1, 2.1],
+  ["Ngopi Maszeh", "Happy Asmara", 8.0, 0.8, 0.0, 16.5],
+  ["500lbs", "Lil Tecca", 350.6, 79.2, 1.2, 10.8],
+  ["アイドル (Idol)", "YOASOBI", 356.6, 47.8, 1.9, 14.1],
+  ["L'AMOUR DE MA VIE", "Billie Eilish", 84.6, 5.2, 0.3, 1.0],
+  ["Thinkin' Bout Me", "Morgan Wallen", 406.3, 42.3, 262.6, 15.4],
+  ["Madonna", "Natanael Cano", 272.8, 7.3, 0.6, 3.3],
 ];

@@ -1,28 +1,36 @@
 ---
-// The regression from class 2 of week 11 in ANOP 102 (/bucknell): 150 of the most streamed songs released from January
-// 2023 to early June 2024, streams against AirPlay radio plays and Spotify playlists. The 4 pills are the 4 models the
+// The regression from class 2 of week 11 in ANOP 102 (/bucknell): 150 of the top songs released from January 2023 to
+// early June 2024, streams against AirPlay radio plays and Spotify playlists. The 4 pills are the 4 models the
 // class runs, in order: radio alone, playlists alone, both together, and both plus months since release. With both in,
 // a slider holds playlists at a level, the songs near that level stay dark, and the line for radio at that level is
 // drawn beside the line for radio alone, so "holding playlists constant" is something you can see. Under the chart is
 // the model as Excel's Analysis ToolPak prints it.
-// Data and models: src/data/songs150.ts, made by scripts/songs150.py. Radio's coefficient falls from 0.87 to 0.23 when
-// playlists come in (R² 0.237 -> 0.615); months since release adds nothing (P-value 0.55, adjusted R² 0.610 -> 0.608).
-// Without JavaScript the chart shows radio alone and all 4 outputs stay listed under it.
-import { songs, models, corrRadioPlaylists, type Model } from '../data/songs150';
+// Data and models: src/data/songs150.ts, made by scripts/songs150.py. Radio's coefficient falls from 0.83 to 0.23 when
+// playlists come in (R² 0.227 -> 0.599); months since release has a P-value of 0.09, and adjusted R² goes up a little
+// (0.593 -> 0.598), so round two is a judgement call. The coda says what the model cannot settle (cold reads, 17 Nov):
+// playlist counts follow streams too, neither input comes with a cost, and Flowers sits far out on its own.
+// Without JavaScript the chart shows radio alone and all 4 outputs stay listed under it. On a phone the output keeps
+// the coefficients and P-values, and the standard errors and t stats come back on a wider screen.
+import { songs, models, corrRadioPlaylists, meanMonths, withoutFlowers, type Model } from '../data/songs150';
 
 const MAX = { radio: 1500, playlists: 300, streams: 2100 };
 const left = (v: number, max: number) => (v / max) * 100;
 const top = (v: number) => (1 - v / MAX.streams) * 100;
 const r = models.radio.rows, b = models.both.rows;
 const fmt = (v: number, d = 4) => v.toLocaleString('en-US', { minimumFractionDigits: d, maximumFractionDigits: d });
-// The ToolPak prints very small P-values in E notation (2.6E-10); the rest with 4 decimals.
-const pval = (p: number) => (p < 0.0001 ? p.toExponential(1).replace('e', 'E').replace('+', '') : fmt(p));
+// Small P-values in E notation with a 2-digit exponent, as Excel prints them (6.8E-10, 4.3E-08); the rest to 4 decimals.
+const pval = (p: number) => {
+  if (p >= 0.0001) return fmt(p);
+  const [m, e] = p.toExponential(1).split('e');
+  return `${m}E-${String(Math.abs(Number(e))).padStart(2, '0')}`;
+};
+const pct = (v: number) => `${Math.round(v * 100)}%`;
 const keys = ['radio', 'playlists', 'both', 'age'] as const;
 const labels: Record<(typeof keys)[number], string> = { radio: 'Radio alone', playlists: 'Playlists alone', both: 'Both', age: 'Both, plus months since release' };
 const P0 = 30;
 const flowers = songs.findIndex((s) => s[0] === 'Flowers');
 ---
-<div class="demo sdemo" data-sdemo data-models={JSON.stringify(models)} data-songs={JSON.stringify(songs.map((s) => [s[0], s[1], s[2], s[3], s[4]]))}>
+<div class="demo sdemo" data-sdemo data-models={JSON.stringify(models)} data-months={meanMonths} data-songs={JSON.stringify(songs.map((s) => [s[0], s[1], s[2], s[3], s[4]]))}>
   <div class="sdemo-controls">
     <div>
       <p class="label" id="sdemo-m">The model</p>
@@ -32,7 +40,7 @@ const flowers = songs.findIndex((s) => s[0] === 'Flowers');
     </div>
     <div class="sdemo-hold" data-hold hidden>
       <label class="label" for="sdemo-p">Hold playlists at <output data-out="p" for="sdemo-p">30,000</output></label>
-      <input type="range" id="sdemo-p" min="0" max="270" step="5" value={P0} />
+      <input type="range" id="sdemo-p" min="0" max="270" step="5" value={P0} aria-valuetext="30,000 playlists" />
     </div>
   </div>
 
@@ -50,17 +58,18 @@ const flowers = songs.findIndex((s) => s[0] === 'Flowers');
       <span class="demo-y label" style="top: 100%">0</span>
     </div>
     <div class="demo-x label sdemo-x" aria-hidden="true" data-xaxis><span>0</span><span class="mid" style="left: 33.33%;">500</span><span class="mid" style="left: 66.67%;">1,000</span><span class="end">1,500</span></div>
-    <p class="sdemo-hover" data-hover aria-hidden="true">Point at a dot to see the song.</p>
+    <p class="sdemo-hover" data-hover aria-hidden="true">Point at a dot, or tap it, to see the song.</p>
   </div>
 
-  <p class="demo-note" aria-live="polite" data-note>Radio alone: 1,000 more radio plays go with {r[1].coef.toFixed(2)} million more streams. R² is {models.radio.r2.toFixed(2)}, so radio accounts for about a quarter of the swing in streams across these songs.</p>
+  <p class="demo-note" data-note>Radio alone: 1,000 more radio plays go with {r[1].coef.toFixed(2)} million more streams. R² is {models.radio.r2.toFixed(3)}, so radio accounts for {pct(models.radio.r2)} of the swing in streams across these songs.</p>
+  <p class="sdemo-sr" aria-live="polite" data-live></p>
 
   {keys.map((k) => {
     const m: Model = models[k];
     return (
       <div class="sdemo-out" data-out-model={k}>
         <p class="label">Summary output · {labels[k]}</p>
-        <div class="sdemo-scroll">
+        <div class="sdemo-scroll" tabindex="0" role="region" aria-label={`Summary output, ${labels[k]}`}>
           <table class="sdemo-stats">
             <tbody>
               <tr><th scope="row">Multiple R</th><td>{m.r.toFixed(3)}</td></tr>
@@ -70,25 +79,26 @@ const flowers = songs.findIndex((s) => s[0] === 'Flowers');
             </tbody>
           </table>
           <table class="sdemo-coefs">
-            <thead><tr><th scope="col"></th><th scope="col">Coefficients</th><th scope="col">Standard Error</th><th scope="col">t Stat</th><th scope="col">P-value</th></tr></thead>
+            <thead><tr><th scope="col"><span class="sdemo-sr">Term</span></th><th scope="col">Coefficients</th><th scope="col" class="sdemo-wide">Standard Error</th><th scope="col" class="sdemo-wide">t Stat</th><th scope="col">P-value</th></tr></thead>
             <tbody>
               {m.rows.map((row) => (
                 <tr>
                   <th scope="row">{row.name}</th>
-                  <td class={(row.name.startsWith('AirPlay') && k !== 'playlists') ? 'is-hl' : undefined}>{fmt(row.coef)}</td>
-                  <td>{fmt(row.se)}</td>
-                  <td>{row.t.toFixed(2)}</td>
+                  <td class={((row.name.startsWith('AirPlay') && (k === 'radio' || k === 'both')) || (row.name.startsWith('Months') && k === 'age')) ? 'is-hl' : undefined}>{fmt(row.coef)}</td>
+                  <td class="sdemo-wide">{fmt(row.se)}</td>
+                  <td class="sdemo-wide">{row.t.toFixed(2)}</td>
                   <td class={row.name.startsWith('Months') ? 'is-hl' : undefined}>{pval(row.p)}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
+        <p class="sdemo-fine">Rounded to 4 decimals. Excel prints more digits.</p>
       </div>
     );
   })}
 
-  <p class="demo-coda">Radio and playlists rise together (their correlation is {corrRadioPlaylists.toFixed(2)}), so on its own, radio gets credit for what playlists did. With both in the model, radio keeps about a quarter of its coefficient, and the budget goes to playlists. This is still observational data, though. Stations add songs that are already hits, and the test that would settle it is an experiment.</p>
+  <p class="demo-coda">Radio and playlists rise together (their correlation is {corrRadioPlaylists.toFixed(2)}), so on its own, radio gets credit for some of what playlists did. With both in the model, radio keeps about a quarter of its coefficient, and the model points to playlists. It cannot settle the budget on its own, though. Stations add songs that are already hits, playlists fill up with songs people already stream, and neither number comes with a cost. Flowers also sits far out on its own, like the gran fondo weekend in class 1. Without it, radio alone accounts for {pct(withoutFlowers.r2)} of the swing, and radio still falls to about a quarter once playlists are in. What would settle the budget is an experiment.</p>
 </div>
 
 <style>
@@ -113,32 +123,47 @@ const flowers = songs.findIndex((s) => s[0] === 'Flowers');
   .sdemo-out th[scope='row'] { text-align: left; font-weight: 400; }
   .sdemo-out thead th { border-top: 0; border-bottom: 1px solid #000; font-weight: 600; }
   .sdemo-stats { margin-bottom: 14px; }
+  .sdemo-sr { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+  .sdemo-fine { margin: 6px 0 0; font-size: 13px; color: rgba(0, 0, 0, 0.6); }
+  .sdemo-scroll:focus-visible { outline: 2px solid #000; outline-offset: 2px; }
   .sdemo-out td.is-hl { background: linear-gradient(transparent 0%, var(--hl, #ccc) 0%); font-weight: 600; padding-left: 6px; }
   @media (max-width: 767px) {
     .sdemo-controls { grid-template-columns: minmax(0, 1fr); }
     .sdemo-plot { height: 220px; }
     .sdemo-pt { width: 6px; height: 6px; margin: -3px 0 0 -3px; }
+    /* On a phone the output keeps the coefficients and P-values, and the term names wrap. */
+    .sdemo-wide { display: none; }
+    .sdemo-out th[scope='row'] { white-space: normal; min-width: 8rem; }
     /* The x axis keeps its ends and its first mark on a phone, so the labels do not run together. */
     .sdemo-x :global(.mid + .mid) { display: none; }
   }
 </style>
 
 <script>
-  type M = { r: number; r2: number; adj: number; n: number; rows: { name: string; coef: number }[] };
+  type M = { r: number; r2: number; adj: number; n: number; rows: { name: string; coef: number; p: number }[] };
   const MAX = { radio: 1500, playlists: 300, streams: 2100 };
+  const BAND = 15; // songs within 15,000 playlists of the level held count as "about that many"
   const top = (v: number) => (1 - v / MAX.streams) * 100;
   const num = (v: number) => Math.round(v).toLocaleString('en-US');
+  const words = ['no', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'];
+  const tens = ['', '', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
+  // Numbers up to two digits in words (the site's rule for prose).
+  const say = (n: number) => (n < 20 ? words[n] : n < 100 ? tens[Math.floor(n / 10)] + (n % 10 ? '-' + words[n % 10] : '') : String(n));
+  const pct = (v: number) => `${Math.round(v * 100)}%`;
 
   document.querySelectorAll<HTMLElement>('[data-sdemo]').forEach((root) => {
     const $ = <T extends Element>(s: string) => root.querySelector<T>(s)!;
     const models: Record<string, M> = JSON.parse(root.dataset.models!);
     const songs: [string, string, number, number, number][] = JSON.parse(root.dataset.songs!);
+    const months = Number(root.dataset.months);
     const pts = [...root.querySelectorAll<HTMLElement>('.sdemo-pt')];
     const pills = [...root.querySelectorAll<HTMLButtonElement>('[data-model]')];
     const slider = $<HTMLInputElement>('#sdemo-p');
     const plot = $<HTMLElement>('[data-plot]');
     const tag = $<HTMLElement>('[data-tag]');
+    const live = $<HTMLElement>('[data-live]');
     const coef = (k: string, start: string) => models[k].rows.find((r) => r.name.startsWith(start))?.coef ?? 0;
+    const pOf = (k: string, start: string) => models[k].rows.find((r) => r.name.startsWith(start))?.p ?? 1;
     let mode = 'radio';
 
     const setLine = (el: SVGLineElement, a: number, b: number, xmax: number) => {
@@ -156,15 +181,16 @@ const flowers = songs.findIndex((s) => s[0] === 'Flowers');
       songs.forEach((s, i) => {
         const x = byPlaylists ? s[3] : s[4];
         pts[i].style.left = `${(x / xmax) * 100}%`;
-        pts[i].classList.toggle('is-far', both && Math.abs(s[3] - P) > 15);
+        pts[i].classList.toggle('is-far', both && Math.abs(s[3] - P) > BAND);
       });
       const f = songs.findIndex((s) => s[0] === 'Flowers');
       tag.style.left = `${((byPlaylists ? songs[f][3] : songs[f][4]) / xmax) * 100}%`;
-      // The lines: the model's own, and in Both, radio alone as a dashed ghost.
+      // The lines: the model's own, and in Both, radio alone as a dashed ghost. With months in, the line is for a
+      // song of average age.
       const fit = $<SVGLineElement>('[data-fit]'), ghost = $<SVGLineElement>('[data-ghost]');
       const a = coef(mode, 'Intercept');
       if (byPlaylists) setLine(fit, a, coef('playlists', 'Spotify'), xmax);
-      else if (both) setLine(fit, a + coef(mode, 'Spotify') * P + (mode === 'age' ? coef('age', 'Months') * 8.8 : 0), coef(mode, 'AirPlay'), xmax);
+      else if (both) setLine(fit, a + coef(mode, 'Spotify') * P + (mode === 'age' ? coef('age', 'Months') * months : 0), coef(mode, 'AirPlay'), xmax);
       else setLine(fit, a, coef('radio', 'AirPlay'), xmax);
       if (both) setLine(ghost, coef('radio', 'Intercept'), coef('radio', 'AirPlay'), xmax);
       ghost.style.display = both ? '' : 'none';
@@ -175,42 +201,50 @@ const flowers = songs.findIndex((s) => s[0] === 'Flowers');
         : '<span>0</span><span class="mid" style="left: 33.33%;">500</span><span class="mid" style="left: 66.67%;">1,000</span><span class="end">1,500</span>';
       $<HTMLElement>('[data-hold]').hidden = !both;
       $('[data-out=p]').textContent = num(P * 1000);
+      slider.setAttribute('aria-valuetext', `${num(P * 1000)} playlists`);
       root.querySelectorAll<HTMLElement>('[data-out-model]').forEach((t) => { t.hidden = t.dataset.outModel !== mode; });
-      const near = songs.filter((s) => Math.abs(s[3] - P) <= 15).length;
+      const near = songs.filter((s) => Math.abs(s[3] - P) <= BAND).length;
       const rb = coef('both', 'AirPlay'), ra = coef('radio', 'AirPlay');
+      const dots = near === 1 ? 'one song is within 15,000 playlists of that' : `${say(near)} songs are within 15,000 playlists of that`;
       $('[data-note]').textContent = {
-        radio: `Radio alone: 1,000 more radio plays go with ${ra.toFixed(2)} million more streams. R² is ${m.r2.toFixed(2)}, so radio accounts for about a quarter of the swing in streams across these songs.`,
-        playlists: `Playlists alone: 1,000 more playlists go with ${coef('playlists', 'Spotify').toFixed(2)} million more streams. R² is ${m.r2.toFixed(2)}, so playlists account for about 60% of the swing.`,
-        both: `Holding playlists constant, 1,000 more radio plays go with ${rb.toFixed(2)} million more streams, about a quarter of what radio alone said. The solid line is radio at ${num(P * 1000)} playlists, where ${near} of the songs sit (the dark dots); the dashed line is radio alone.`,
-        age: `Months since release has a P-value of 0.55, and adjusted R² falls from ${models.both.adj.toFixed(3)} to ${m.adj.toFixed(3)}. Once playlists are in, a song's age adds nothing.`,
+        radio: `Radio alone: 1,000 more radio plays go with ${ra.toFixed(2)} million more streams. R² is ${m.r2.toFixed(3)}, so radio accounts for ${pct(m.r2)} of the swing in streams across these songs.`,
+        playlists: `Playlists alone: 1,000 more playlists go with ${coef('playlists', 'Spotify').toFixed(2)} million more streams. R² is ${m.r2.toFixed(3)}, so playlists account for ${pct(m.r2)} of the swing.`,
+        both: `Holding playlists constant, 1,000 more radio plays go with ${rb.toFixed(2)} million more streams, about a quarter of what radio alone said. The solid line is radio for a song with ${P === 0 ? 'no' : num(P * 1000)} playlists, and ${dots} (the dark dots). Move the slider, and the line moves up and down with the same slope. The dashed line is radio alone.`,
+        age: `Months since release has a P-value of ${pOf('age', 'Months').toFixed(2)}, and adjusted R² goes from ${models.both.adj.toFixed(3)} to ${m.adj.toFixed(3)}. A little better, and the P-value is above 0.05. Keep it or drop it? (The line is for a song of average age, about ${say(Math.round(months))} months.)`,
       }[mode]!;
     }
+    // The screen-reader line follows the model and where the slider stops, so it does not read out every step.
+    const announce = () => { live.textContent = $('[data-note]').textContent ?? ''; };
 
     pills.forEach((b) => b.addEventListener('click', () => {
       mode = b.dataset.model!;
       pills.forEach((p) => p.setAttribute('aria-pressed', String(p === b)));
       update();
+      announce();
     }));
     slider.addEventListener('input', update);
+    slider.addEventListener('change', announce);
 
-    // Point at a dot (or tap it) to see the song.
+    // Point at a dot, or tap it, to see the song. On a touch screen the song stays until the next tap.
     const hover = $<HTMLElement>('[data-hover]');
+    const idle = 'Point at a dot, or tap it, to see the song.';
     let on: HTMLElement | null = null;
-    plot.addEventListener('pointermove', (e) => {
-      const box = plot.getBoundingClientRect();
-      let best = -1, bd = 14 * 14;
+    const pick = (e: PointerEvent) => {
+      let best = -1, bd = (e.pointerType === 'touch' ? 22 : 14) ** 2;
       pts.forEach((p, i) => {
         const r = p.getBoundingClientRect();
         const dx = r.left + r.width / 2 - e.clientX, dy = r.top + r.height / 2 - e.clientY;
         if (dx * dx + dy * dy < bd) { bd = dx * dx + dy * dy; best = i; }
       });
       on?.classList.remove('is-on');
-      if (best < 0 || e.clientX < box.left - 20) { on = null; hover.textContent = 'Point at a dot to see the song.'; return; }
+      if (best < 0) { on = null; hover.textContent = idle; return; }
       on = pts[best]; on.classList.add('is-on');
       const s = songs[best];
       hover.textContent = `${s[0]}, ${s[1]}: ${num(s[2])} million streams, ${num(s[3] * 1000)} playlists, ${num(s[4] * 1000)} radio plays`;
-    });
-    plot.addEventListener('pointerleave', () => { on?.classList.remove('is-on'); on = null; hover.textContent = 'Point at a dot to see the song.'; });
+    };
+    plot.addEventListener('pointermove', (e) => { if (e.pointerType !== 'touch') pick(e); });
+    plot.addEventListener('pointerdown', pick);
+    plot.addEventListener('pointerleave', (e) => { if (e.pointerType === 'touch') return; on?.classList.remove('is-on'); on = null; hover.textContent = idle; });
     update();
   });
 </script>

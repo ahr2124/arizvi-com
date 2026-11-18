@@ -64,14 +64,14 @@ export const classes: Record<string, ClassPlan> = {
   },
   regression: {
     week: 11,
-    before: 'Video (18 min): a line through the data; the slope, the intercept, R squared; the Analysis ToolPak. A 3-question check.',
+    before: 'Video (18 min): a line through the data; the slope, the intercept, R squared; the Analysis ToolPak. A 3-question check after this class, before class 2.',
     steps: [
       { min: 20, who: 'me', title: 'Try the class.', text: 'The bike shop\'s 12 weeks of ad spend and sales. This widget.' },
       { min: 25, who: 'you', title: 'Fit it in Excel 3 ways.', text: 'The chart trendline, SLOPE and INTERCEPT, the Analysis ToolPak.' },
       { min: 20, who: 'you', title: 'Read the output line by line, in pairs.', text: 'Each number written as a sentence.' },
       { min: 10, who: 'room', title: 'Debrief.', text: 'The weekend that was different, and what to do about it.' },
     ],
-    lab: 'Lab 11: 2 years of the chain\'s weekly sales against temperature and a promotion flag. Fit it, read it, predict next month, and say which of the 3 doubts applies.',
+    lab: 'Lab 11, after class 2: what is a promotion worth? 2 years of the chain\'s weekly sales against temperature and a promotion flag, with the flag alone and then both. Read it, predict next month, and name the doubt that applies.',
     tries: [
       { do: 'Read the slope with all 12 weeks in.', see: '$1.70 of sales per $1 of ads, R² 0.14. At a 40% margin that is 68 cents back on the dollar.' },
       { do: 'Turn off the gran fondo weekend, the orange point.', see: 'Slope $2.87, R² 0.86, $1.15 back on the dollar. The same spreadsheet now says yes.' },

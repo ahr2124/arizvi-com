@@ -9,7 +9,8 @@
 // in Moodle (MoodleShell.astro, content in src/data/bucknell102.ts, the regression in SongsDemo.astro), opening on
 // the class itself. The visit's 30 minutes are marked in its plan.
 // The lesson is his of 17 Nov 2026 (the same class runs at Tulane): 150 of the most streamed songs released from
-// January 2023 to early June 2024, radio against playlists.
+// January 2023 to early June 2024 (top-ranked in the Kaggle dataset, gaps in the data left out), radio against
+// playlists. After the cold reads of 17 Nov the lede says what the 30 minutes cover, as Bucknell asked.
 // Bucknell's orange (the section colour) marks the claim in the title, where you are in the course shell, what the
 // sample student has done, the visit's 30 minutes and a rubric's best level.
 // The course pages (/bucknell/anop-102/ and its pack, ANOP 302, 330 and 400) stay up; ANOP 102's is linked from the
@@ -23,8 +24,8 @@ import { bucknellColours } from '../../data/bucknell';
   <header class="page-head">
     <h1>Playlists or <mark>radio?</mark></h1>
     <p>The class I am teaching on my campus visit: multiple linear regression, for students in ANOP&nbsp;102.</p>
-    <p>A record label has one budget for the next single. Should it pay for radio, or pitch the song to playlists? Students answer it in Excel with 150 of the most streamed songs of 2023 and 2024, first one input at a time and then both together. On its own, radio looks strong. Once playlists are in the model, radio keeps about a quarter of its coefficient.</p>
-    <p>The class sits in week 11 of the course, the way students would find it in Moodle. The 30 minutes I teach on the visit are marked in its plan.</p>
+    <p>A record label has one budget for the next single. Should it pay for radio, or pitch the song to playlists? Students work on it in Excel with 150 of the top songs of 2023 and 2024, first one input at a time and then both together. On its own, radio seems to work. Once playlists are in the model, radio's effect shrinks to about a quarter, and then we ask what the data cannot tell a label.</p>
+    <p>The class sits in week 11 of the course, the way students would find it in Moodle. The 30 minutes I teach on the visit are marked in its plan. They cover what a second input does to a coefficient. P-values, adjusted R squared and checking the model come after.</p>
   </header>
 
   <Section title="The class, in Moodle" id="course">
