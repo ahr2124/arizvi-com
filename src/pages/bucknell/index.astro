@@ -1,107 +1,33 @@
 ---
 // src/pages/bucknell/index.astro  →  arizvi.com/bucknell
 // For the Bucknell business analytics search (Analytics & Operations Management, Freeman College of Management).
-// Rebuilt on 17 Nov 2026 around the class Ali teaches on his campus visit (Ali: "For Bucknell, focus on building out a
-// mock LMS around the one lesson that I am teaching"). Bucknell set the topic: multiple linear regression, at the level
-// of ANOP 102, the Excel course every hire teaches. In order: the class, inside ANOP 102 laid out the way it would sit
-// in Moodle (MoodleShell.astro, content in src/data/bucknell102.ts, the regression in SongsDemo.astro); then the 4
-// steps he teaches by; then ANOP 330, machine learning, as a card that opens its own page (he asked for it back on
-// 13 Nov: "can you put the ML course back?").
+// The page is the class Ali teaches on his campus visit and nothing else (Ali, 17 Nov 2026: "For Bucknell, focus on
+// building out a mock LMS around the one lesson that I am teaching", then "I don't know if we need to sell in that
+// lesson. I think it should be more focussed on the lesson itself"). So: no headshot, no industry line, no How I
+// teach, no other courses. Bucknell set the topic: multiple linear regression, at the level of ANOP 102.
+// The title and a short lede say what the class asks; then the class inside ANOP 102, laid out the way it would sit
+// in Moodle (MoodleShell.astro, content in src/data/bucknell102.ts, the regression in SongsDemo.astro), opening on
+// the class itself. The visit's 30 minutes are marked in its plan.
 // The lesson is his of 17 Nov 2026 (the same class runs at Tulane): 150 of the most streamed songs released from
-// January 2023 to early June 2024, radio against playlists. The visit's 30 minutes are marked in the plan.
-// Bucknell's orange (the section colour) marks where you are in the course shell, what the sample student has done,
-// the visit's 30 minutes and a rubric's best level.
-// Numbers up to two digits are words in the copy; digits stay for course codes, data, minutes, the week labels and
-// points in the course shell.
-// The other course pages (/bucknell/anop-102/ and its pack, ANOP 302, 330 and 400) stay up; ANOP 102's is linked from
-// the shell's syllabus, and ANOP 330's from its card. Not linked from the nav; sends noindex.
+// January 2023 to early June 2024, radio against playlists.
+// Bucknell's orange (the section colour) marks the claim in the title, where you are in the course shell, what the
+// sample student has done, the visit's 30 minutes and a rubric's best level.
+// The course pages (/bucknell/anop-102/ and its pack, ANOP 302, 330 and 400) stay up; ANOP 102's is linked from the
+// shell's syllabus. Not linked from the nav; sends noindex.
 import Base from '../../layouts/Base.astro';
 import Section from '../../components/Section.astro';
 import MoodleShell from '../../components/MoodleShell.astro';
-import { bucknellColours, course } from '../../data/bucknell';
-
-// The 4 steps Ali teaches by, each carrying the methods he describes for them (as on /tulane).
-const steps = [
-  ['Build the course backward from the outcome.', 'I start from what students should be able to do when the course ends, then plan each week and each assessment backward from it. Every brief follows TILT (its purpose, the task, and the criteria), and every lab comes with its rubric before students start.'],
-  ['Personalize within a defined structure.', 'Everyone gets the same foundations. We start on a worked example and move to real problems with feedback midway, and by the end students solve semi-structured problems alone or in teams. I scaffold each step so that first-generation students and students whose first language is not English do well.'],
-  ['Learn on real problems.', 'The problems come from open data, like the songs in the class above, and from industry partners and my own industry work. Guest speakers bring more of them into the room. I prepare each speaker beforehand, and when students lose the thread, I step in with questions.'],
-  ['Test the teaching itself.', 'A short check before class tells me what the room found hard, and class starts there. For mid-course feedback, students get fifteen minutes in class to answer three questions anonymously (what should I start, continue, and stop doing?), and I leave the room. At Bucknell I would run it in Moodle.'],
-];
-
-// ANOP 330, on its own page, with the 2 classes to try there.
-const ml = course('anop-330');
-const classes = [
-  { week: 'Week 4', href: '/bucknell/anop-330/#overfit', title: 'Testing a model on days it has not seen', line: 'Students fit ice-cream sales on 16 days and test the model on the 8 held back.' },
-  { week: 'Week 8', href: '/bucknell/anop-330/#threshold', title: 'Choosing the cutoff for a retention offer', line: 'Students find that the most accurate cutoff makes no money.' },
-];
+import { bucknellColours } from '../../data/bucknell';
 ---
-<Base title="Bucknell" description="The class Ali Rizvi teaches on his Bucknell campus visit, multiple linear regression for ANOP 102, laid out in Moodle with what students do before and after it." noindex accent={bucknellColours} rail>
+<Base title="Bucknell" description="Playlists or radio? The multiple regression class Ali Rizvi teaches on his Bucknell campus visit, for ANOP 102, laid out in Moodle." noindex accent={bucknellColours}>
   <header class="page-head">
-    <div class="intro-grid">
-      <div class="text">
-        <h1>Teaching analytics at <mark>Bucknell</mark></h1>
-        <p>For my campus visit, I am teaching a class on multiple linear regression for ANOP&nbsp;102. Below is that class the way students would find it in Moodle, in week 11 of the course, with what they do before it and the lab that follows.</p>
-        <p>I spent over a decade in industry before my PhD, including leading AI and analytics teams at Morgan Stanley and on Amazon Alexa.</p>
-        <p>This page is a sample of how I could teach. I would work with the professors who teach these courses now to understand the students and see what works and what does not. Then I would build on what is already there.</p>
-      </div>
-      <div class="photo"><img src="/media/headshot.jpg" alt="Ali Rizvi" width="400" height="500" /></div>
-    </div>
+    <h1>Playlists or <mark>radio?</mark></h1>
+    <p>The class I am teaching on my campus visit: multiple linear regression, for students in ANOP&nbsp;102.</p>
+    <p>A record label has one budget for the next single. Should it pay for radio, or pitch the song to playlists? Students answer it in Excel with 150 of the most streamed songs of 2023 and 2024, first one input at a time and then both together. On its own, radio looks strong. Once playlists are in the model, radio keeps about a quarter of its coefficient.</p>
+    <p>The class sits in week 11 of the course, the way students would find it in Moodle. The 30 minutes I teach on the visit are marked in its plan.</p>
   </header>
 
   <Section title="The class, in Moodle" id="course">
-    <div class="grid"><div class="span-8">
-      <p>The class asks a question a record label faces. With one budget for the next single, should it pay for radio, or pitch the song to playlists? Students answer it with 150 of the most streamed songs of 2023 and 2024, first one input at a time and then both together. Radio looks strong on its own. Once playlists are in the model, it keeps about a quarter of its coefficient.</p>
-      <p>On my visit I teach 30 minutes of it, marked in the plan. You can <a href="#mdl-class2">open the class</a> and run the regression yourself, take <a href="#mdl-check">the check</a> students do before it, or read <a href="#mdl-lab11">the lab</a> that follows.</p>
-    </div></div>
-    <MoodleShell />
+    <MoodleShell start="mdl-class2" />
   </Section>
-
-  <Section title="How I teach" id="approach">
-    <ol class="principles steps across">
-      {steps.map(([head, line]) => <li><strong>{head}</strong> {line}</li>)}
-    </ol>
-    <div class="grid after-steps"><div class="span-8">
-      <p><strong>Generative AI.</strong> Where students will use it at work, they use it in my courses too, and they disclose which tools and prompts they used and write a short reflection on what changed. Where students need the fundamentals without it, the checks are on paper. I have also built generative AI modules into other courses, so that students learn to use it within each subject. The class above ends on it: a chatbot runs the same idea as a regression, at a huge scale.</p>
-    </div></div>
-  </Section>
-
-  <Section title="Machine learning: ANOP 330" id="ml">
-    <div class="grid"><div class="span-8">
-      <p>We talked about the department needing more sections of data visualization and of machine learning, and I could teach both. ANOP&nbsp;330 has its own page, with two classes you can try and a full pack (syllabus, weekly plan, and rubrics) for colleagues to review.</p>
-    </div></div>
-    <ul class="exhibits courses two">
-      <li class="course">
-        <p class="code">{ml.code}</p>
-        <h3><a href={`/bucknell/${ml.slug}/`}>{ml.title}</a></h3>
-        <p>{ml.line}</p>
-        <p>At Amazon I owned Alexa Orchestration, and at Morgan Stanley my team deployed AI models to compliance users. I would teach from both.</p>
-        <dl class="course-facts">
-          <dt class="label">In the catalog</dt>
-          <dd>1 Credit. {ml.offered}. Prerequisites: {ml.prereqs}.</dd>
-          <dt class="label">Students</dt>
-          <dd>{ml.who}</dd>
-          <dt class="label">When</dt>
-          <dd>{ml.when}</dd>
-        </dl>
-        <p class="sample"><a href={`/bucknell/${ml.slug}/`}>The term, week by week&nbsp;→</a></p>
-      </li>
-      <li class="course">
-        <p class="label">Two classes to try</p>
-        {classes.map((k) => (
-          <div class="ml-class">
-            <span class="label tile-tag">{ml.code} · {k.week}</span>
-            <a class="tile-title" href={k.href}>{k.title}&nbsp;→</a>
-            <p>{k.line}</p>
-          </div>
-        ))}
-      </li>
-    </ul>
-  </Section>
-
 </Base>
-
-<style>
-  /* The 2 classes beside the ANOP 330 card. */
-  .ml-class { margin-top: 18px; }
-  .ml-class p { margin: 0; }
-</style>

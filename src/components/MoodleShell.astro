@@ -3,7 +3,7 @@
 // building out a mock LMS around the one lesson that I am teaching"). What a student sees in a Moodle course: a
 // breadcrumb, the Course, Participants and Grades tabs, the course index down the side, and the course page itself: a
 // General section, then one section per week with its activities, each with its type, its dates and its completion
-// mark. Week 11 is open and built out in full (before class, class 1, class 2, after class), and its pieces open up:
+// mark. On /bucknell it opens on class 2, the lesson itself; the course page is a tab away. Week 11 is open and built out in full (before class, class 1, class 2, after class), and its pieces open up:
 // the ToolPak page, the check (a quiz you can take), class 2 (the plan, with the 30 minutes taught on the campus visit
 // marked, and the regression to try), and lab 11 (its brief, rubric and submission status). The other 13 weeks come
 // from the course pack, closed, with their labs and project pieces.
@@ -19,6 +19,9 @@ import SongsDemo from './SongsDemo.astro';
 import { pack } from '../data/packs/anop-102';
 import { course, now, moment, week11, announcements, people, check, toolpak, class2, lab11, grades, gradesNote, type Activity, type Label } from '../data/bucknell102';
 
+// start: the panel that opens when the address names none (on /bucknell, the class itself).
+interface Props { start?: string }
+const { start = 'mdl-course' } = Astro.props;
 const tabs = [['mdl-course', 'Course'], ['mdl-participants', 'Participants'], ['mdl-grades', 'Grades']];
 const general: Activity[] = [
   { type: 'Forum', title: 'Announcements', href: '#mdl-announcements' },
@@ -51,7 +54,7 @@ let t = 0;
 const steps = class2.steps.map((s) => { const from = t; t += s.min; return { ...s, from, to: t }; });
 const who = { me: 'Me, at the front', you: 'You, working', room: 'The room, laptops closed' } as const;
 ---
-<div class="mdl" data-mdl>
+<div class="mdl" data-mdl data-start={start}>
   <div class="mdl-top">
     <nav class="mdl-crumbs" aria-label="Breadcrumb">
       <ol data-crumbs><li><a href="#mdl-course">{course.code}</a></li></ol>
@@ -495,7 +498,8 @@ const who = { me: 'Me, at the front', you: 'You, working', room: 'The room, lapt
     };
     shell.classList.add('js');
     const first = target(decodeURIComponent(location.hash.slice(1)));
-    if (first) { open(first); if (first.el === first.p) shell.scrollIntoView({ block: 'start' }); } else show(panels[0]);
+    if (first) { open(first); if (first.el === first.p) shell.scrollIntoView({ block: 'start' }); }
+    else { const s = target(shell.dataset.start ?? ''); show(s ? s.p : panels[0]); }
     shell.addEventListener('click', (e) => {
       const a = (e.target as Element).closest?.<HTMLAnchorElement>('a[href^="#mdl-"]'); if (!a) return;
       const t = target(decodeURIComponent(a.getAttribute('href')!.slice(1))); if (!t) return;
