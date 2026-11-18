@@ -43,10 +43,10 @@ export const week11: (Activity | Label)[] = [
   { label: 'Class 2 (today)' },
   { type: 'Page', title: 'Class 2: playlists or radio?', href: '#mdl-class2', note: 'Today' },
   { type: 'File', title: 'Songs 2023-24, 150 rows.xlsx', text: 'Spotify streams, Spotify playlists, AirPlay radio plays, and months since release, for 150 of the top songs released from January 2023 to early June 2024.' },
-  { type: 'Feedback', title: 'Exit ticket (on paper, at the end of class)', text: 'Two sentences. First, radio\'s coefficient from the model with both inputs, as a sentence a label could act on. Second, one thing that is still not clear. Hand in a photo of it as the first page of lab 11.' },
+  { type: 'Feedback', title: 'Exit ticket (on paper, at the end of class)', text: 'Two sentences. First, radio\'s coefficient from the model with both inputs, as a sentence that says what is held constant. Second, one thing that is still not clear. Hand in a photo of it as the first page of lab 11.' },
   { label: 'After class' },
   { type: 'Forum', title: 'One more input', note: 'Before week 12', text: 'Name one more input you would add to the model, which way you think it would move radio\'s coefficient, and why. Reply to one classmate who picked a different input.' },
-  { type: 'Assignment', title: 'Lab 11: what is a promotion worth?', href: '#mdl-lab11', note: 'Due before week 12 · Pass or redo' },
+  { type: 'Assignment', title: 'Lab 11: What is a promotion worth?', href: '#mdl-lab11', note: 'Due before week 12 · Pass or redo' },
 ];
 
 export const announcements = [
@@ -104,7 +104,7 @@ export const class2 = {
     'Explain why a coefficient changes when a second input comes in.',
     'Say what this kind of data cannot tell you, and what test would.',
   ],
-  data: 'The 150 top-ranked songs released from January 2023 to early June 2024 in the Kaggle dataset Most Streamed Spotify Songs 2024 (Nidula Elgiriyewithana), with data to mid-June 2024. The dataset ranks songs by a score across platforms. A few rows with under a million Spotify streams, or no radio plays or playlists at all, are left out, since they look like gaps in the data. Streams are in millions, and playlists and radio plays in thousands.',
+  data: 'The 150 top-ranked songs released from January 2023 to early June 2024 in the Kaggle dataset Most Streamed Spotify Songs 2024 (Nidula Elgiriyewithana), with data to mid-June 2024. The dataset ranks songs by a score across platforms. Rows with a blank count, or under a million Spotify streams, are left out, since they look like gaps in the data. Streams are in millions, and playlists and radio plays in thousands.',
   source: 'https://www.kaggle.com/datasets/nelgiriyewithana/most-streamed-spotify-songs-2024',
   steps: [
     { min: 5, who: 'me', title: 'From the check.', text: 'The question the room found hardest, worked through at the board.' },
@@ -129,7 +129,7 @@ export const class2 = {
 };
 
 export const lab11 = {
-  title: 'Lab 11: what is a promotion worth?',
+  title: 'Lab 11: What is a promotion worth?',
   opened: 'Week 11, class 2',
   due: 'Before week 12, class 1',
   grading: 'Pass or redo',
@@ -156,6 +156,6 @@ export const grades = [
   { name: 'Lab 9: Design the A/B test', cat: 'Weekly labs', week: 9, grade: 'Pass', range: 'Pass or redo', feedback: 'One metric, fixed in advance, and the sample size follows from it.' },
   { name: 'Lab 10: Write up the test', cat: 'Weekly labs', week: 10, grade: 'Pass', range: 'Pass or redo', feedback: 'The first version did not say what the test cannot show. The second one does.' },
   { name: 'Check: three questions on class 1', cat: 'Checks (not counted)', week: 11, grade: '2 / 3', range: '0-3', feedback: 'Question 2: keep the line without the weekend, and name the weekend in the memo.' },
-  { name: 'Lab 11: what is a promotion worth?', cat: 'Weekly labs', week: 11, grade: '-', range: 'Pass or redo', feedback: 'Due before week 12, class 1.' },
+  { name: 'Lab 11: What is a promotion worth?', cat: 'Weekly labs', week: 11, grade: '-', range: 'Pass or redo', feedback: 'Due before week 12, class 1.' },
 ];
 export const gradesNote = 'Weekly labs so far: ten of ten passed, one of them after a redo. Each lab passed is worth 2.5 of the 30.';

@@ -7,8 +7,8 @@ The CSV is not kept in this repository. Download it and run:
 
 The cut (Ali's lesson, 17 Nov 2026): one row per track and artist, songs released 1 Jan 2023 to 6 Jun 2024 with
 Spotify streams, Spotify playlist count and AirPlay spins all present, the 150 best by All Time Rank (the dataset's
-own score across platforms). Rows with under 1 million Spotify streams, or with no AirPlay spins or no Spotify
-playlists, are left out first: they are gaps in the source, not songs nobody played (Ali chose this on 17 Nov 2026,
+own score across platforms). Rows with a blank count or under 1 million Spotify streams (a zero count, should a
+later edition have one) are left out first: they are gaps in the source, not songs nobody played (Ali chose this on 17 Nov 2026,
 after a cold read found 8 such rows in the first cut). Months since release count to 15 Jun 2024. Each model is
 fitted by ordinary least squares, as Excel's Analysis ToolPak does.
 """

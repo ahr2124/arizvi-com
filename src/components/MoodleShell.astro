@@ -38,12 +38,14 @@ const weeks = pack.weeks.map((w) => {
   if (w.w === now) return { w: w.w, topic: w.topic, items: week11 };
   const done = w.w < now;
   const items: Activity[] = [];
-  if (w.before) items.push({ type: 'Quiz', title: 'Video and check, before class 1', done });
+  // The pack's pre-work: a video and a check most weeks, a reading and a check in week 5, a check alone in week 7,
+  // nothing in weeks 13 and 14.
+  if (w.before && !/^Nothing\.? (Sleep|new\. Bring)/.test(w.before)) items.push({ type: 'Quiz', title: w.before.startsWith('Video') ? 'Video and check, before class 1' : w.before.startsWith('Read the') ? 'Reading and check, before class 1' : 'Check, before class 1', done });
   if (w.w === 7) items.push({ type: 'Quiz', title: 'Midterm (in class, 75 minutes)', done });
   const lab = pack.labs.find((l) => l.n === w.w);
   if (lab) items.push({ type: 'Assignment', title: `Lab ${lab.n}: ${lab.title}`, note: `Due ${lab.due}`, done });
   if (w.memo) items.push({ type: 'Assignment', title: piece(w.memo), done });
-  if (w.w === 14) items.push({ type: 'Assignment', title: 'Reflection (1 page)', done });
+  if (w.w === 14) items.push({ type: 'Assignment', title: 'Reflection (one page)', done });
   return { w: w.w, topic: w.topic, items };
 });
 const isLabel = (i: Activity | Label): i is Label => 'label' in i;
