@@ -1,24 +1,26 @@
 ---
 // src/pages/bucknell/index.astro  →  arizvi.com/bucknell
 // For the Bucknell business analytics search (Analytics & Operations Management, Freeman College of Management).
-// The page is Meow-Dle, the mock Moodle, and nothing else (Ali, 19 Nov 2026: "i think we should remove all the
-// commentary and just leave Meow-Dle"): no title, no lede and no section heading above it. Meow-Dle's name, across
-// the top of the shell, is the page's h1.
-// Meow-Dle opens on the class Ali teaches on his campus visit (Ali, 17 Nov 2026: "For Bucknell, focus on building out
-// a mock LMS around the one lesson that I am teaching"): ANOP 102, week 11, class 2, "Playlists or radio?"
+// The page is Meowdle, the mock Moodle, and nothing else (Ali, 19 Nov 2026: "i think we should remove all the
+// commentary and just leave Meow-Dle", then, after the cold reads that night, "Meowdle" and "Remove them all" for the
+// lines inside it that spoke to the committee). No title, lede or section heading above it, and nothing in it about
+// the visit. Meowdle's name, across the top of the shell, is the page's h1, and the tab reads as Moodle's would
+// ("Course: ANOP 102 | Meowdle").
+// Meowdle opens on the class Ali teaches on his campus visit (Ali, 17 Nov 2026: "For Bucknell, focus on building out a
+// mock LMS around the one lesson that I am teaching"): ANOP 102, week 11, class 2, "Playlists or radio?"
 // (MoodleShell.astro, content in src/data/bucknell102.ts, the regression in SongsDemo.astro). Bucknell set the topic:
-// multiple linear regression, at the level of ANOP 102. The visit's 30 minutes, and what they cover (Bucknell asked
-// for this; it was in the lede too until 19 Nov), are marked in the class plan.
+// multiple linear regression, at the level of ANOP 102. Since 19 Nov the class's plan follows the deck he teaches from
+// for minutes 5 to 35 ("Follow the deck in the plan only").
 // The lesson is his of 17 Nov 2026 (the same class runs at Tulane): the 150 top-ranked songs released from January
 // 2023 to early June 2024 in the Kaggle dataset, gaps in the data left out, radio against playlists.
-// Bucknell's orange (the section colour) marks where you are in Meow-Dle, what the sample student has done, the
-// visit's 30 minutes and a rubric's best level.
+// Bucknell's orange (the section colour) marks where you are in Meowdle, what the student has done, and a rubric's
+// best level.
 // The course pages (/bucknell/anop-102/ and its pack, ANOP 302, 330 and 400) go with this page; ANOP 102's is linked
 // from the shell's syllabus. Not linked from the nav; sends noindex.
 import Base from '../../layouts/Base.astro';
 import MoodleShell from '../../components/MoodleShell.astro';
 import { bucknellColours } from '../../data/bucknell';
 ---
-<Base title="Bucknell" description="Playlists or radio? The multiple regression class Ali Rizvi teaches on his Bucknell campus visit, for ANOP 102, laid out in Meow-Dle, a mock Moodle." noindex accent={bucknellColours}>
+<Base title="Course: ANOP 102 | Meowdle" description="Playlists or radio? The multiple regression class Ali Rizvi teaches on his Bucknell campus visit, for ANOP 102, laid out in Meowdle, a mock Moodle." noindex accent={bucknellColours}>
   <MoodleShell start="mdl-class2" />
 </Base>

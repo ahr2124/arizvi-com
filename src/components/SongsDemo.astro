@@ -7,8 +7,13 @@
 // the model as Excel's Analysis ToolPak prints it.
 // Data and models: src/data/songs150.ts, made by scripts/songs150.py. Radio's coefficient falls from 0.83 to 0.23 when
 // playlists come in (R² 0.227 -> 0.599); months since release has a P-value of 0.09, and adjusted R² goes up a little
-// (0.593 -> 0.598), so round two is a judgement call. The coda says what the model cannot settle (cold reads, 17 Nov):
-// playlist counts follow streams too, neither input comes with a cost, and Flowers sits far out on its own.
+// (0.593 -> 0.598), and it stays in: every count runs to mid-June 2024, so an older song has had longer to collect all
+// three (cold reads, 19 Nov: a class that drops an input on its P-value alone teaches the wrong habit). The coda says
+// what the model cannot settle (cold reads, 17 and 19 Nov): playlist counts follow streams too, neither input comes
+// with a cost, all 150 songs are hits, and Flowers sits far out on its own. Flowers stays in, unlike class 1's gran
+// fondo weekend, since it is the kind of song we study, and the answer is checked without it.
+// A tap picks the nearest song, and another tap in the same spot steps to the next one there, so the crowd of dots
+// near the axis can be read one by one on a phone (cold reads, 19 Nov).
 // Without JavaScript the chart shows radio alone and all 4 outputs stay listed under it. On a phone the output keeps
 // the coefficients and P-values, and the standard errors and t stats come back on a wider screen.
 import { songs, models, corrRadioPlaylists, meanMonths, withoutFlowers, type Model } from '../data/songs150';
@@ -53,7 +58,7 @@ const flowers = songs.findIndex((s) => s[0] === 'Flowers');
       </svg>
       {songs.map((s, i) => <span class={`sdemo-pt${i === flowers ? ' is-flowers' : ''}`} style={`left: ${left(s[4], MAX.radio)}%; top: ${top(s[2])}%`} />)}
       <span class="sdemo-tag" data-tag style={`left: ${left(songs[flowers][4], MAX.radio)}%; top: ${top(songs[flowers][2])}%`}>Flowers</span>
-      <span class="demo-y label" style="top: 0">2,100</span>
+      <span class="demo-y label" style={`top: ${top(2000)}%`}>2,000</span>
       <span class="demo-y label" style={`top: ${top(1000)}%`}>1,000</span>
       <span class="demo-y label" style="top: 100%">0</span>
     </div>
@@ -98,7 +103,7 @@ const flowers = songs.findIndex((s) => s[0] === 'Flowers');
     );
   })}
 
-  <p class="demo-coda">Radio and playlists rise together (their correlation is {corrRadioPlaylists.toFixed(2)}), so on its own, radio gets credit for some of what goes with playlists. With both in the model, radio keeps about a quarter of its coefficient, and the model points to playlists. It cannot settle the budget on its own, though. Stations add songs that are already hits, playlists fill up with songs people already stream, and neither number comes with a cost. Flowers also sits far out on its own, like the gran fondo weekend in class 1. Without it, radio alone accounts for {pct(withoutFlowers.r2)} of the swing, and radio still falls to about a quarter once playlists are in. What would settle the budget is an experiment.</p>
+  <p class="demo-coda">Radio and playlists rise together (their correlation is {corrRadioPlaylists.toFixed(2)}), so on its own, radio gets credit for some of what goes with playlists. With both in the model, radio keeps about a quarter of its coefficient, and the model points to playlists. It cannot settle the budget on its own, though. Stations add songs that are already hits, playlists fill up with songs people already stream, and neither number comes with a cost. All 150 songs are hits, too, so a song that got radio play and flopped is not here. Flowers sits far out on its own. Unlike the gran fondo weekend, it is the kind of song we are studying, so it stays in, and we check the answer without it: radio alone then accounts for {pct(withoutFlowers.r2)} of the swing, and radio still falls to about a quarter once playlists are in. What would settle the budget is an experiment.</p>
 </div>
 
 <style>
@@ -134,6 +139,7 @@ const flowers = songs.findIndex((s) => s[0] === 'Flowers');
     /* On a phone the output keeps the coefficients and P-values, and the term names wrap. */
     .sdemo-wide { display: none; }
     .sdemo-out th[scope='row'] { white-space: normal; min-width: 8rem; }
+    .sdemo-out th, .sdemo-out td { padding-right: 10px; }
     /* The x axis keeps its ends and its first mark on a phone, so the labels do not run together. */
     .sdemo-x :global(.mid + .mid) { display: none; }
   }
@@ -205,12 +211,12 @@ const flowers = songs.findIndex((s) => s[0] === 'Flowers');
       root.querySelectorAll<HTMLElement>('[data-out-model]').forEach((t) => { t.hidden = t.dataset.outModel !== mode; });
       const near = songs.filter((s) => Math.abs(s[3] - P) <= BAND).length;
       const rb = coef('both', 'AirPlay'), ra = coef('radio', 'AirPlay');
-      const dots = near === 1 ? 'one song is within 15,000 playlists of that' : `${say(near)} songs are within 15,000 playlists of that`;
+      const dots = near === 0 ? 'no song is within 15,000 playlists of that' : near === 1 ? 'one song is within 15,000 playlists of that (the dark dot)' : `${say(near)} songs are within 15,000 playlists of that (the dark dots)`;
       $('[data-note]').textContent = {
         radio: `Radio alone: 1,000 more radio plays go with ${ra.toFixed(2)} million more streams. R² is ${m.r2.toFixed(3)}, so radio accounts for ${pct(m.r2)} of the swing in streams across these songs.`,
         playlists: `Playlists alone: 1,000 more playlists go with ${coef('playlists', 'Spotify').toFixed(2)} million more streams. R² is ${m.r2.toFixed(3)}, so playlists account for ${pct(m.r2)} of the swing.`,
-        both: `Holding playlists constant, 1,000 more radio plays go with ${rb.toFixed(2)} million more streams, about a quarter of what radio alone said. The solid line is radio for a song with ${P === 0 ? 'no' : num(P * 1000)} playlists, and ${dots} (the dark dots). Move the slider, and the line moves up and down with the same slope. The dashed line is radio alone.`,
-        age: `Months since release has a P-value of ${pOf('age', 'Months').toFixed(2)}, and adjusted R² goes from ${models.both.adj.toFixed(3)} to ${m.adj.toFixed(3)}. A little better, and the P-value is above 0.05. Keep it or drop it? (The line is for a song of average age, about ${say(Math.round(months))} months.)`,
+        both: `Holding playlists constant, 1,000 more radio plays go with ${rb.toFixed(2)} million more streams, about a quarter of what radio alone said. The solid line is radio for a song with ${P === 0 ? 'no' : num(P * 1000)} playlists, and ${dots}. Move the slider, and the line moves up and down with the same slope. The dashed line is radio alone.`,
+        age: `Months since release has a P-value of ${pOf('age', 'Months').toFixed(2)}, and adjusted R² goes from ${models.both.adj.toFixed(3)} to ${m.adj.toFixed(3)}. A little better, and it stays in: an older song has had longer to collect streams, playlists, and radio plays, and a P-value alone does not show that age adds nothing. (The line is for a song of average age, about ${say(Math.round(months))} months.)`,
       }[mode]!;
     }
     // The screen-reader line follows the model and where the slider stops, so it does not read out every step.
@@ -229,18 +235,29 @@ const flowers = songs.findIndex((s) => s[0] === 'Flowers');
     const hover = $<HTMLElement>('[data-hover]');
     const idle = 'Point at a dot, or tap it, to see the song.';
     let on: HTMLElement | null = null;
+    let last = { x: -99, y: -99, list: [] as number[], at: 0 };
     const pick = (e: PointerEvent) => {
-      let best = -1, bd = (e.pointerType === 'touch' ? 22 : 14) ** 2;
-      pts.forEach((p, i) => {
-        const r = p.getBoundingClientRect();
-        const dx = r.left + r.width / 2 - e.clientX, dy = r.top + r.height / 2 - e.clientY;
-        if (dx * dx + dy * dy < bd) { bd = dx * dx + dy * dy; best = i; }
-      });
+      const touch = e.pointerType === 'touch';
+      const reach = (touch ? 22 : 14) ** 2;
+      // Every song within reach, nearest first.
+      const near = pts
+        .map((p, i) => { const r = p.getBoundingClientRect(); const dx = r.left + r.width / 2 - e.clientX, dy = r.top + r.height / 2 - e.clientY; return { i, d: dx * dx + dy * dy }; })
+        .filter((c) => c.d < reach)
+        .sort((a, b) => a.d - b.d)
+        .map((c) => c.i);
+      // A tap close to the last one steps to the next song in the same crowd (a finger never lands twice on the same
+      // pixel, so the crowd is the one the first tap found).
+      const again = e.type === 'pointerdown' && last.list.length > 1 && Math.hypot(e.clientX - last.x, e.clientY - last.y) < 12;
+      const list = again ? last.list : near;
+      const at = again ? (last.at + 1) % list.length : 0;
+      if (e.type === 'pointerdown') last = again ? { ...last, at } : { x: e.clientX, y: e.clientY, list, at };
       on?.classList.remove('is-on');
-      if (best < 0) { on = null; hover.textContent = idle; return; }
+      if (!list.length) { on = null; hover.textContent = idle; return; }
+      const best = list[at];
       on = pts[best]; on.classList.add('is-on');
       const s = songs[best];
-      hover.textContent = `${s[0]}, ${s[1]}: ${num(s[2])} million streams, ${num(s[3] * 1000)} playlists, ${num(s[4] * 1000)} radio plays`;
+      const more = e.type === 'pointerdown' && list.length > 1 ? ` (${say(at + 1)} of ${say(list.length)} songs here; tap again for the next)` : '';
+      hover.textContent = `${s[0]}, ${s[1]}: ${num(s[2])} million streams, ${num(s[3] * 1000)} playlists, ${num(s[4] * 1000)} radio plays${more}`;
     };
     plot.addEventListener('pointermove', (e) => { if (e.pointerType !== 'touch') pick(e); });
     plot.addEventListener('pointerdown', pick);
