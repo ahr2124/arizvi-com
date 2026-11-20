@@ -7,7 +7,9 @@
 // teach, no other courses. Bucknell set the topic: multiple linear regression, at the level of ANOP 102.
 // The title and a short lede say what the class asks; then the class inside ANOP 102, laid out the way it would sit
 // in Moodle (MoodleShell.astro, content in src/data/bucknell102.ts, the regression in SongsDemo.astro), opening on
-// the class itself. The visit's 30 minutes are marked in its plan.
+// the class itself. The visit's 30 minutes are marked in its plan. The mock Moodle is called Meow-dle (Ali, 19 Nov
+// 2026: "lets name the fake moodle meow-dle"); the lede still says "the way students would find it in Moodle", the
+// real one.
 // The lesson is his of 17 Nov 2026 (the same class runs at Tulane): 150 of the most streamed songs released from
 // January 2023 to early June 2024 (top-ranked in the Kaggle dataset, gaps in the data left out), radio against
 // playlists. After the cold reads of 17 Nov the lede says what the 30 minutes cover, as Bucknell asked.
@@ -20,7 +22,7 @@ import Section from '../../components/Section.astro';
 import MoodleShell from '../../components/MoodleShell.astro';
 import { bucknellColours } from '../../data/bucknell';
 ---
-<Base title="Bucknell" description="Playlists or radio? The multiple regression class Ali Rizvi teaches on his Bucknell campus visit, for ANOP 102, laid out in Moodle." noindex accent={bucknellColours}>
+<Base title="Bucknell" description="Playlists or radio? The multiple regression class Ali Rizvi teaches on his Bucknell campus visit, for ANOP 102, laid out in Meow-dle, a mock Moodle." noindex accent={bucknellColours}>
   <header class="page-head">
     <h1>Playlists or <mark>radio?</mark></h1>
     <p>The class I am teaching on my campus visit: multiple linear regression, for students in ANOP&nbsp;102.</p>
@@ -28,7 +30,7 @@ import { bucknellColours } from '../../data/bucknell';
     <p>The class sits in week 11 of the course, the way students would find it in Moodle. The 30 minutes I teach on the visit are marked in its plan. They cover what a second input does to a coefficient. P-values, adjusted R squared and checking the model come after.</p>
   </header>
 
-  <Section title="The class, in Moodle" id="course">
+  <Section title="The class, in Meow-dle" id="course">
     <MoodleShell start="mdl-class2" />
   </Section>
 </Base>

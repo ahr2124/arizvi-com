@@ -9,6 +9,8 @@
 // from the course pack, closed, with their labs and project pieces.
 // No logos, icons or Moodle colours: black on white, the one typeface, and the section colour for where you are,
 // what is done and a rubric's best level.
+// The mock is called Meow-dle (Ali, 19 Nov 2026: "lets name the fake moodle meow-dle"). The name sits in text across
+// the top, where Moodle shows a site's name.
 // Without JavaScript every panel shows, one after another, and the tabs and the course index jump to each. With it,
 // one panel shows at a time, the breadcrumb follows, and the address keeps the panel (/bucknell/#mdl-class2), so a
 // link can open one. On a tablet or a phone the course index is left out, as Moodle closes its drawer, and the weeks
@@ -59,6 +61,7 @@ const steps = class2.steps.map((s) => { const from = t; t += s.min; return { ...
 const who = { me: 'Me, at the front', you: 'You, working', room: 'The room, laptops closed' } as const;
 ---
 <div class="mdl" data-mdl data-start={start}>
+  <div class="mdl-bar"><p class="mdl-brand">Meow-dle</p></div>
   <div class="mdl-top">
     <nav class="mdl-crumbs" aria-label="Breadcrumb">
       <ol data-crumbs><li><a href="#mdl-course">{course.code}</a></li></ol>
@@ -293,6 +296,9 @@ const who = { me: 'Me, at the front', you: 'You, working', room: 'The room, lapt
 <style>
   .mdl { margin-top: 1.25rem; border: 2px solid #000; background: #fff; font-size: 16px; }
   .mdl p { max-width: 66ch; }
+  /* The name across the top, as Moodle shows a site's name: Meow-dle, in text. */
+  .mdl-bar { padding: 10px 18px; border-bottom: 1px solid #000; }
+  .mdl-brand { margin: 0; font-weight: 700; font-size: 1.15rem; line-height: 1.3; }
   .mdl-top { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 16px; padding: 12px 18px 8px; }
   .mdl-crumbs ol { list-style: none; margin: 0; padding: 0; max-width: none; display: flex; flex-wrap: wrap; gap: 0 8px; font-weight: 600; }
   /* The breadcrumb's items are written by the script, so their rules are global (inside .mdl-crumbs). */
@@ -432,6 +438,7 @@ const who = { me: 'Me, at the front', you: 'You, working', room: 'The room, lapt
   }
   /* A phone: the tabs stay in view, and each row stacks, with the completion mark beside the activity's type. */
   @media (max-width: 767px) {
+    .mdl-bar { padding: 8px 14px; }
     .mdl-top { padding: 10px 14px 6px; }
     .mdl-term { margin-left: 0; }
     .mdl-tabs { padding: 0 4px; position: sticky; top: 0; z-index: 3; background: #fff; }
