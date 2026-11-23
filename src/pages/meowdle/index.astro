@@ -1,0 +1,28 @@
+---
+// src/pages/meowdle/index.astro  →  arizvi.com/meowdle (live since 22 Nov 2026: "ok meowdle can go live"; it was
+// /bucknell, hidden, until then, and /bucknell now sends people here).
+// For the Bucknell business analytics search (Analytics & Operations Management, Freeman College of Management).
+// The page is Meowdle, the mock Moodle, and nothing else (Ali, 19 Nov 2026: "i think we should remove all the
+// commentary and just leave Meow-Dle", then, after the cold reads that night, "Meowdle" and "Remove them all" for the
+// lines inside it that spoke to the committee). No title, lede or section heading above it, and nothing in it about
+// the visit, the link-preview description included (22 Nov, at the confirmation read before going live). Meowdle's name, across the top of the shell, is the page's h1, and the tab reads as Moodle's would
+// ("Course: ANOP 102 | Meowdle"). The address is the mock's own name (Ali, 20 Nov 2026: "wonderinf if we should change
+// it to arizvi.com/meowdle").
+// Meowdle opens on the class Ali teaches on his campus visit (Ali, 17 Nov 2026: "For Bucknell, focus on building out a
+// mock LMS around the one lesson that I am teaching"): ANOP 102, week 11, class 2, "Who gets the credit?"
+// (MoodleShell.astro, content in src/data/bucknell102.ts, the regression in CreditDemo.astro). Bucknell set the topic:
+// multiple linear regression, at the level of ANOP 102. The class's plan follows the deck he teaches from for minutes
+// 5 to 35 ("Follow the deck in the plan only", 19 Nov), and since 22 Nov that is the deck of 20 Nov: 250 simulated
+// artist eras in Google Sheets, radio, then teen exposure, then fan base, and the $5 million call ("Update class 2
+// first", before going live).
+// Bucknell's orange (the section colour) marks where you are in Meowdle, what the student has done, and a rubric's
+// best level.
+// The course pages (/bucknell/anop-102/ and its pack, ANOP 302, 330 and 400) stay hidden in src/pages/_bucknell, and
+// Meowdle does not link to them. Not linked from the nav; sends noindex.
+import Base from '../../layouts/Base.astro';
+import MoodleShell from '../../components/MoodleShell.astro';
+import { bucknellColours } from '../../data/bucknell';
+---
+<Base title="Course: ANOP 102 | Meowdle" description="Who gets the credit? A multiple regression class for ANOP 102, week 11, laid out in Meowdle, a mock Moodle." noindex accent={bucknellColours}>
+  <MoodleShell start="mdl-class2" />
+</Base>

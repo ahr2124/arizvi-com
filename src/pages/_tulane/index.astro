@@ -1,0 +1,195 @@
+---
+// src/pages/tulane/index.astro  →  arizvi.com/tulane
+// For the Tulane Freeman search (Professor of Practice, Management Science - Information Systems). Rebuilt on 12 Nov
+// 2026 around how Ali teaches, with one course laid out in full around a service project, in Canvas's course
+// structure and the site's own look. In order: the 4 steps across the
+// page under number tags, carrying his methods, with a line on generative AI under them; one course in full (a
+// section of MGSC 3010 on its current outline, built with the professors who teach it now, with one service project
+// for one New Orleans partner as the place students apply it), laid out the way it would sit in Canvas
+// (CourseShell.astro, content in src/data/tulane3010.ts); the courses as cards, each with a chip; the catalogue's own
+// lists for the master's and the certificate side by side.
+// Tulane Green (the section colour) marks where Ali comes in: the step tags, the course codes, where you are in the
+// course shell, a rubric's best level, and the courses he could teach among the catalogue's lists.
+// Numbers up to two digits are words in the copy (Ali, 11 Nov 2026); digits stay for course codes, years, data, the
+// week labels and points in the course shell, and the scores (1 or 0).
+// Not linked from the nav; sends noindex.
+// Tulane facts, read 12 Nov 2026: codes, titles, prerequisites and the MGSC 3010 modules from the 2026-27 catalogue
+// (catalog.tulane.edu/courses/mgsc/); MGSC 3010 in the Required Core Business Courses
+// (catalog.tulane.edu/business/management/management-major/); the certificate and the master's lists from their
+// catalogue pages; the two semesters of service learning and the 20-hour minimum (catalog.tulane.edu/newcomb-tulane/
+// center-public-service/); the Faculty Seminar on Service Learning, the public service designation and the Service
+// Learning Assistants from the Center for Public Service's faculty pages (cps.tulane.edu).
+// The service partner is not named: the plan uses an example of the kind of decision a partner could bring.
+import Base from '../../layouts/Base.astro';
+import Section from '../../components/Section.astro';
+import CourseShell from '../../components/CourseShell.astro';
+import { arrows } from '../../data/bucknell';
+
+// Numbers and course codes stay on the same line as the word after them (as on /bucknell).
+const keep = (s: string) => s.replace(/(\d|[A-Z]{4}) (?=\w)/g, '$1 ');
+
+// The 4 steps Ali teaches by, each carrying the methods he describes for them.
+const steps = [
+  ['Build the course backward from the outcome.', 'I start from what students should be able to do when the course ends, then plan each week and each assessment backward from it. Every brief follows TILT (its purpose, the task, and the criteria), and I grade key pieces with specifications: each spec is met or not yet, 1 or 0.'],
+  ['Personalize within a defined structure.', 'Everyone gets the same foundations. We start on a worked example and move to real problems with feedback midway, and by the end students solve semi-structured problems alone or in teams. I scaffold each step so that first-generation students and students whose first language is not English do well.'],
+  ['Learn on real problems.', 'The problems come from open data such as the CFPB\'s consumer complaints, and from industry partners and my own industry work. Guest speakers bring more of them into the room. I prepare each speaker beforehand, and when students lose the thread, I step in with questions.'],
+  ['Test the teaching itself.', 'The real problems midway are formative assessments. They show whether the teaching has worked while there is still time to change it. For mid-course feedback, students get fifteen minutes in class to answer three questions anonymously (what should I start, continue, and stop doing?), and I leave the room. At Freeman I would run it in Canvas.'],
+];
+
+// The courses, with a chip on each saying how it would come in.
+const courses = [
+  {
+    code: 'MGSC 3010',
+    chip: 'A section in full above',
+    where: 'BSM core',
+    prereq: 'Prerequisite(s): INFO 1010 and (MATH 1230 or MGSC 3005).',
+    title: 'Introduction to Business Analytics',
+    line: 'Students build Excel models for optimization and simulation. In my section, teams use them on one partner\'s problem and end with a memo.',
+    who: 'BSM students.',
+    sample: { href: '#course', text: 'The section, laid out in Canvas, is above' },
+  },
+  {
+    code: 'MGSC 4790',
+    chip: 'Added sections',
+    where: 'Business Analytics and AI certificate, core',
+    prereq: 'Prerequisite(s): MGSC 3010.',
+    title: 'Business Analytics with Python',
+    line: 'Students use Python for descriptive, prescriptive, and predictive analytics, and a team project optimizes and simulates a portfolio.',
+    note: 'I built a course around Python on Codio, from IDE basics up to PyTorch.',
+    who: 'Students in the Business Analytics and AI certificate.',
+  },
+  {
+    code: 'MGSC 4690',
+    chip: 'Added sections',
+    where: 'Business Analytics and AI certificate, core',
+    prereq: 'Prerequisite(s): MGSC 3010.',
+    title: 'AI for Business',
+    line: 'In my sections, students understand the technology, then build models that can thoughtfully answer business problems.',
+    note: 'At Amazon I owned Alexa Orchestration, and at Morgan Stanley my team deployed AI models to compliance users. I could teach from both, including MGSC 7350, the graduate version.',
+    who: 'Students in the Business Analytics and AI certificate.',
+  },
+  {
+    code: 'MGSC 7340',
+    chip: 'Master\'s',
+    where: 'MAN degree requirements, fall term',
+    title: 'Web Analytics',
+    line: 'In my sections, students work through funnels, instrumentation and A/B tests in Python, and end with a decision to ship a change or drop it.',
+    note: 'I could teach it from a year of A/B tests I ran at an e-commerce retailer.',
+    who: 'Master of Business Analytics and AI students, and seniors on the 4+1.',
+    sample: { href: '/projects/experimentation/', text: 'The experiments behind it' },
+  },
+  {
+    code: 'MGSC 7870',
+    chip: 'Master\'s',
+    where: 'MAN degree requirements, spring term',
+    prereq: 'Prerequisite(s): (MGSC 7310 and 7330) or MGSC 7520*. * May be taken concurrently.',
+    title: 'Business Analytics Projects',
+    line: 'In my sections, students work on a client\'s problem under a charter. They have a working analysis by midterm and present the final one with the client in the room.',
+    note: 'I ran Waterloo\'s Undergraduate Capstone Seminar (GBDA 402) on live client projects, and I would run this course the same way.',
+    who: 'Master of Business Analytics and AI students.',
+  },
+];
+
+// The 2026-27 catalogue's own lists (Business Analytics and AI, MAN: Degree Requirements; Business Analytics and AI
+// Certificate), side by side. `mine` marks a course I could teach.
+const lists: { p: string; g: string; rows: { c: string; t: string; mine?: boolean }[] }[] = [
+  { p: 'Master\'s (MAN)', g: 'Fall Term', rows: [
+    { c: 'CDMA 6030', t: 'Advanced Career Development and Management' },
+    { c: 'MGSC 7000', t: 'Bus Analytics Practicum' },
+    { c: 'MGSC 7100', t: 'SQL Database Fundamentals and Business Intelligence' },
+    { c: 'MGSC 7310', t: 'Modeling and Analytics' },
+    { c: 'MGSC 7340', t: 'Web Analytics', mine: true },
+  ] },
+  { p: 'Master\'s (MAN)', g: 'Spring Term', rows: [
+    { c: 'MGSC 7520', t: 'Advanced Modeling and Analytics', mine: true },
+    { c: 'MGSC 7870', t: 'Business Analytics Projects', mine: true },
+  ] },
+  { p: 'Certificate', g: 'Three Core Courses', rows: [
+    { c: 'MGSC 4790', t: 'Business Analytics with Python', mine: true },
+    { c: 'MGSC 4690', t: 'AI for Business', mine: true },
+    { c: 'MGSC 4590', t: 'Business Data Exploration & Visualization', mine: true },
+  ] },
+  { p: 'Certificate', g: 'Elective Course (choose one of the following)', rows: [
+    { c: 'ACCN 3290', t: 'Accounting Analytics' },
+    { c: 'MKTG 4110', t: 'Research and Analytics' },
+    { c: 'MKTG 4250', t: 'Social and Online Marketing' },
+  ] },
+];
+
+const tulaneColours: [string, string] = ['#285C4D', '#285C4D']; // Tulane Green, from the university's brand page
+---
+<Base title="Tulane" description="How Ali Rizvi would teach in the Management Science area at Tulane's Freeman School of Business, with one section of MGSC 3010 laid out in full." noindex accent={tulaneColours} rail>
+  <header class="page-head">
+    <div class="intro-grid">
+      <div class="text">
+        <h1>Teaching analytics and information systems at <mark>Freeman</mark></h1>
+        <p>This page is a sample of how I could teach. I would work with the professors who teach these courses now to understand the students and see what works and what does not. Then I would build on what is already there.</p>
+        <p>I spent over a decade in industry before my PhD, including leading AI and analytics teams at Morgan Stanley and on Amazon Alexa.</p>
+        <p>Tulane undergraduates complete service learning as part of their degree, so the course I lay out in full is one section of MGSC&nbsp;3010 with a service project.</p>
+      </div>
+      <div class="photo"><img src="/media/headshot.jpg" alt="Ali Rizvi" width="400" height="500" /></div>
+    </div>
+  </header>
+
+  <Section title="How I teach" id="approach">
+    <ol class="principles steps across">
+      {steps.map(([head, line]) => <li><strong>{head}</strong> {line}</li>)}
+    </ol>
+    <div class="grid after-steps"><div class="span-8">
+      <p><strong>Generative AI.</strong> Where students will use it at work, they use it in my courses too, and they disclose which tools and prompts they used and write a short reflection on what changed. Specific parts of that disclosure are graded 1 or 0. Where students need the fundamentals without it, the checks are on paper. I have also built generative AI modules into other courses, so that students learn to use it within each subject.</p>
+    </div></div>
+  </Section>
+
+  <Section title="A section of MGSC 3010, with a service project" id="course">
+    <div class="grid"><div class="span-8">
+      <p>Here is a draft of how I could run one section of Introduction to Business Analytics on its current outline. I would settle the grading and the service hours with the professors who teach it now, so that sections stay comparable. The content follows the catalog's four modules (data modeling, deterministic modeling, spreadsheet automation, and probabilistic modeling). Students build Excel models for linear programming and simulation, and in this section they use them on the service project and end with a memo to the partner.</p>
+      <p>I would work with the Center for Public Service to find one community partner in New Orleans for the section, with a Service Learning Assistant who runs the site orientation and collects the service timesheets. Each team would take a different question for the same partner. If the area agreed, I would take the Center's Faculty Seminar on Service Learning first and propose the section for the public service designation, so that it could count toward the two semesters of service learning Tulane undergraduates complete.</p>
+      <p>Below is the section as it might look in Canvas, with a placeholder for the partner.</p>
+    </div></div>
+    <CourseShell />
+  </Section>
+
+  <Section title="Courses I could teach" id="courses">
+    <div class="grid"><div class="span-8">
+      <p>I would teach where the area needs sections most. In my first year I could teach sections of MGSC&nbsp;3010 and take added sections of the courses below where demand is highest, on their current outlines and alongside the colleagues who lead them now.</p>
+    </div></div>
+    <ul class="exhibits courses">
+      {courses.map((c) => (
+        <li class="course">
+          <p class="code">{c.code}</p>
+          <span class="chip">{c.chip}</span>
+          <h3>{c.title} (3)</h3>
+          <p>{arrows(c.line)}</p>
+          {c.note && <p>{keep(c.note)}</p>}
+          <dl class="course-facts">
+            <dt class="label">In the catalog</dt>
+            <dd>{c.where}.{c.prereq && ` ${c.prereq}`}</dd>
+            {c.who && <><dt class="label">Students</dt><dd>{keep(c.who)}</dd></>}
+          </dl>
+          {c.sample && <p class="sample"><a href={c.sample.href}>{c.sample.text}&nbsp;→</a></p>}
+        </li>
+      ))}
+    </ul>
+    <div class="grid"><div class="span-8">
+      <p style="margin-top: 2rem;">{keep('I could also teach MGSC 4320, 4590, 7520, and 3005.')} Past MGSC&nbsp;3010, I would teach in Python, with Tableau, SQL or Excel where a course uses them. If colleagues want them, I could also help build generative AI modules for their courses.</p>
+    </div></div>
+  </Section>
+
+  <Section title="Where they sit" id="programs">
+    <div class="grid"><div class="span-8">
+      <p>These are the catalog's lists for the Business Analytics and AI master's and certificate. The master's adds four advisor-approved electives, and MGSC&nbsp;3010 is in the BSM core. Bold marks courses where I could take a section.</p>
+    </div></div>
+    <ul class="cols c4 sits">
+      {lists.map((g) => (
+        <li>
+          <span class="label">{g.p}</span>
+          <strong>{g.g}</strong>
+          <ul class="sit">
+            {g.rows.map((r) => <li class:list={{ mine: r.mine }}>{r.c && <span class="nb">{r.c}</span>} {r.t}</li>)}
+          </ul>
+        </li>
+      ))}
+    </ul>
+  </Section>
+
+</Base>

@@ -1,0 +1,108 @@
+---
+// src/pages/bucknell/anop-302.astro  →  arizvi.com/bucknell/anop-302
+// Draft syllabus for Bucknell's ANOP 302. Not linked from the nav; sends noindex.
+import Base from '../../layouts/Base.astro';
+import Section from '../../components/Section.astro';
+import CourseHeader from '../../components/CourseHeader.astro';
+import FourSteps from '../../components/FourSteps.astro';
+import CourseNav from '../../components/CourseNav.astro';
+import OptionDemo from '../../components/OptionDemo.astro';
+import UnitFigure from '../../components/UnitFigure.astro';
+import HandedIn from '../../components/HandedIn.astro';
+import ClassPlan from '../../components/ClassPlan.astro';
+import { classes } from '../../data/classes';
+import { pack } from '../../data/packs/anop-302';
+import { course, bucknellColours } from '../../data/bucknell';
+
+const c = course('anop-302');
+
+
+// Three units. Each week: a model the class builds together, then a lab students finish on their own.
+const units: { n: 1 | 2 | 3; weeks: string; name: string; line: string; items: { w: string; topic: string; build: string; try?: boolean }[] }[] = [
+  {
+    n: 1, weeks: 'Weeks 1-7', name: 'Optimization', line: 'Linear and integer models for cash, bonds, capital budgets and product mix',
+    items: [
+      { w: '1', topic: 'From spreadsheets to finance', build: 'Linear programs from the start, for anyone who has not met them, straight onto a financial plan. Model hygiene: inputs, decisions, outputs.' },
+      { w: '2', topic: 'Short-term financing', build: 'Multi-period cash management: borrow, invest or hold, month by month.' },
+      { w: '3', topic: 'Sensitivity analysis', build: 'Shadow prices and allowable ranges - what an extra dollar of credit line is worth.' },
+      { w: '4', topic: 'Multi-period models', build: 'Bond portfolio dedication: meet a stream of liabilities at the lowest cost.' },
+      { w: '5', topic: 'Integer models', build: 'Capital budgeting and project selection under a budget.' },
+      { w: '6', topic: 'Accounting applications', build: 'Product mix with contribution margins, and how allocated costs can mislead a decision.' },
+      { w: '7', topic: 'Review and midterm', build: 'A practice case, then the midterm.' },
+    ],
+  },
+  {
+    n: 2, weeks: 'Weeks 8-9', name: 'Portfolios', line: 'Markowitz and the efficient frontier, with the limits real investors face',
+    items: [
+      { w: '8', topic: 'Nonlinear models', build: 'Mean-variance portfolio optimization (Markowitz).' },
+      { w: '9', topic: 'The efficient frontier', build: 'The frontier, the constraints real investors face, and index tracking.' },
+    ],
+  },
+  {
+    n: 3, weeks: 'Weeks 10-14', name: 'Simulation and risk', line: 'Monte Carlo methods, from value at risk to pricing and hedging options',
+    items: [
+      { w: '10', topic: 'Monte Carlo fundamentals', build: 'Random draws, distributions, sample size and how fast the answer settles.' },
+      { w: '11', topic: 'Risk management', build: 'Simulating portfolio losses and estimating value at risk.' },
+      { w: '12', topic: 'Pricing derivatives', build: 'A European call by simulation, checked against Black-Scholes, then a path-dependent option.', try: true },
+      { w: '13', topic: 'Hedging', build: 'Foreign exchange exposure hedged with forwards vs. options, compared by simulation.' },
+      { w: '14', topic: 'Project presentations', build: 'Teams present their decision and the model behind it.' },
+    ],
+  },
+];
+
+---
+<Base title="ANOP 302" description="ANOP 302, Financial Decision Modeling using Spreadsheets, as Ali Rizvi could teach it at Bucknell: the term week by week, and an option to price by simulation." noindex accent={bucknellColours} up={['/bucknell/', 'All courses']}>
+  <CourseHeader course={c} facts={[
+    ['Format', '14 weeks, 2 classes of 75 minutes each week'],
+    ['Tools', 'Excel with Solver. Laptops are open while we build and closed for the debrief.'],
+  ]}>
+    <p class="practice"><span class="label">A sample</span>The outline ANOP 302 has run on comes first, and I would build on it. I would check with colleagues in finance, and with whoever teaches ANOP 350, which goes deeper into simulation.</p>
+  </CourseHeader>
+
+  <FourSteps steps={[
+    'Each team ends with a financial decision a real organization faces, and the model behind it. Every week ends with a 1-page memo.',
+    'Everyone moves from formulation to risk to simulation in the same order, and each team picks its own organization.',
+    'At Morgan Stanley my team deployed AI models to compliance users in a way regulators could audit. So each week, students write their decision in a memo someone else could check.',
+    'Exit tickets every class show whether students can say what to do. Midterm feedback shows what to change.',
+  ]} />
+
+  
+  <Section title="Week by week" id="term">
+    {units.map((u) => (
+      <div class="unit grid">
+        <div class="unit-side">
+          <UnitFigure unit={u.n} />
+          <p class="label">{u.weeks}</p>
+          <h3>{u.name}</h3>
+          <p class="unit-line">{u.line}</p>
+        </div>
+        <ul class="rows compact unit-weeks">
+          {u.items.map((x) => (
+            <li class="grid">
+              <div class="label">Week {x.w}</div>
+              <div class="body">
+                <span class="title">{x.topic}</span>
+                <p>{x.build}{x.try && <> <a href="#try">Try it below.</a></>}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))}
+  </Section>
+
+  
+  
+  
+  <Section title="Pricing an option by simulation" id="try">
+    <ClassPlan plan={classes.option} course={c.slug}>
+      <p>A call option on a $100 stock: strike $100, 1 year to expiry, 20% volatility, 5% interest. Black-Scholes gives the exact price, so it can check the simulation.</p>
+      <p>Each press simulates more stock paths and averages the payoffs. The band is the 95% interval, and the dashed line is Black-Scholes. Before anyone presses, I ask how many paths it takes to get within 10 cents.</p>
+    </ClassPlan>
+    <OptionDemo />
+  </Section>
+
+  <HandedIn pack={pack} />
+
+  <CourseNav current={c.slug} />
+</Base>

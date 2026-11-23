@@ -1,0 +1,822 @@
+<!doctype html>
+<html lang="en-CA">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>slotravel - 3 trips, 21 days each</title>
+<meta name="description" content="3 slow trips, 21 days each: Europe by rail, Ecuador and Peru, and cultural Mexico. Pick one.">
+<meta property="og:title" content="slotravel">
+<meta property="og:description" content="3 trips, 21 days each. Pick one and I will plan the rest.">
+<meta property="og:image" content="https://thumb.wikimedia.org/wikipedia/commons/thumb/1/13/RhB_ABe_4-4_III_Kreisviadukt_Brusio.jpg/1280px-RhB_ABe_4-4_III_Kreisviadukt_Brusio.jpg">
+<meta name="theme-color" content="#000000">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="preload" href="/fonts/CooperHewitt-Bold.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+@font-face { font-family: 'Cooper Hewitt'; src: url('/fonts/CooperHewitt-Book.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Cooper Hewitt'; src: url('/fonts/CooperHewitt-BookItalic.woff2') format('woff2'); font-weight: 400; font-style: italic; font-display: swap; }
+@font-face { font-family: 'Cooper Hewitt'; src: url('/fonts/CooperHewitt-Semibold.woff2') format('woff2'); font-weight: 600; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Cooper Hewitt'; src: url('/fonts/CooperHewitt-Bold.woff2') format('woff2'); font-weight: 700; font-style: normal; font-display: swap; }
+
+:root {
+  --ink: #000;
+  --paper: #fff;
+  --muted: #4d4d4d;
+  --rail: #c4122f;   /* Rhaetian Railway red */
+  --andes: #0e7c72;  /* Quilotoa crater lake */
+  --rosa: #e4007c;   /* rosa mexicano */
+  --flap: #1c1c1c;
+  --flap-ink: #f4f4ee;
+  --solari: #ffd23f;
+  --max: 1160px;
+  --pad: 20px;
+  --c: #000;
+}
+@media (min-width: 768px) { :root { --pad: 48px; } }
+
+* { box-sizing: border-box; }
+html {
+  font-family: 'Cooper Hewitt', Helvetica, Arial, sans-serif;
+  font-size: 18px;
+  line-height: 1.5;
+  color: var(--ink);
+  background: var(--paper);
+  font-variant-numeric: tabular-nums;
+  -webkit-font-smoothing: antialiased;
+  scroll-behavior: smooth;
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body { margin: 0; overflow-x: clip; }
+img { display: block; max-width: 100%; height: auto; }
+a { color: inherit; text-underline-offset: 3px; }
+a:hover { text-decoration-thickness: 2px; }
+:focus-visible { outline: 3px solid var(--c, #000); outline-offset: 3px; }
+h1, h2, h3 { margin: 0; font-weight: 700; letter-spacing: -0.02em; line-height: 1.02; }
+h2 { font-size: clamp(2.4rem, 7vw, 4.6rem); letter-spacing: -0.035em; }
+h3 { font-size: 1.25rem; font-weight: 600; margin: 48px 0 14px; }
+p { margin: 0 0 1em; max-width: 62ch; }
+.wrap { max-width: var(--max); margin: 0 auto; padding: 0 var(--pad); }
+.small { font-size: 14px; color: var(--muted); }
+
+/* Buttons (pills are the one rounded element) */
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  font: inherit; font-weight: 600; font-size: 17px; line-height: 1;
+  padding: 14px 22px; border-radius: 999px; cursor: pointer;
+  background: var(--c, #000); color: #fff; border: 2px solid var(--c, #000);
+  text-decoration: none;
+}
+.btn.ghost { background: transparent; color: var(--c, #000); }
+.btn:hover { filter: brightness(1.12); }
+.btn.ghost:hover { background: var(--c, #000); color: #fff; filter: none; }
+
+/* Top */
+.top { display: flex; align-items: center; justify-content: space-between; padding-top: 18px; padding-bottom: 18px; }
+.home { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 600; font-size: 16px; }
+.home img { width: 34px; height: 34px; }
+
+/* Hero */
+.hero { padding-top: 24px; padding-bottom: 72px; }
+.hero h1 {
+  font-size: clamp(4.2rem, 17vw, 12.5rem);
+  letter-spacing: -0.055em; line-height: 0.82; margin-left: -0.04em;
+}
+.lede { font-size: clamp(1.25rem, 2.6vw, 1.75rem); line-height: 1.3; margin: 22px 0 0; max-width: 30ch; }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 22px; }
+
+/* Departures board */
+.board {
+  --cw: 0.76em; --gap: 2px;
+  width: fit-content; max-width: 100%;
+  margin-top: 36px; background: #000; color: var(--flap-ink);
+  border-radius: 8px; padding: 12px 16px 14px;
+  font-size: clamp(12px, 1.95vw, 22px); font-weight: 600;
+}
+.board-top { display: flex; justify-content: space-between; align-items: baseline; font-size: 15px; padding: 2px 2px 10px; }
+.board-top b { font-size: 18px; font-weight: 600; }
+.clock { color: var(--solari); font-size: 18px; }
+.board-head, .row { display: grid; grid-template-columns: repeat(5, auto); justify-content: start; column-gap: 0.85em; }
+.board-head { font-weight: 400; color: #aaa; padding: 0 2px 8px; }
+.board-head span, .col { width: calc(var(--n) * (var(--cw) + var(--gap))); }
+.board-head span { font-size: inherit; line-height: 1; }
+.board-head i { font-style: normal; font-size: 13px; }
+.col.c-gate, .board-head .g { width: 2.2em; justify-content: center; text-align: center; }
+.row {
+  color: inherit; text-decoration: none; padding: 7px 2px; border-top: 1px solid #262626;
+  border-radius: 4px; transition: background-color .15s;
+}
+.row:hover, .row.lit { background: #191919; }
+.row.lit .col.c-status .f { color: var(--solari); }
+.row:focus-visible { outline: 3px solid var(--solari); outline-offset: 0; }
+.col { display: flex; white-space: pre; }
+.f {
+  display: inline-block; width: var(--cw); height: 1.34em; line-height: 1.22em; padding-top: 0.12em;
+  margin-right: var(--gap); text-align: center; background: var(--flap);
+  border-radius: 2px; position: relative; overflow: hidden;
+}
+.f::after { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: rgba(0,0,0,.7); }
+.col.c-gate .f { background: var(--g); color: #fff; }
+.col.c-status[data-state="pick"] .f, .col.c-status[data-state="dice"] .f { color: var(--solari); }
+.board-note { font-size: 13px; color: #aaa; margin: 10px 2px 0; }
+@media (max-width: 760px) {
+  .board { --cw: 0.74em; --gap: 1.5px; font-size: 12.5px; padding: 10px 10px 12px; }
+  .board-head { display: none; }
+  .row { grid-template-columns: auto auto; row-gap: 5px; column-gap: 0.8em; padding: 9px 2px; }
+  .col.c-trip { grid-column: 1; grid-row: 1; }
+  .col.c-gate { grid-column: 2; grid-row: 1; }
+  .col.c-route { grid-column: 1; grid-row: 2; }
+  .col.c-status { grid-column: 2; grid-row: 2; }
+  .col.c-days { display: none; }
+}
+
+/* Plain sections */
+.sec { padding-top: 56px; padding-bottom: 64px; background: linear-gradient(#000, #000) var(--pad) 0 / calc(100% - 2 * var(--pad)) 2px no-repeat; }
+.sec > h2 { margin-bottom: 28px; }
+.rules { list-style: none; counter-reset: r; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr; gap: 0 48px; }
+@media (min-width: 900px) { .rules { grid-template-columns: 1fr 1fr; } }
+.rules li { counter-increment: r; display: grid; grid-template-columns: 2.2em 1fr; padding: 14px 0; border-top: 1px solid #000; font-size: 19px; line-height: 1.4; }
+.rules li::before { content: counter(r); font-weight: 700; font-size: 1.5em; line-height: 1; }
+
+/* Trip sections */
+.trip { padding-bottom: 72px; overflow-x: clip; }
+.band { height: 22px; margin-bottom: 44px; }
+.band.rail {
+  background:
+    linear-gradient(var(--c), var(--c)) 0 4px / 100% 3px no-repeat,
+    linear-gradient(var(--c), var(--c)) 0 15px / 100% 3px no-repeat,
+    repeating-linear-gradient(90deg, #000 0 6px, transparent 6px 24px) 0 1px / 100% 20px no-repeat;
+}
+.band.andes {
+  height: 24px;
+  background:
+    linear-gradient(135deg, var(--c) 25%, transparent 25%) -12px 0 / 24px 24px,
+    linear-gradient(225deg, var(--c) 25%, transparent 25%) -12px 0 / 24px 24px,
+    linear-gradient(315deg, var(--c) 25%, transparent 25%) 0 0 / 24px 24px,
+    linear-gradient(45deg, var(--c) 25%, transparent 25%) 0 0 / 24px 24px;
+}
+.band.picado { height: 66px; background: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22186%22 height=%2266%22 viewBox=%220 0 186 66%22%3E%3Cpath d=%22M0 5 Q93 9 186 5%22 stroke=%22%23000%22 stroke-width=%221.5%22 fill=%22none%22/%3E%3Cpath fill=%22%23e4007c%22 fill-rule=%22evenodd%22 d=%22M4 6 H58 V50 L51.25 50 L44.50 58 L37.75 50 L31.00 58 L24.25 50 L17.50 58 L10.75 50 L4.00 58 Z M26.8 25 a4.2 4.2 0 1 0 8.4 0 a4.2 4.2 0 1 0 -8.4 0 M39.50 25.00 a2.5 2.5 0 1 0 5.0 0 a2.5 2.5 0 1 0 -5.0 0 M36.28 32.78 a2.5 2.5 0 1 0 5.0 0 a2.5 2.5 0 1 0 -5.0 0 M28.50 36.00 a2.5 2.5 0 1 0 5.0 0 a2.5 2.5 0 1 0 -5.0 0 M20.72 32.78 a2.5 2.5 0 1 0 5.0 0 a2.5 2.5 0 1 0 -5.0 0 M17.50 25.00 a2.5 2.5 0 1 0 5.0 0 a2.5 2.5 0 1 0 -5.0 0 M20.72 17.22 a2.5 2.5 0 1 0 5.0 0 a2.5 2.5 0 1 0 -5.0 0 M28.50 14.00 a2.5 2.5 0 1 0 5.0 0 a2.5 2.5 0 1 0 -5.0 0 M36.28 17.22 a2.5 2.5 0 1 0 5.0 0 a2.5 2.5 0 1 0 -5.0 0 M10 9 l3 4 l-3 4 l-3 -4 Z M52 9 l3 4 l-3 4 l-3 -4 Z M12 44 h38 v2 h-38 Z%22/%3E%3Cpath fill=%22%23f5a300%22 fill-rule=%22evenodd%22 d=%22M66 6 H120 V50 L113.25 50 L106.50 58 L99.75 50 L93.00 58 L86.25 50 L79.50 58 L72.75 50 L66.00 58 Z M88.8 25 a4.2 4.2 0 1 0 8.4 0 a4.2 4.2 0 1 0 -8.4 0 M101.50 25.00 a2.5 2.5 0 1 0 5.0 0 a2.5 2.5 0 1 0 -5.0 0 M98.28 32.78 a2.5 2.5 0 1 0 5.0 0 a2.5 2.5 0 1 0 -5.0 0 M90.50 36.00 a2.5 2.5 0 1 0 5.0 0 a2.5 2.5 0 1 0 -5.0 0 M82.72 32.78 a2.5 2.5 0 1 0 5.0 0 a2.5 2.5 0 1 0 -5.0 0 M79.50 25.00 a2.5 2.5 0 1 0 5.0 0 a2.5 2.5 0 1 0 -5.0 0 M82.72 17.22 a2.5 2.5 0 1 0 5.0 0 a2.5 2.5 0 1 0 -5.0 0 M90.50 14.00 a2.5 2.5 0 1 0 5.0 0 a2.5 2.5 0 1 0 -5.0 0 M98.28 17.22 a2.5 2.5 0 1 0 5.0 0 a2.5 2.5 0 1 0 -5.0 0 M72 9 l3 4 l-3 4 l-3 -4 Z M114 9 l3 4 l-3 4 l-3 -4 Z M74 44 h38 v2 h-38 Z%22/%3E%3Cpath fill=%22%23009fae%22 fill-rule=%22evenodd%22 d=%22M128 6 H182 V50 L175.25 50 L168.50 58 L161.75 50 L155.00 58 L148.25 50 L141.50 58 L134.75 50 L128.00 58 Z M150.8 25 a4.2 4.2 0 1 0 8.4 0 a4.2 4.2 0 1 0 -8.4 0 M163.50 25.00 a2.5 2.5 0 1 0 5.0 0 a2.5 2.5 0 1 0 -5.0 0 M160.28 32.78 a2.5 2.5 0 1 0 5.0 0 a2.5 2.5 0 1 0 -5.0 0 M152.50 36.00 a2.5 2.5 0 1 0 5.0 0 a2.5 2.5 0 1 0 -5.0 0 M144.72 32.78 a2.5 2.5 0 1 0 5.0 0 a2.5 2.5 0 1 0 -5.0 0 M141.50 25.00 a2.5 2.5 0 1 0 5.0 0 a2.5 2.5 0 1 0 -5.0 0 M144.72 17.22 a2.5 2.5 0 1 0 5.0 0 a2.5 2.5 0 1 0 -5.0 0 M152.50 14.00 a2.5 2.5 0 1 0 5.0 0 a2.5 2.5 0 1 0 -5.0 0 M160.28 17.22 a2.5 2.5 0 1 0 5.0 0 a2.5 2.5 0 1 0 -5.0 0 M134 9 l3 4 l-3 4 l-3 -4 Z M176 9 l3 4 l-3 4 l-3 -4 Z M136 44 h38 v2 h-38 Z%22/%3E%3C/svg%3E") 0 0 / 186px 66px repeat-x; margin-bottom: 30px; }
+.trip-head { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 20px; }
+.gate-pill { border: 2px solid var(--c); color: var(--c); border-radius: 999px; padding: 4px 14px; font-weight: 600; font-size: 17px; line-height: 1.2; }
+.route-line { font-size: clamp(1.1rem, 2.2vw, 1.45rem); margin: 14px 0 0; max-width: none; color: var(--c); font-weight: 600; }
+
+.hero-photo { position: relative; margin: 28px 0 0; }
+.hero-photo img { width: 100%; aspect-ratio: 16 / 7; object-fit: cover; background: #eee; }
+.hero-photo figcaption { font-size: 14px; color: var(--muted); margin-top: 8px; padding-right: 150px; }
+@media (max-width: 700px) { .hero-photo img { aspect-ratio: 4 / 3; } .hero-photo figcaption { padding-right: 96px; } }
+
+.stamp { position: absolute; right: 3%; bottom: -34px; width: 168px; height: auto; color: var(--c); transform: rotate(-11deg); mix-blend-mode: multiply; pointer-events: none; }
+@media (max-width: 700px) { .stamp { width: 108px; bottom: -22px; } }
+
+.intro { margin-top: 44px; font-size: clamp(1.15rem, 2vw, 1.4rem); line-height: 1.4; }
+.intro p { max-width: 46ch; }
+
+.facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 24px; margin: 30px 0 0; }
+@media (min-width: 900px) { .facts { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.facts div { border-top: 1px solid #000; padding: 10px 0 14px; }
+.facts dt { font-size: 14px; color: var(--muted); }
+.facts dd { margin: 2px 0 0; font-size: 19px; font-weight: 600; line-height: 1.3; }
+
+/* Route drawn by altitude: same scale on all 3 trips (5,000 m = full height) */
+.alt { list-style: none; margin: 0; padding: 0; display: flex; align-items: flex-end; gap: 8px; border-bottom: 2px solid #000; }
+.alt li { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; justify-content: flex-end; padding-bottom: 8px; }
+.alt .bar { height: max(3px, calc(var(--h) * 190px)); background: var(--c); border-radius: 3px 3px 0 0; margin-bottom: 8px; }
+.alt b { font-size: 15px; font-weight: 600; line-height: 1.2; overflow-wrap: anywhere; }
+.alt .m { font-size: 13px; color: var(--muted); }
+.alt-note { font-size: 13px; color: var(--muted); margin-top: 8px; }
+@media (max-width: 700px) {
+  .alt { display: block; border-bottom: 0; }
+  .alt li { display: grid; grid-template-columns: 8em minmax(0, 1fr) 4.6em; align-items: center; gap: 10px; padding: 4px 0; }
+  .alt .bar { order: 2; height: 12px; width: max(3px, calc(var(--h) * 100%)); margin: 0; border-radius: 0 3px 3px 0; }
+  .alt b { order: 1; font-size: 14px; }
+  .alt .m { order: 3; text-align: right; }
+}
+
+.days { list-style: none; margin: 0; padding: 0; border-top: 2px solid #000; }
+.days li { display: grid; grid-template-columns: 8.5em minmax(0, 1fr); gap: 4px 20px; padding: 16px 0; border-bottom: 1px solid #000; }
+.days .when { font-weight: 600; color: var(--c); }
+.days h4 { margin: 0; font-size: 20px; font-weight: 700; letter-spacing: -0.01em; }
+.days h4 span { font-weight: 400; color: var(--muted); font-size: 17px; }
+.days p { margin: 4px 0 0; }
+@media (max-width: 600px) { .days li { grid-template-columns: 1fr; } }
+
+.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 26px 18px; margin: 44px 0 8px; }
+@media (min-width: 900px) { .cards { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
+.card { margin: 0; background: #fff; padding: 8px 8px 12px; box-shadow: 0 1px 2px rgba(0,0,0,.28), 0 8px 18px rgba(0,0,0,.10); transform: rotate(var(--r, 0deg)); }
+.card:nth-child(1) { --r: -2.4deg; } .card:nth-child(2) { --r: 1.7deg; } .card:nth-child(3) { --r: -1.1deg; } .card:nth-child(4) { --r: 2.3deg; } .card:nth-child(5) { --r: -1.6deg; }
+.card img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; background: #eee; }
+.card figcaption { font-style: italic; font-size: 14px; line-height: 1.35; margin-top: 8px; }
+.noimg img { display: none; }
+.noimg::before { content: ""; display: block; aspect-ratio: 4 / 3; background: repeating-linear-gradient(45deg, var(--c) 0 10px, #fff 10px 20px); opacity: .25; }
+.hero-photo.noimg::before { aspect-ratio: 16 / 7; }
+
+.notes { margin: 0; padding: 0 0 0 1.3em; }
+.notes li { padding: 4px 0 8px; max-width: 64ch; }
+.notes li::marker { font-weight: 700; color: var(--c); }
+.pick-row { margin-top: 30px; display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+
+/* Quiz */
+#quiz { --c: #000; }
+fieldset { border: 0; margin: 0 0 22px; padding: 0; }
+legend { font-weight: 600; font-size: 20px; margin-bottom: 10px; padding: 0; }
+.opts { display: flex; flex-wrap: wrap; gap: 10px; }
+.chip { position: relative; display: inline-block; border: 2px solid #000; border-radius: 999px; padding: 9px 16px; cursor: pointer; font-size: 16px; line-height: 1.3; }
+.chip input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.chip:has(input:checked) { background: #000; color: #fff; }
+.chip:has(input:focus-visible) { outline: 3px solid #000; outline-offset: 3px; }
+.result { margin-top: 28px; }
+.result-card { --c: #000; position: relative; border: 3px solid var(--c); border-radius: 14px; padding: 22px 24px 24px; max-width: 560px; color: var(--c); }
+.result-card h3 { margin: 0 0 6px; font-size: clamp(1.8rem, 5vw, 2.6rem); letter-spacing: -0.03em; }
+.result-card p { color: #000; }
+.result-card .pick-row { margin-top: 14px; }
+.thunk { animation: thunk .38s cubic-bezier(.2, 1.4, .4, 1); }
+@keyframes thunk { from { transform: scale(1.35) rotate(-5deg); opacity: 0; } to { transform: none; opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .thunk { animation: none; } }
+
+/* Boarding pass */
+dialog { border: 0; padding: 0; background: transparent; max-width: min(720px, calc(100vw - 24px)); width: 100%; }
+dialog::backdrop { background: rgba(0,0,0,.82); }
+.pass {
+  display: grid; grid-template-columns: minmax(0, 1fr) 150px; background: #fff; color: #000; border-radius: 16px; overflow: hidden;
+  -webkit-mask: radial-gradient(circle 14px at calc(100% - 150px) 0, #0000 98%, #000) top / 100% 51% no-repeat, radial-gradient(circle 14px at calc(100% - 150px) 100%, #0000 98%, #000) bottom / 100% 51% no-repeat;
+          mask: radial-gradient(circle 14px at calc(100% - 150px) 0, #0000 98%, #000) top / 100% 51% no-repeat, radial-gradient(circle 14px at calc(100% - 150px) 100%, #0000 98%, #000) bottom / 100% 51% no-repeat;
+}
+.pass-main { padding: 0 0 18px; }
+.pass-band { background: var(--c); color: #fff; padding: 14px 22px; display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+.pass-band b { font-size: 20px; }
+.pass-band span { font-size: 15px; }
+.pass-body { padding: 16px 22px 0; }
+.pass label { display: block; font-size: 14px; color: var(--muted); }
+.pass input { display: block; width: 100%; font: inherit; font-size: 22px; font-weight: 600; border: 0; border-bottom: 2px solid #000; padding: 4px 0 6px; margin: 2px 0 14px; color: #000; background: transparent; border-radius: 0; }
+.pass input:focus { outline: none; border-bottom-color: var(--c); }
+.pass dl { margin: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 18px; }
+.pass dt { font-size: 13px; color: var(--muted); }
+.pass dd { margin: 0; font-weight: 600; font-size: 17px; line-height: 1.25; }
+.pass-stub { border-left: 2px dashed #bbb; padding: 0; display: flex; flex-direction: column; }
+.pass-stub .pass-band { justify-content: center; }
+.pass-stub dl { grid-template-columns: 1fr; padding: 16px 18px; }
+.pass-stub dd { font-size: 34px; line-height: 1; }
+.barcode { display: block; margin: 16px 22px 0; width: calc(100% - 44px); max-width: 300px; height: 44px; }
+.pass-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+.pass-actions .btn.ghost { background: #fff; }
+.pass-actions .btn.ghost:hover { background: var(--c); }
+.pass-foot { color: #fff; font-size: 14px; margin: 10px 4px 0; }
+.pass-foot output { color: var(--solari); margin-left: 6px; }
+@media (max-width: 560px) {
+  .pass { grid-template-columns: 1fr; -webkit-mask: none; mask: none; }
+  .pass-stub { border-left: 0; border-top: 2px dashed #bbb; }
+  .pass-stub .pass-band { display: none; }
+  .pass-stub dl { grid-template-columns: 1fr 1fr; padding: 12px 22px 16px; }
+  .pass-stub dd { font-size: 26px; }
+}
+
+/* Footer */
+.foot { font-size: 14px; color: var(--muted); }
+.foot h2 { font-size: 22px; letter-spacing: -0.01em; color: #000; margin-bottom: 12px; }
+.credits { margin: 0 0 18px; padding: 0; list-style: none; columns: 2 280px; column-gap: 32px; }
+.credits li { break-inside: avoid; padding: 3px 0; }
+.foot p { max-width: none; }
+.foot .back { color: #000; font-weight: 600; font-size: 16px; }
+
+@media print { .board, .hero-actions, .pick-row, #quiz, dialog { display: none !important; } }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <filter id="ink" x="-5%" y="-5%" width="110%" height="110%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="4" result="n"/>
+    <feDisplacementMap in="SourceGraphic" in2="n" scale="3" xChannelSelector="R" yChannelSelector="G" result="d"/>
+    <feTurbulence type="fractalNoise" baseFrequency="1.6" numOctaves="1" seed="9" result="s"/>
+    <feColorMatrix in="s" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  -2.4 0 0 0 2.05" result="m"/>
+    <feComposite in="d" in2="m" operator="in"/>
+  </filter>
+</svg>
+
+<header class="top wrap" id="top">
+  <a class="home" href="/"><img src="/media/mark.svg" width="34" height="34" alt="">arizvi.com</a>
+</header>
+
+<main>
+<section class="hero wrap">
+  <h1>slotravel</h1>
+  <p class="lede">3 trips, 21 days each. Pick one and I will plan the rest.</p>
+
+  <div class="board" id="board">
+    <div class="board-top"><b>Departures</b><span class="clock" aria-hidden="true"></span></div>
+    <div class="board-head" aria-hidden="true">
+      <span style="--n:14"><i>Trip</i></span><span style="--n:14"><i>Route</i></span><span style="--n:2"><i>Days</i></span><span class="g" style="--n:1"><i>Gate</i></span><span style="--n:9"><i>Status</i></span>
+    </div>
+    <a class="row" href="#eurorail" data-trip="eurorail" aria-label="Eurorail, Girona to Milan, 21 days, gate A">
+      <span class="col c-trip" style="--n:14">EURORAIL</span><span class="col c-route" style="--n:14">GIRONA → MILAN</span><span class="col c-days" style="--n:2">21</span><span class="col c-gate" style="--n:1;--g:var(--rail)">A</span><span class="col c-status" style="--n:9">BOARDING</span>
+    </a>
+    <a class="row" href="#ecuador-peru" data-trip="ecuador-peru" aria-label="Ecuador and Peru, Quito to Cusco, 21 days, gate B">
+      <span class="col c-trip" style="--n:14">ECUADOR + PERU</span><span class="col c-route" style="--n:14">QUITO → CUSCO</span><span class="col c-days" style="--n:2">21</span><span class="col c-gate" style="--n:1;--g:var(--andes)">B</span><span class="col c-status" style="--n:9">ON TIME</span>
+    </a>
+    <a class="row" href="#mexico" data-trip="mexico" aria-label="Cultural Mexico, Mexico City to Mérida, 21 days, gate C">
+      <span class="col c-trip" style="--n:14">MEXICO</span><span class="col c-route" style="--n:14">CDMX → MÉRIDA</span><span class="col c-days" style="--n:2">21</span><span class="col c-gate" style="--n:1;--g:var(--rosa)">C</span><span class="col c-status" style="--n:9">ON TIME</span>
+    </a>
+  </div>
+
+  <div class="hero-actions">
+    <button class="btn" id="dice" type="button">Roll the dice</button>
+    <a class="btn ghost" href="#quiz">Take the quiz</a>
+  </div>
+</section>
+
+<section class="sec wrap" id="rules">
+  <h2>How I travel</h2>
+  <ol class="rules">
+    <li>3 weeks, 4 to 7 bases. A plain apartment for anything over 3 nights.</li>
+    <li>Sightsee fast, then stay put. (I once did all of Baku in half a day.)</li>
+    <li>1st class on trains, always. Flights unbundled - pay for the seat, skip the rest.</li>
+    <li>No shopping stops. Food stops count as culture.</li>
+    <li>Every science museum on the way. (The long-term goal is all of them.)</li>
+    <li>A ride or a swim every few days.</li>
+    <li>My passport stays with me. Never as a deposit.</li>
+  </ol>
+</section>
+
+<!-- ============ EURORAIL ============ -->
+<section class="trip" id="eurorail" style="--c: var(--rail)">
+  <div class="band rail" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="trip-head"><h2>Eurorail</h2><span class="gate-pill">Gate A</span></div>
+    <p class="route-line">Girona → Paris → Munich → Vienna → Zurich → St. Moritz → Milan</p>
+
+    <figure class="hero-photo">
+      <img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/1/13/RhB_ABe_4-4_III_Kreisviadukt_Brusio.jpg/1280px-RhB_ABe_4-4_III_Kreisviadukt_Brusio.jpg" srcset="https://thumb.wikimedia.org/wikipedia/commons/thumb/1/13/RhB_ABe_4-4_III_Kreisviadukt_Brusio.jpg/960px-RhB_ABe_4-4_III_Kreisviadukt_Brusio.jpg 960w, https://thumb.wikimedia.org/wikipedia/commons/thumb/1/13/RhB_ABe_4-4_III_Kreisviadukt_Brusio.jpg/1280px-RhB_ABe_4-4_III_Kreisviadukt_Brusio.jpg 1280w, https://thumb.wikimedia.org/wikipedia/commons/thumb/1/13/RhB_ABe_4-4_III_Kreisviadukt_Brusio.jpg/1920px-RhB_ABe_4-4_III_Kreisviadukt_Brusio.jpg 1920w" sizes="(min-width: 1160px) 1064px, calc(100vw - 40px)" width="1280" height="790" alt="A red Rhaetian Railway train crossing the Brusio spiral viaduct in green fields" loading="lazy" decoding="async" onerror="this.closest('figure').classList.add('noimg')">
+      <figcaption>The Brusio spiral viaduct on the Bernina line. The train loops under itself.</figcaption>
+      <svg class="stamp" viewBox="0 0 220 140" aria-hidden="true"><g filter="url(#ink)"><rect x="6" y="6" width="208" height="128" rx="16" fill="none" stroke="currentColor" stroke-width="6"/><rect x="17" y="17" width="186" height="106" rx="9" fill="none" stroke="currentColor" stroke-width="2.5"/><g fill="currentColor" font-family="Cooper Hewitt, Helvetica, Arial, sans-serif" font-weight="700" text-anchor="middle"><text x="110" y="54" font-size="22">INTERRAIL</text><text x="110" y="90" font-size="34">1ST CLASS</text><text x="110" y="112" font-size="15">7 DAYS IN 1 MONTH</text></g></g></svg>
+    </figure>
+
+    <div class="intro">
+      <p>Europe on 1 rail pass, start to finish. Girona is my base in Europe, so the trip starts there, crosses the Alps on 2 UNESCO railway lines and ends in Milan.</p>
+      <p class="small">(Eurail retired its name on 10 Sep 2026 and the pass is called Interrail now. I am still calling it Eurorail.)</p>
+    </div>
+
+    <dl class="facts">
+      <div><dt>Countries</dt><dd>6</dd></div>
+      <div><dt>Bases</dt><dd>7</dd></div>
+      <div><dt>Getting around</dt><dd>About 35 h of trains, all 1st class</dd></div>
+      <div><dt>Highest point</dt><dd>2,253 m (Bernina Pass)</dd></div>
+      <div><dt>Science museums</dt><dd>6</dd></div>
+      <div><dt>Big moment</dt><dd>The Bernina line, window down</dd></div>
+    </dl>
+
+    <h3>The route, drawn by altitude</h3>
+    <ol class="alt">
+      <li style="--h:.015"><span class="bar"></span><b>Girona</b><span class="m">75 m</span></li>
+      <li style="--h:.007"><span class="bar"></span><b>Paris</b><span class="m">35 m</span></li>
+      <li style="--h:.104"><span class="bar"></span><b>Munich</b><span class="m">520 m</span></li>
+      <li style="--h:.085"><span class="bar"></span><b>Salzburg</b><span class="m">425 m</span></li>
+      <li style="--h:.038"><span class="bar"></span><b>Vienna</b><span class="m">190 m</span></li>
+      <li style="--h:.082"><span class="bar"></span><b>Zurich</b><span class="m">410 m</span></li>
+      <li style="--h:.364"><span class="bar"></span><b>St. Moritz</b><span class="m">1,822 m</span></li>
+      <li style="--h:.451"><span class="bar"></span><b>Bernina Pass</b><span class="m">2,253 m</span></li>
+      <li style="--h:.024"><span class="bar"></span><b>Milan</b><span class="m">120 m</span></li>
+    </ol>
+    <p class="alt-note">Same scale on all 3 trips, so you can compare. Heights are approximate.</p>
+
+    <h3>Day by day</h3>
+    <ol class="days">
+      <li><span class="when">Days 1–4</span><div><h4>Girona <span>(4 nights)</span></h4><p>Land in Barcelona, 38 min to Girona on the AVE. Ride Rocacorba in the morning, the old town and the Call (the Jewish quarter) after. 1 day back in Barcelona for CosmoCaixa (it has a flooded Amazon forest inside).</p></div></li>
+      <li><span class="when">Days 5–8</span><div><h4>Paris <span>(4 nights)</span></h4><p>TGV direct from Girona, about 6 h. Musée des Arts et Métiers (Foucault's pendulum, and early airplanes hanging inside a church). Cité des sciences. A 2-hour Louvre speed run.</p></div></li>
+      <li><span class="when">Days 9–12</span><div><h4>Munich <span>(4 nights)</span></h4><p>TGV direct from Paris, about 5.5 h. A full day at the Deutsches Museum, then its aviation branch at Flugwerft Schleissheim. Beer garden in the Englischer Garten.</p></div></li>
+      <li><span class="when">Day 13</span><div><h4>Salzburg <span>(stopover)</span></h4><p>Bags in a station locker, 5 hours in town, back on the next Railjet to Vienna. Same pass day.</p></div></li>
+      <li><span class="when">Days 13–15</span><div><h4>Vienna <span>(3 nights)</span></h4><p>Technisches Museum Wien. Coffee house afternoons. 1 day on the Semmering railway (opened 1854, often called the first true mountain railway), then walk the railway trail to the 20-Schilling view.</p></div></li>
+      <li><span class="when">Day 16</span><div><h4>Zurich <span>(1 night)</span></h4><p>About 8 h on the Railjet over the Arlberg. Swim in the Limmat if it is summer.</p></div></li>
+      <li><span class="when">Days 17–18</span><div><h4>St. Moritz <span>(2 nights)</span></h4><p>Up the Albula line from Chur, over the Landwasser Viaduct. Ride or hike in the Engadin.</p></div></li>
+      <li><span class="when">Days 19–21</span><div><h4>Milan <span>(2 nights)</span></h4><p>The Bernina line down to Tirano on the regional train, windows open, past the Brusio spiral viaduct. Then on to Milan for the Leonardo da Vinci science museum. Fly home on day 21.</p></div></li>
+    </ol>
+
+    <div class="cards">
+      <figure class="card"><img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/c/cd/Girona_des_de_l_aire_edited.jpg/500px-Girona_des_de_l_aire_edited.jpg" srcset="https://thumb.wikimedia.org/wikipedia/commons/thumb/c/cd/Girona_des_de_l_aire_edited.jpg/500px-Girona_des_de_l_aire_edited.jpg 500w, https://thumb.wikimedia.org/wikipedia/commons/thumb/c/cd/Girona_des_de_l_aire_edited.jpg/960px-Girona_des_de_l_aire_edited.jpg 960w" sizes="(min-width: 900px) 200px, 45vw" width="1280" height="853" alt="Girona old town and cathedral from the air" loading="lazy" decoding="async" onerror="this.closest('figure').classList.add('noimg')"><figcaption>Girona. Day 1, coffee first.</figcaption></figure>
+      <figure class="card"><img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/1/14/Deutsches_Museum_Portrait_4.jpg/500px-Deutsches_Museum_Portrait_4.jpg" srcset="https://thumb.wikimedia.org/wikipedia/commons/thumb/1/14/Deutsches_Museum_Portrait_4.jpg/500px-Deutsches_Museum_Portrait_4.jpg 500w, https://thumb.wikimedia.org/wikipedia/commons/thumb/1/14/Deutsches_Museum_Portrait_4.jpg/960px-Deutsches_Museum_Portrait_4.jpg 960w" sizes="(min-width: 900px) 200px, 45vw" width="1280" height="659" alt="The Deutsches Museum building on its island in the Isar" loading="lazy" decoding="async" onerror="this.closest('figure').classList.add('noimg')"><figcaption>Deutsches Museum. 1 day is not enough.</figcaption></figure>
+      <figure class="card"><img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/9/91/Salzburg_(48489551981).jpg/500px-Salzburg_(48489551981).jpg" srcset="https://thumb.wikimedia.org/wikipedia/commons/thumb/9/91/Salzburg_(48489551981).jpg/500px-Salzburg_(48489551981).jpg 500w, https://thumb.wikimedia.org/wikipedia/commons/thumb/9/91/Salzburg_(48489551981).jpg/960px-Salzburg_(48489551981).jpg 960w" sizes="(min-width: 900px) 200px, 45vw" width="1280" height="853" alt="Salzburg old town with snowy mountains behind" loading="lazy" decoding="async" onerror="this.closest('figure').classList.add('noimg')"><figcaption>Salzburg in 5 hours, between trains.</figcaption></figure>
+      <figure class="card"><img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/0/01/Semmering_-_Semmeringbahn,_20-Schilling-Blick.JPG/500px-Semmering_-_Semmeringbahn,_20-Schilling-Blick.JPG" srcset="https://thumb.wikimedia.org/wikipedia/commons/thumb/0/01/Semmering_-_Semmeringbahn,_20-Schilling-Blick.JPG/500px-Semmering_-_Semmeringbahn,_20-Schilling-Blick.JPG 500w, https://thumb.wikimedia.org/wikipedia/commons/thumb/0/01/Semmering_-_Semmeringbahn,_20-Schilling-Blick.JPG/960px-Semmering_-_Semmeringbahn,_20-Schilling-Blick.JPG 960w" sizes="(min-width: 900px) 200px, 45vw" width="1280" height="854" alt="Semmering railway viaducts in autumn forest" loading="lazy" decoding="async" onerror="this.closest('figure').classList.add('noimg')"><figcaption>The 20-Schilling view. It was on the old banknote.</figcaption></figure>
+      <figure class="card"><img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b2/RhB_Ge_4-4_III_UNESCO_Weltkulturerbe_auf_Landwasserviadukt.jpg/500px-RhB_Ge_4-4_III_UNESCO_Weltkulturerbe_auf_Landwasserviadukt.jpg" srcset="https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b2/RhB_Ge_4-4_III_UNESCO_Weltkulturerbe_auf_Landwasserviadukt.jpg/500px-RhB_Ge_4-4_III_UNESCO_Weltkulturerbe_auf_Landwasserviadukt.jpg 500w, https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b2/RhB_Ge_4-4_III_UNESCO_Weltkulturerbe_auf_Landwasserviadukt.jpg/960px-RhB_Ge_4-4_III_UNESCO_Weltkulturerbe_auf_Landwasserviadukt.jpg 960w" sizes="(min-width: 900px) 200px, 45vw" width="1280" height="855" alt="A red train on the Landwasser Viaduct running into a tunnel" loading="lazy" decoding="async" onerror="this.closest('figure').classList.add('noimg')"><figcaption>Landwasser Viaduct. 65 m up, then straight into the mountain.</figcaption></figure>
+    </div>
+
+    <h3>Good to know</h3>
+    <ol class="notes">
+      <li>Pass: Interrail Global Pass, 1st class, 7 travel days in 1 month, about CAD 800. The Salzburg stop and Vienna share a travel day, and Barcelona is a separate cheap ticket.</li>
+      <li>Book the 2 TGV seats as soon as booking opens. Pass-holder seats on French trains run out.</li>
+      <li>Bernina line: the regional train needs no reservation and the windows open. The Bernina Express has bigger glass and a compulsory paid seat reservation.</li>
+      <li>Best months: June or September.</li>
+    </ol>
+    <div class="pick-row"><button class="btn pick" type="button" data-trip="eurorail">Pick Eurorail</button></div>
+  </div>
+</section>
+
+<!-- ============ ECUADOR + PERU ============ -->
+<section class="trip" id="ecuador-peru" style="--c: var(--andes)">
+  <div class="band andes" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="trip-head"><h2>Ecuador + Peru</h2><span class="gate-pill">Gate B</span></div>
+    <p class="route-line">Quito → Quilotoa → Baños → Lima → Cusco → Sacred Valley → Machu Picchu</p>
+
+    <figure class="hero-photo">
+      <img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/b/bb/Machu_Picchu,_2023_(012).jpg/1280px-Machu_Picchu,_2023_(012).jpg" srcset="https://thumb.wikimedia.org/wikipedia/commons/thumb/b/bb/Machu_Picchu,_2023_(012).jpg/960px-Machu_Picchu,_2023_(012).jpg 960w, https://thumb.wikimedia.org/wikipedia/commons/thumb/b/bb/Machu_Picchu,_2023_(012).jpg/1280px-Machu_Picchu,_2023_(012).jpg 1280w, https://thumb.wikimedia.org/wikipedia/commons/thumb/b/bb/Machu_Picchu,_2023_(012).jpg/1920px-Machu_Picchu,_2023_(012).jpg 1920w" sizes="(min-width: 1160px) 1064px, calc(100vw - 40px)" width="1280" height="853" alt="Machu Picchu terraces with Huayna Picchu behind, under cloud" loading="lazy" decoding="async" onerror="this.closest('figure').classList.add('noimg')">
+      <figcaption>Machu Picchu, with Huayna Picchu behind.</figcaption>
+      <svg class="stamp" viewBox="0 0 220 140" aria-hidden="true"><g filter="url(#ink)"><rect x="6" y="6" width="208" height="128" rx="16" fill="none" stroke="currentColor" stroke-width="6"/><rect x="17" y="17" width="186" height="106" rx="9" fill="none" stroke="currentColor" stroke-width="2.5"/><g fill="currentColor" font-family="Cooper Hewitt, Helvetica, Arial, sans-serif" font-weight="700" text-anchor="middle"><text x="110" y="54" font-size="20">MAX ALTITUDE</text><text x="110" y="90" font-size="34">~5,000 M</text><text x="110" y="112" font-size="15">BREATHE SLOWLY</text></g></g></svg>
+    </figure>
+
+    <div class="intro">
+      <p>Volcanoes first, then the Incas. Ecuador is a slow ramp up in altitude before Cusco, and Lima sits in the middle for 3 days of eating at sea level.</p>
+    </div>
+
+    <dl class="facts">
+      <div><dt>Countries</dt><dd>2</dd></div>
+      <div><dt>Bases</dt><dd>7</dd></div>
+      <div><dt>Getting around</dt><dd>3 flights, the Vistadome train, rental bikes</dd></div>
+      <div><dt>Highest point</dt><dd>About 5,000 m (Rainbow Mountain)</dd></div>
+      <div><dt>Science museums</dt><dd>1 (MIC, Quito)</dd></div>
+      <div><dt>Big moment</dt><dd>Machu Picchu at first entry</dd></div>
+    </dl>
+
+    <h3>The route, drawn by altitude</h3>
+    <ol class="alt">
+      <li style="--h:.57"><span class="bar"></span><b>Quito</b><span class="m">2,850 m</span></li>
+      <li style="--h:.78"><span class="bar"></span><b>Quilotoa</b><span class="m">3,900 m</span></li>
+      <li style="--h:.364"><span class="bar"></span><b>Baños</b><span class="m">1,820 m</span></li>
+      <li style="--h:.03"><span class="bar"></span><b>Lima</b><span class="m">150 m</span></li>
+      <li style="--h:.68"><span class="bar"></span><b>Cusco</b><span class="m">3,400 m</span></li>
+      <li style="--h:.574"><span class="bar"></span><b>Sacred Valley</b><span class="m">2,870 m</span></li>
+      <li style="--h:.486"><span class="bar"></span><b>Machu Picchu</b><span class="m">2,430 m</span></li>
+      <li style="--h:1"><span class="bar"></span><b>Rainbow Mountain</b><span class="m">5,000 m</span></li>
+    </ol>
+    <p class="alt-note">Same scale on all 3 trips. Heights are approximate.</p>
+
+    <h3>Day by day</h3>
+    <ol class="days">
+      <li><span class="when">Days 1–3</span><div><h4>Quito <span>(3 nights)</span></h4><p>The old town (on the UNESCO list since 1978). The TelefériQo up to about 3,900 m to start the altitude ramp. The Museo Interactivo de Ciencia, in an old textile mill. Mitad del Mundo for the equator photo (the painted line is about 240 m off the real equator).</p></div></li>
+      <li><span class="when">Days 4–5</span><div><h4>Cotopaxi and Quilotoa <span>(2 nights)</span></h4><p>Hacienda stay under Cotopaxi. Walk the Quilotoa crater rim, about 3,900 m up.</p></div></li>
+      <li><span class="when">Days 6–8</span><div><h4>Baños <span>(3 nights)</span></h4><p>Rent a bike and roll down the Ruta de las Cascadas to the Pailón del Diablo waterfall (about 18 km, mostly downhill), then a truck back up. Hot springs after.</p></div></li>
+      <li><span class="when">Days 9–11</span><div><h4>Lima <span>(3 nights)</span></h4><p>Fly Quito → Lima. Ceviche at lunch (cevicherías close in the afternoon). 1 big tasting menu (Central or Maido, booked well ahead). The Malecón bike path in Miraflores, then Barranco at sunset.</p></div></li>
+      <li><span class="when">Days 12–14</span><div><h4>Cusco <span>(3 nights)</span></h4><p>Fly up to 3,400 m and go slow for 2 days. Qorikancha, Sacsayhuamán, San Blas.</p></div></li>
+      <li><span class="when">Days 15–16</span><div><h4>Sacred Valley <span>(2 nights)</span></h4><p>Bike from Moray down to the Maras salt pans. Ollantaytambo.</p></div></li>
+      <li><span class="when">Day 17</span><div><h4>Aguas Calientes <span>(1 night)</span></h4><p>Vistadome train from Ollantaytambo (<a href="#rules">rule 3</a>). Early night.</p></div></li>
+      <li><span class="when">Days 18–21</span><div><h4>Cusco <span>(3 nights)</span></h4><p>Machu Picchu at first entry, train back. Then Rainbow Mountain, about 5,000 m, as the last big day. Fly home on day 21.</p></div></li>
+    </ol>
+
+    <div class="cards">
+      <figure class="card"><img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/2/29/Panorama_quilotoa_crater_lake_ecuador.jpg/500px-Panorama_quilotoa_crater_lake_ecuador.jpg" srcset="https://thumb.wikimedia.org/wikipedia/commons/thumb/2/29/Panorama_quilotoa_crater_lake_ecuador.jpg/500px-Panorama_quilotoa_crater_lake_ecuador.jpg 500w, https://thumb.wikimedia.org/wikipedia/commons/thumb/2/29/Panorama_quilotoa_crater_lake_ecuador.jpg/960px-Panorama_quilotoa_crater_lake_ecuador.jpg 960w" sizes="(min-width: 900px) 200px, 45vw" width="1280" height="953" alt="Quilotoa crater lake inside a volcano" loading="lazy" decoding="async" onerror="this.closest('figure').classList.add('noimg')"><figcaption>Quilotoa. A lake inside a volcano.</figcaption></figure>
+      <figure class="card"><img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d7/Ba%C3%B1os,_Ecuador.JPG/500px-Ba%C3%B1os,_Ecuador.JPG" srcset="https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d7/Ba%C3%B1os,_Ecuador.JPG/500px-Ba%C3%B1os,_Ecuador.JPG 500w, https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d7/Ba%C3%B1os,_Ecuador.JPG/960px-Ba%C3%B1os,_Ecuador.JPG 960w" sizes="(min-width: 900px) 200px, 45vw" width="1280" height="960" alt="The town of Baños in a green valley" loading="lazy" decoding="async" onerror="this.closest('figure').classList.add('noimg')"><figcaption>Baños. Rent a bike, roll downhill, truck back up.</figcaption></figure>
+      <figure class="card"><img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/7/78/Cebiche_de_corvina.JPG/500px-Cebiche_de_corvina.JPG" srcset="https://thumb.wikimedia.org/wikipedia/commons/thumb/7/78/Cebiche_de_corvina.JPG/500px-Cebiche_de_corvina.JPG 500w, https://thumb.wikimedia.org/wikipedia/commons/thumb/7/78/Cebiche_de_corvina.JPG/960px-Cebiche_de_corvina.JPG 960w" sizes="(min-width: 900px) 200px, 45vw" width="1280" height="960" alt="A plate of ceviche with onion, corn and lettuce" loading="lazy" decoding="async" onerror="this.closest('figure').classList.add('noimg')"><figcaption>Ceviche. Lunch only, the Lima way.</figcaption></figure>
+      <figure class="card"><img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/c/ca/Salineras_de_Maras,_Maras,_Per%C3%BA,_2015-07-30,_DD_12.JPG/500px-Salineras_de_Maras,_Maras,_Per%C3%BA,_2015-07-30,_DD_12.JPG" srcset="https://thumb.wikimedia.org/wikipedia/commons/thumb/c/ca/Salineras_de_Maras,_Maras,_Per%C3%BA,_2015-07-30,_DD_12.JPG/500px-Salineras_de_Maras,_Maras,_Per%C3%BA,_2015-07-30,_DD_12.JPG 500w, https://thumb.wikimedia.org/wikipedia/commons/thumb/c/ca/Salineras_de_Maras,_Maras,_Per%C3%BA,_2015-07-30,_DD_12.JPG/960px-Salineras_de_Maras,_Maras,_Per%C3%BA,_2015-07-30,_DD_12.JPG 960w" sizes="(min-width: 900px) 200px, 45vw" width="1280" height="963" alt="White salt ponds on a hillside at Maras" loading="lazy" decoding="async" onerror="this.closest('figure').classList.add('noimg')"><figcaption>Maras salt pans, worked since before the Incas.</figcaption></figure>
+      <figure class="card"><img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/2/24/Monta%C3%B1aarcoirisperuabanto.jpg/500px-Monta%C3%B1aarcoirisperuabanto.jpg" srcset="https://thumb.wikimedia.org/wikipedia/commons/thumb/2/24/Monta%C3%B1aarcoirisperuabanto.jpg/500px-Monta%C3%B1aarcoirisperuabanto.jpg 500w, https://thumb.wikimedia.org/wikipedia/commons/thumb/2/24/Monta%C3%B1aarcoirisperuabanto.jpg/960px-Monta%C3%B1aarcoirisperuabanto.jpg 960w" sizes="(min-width: 900px) 200px, 45vw" width="1280" height="853" alt="Rainbow Mountain with red, ochre and green stripes" loading="lazy" decoding="async" onerror="this.closest('figure').classList.add('noimg')"><figcaption>Rainbow Mountain. Highest point of all 3 trips.</figcaption></figure>
+    </div>
+
+    <h3>Good to know</h3>
+    <ol class="notes">
+      <li>Machu Picchu tickets are sold by circuit and entry hour on <a href="https://tuboleto.cultura.pe">tuboleto.cultura.pe</a>, tied to your passport. Book as soon as dates are set (they sell out months ahead in high season).</li>
+      <li>Quito (2,850 m) and Quilotoa come first, so Cusco (3,400 m) is not a shock. Lima in the middle is a sea-level rest.</li>
+      <li>Best months: May to September (dry season in the Andes).</li>
+    </ol>
+    <div class="pick-row"><button class="btn pick" type="button" data-trip="ecuador-peru">Pick Ecuador + Peru</button></div>
+  </div>
+</section>
+
+<!-- ============ MEXICO ============ -->
+<section class="trip" id="mexico" style="--c: var(--rosa)">
+  <div class="band picado" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="trip-head"><h2>Cultural Mexico</h2><span class="gate-pill">Gate C</span></div>
+    <p class="route-line">Mexico City → Puebla → Oaxaca → Mérida</p>
+
+    <figure class="hero-photo">
+      <img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/9/97/Bellas_Artes_01.jpg/1280px-Bellas_Artes_01.jpg" srcset="https://thumb.wikimedia.org/wikipedia/commons/thumb/9/97/Bellas_Artes_01.jpg/960px-Bellas_Artes_01.jpg 960w, https://thumb.wikimedia.org/wikipedia/commons/thumb/9/97/Bellas_Artes_01.jpg/1280px-Bellas_Artes_01.jpg 1280w, https://thumb.wikimedia.org/wikipedia/commons/thumb/9/97/Bellas_Artes_01.jpg/1920px-Bellas_Artes_01.jpg 1920w" sizes="(min-width: 1160px) 1064px, calc(100vw - 40px)" width="1280" height="853" alt="Palacio de Bellas Artes in Mexico City, white marble with a golden dome" loading="lazy" decoding="async" onerror="this.closest('figure').classList.add('noimg')">
+      <figcaption>Palacio de Bellas Artes, Mexico City.</figcaption>
+      <svg class="stamp" viewBox="0 0 220 140" aria-hidden="true"><g filter="url(#ink)"><rect x="6" y="6" width="208" height="128" rx="16" fill="none" stroke="currentColor" stroke-width="6"/><rect x="17" y="17" width="186" height="106" rx="9" fill="none" stroke="currentColor" stroke-width="2.5"/><g fill="currentColor" font-family="Cooper Hewitt, Helvetica, Arial, sans-serif" font-weight="700" text-anchor="middle"><text x="110" y="54" font-size="22">OAXACA</text><text x="110" y="90" font-size="34">7 MOLES</text><text x="110" y="112" font-size="15">EAT ALL 7</text></g></g></svg>
+    </figure>
+
+    <div class="intro">
+      <p>4 bases from Mexico City to Mérida, with 5 pyramid sites on the way. Oaxaca is the food stop (7 moles to get through) and Yucatán is the swimming stop (cenotes).</p>
+    </div>
+
+    <dl class="facts">
+      <div><dt>Countries</dt><dd>1</dd></div>
+      <div><dt>Bases</dt><dd>4</dd></div>
+      <div><dt>Getting around</dt><dd>ADO buses (Platino class), 1 flight, the Tren Maya</dd></div>
+      <div><dt>Highest point</dt><dd>About 2,300 m (Teotihuacán)</dd></div>
+      <div><dt>Science museums</dt><dd>2 (Universum, MIDE)</dd></div>
+      <div><dt>Big moment</dt><dd>Swimming in a cenote</dd></div>
+    </dl>
+
+    <h3>The route, drawn by altitude</h3>
+    <ol class="alt">
+      <li style="--h:.448"><span class="bar"></span><b>Mexico City</b><span class="m">2,240 m</span></li>
+      <li style="--h:.46"><span class="bar"></span><b>Teotihuacán</b><span class="m">2,300 m</span></li>
+      <li style="--h:.427"><span class="bar"></span><b>Puebla</b><span class="m">2,135 m</span></li>
+      <li style="--h:.311"><span class="bar"></span><b>Oaxaca</b><span class="m">1,555 m</span></li>
+      <li style="--h:.388"><span class="bar"></span><b>Monte Albán</b><span class="m">1,940 m</span></li>
+      <li style="--h:.002"><span class="bar"></span><b>Mérida</b><span class="m">10 m</span></li>
+    </ol>
+    <p class="alt-note">Same scale on all 3 trips. Heights are approximate.</p>
+
+    <h3>Day by day</h3>
+    <ol class="days">
+      <li><span class="when">Days 1–6</span><div><h4>Mexico City <span>(6 nights)</span></h4><p>Museo Nacional de Antropología (a full morning, minimum). Teotihuacán, at the gate when it opens. The murals at Bellas Artes. Universum at UNAM and MIDE (a museum of economics, very PM). Casa Azul, booked ahead. Sunday: ride Reforma with no cars (Muévete en Bici) on an Ecobici.</p></div></li>
+      <li><span class="when">Days 7–8</span><div><h4>Puebla <span>(2 nights)</span></h4><p>ADO bus, about 2 h. The Great Pyramid of Cholula (biggest pyramid on Earth by volume, with a church on top). Mole poblano in its home town.</p></div></li>
+      <li><span class="when">Days 9–13</span><div><h4>Oaxaca <span>(5 nights)</span></h4><p>ADO Platino, about 4.5 h (<a href="#rules">rule 3</a> covers buses too). Monte Albán. A swim in the mineral pools at Hierve el Agua. A mezcal palenque in Santiago Matatlán. Work through the 7 moles.</p></div></li>
+      <li><span class="when">Days 14–21</span><div><h4>Mérida <span>(7 nights)</span></h4><p>Fly Oaxaca → Mérida (usually 1 stop). Uxmal and the Ruta Puuc. The Tren Maya to Chichén Itzá. Swim in the cenotes (Ik Kil, Cuzamá). Gran Museo del Mundo Maya. Sunday Biciruta on Paseo de Montejo. Fly home on day 21.</p></div></li>
+    </ol>
+
+    <div class="cards">
+      <figure class="card"><img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a7/ZA77_Teotihuac%C3%A1n_edo_de_mex_Herberto_de_la_rosa.jpg/500px-ZA77_Teotihuac%C3%A1n_edo_de_mex_Herberto_de_la_rosa.jpg" srcset="https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a7/ZA77_Teotihuac%C3%A1n_edo_de_mex_Herberto_de_la_rosa.jpg/500px-ZA77_Teotihuac%C3%A1n_edo_de_mex_Herberto_de_la_rosa.jpg 500w, https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a7/ZA77_Teotihuac%C3%A1n_edo_de_mex_Herberto_de_la_rosa.jpg/960px-ZA77_Teotihuac%C3%A1n_edo_de_mex_Herberto_de_la_rosa.jpg 960w" sizes="(min-width: 900px) 200px, 45vw" width="1280" height="851" alt="The Avenue of the Dead and Pyramid of the Sun at Teotihuacán" loading="lazy" decoding="async" onerror="this.closest('figure').classList.add('noimg')"><figcaption>Teotihuacán. At the gate at opening, done before the heat.</figcaption></figure>
+      <figure class="card"><img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/6/60/Gran_Pir%C3%A1mide_de_Cholula,_Puebla,_M%C3%A9xico,_2013-10-12,_DD_10.JPG/500px-Gran_Pir%C3%A1mide_de_Cholula,_Puebla,_M%C3%A9xico,_2013-10-12,_DD_10.JPG" srcset="https://thumb.wikimedia.org/wikipedia/commons/thumb/6/60/Gran_Pir%C3%A1mide_de_Cholula,_Puebla,_M%C3%A9xico,_2013-10-12,_DD_10.JPG/500px-Gran_Pir%C3%A1mide_de_Cholula,_Puebla,_M%C3%A9xico,_2013-10-12,_DD_10.JPG 500w, https://thumb.wikimedia.org/wikipedia/commons/thumb/6/60/Gran_Pir%C3%A1mide_de_Cholula,_Puebla,_M%C3%A9xico,_2013-10-12,_DD_10.JPG/960px-Gran_Pir%C3%A1mide_de_Cholula,_Puebla,_M%C3%A9xico,_2013-10-12,_DD_10.JPG 960w" sizes="(min-width: 900px) 200px, 45vw" width="1280" height="815" alt="Excavated stone platforms of the Great Pyramid of Cholula" loading="lazy" decoding="async" onerror="this.closest('figure').classList.add('noimg')"><figcaption>Cholula. Biggest pyramid on Earth by volume.</figcaption></figure>
+      <figure class="card"><img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/b/bb/Monte_Alban_West_Side_Platform.jpg/500px-Monte_Alban_West_Side_Platform.jpg" srcset="https://thumb.wikimedia.org/wikipedia/commons/thumb/b/bb/Monte_Alban_West_Side_Platform.jpg/500px-Monte_Alban_West_Side_Platform.jpg 500w, https://thumb.wikimedia.org/wikipedia/commons/thumb/b/bb/Monte_Alban_West_Side_Platform.jpg/960px-Monte_Alban_West_Side_Platform.jpg 960w" sizes="(min-width: 900px) 200px, 45vw" width="1280" height="975" alt="Stone platforms at Monte Albán under a blue sky" loading="lazy" decoding="async" onerror="this.closest('figure').classList.add('noimg')"><figcaption>Monte Albán. The Zapotecs levelled a mountain top for this.</figcaption></figure>
+      <figure class="card"><img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/3/30/ChickRedMole.JPG/500px-ChickRedMole.JPG" srcset="https://thumb.wikimedia.org/wikipedia/commons/thumb/3/30/ChickRedMole.JPG/500px-ChickRedMole.JPG 500w, https://thumb.wikimedia.org/wikipedia/commons/thumb/3/30/ChickRedMole.JPG/960px-ChickRedMole.JPG 960w" sizes="(min-width: 900px) 200px, 45vw" width="1280" height="580" alt="Chicken in red mole with rice" loading="lazy" decoding="async" onerror="this.closest('figure').classList.add('noimg')"><figcaption>Mole. Oaxaca has 7. I am trying all 7.</figcaption></figure>
+      <figure class="card"><img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/2/22/Cenote-ik-kil.png/500px-Cenote-ik-kil.png" srcset="https://thumb.wikimedia.org/wikipedia/commons/thumb/2/22/Cenote-ik-kil.png/500px-Cenote-ik-kil.png 500w, https://thumb.wikimedia.org/wikipedia/commons/thumb/2/22/Cenote-ik-kil.png/960px-Cenote-ik-kil.png 960w" sizes="(min-width: 900px) 200px, 45vw" width="1280" height="960" alt="Cenote Ik Kil, a round sinkhole with hanging roots and water below" loading="lazy" decoding="async" onerror="this.closest('figure').classList.add('noimg')"><figcaption>Cenote Ik Kil. The open-water swim of the trip.</figcaption></figure>
+    </div>
+
+    <h3>Good to know</h3>
+    <ol class="notes">
+      <li>Best timing: the end of October, so Oaxaca lands on Día de Muertos (1 and 2 Nov). Book Oaxaca early for those dates.</li>
+      <li>The Museo Nacional de Antropología and Casa Azul are closed on Mondays.</li>
+      <li>The Tren Maya station at Chichén Itzá is outside the site, so plan the last stretch by bus or taxi.</li>
+    </ol>
+    <div class="pick-row"><button class="btn pick" type="button" data-trip="mexico">Pick Cultural Mexico</button></div>
+  </div>
+</section>
+
+<!-- ============ QUIZ ============ -->
+<section class="sec wrap" id="quiz">
+  <h2>Which trip are you?</h2>
+  <p>4 questions, about 20 seconds.</p>
+  <form id="quizform" novalidate>
+    <fieldset><legend>1. Pick a lunch</legend><div class="opts">
+      <label class="chip"><input type="radio" name="q1" value="mexico">Mole negro in Oaxaca</label>
+      <label class="chip"><input type="radio" name="q1" value="eurorail">A croissant in a 1st class seat</label>
+      <label class="chip"><input type="radio" name="q1" value="ecuador-peru">Ceviche in Lima, before the shop closes</label>
+    </div></fieldset>
+    <fieldset><legend>2. Pick a height</legend><div class="opts">
+      <label class="chip"><input type="radio" name="q2" value="ecuador-peru">About 5,000 m, breathing hard</label>
+      <label class="chip"><input type="radio" name="q2" value="mexico">2,240 m, just enough to justify a nap</label>
+      <label class="chip"><input type="radio" name="q2" value="eurorail">65 m up, on a viaduct</label>
+    </div></fieldset>
+    <fieldset><legend>3. Pick a ride</legend><div class="opts">
+      <label class="chip"><input type="radio" name="q3" value="eurorail">A red Swiss train, window down</label>
+      <label class="chip"><input type="radio" name="q3" value="mexico">Reforma on a Sunday, no cars</label>
+      <label class="chip"><input type="radio" name="q3" value="ecuador-peru">A rental bike, downhill to a waterfall</label>
+    </div></fieldset>
+    <fieldset><legend>4. Pick a museum</legend><div class="opts">
+      <label class="chip"><input type="radio" name="q4" value="ecuador-peru">A science museum in an old textile mill</label>
+      <label class="chip"><input type="radio" name="q4" value="eurorail">The Deutsches Museum, all day</label>
+      <label class="chip"><input type="radio" name="q4" value="mexico">A museum about economics</label>
+    </div></fieldset>
+    <button class="btn" type="submit">Show my trip</button>
+  </form>
+  <div class="result" id="result" aria-live="polite"></div>
+</section>
+</main>
+
+<footer class="sec wrap foot">
+  <h2>Photo credits</h2>
+  <ol class="credits">
+    <li><a href="https://commons.wikimedia.org/wiki/File:RhB_ABe_4-4_III_Kreisviadukt_Brusio.jpg">Brusio spiral viaduct</a>: Kabelleger / David Gubler, <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a></li>
+    <li><a href="https://commons.wikimedia.org/wiki/File:Girona_des_de_l_aire_edited.jpg">Girona from the air</a>: Patronat de Turisme Costa Brava Pirineu de Girona, <a href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a></li>
+    <li><a href="https://commons.wikimedia.org/wiki/File:Deutsches_Museum_Portrait_4.jpg">Deutsches Museum</a>: Burkhard Mücke, <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a></li>
+    <li><a href="https://commons.wikimedia.org/wiki/File:Salzburg_(48489551981).jpg">Salzburg</a>: Jorge Franganillo, <a href="https://creativecommons.org/licenses/by/2.0/">CC BY 2.0</a></li>
+    <li><a href="https://commons.wikimedia.org/wiki/File:Semmering_-_Semmeringbahn,_20-Schilling-Blick.JPG">Semmering railway, the 20-Schilling view</a>: C.Stadler/Bwag, <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a></li>
+    <li><a href="https://commons.wikimedia.org/wiki/File:RhB_Ge_4-4_III_UNESCO_Weltkulturerbe_auf_Landwasserviadukt.jpg">Landwasser Viaduct</a>: Kabelleger / David Gubler, <a href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a></li>
+    <li><a href="https://commons.wikimedia.org/wiki/File:Machu_Picchu,_2023_(012).jpg">Machu Picchu</a>: Draceane, <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a></li>
+    <li><a href="https://commons.wikimedia.org/wiki/File:Panorama_quilotoa_crater_lake_ecuador.jpg">Quilotoa crater lake</a>: Annom, Public domain</li>
+    <li><a href="https://commons.wikimedia.org/wiki/File:Ba%C3%B1os,_Ecuador.JPG">Baños, Ecuador</a>: Eddyl, <a href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a></li>
+    <li><a href="https://commons.wikimedia.org/wiki/File:Cebiche_de_corvina.JPG">Cebiche de corvina</a>: Picanteria karol, <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a></li>
+    <li><a href="https://commons.wikimedia.org/wiki/File:Salineras_de_Maras,_Maras,_Per%C3%BA,_2015-07-30,_DD_12.JPG">Maras salt pans</a>: Diego Delso, <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a></li>
+    <li><a href="https://commons.wikimedia.org/wiki/File:Monta%C3%B1aarcoirisperuabanto.jpg">Vinicunca (Rainbow Mountain)</a>: Diego Aldrin Abanto Ricce, <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a></li>
+    <li><a href="https://commons.wikimedia.org/wiki/File:Bellas_Artes_01.jpg">Palacio de Bellas Artes</a>: Xavier Quetzalcoatl Contreras Castillo, <a href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a></li>
+    <li><a href="https://commons.wikimedia.org/wiki/File:ZA77_Teotihuac%C3%A1n_edo_de_mex_Herberto_de_la_rosa.jpg">Teotihuacán</a>: Hdlrosa, <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a></li>
+    <li><a href="https://commons.wikimedia.org/wiki/File:Gran_Pir%C3%A1mide_de_Cholula,_Puebla,_M%C3%A9xico,_2013-10-12,_DD_10.JPG">Great Pyramid of Cholula</a>: Diego Delso, <a href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a></li>
+    <li><a href="https://commons.wikimedia.org/wiki/File:Monte_Alban_West_Side_Platform.jpg">Monte Albán</a>: nsaum75, <a href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a></li>
+    <li><a href="https://commons.wikimedia.org/wiki/File:ChickRedMole.JPG">Chicken in red mole</a>: AlejandroLinaresGarcia, <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a></li>
+    <li><a href="https://commons.wikimedia.org/wiki/File:Cenote-ik-kil.png">Cenote Ik Kil</a>: Dmadeo, <a href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a></li>
+  </ol>
+  <p>All photos are from Wikimedia Commons, used under the licences linked above. Pass price, timings and booking rules were checked on 10 Nov 2026.</p>
+  <p><a class="back" href="/">Back to arizvi.com</a></p>
+</footer>
+
+<dialog id="pass" aria-labelledby="pass-title">
+  <div class="pass" id="pass-card">
+    <div class="pass-main">
+      <div class="pass-band"><b id="pass-title">Boarding pass</b><span>slotravel</span></div>
+      <div class="pass-body">
+        <label for="pname">Passenger</label>
+        <input id="pname" type="text" autocomplete="name" placeholder="Your name" maxlength="40">
+        <dl>
+          <div><dt>Trip</dt><dd id="p-trip"></dd></div>
+          <div><dt>Route</dt><dd id="p-route"></dd></div>
+          <div><dt>Days</dt><dd>21</dd></div>
+          <div><dt>Class</dt><dd>1st (rule 3)</dd></div>
+          <div><dt>Departs</dt><dd>When Ali books it</dd></div>
+          <div><dt>Bags</dt><dd>Carry-on, please</dd></div>
+        </dl>
+      </div>
+      <svg class="barcode" id="barcode" viewBox="0 0 300 44" preserveAspectRatio="none" aria-hidden="true"></svg>
+    </div>
+    <div class="pass-stub">
+      <div class="pass-band"><b>Stub</b></div>
+      <dl>
+        <div><dt>Gate</dt><dd id="p-gate"></dd></div>
+        <div><dt>Seat</dt><dd>1A</dd></div>
+      </dl>
+    </div>
+  </div>
+  <div class="pass-actions">
+    <a class="btn" id="mail" href="mailto:ali.rizvi@uwaterloo.ca">Email it to Ali</a>
+    <button class="btn ghost" id="copy" type="button">Copy the pass</button>
+    <button class="btn ghost" id="close" type="button">Close</button>
+  </div>
+  <p class="pass-foot">Email not opening? Send it to ali.rizvi@uwaterloo.ca<output id="copied"></output></p>
+</dialog>
+
+<script>
+(() => {
+  const TRIPS = {
+    'eurorail':     { name: 'Eurorail',        route: 'Girona → Milan',        gate: 'A', status: 'BOARDING', c: '#c4122f',
+                      line: 'You want a window seat in 1st class and an Alp outside it.' },
+    'ecuador-peru': { name: 'Ecuador + Peru',  route: 'Quito → Cusco',         gate: 'B', status: 'ON TIME',  c: '#0e7c72',
+                      line: 'You like your views high and your lunch straight out of the Pacific.' },
+    'mexico':       { name: 'Cultural Mexico', route: 'Mexico City → Mérida',  gate: 'C', status: 'ON TIME',  c: '#e4007c',
+                      line: 'You are here for pyramids before breakfast and mole after dark.' }
+  };
+  const KEY = 'slotravel-pick';
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const store = {
+    get() { try { return localStorage.getItem(KEY); } catch (e) { return null; } },
+    set(v) { try { localStorage.setItem(KEY, v); } catch (e) {} }
+  };
+
+  /* ---------- Split-flap board ---------- */
+  const CH = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  const jobs = new Map();
+  let running = false;
+  const flip = el => { if (!reduced && el.animate) el.animate([{ transform: 'scaleY(.3)' }, { transform: 'scaleY(1)' }], { duration: 70 }); };
+  function run() {
+    if (running) return;
+    running = true;
+    const step = () => {
+      jobs.forEach((j, el) => {
+        if (j.left > 0) { el.textContent = CH[(Math.random() * CH.length) | 0]; j.left--; flip(el); }
+        else { if (el.textContent !== j.target) { el.textContent = j.target; flip(el); } jobs.delete(el); }
+      });
+      if (jobs.size) setTimeout(step, 55); else running = false;
+    };
+    step();
+  }
+  function setCol(col, text, spin) {
+    const n = parseInt(getComputedStyle(col).getPropertyValue('--n'), 10);
+    const t = [...text.toUpperCase()];
+    const padded = col.classList.contains('c-gate') ? t : t.concat(Array(Math.max(0, n - t.length)).fill(' '));
+    let cells = col.querySelectorAll('.f');
+    if (cells.length !== n) {
+      col.textContent = '';
+      for (let i = 0; i < n; i++) { const s = document.createElement('span'); s.className = 'f'; s.textContent = ' '; col.appendChild(s); }
+      cells = col.querySelectorAll('.f');
+    }
+    cells.forEach((cell, i) => {
+      const target = padded[i] || ' ';
+      if (reduced || !spin) { cell.textContent = target; return; }
+      jobs.set(cell, { target, left: spin + ((Math.random() * 7) | 0) + (i % 4) });
+    });
+    if (!reduced && spin) run();
+  }
+  const board = document.getElementById('board');
+  const rows = [...board.querySelectorAll('.row')];
+  const statusFor = id => (store.get() === id ? 'YOUR PICK' : TRIPS[id].status);
+  rows.forEach(row => {
+    const id = row.dataset.trip;
+    row.querySelectorAll('.col').forEach((col, ci) => {
+      const text = col.classList.contains('c-status') ? statusFor(id) : col.textContent.trim();
+      col.setAttribute('aria-hidden', 'true');
+      setCol(col, text, 6 + ci * 4);
+      if (col.classList.contains('c-status') && store.get() === id) col.dataset.state = 'pick';
+    });
+  });
+  function setStatus(id, text, state) {
+    const row = rows.find(r => r.dataset.trip === id);
+    const col = row.querySelector('.col.c-status');
+    if (state) col.dataset.state = state; else delete col.dataset.state;
+    setCol(col, text, 5);
+  }
+
+  const clock = board.querySelector('.clock');
+  const tick = () => { const d = new Date(); clock.textContent = String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0'); };
+  tick(); setInterval(tick, 20000);
+
+  /* ---------- Dice ---------- */
+  const dice = document.getElementById('dice');
+  let rolling = false;
+  dice.addEventListener('click', () => {
+    if (rolling) return;
+    rolling = true;
+    const ids = rows.map(r => r.dataset.trip);
+    const target = (Math.random() * ids.length) | 0;
+    const land = () => {
+      rows.forEach((r, i) => r.classList.toggle('lit', i === target));
+      ids.forEach(id => { if (id !== ids[target]) setStatus(id, statusFor(id), store.get() === id ? 'pick' : null); });
+      setStatus(ids[target], 'DICE SAYS', 'dice');
+      setTimeout(() => {
+        document.getElementById(ids[target]).scrollIntoView({ behavior: reduced ? 'auto' : 'smooth' });
+        rows.forEach(r => r.classList.remove('lit'));
+        rolling = false;
+      }, reduced ? 600 : 1400);
+    };
+    if (reduced) { land(); return; }
+    const total = 9 + ((target - 9 % 3) + 3) % 3;
+    let i = 0;
+    const hop = () => {
+      rows.forEach((r, k) => r.classList.toggle('lit', k === i % 3));
+      if (i >= total) { land(); return; }
+      i++;
+      setTimeout(hop, 70 + i * i * 2.6);
+    };
+    hop();
+  });
+
+  /* ---------- Boarding pass ---------- */
+  const dlg = document.getElementById('pass');
+  const pname = document.getElementById('pname');
+  const mail = document.getElementById('mail');
+  const copied = document.getElementById('copied');
+  let current = null;
+  function passText() {
+    const t = TRIPS[current];
+    return 'slotravel boarding pass\n' +
+      'Passenger: ' + (pname.value.trim() || '(name here)') + '\n' +
+      'Trip: ' + t.name + ' (' + t.route + ')\n' +
+      'Days: 21 | Gate ' + t.gate + ' | Seat 1A | 1st class\n' +
+      'Departs: when Ali books it';
+  }
+  function barcode(seed) {
+    let h = 2166136261;
+    for (const ch of seed) { h ^= ch.charCodeAt(0); h = Math.imul(h, 16777619) >>> 0; }
+    let x = 0, out = '';
+    while (x < 296) {
+      h = Math.imul(h ^ (h >>> 13), 1274126177) >>> 0;
+      const w = 1 + (h % 4), gap = 1 + ((h >>> 8) % 3);
+      out += '<rect x="' + x + '" y="0" width="' + w + '" height="44" fill="#000"/>';
+      x += w + gap;
+    }
+    document.getElementById('barcode').innerHTML = out;
+  }
+  function refresh() {
+    const t = TRIPS[current];
+    mail.href = 'mailto:ali.rizvi@uwaterloo.ca?subject=' + encodeURIComponent('slotravel: I pick ' + t.name) + '&body=' + encodeURIComponent('Hi Ali,\n\nI pick ' + t.name + '.\n\n' + passText());
+    barcode((pname.value || 'slotravel') + current);
+  }
+  function openPass(id) {
+    current = id;
+    const t = TRIPS[id];
+    document.getElementById('pass-card').style.setProperty('--c', t.c);
+    dlg.style.setProperty('--c', t.c);
+    document.getElementById('p-trip').textContent = t.name;
+    document.getElementById('p-route').textContent = t.route;
+    document.getElementById('p-gate').textContent = t.gate;
+    copied.textContent = '';
+    refresh();
+    const prev = store.get();
+    store.set(id);
+    if (prev && prev !== id) setStatus(prev, TRIPS[prev].status, null);
+    setStatus(id, 'YOUR PICK', 'pick');
+    if (typeof dlg.showModal === 'function') dlg.showModal(); else dlg.setAttribute('open', '');
+    pname.focus();
+  }
+  pname.addEventListener('input', refresh);
+  document.getElementById('copy').addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText(passText()); copied.textContent = 'Copied.'; }
+    catch (e) { copied.textContent = 'Copy did not work here. Select the text and copy it by hand.'; }
+  });
+  document.getElementById('close').addEventListener('click', () => dlg.close());
+  dlg.addEventListener('click', e => { if (e.target === dlg) dlg.close(); });
+  document.querySelectorAll('.pick').forEach(b => b.addEventListener('click', () => openPass(b.dataset.trip)));
+
+  /* ---------- Quiz ---------- */
+  const form = document.getElementById('quizform');
+  const result = document.getElementById('result');
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    const fd = new FormData(form);
+    const answers = ['q1', 'q2', 'q3', 'q4'].map(q => fd.get(q));
+    if (answers.some(a => !a)) {
+      result.innerHTML = '<p>Answer all 4 questions first.</p>';
+      return;
+    }
+    const score = {};
+    answers.forEach(a => { score[a] = (score[a] || 0) + 1; });
+    const best = Math.max(...Object.values(score));
+    const tied = Object.keys(score).filter(k => score[k] === best);
+    const win = tied.length === 1 ? tied[0] : [...answers].reverse().find(a => tied.includes(a));
+    const t = TRIPS[win];
+    result.innerHTML =
+      '<div class="result-card thunk" style="--c:' + t.c + '">' +
+      '<h3>You are ' + t.name + '.</h3><p>' + t.line + '</p>' +
+      '<div class="pick-row"><a class="btn" href="#' + win + '">See the trip</a>' +
+      '<button class="btn ghost" type="button" data-trip="' + win + '">Pick ' + t.name + '</button></div></div>';
+    result.querySelector('button').addEventListener('click', () => openPass(win));
+  });
+})();
+</script>
+</body>
+</html>

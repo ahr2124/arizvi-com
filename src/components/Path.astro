@@ -1,0 +1,12 @@
+---
+interface Props { path: { stage: string; detail: string; year?: string }[]; compact?: boolean }
+const { path, compact = false } = Astro.props;
+---
+<ol class:list={['path', { compact }]}>
+  {path.map((s) => (
+    <li>
+      <p class="label">{s.year ? `${s.year} · ` : ''}{s.stage}</p>
+      {!compact && <p>{s.detail}</p>}
+    </li>
+  ))}
+</ol>

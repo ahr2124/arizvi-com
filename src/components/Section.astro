@@ -1,0 +1,14 @@
+---
+// A section: a 2px rule, then its heading. With a title, the title is the h2 and the label is a small line above it.
+// With a label alone (the main pages), the label is the h2 and keeps its small look, so every section has a heading
+// a screen reader can jump to.
+interface Props { label?: string; title?: string; id?: string }
+const { label, title, id } = Astro.props;
+---
+<section class="section" id={id}>
+  <div class="section-head">
+    {label && (title ? <p class="label">{label}</p> : <h2 class="label">{label}</h2>)}
+    {title && <h2>{title}</h2>}
+  </div>
+  <slot />
+</section>

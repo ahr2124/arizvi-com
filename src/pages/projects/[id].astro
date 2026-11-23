@@ -1,0 +1,61 @@
+---
+import Base from '../../layouts/Base.astro';
+import Cover from '../../components/Cover.astro';
+import Path from '../../components/Path.astro';
+import { getCollection, render } from 'astro:content';
+// The full write-up behind a card on /projects (Ali, 11 Nov 2026: "work and projects ARE Literally the same - remove
+// one of them"; the Work page went and its write-ups moved here). Next follows the order of the cards, so every
+// write-up is one click from the one before it, and the last leads back to the first.
+export async function getStaticPaths() {
+  const entries = (await getCollection('work')).filter((e) => e.body?.trim()).sort((a, b) => a.data.order - b.data.order);
+  return entries.map((entry, i) => {
+    const next = entries[(i + 1) % entries.length];
+    return { params: { id: entry.id }, props: { entry, next: next.id !== entry.id ? next : undefined } };
+  });
+}
+const { entry, next } = Astro.props;
+const { Content } = await render(entry);
+const d = entry.data;
+const kind = { 'research-to-company': 'Research → Company', research: 'Research', industry: 'Industry' }[d.track];
+const hasCover = !!(d.image || d.video); // with neither, the page goes from its header straight to the text
+// Notes that open with a list get a label, so they do not read as part of the Path's last step on a phone.
+const notesLabel = !!d.path && /^\s*[-*] /.test(entry.body ?? '');
+---
+<Base title={d.title} description={d.summary} image={d.image} preload={d.video ? d.image : undefined}>
+  <article>
+    <header class:list={['case-head', { bare: !hasCover }]}>
+      <p class="label">{d.years} · {d.role} · {kind}</p>
+      <h1>{d.title}</h1>
+      <div class="grid"><p class="span-8">{d.summary}</p></div>
+    </header>
+    {hasCover && <div class="case-cover"><Cover entry={entry} eager video /></div>}
+    {d.outcome && (
+      <div class="outcome grid">
+        <p class="label">Outcome</p>
+        <p>{d.outcome}</p>
+      </div>
+    )}
+    {d.path && (
+      <div class="grid"><div class="span-12"><p class="label">Path</p><Path path={d.path} /></div></div>
+    )}
+    <div class="grid">
+      <div class="span-8 prose">
+        {d.link && <p><a href={d.link} target="_blank" rel="noopener">Visit {d.title}</a></p>}
+        {notesLabel && <p class="label" style="margin-top:2.5rem">Notes</p>}
+        <Content />
+        {d.papers && (
+          <>
+            <p class="label" style="margin-top:2.5rem">Papers from this work</p>
+            <ul>{d.papers.map((p) => <li>{p.href ? <a href={p.href}>{p.title}</a> : p.title}. <em>{p.venue}</em>.</li>)}</ul>
+          </>
+        )}
+      </div>
+    </div>
+    {next && (
+      <nav class="next" aria-label="Next project">
+        <p class="label">Next</p>
+        <a href={`/projects/${next.id}/`}>{next.data.title}</a>
+      </nav>
+    )}
+  </article>
+</Base>

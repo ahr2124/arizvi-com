@@ -1,0 +1,46 @@
+---
+import type { CollectionEntry } from 'astro:content';
+// A work entry's cover: its video (on the case-study page only), or its picture. An entry with neither gets a title
+// card in the grid, its name in white on black; its case-study page shows no cover (see work/[id].astro).
+// The video starts by script, and only when it is on screen: see the script at the foot of this file.
+interface Props { entry: CollectionEntry<'work'>; eager?: boolean; video?: boolean }
+const { entry, eager = false, video = false } = Astro.props;
+---
+{video && entry.data.video ? (
+  <video class="cover cover-video" src={entry.data.video} poster={entry.data.image} controls muted loop playsinline preload="none" data-autoplay></video>
+) : entry.data.image ? (
+  <img class="cover" src={entry.data.image} alt={entry.data.title} width="1200" height="800" loading={eager ? 'eager' : 'lazy'} fetchpriority={eager ? 'high' : undefined} />
+) : (
+  <div class="cover titlecard" aria-hidden="true"><span>{entry.data.title}</span></div>
+)}
+
+<script>
+  // A cover video plays itself, muted, while it is on screen, and pauses when it is scrolled away, so a visitor only
+  // downloads what they watch. It waits for a tap instead when the visitor has asked for less motion or less data,
+  // or is on mobile data or a slow connection (where the browser says so), or is on a phone (an iPhone never says). Once they pause it or turn the sound on
+  // themselves, the video is theirs.
+  const videos = document.querySelectorAll<HTMLVideoElement>('video[data-autoplay]');
+  const conn = (navigator as Navigator & { connection?: { saveData?: boolean; effectiveType?: string; type?: string } }).connection;
+  const hold = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    || !!conn?.saveData
+    || conn?.type === 'cellular'
+    || /(^|-)2g$|^3g$/.test(conn?.effectiveType ?? '')
+    || window.matchMedia('(max-width: 767px) and (pointer: coarse)').matches;
+  if (videos.length && !hold && 'IntersectionObserver' in window) {
+    videos.forEach((v) => {
+      let theirs = false;
+      let ours = false; // the next pause is the one this script asked for
+      const io = new IntersectionObserver(([e]) => {
+        if (theirs) return;
+        if (e.isIntersecting) v.play().catch(() => {});
+        else if (!v.paused) { ours = true; v.pause(); }
+      }, { threshold: 0.2 });
+      v.addEventListener('pause', () => {
+        if (ours) ours = false;
+        else { theirs = true; io.disconnect(); }
+      });
+      v.addEventListener('volumechange', () => { theirs = true; io.disconnect(); });
+      io.observe(v);
+    });
+  }
+</script>

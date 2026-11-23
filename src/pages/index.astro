@@ -1,0 +1,64 @@
+---
+import Base from '../layouts/Base.astro';
+import Exhibits from '../components/Exhibits.astro';
+import Section from '../components/Section.astro';
+import Quote from '../components/Quote.astro';
+import StartTiles from '../components/StartTiles.astro';
+import { featuredShort, homeComments } from '../data/students';
+const email = 'ali.rizvi@uwaterloo.ca';
+const news = [
+  ['Feb 2027', 'Keynote, 6th International SDG Conference, Chitrakoot: "Who Consulted the Village?"'],
+  ['2026', 'Published at ACM Interactive Health 2026: "Embed, don\'t isolate," on stigma-sensitive parent dashboards.'],
+  ['2026', 'Chapter "A|B Testing, IRL: What Really Works (and Doesn\'t)" forthcoming from Springer.'],
+  ['Oct 2025', 'PhD defended, University of Waterloo.'],
+];
+---
+<Base title="Ali Rizvi" pageNav>
+  <section class="intro">
+    <div class="intro-grid">
+      <div class="text">
+        <h1>Ali Rizvi</h1>
+        <p>I teach <mark>analytics and user experience</mark>, after over a decade leading AI and analytics teams in industry (PwC, EY, Morgan Stanley, Amazon Alexa). My PhD is in Management Science and Engineering (University of Waterloo, 2025).</p>
+        <p class="label"><a href={`mailto:${email}`}>{email}</a></p>
+      </div>
+      <div class="photo"><img src="/media/headshot.jpg" alt="Ali Rizvi" width="400" height="500" fetchpriority="high" /></div>
+    </div>
+  </section>
+
+  <!-- Teaching comes first, and opens with the students' own words (Ali, 11 Nov 2026). -->
+  <Section title="Teaching">
+    <Quote comment={featuredShort} size="big" />
+    <div class="grid"><div class="span-8">
+      <p>I taught fourteen course sections of six courses at the University of Waterloo between 2021 and 2024, undergrad and grad, with ~700 students from nine departments in total. Three other faculty members have since adopted a course I built from scratch.</p>
+    </div></div>
+    <ul class="quotes two">
+      {homeComments.map((c) => <li><Quote comment={c} /></li>)}
+    </ul>
+    <div class="grid"><p class="span-8 links-row"><a href="/teaching/">{'Courses\u00a0and\u00a0how\u00a0I\u00a0teach'}</a> · <a href="/teaching/#students">{'More\u00a0from\u00a0students'}</a></p></div>
+  </Section>
+
+  <!-- Teaching resources, one section after Teaching, as in the nav (Ali, 12 Nov 2026: "Add resources to my landing
+       page", then "like one section"). His line from /resources, then its four Start here tiles, each opening its piece
+       there. -->
+  <Section title="Teaching resources">
+    <div class="grid"><div class="span-8">
+      <p>I love experimenting with pedagogy to find what works best for my students. Here are four real pieces from my courses, each showing one strategy I use.</p>
+    </div></div>
+    <StartTiles from="/resources/" home />
+    <div class="grid"><p class="span-8 links-row after-tiles"><a href="/resources/">{'All\u00a0teaching\u00a0resources'}</a> · <a href="/resources/#where">{'Where\u00a0I\u00a0used\u00a0each\u00a0strategy'}</a></p></div>
+  </Section>
+
+  <Section title="Research output">
+    <div class="grid"><div class="span-8">
+      <p>I work on AI and interactive systems for the 80% of people they were not built for: people using a second language, on a bad connection, in a small or moving room, with a lot to lose if the system gets it wrong.</p>
+      <p>Each project goes the same way: a question → a study and an output (an artifact, a system) → something that keeps the work going after the paper is out.</p>
+    </div></div>
+    <Exhibits cards />
+  </Section>
+
+  <Section label="News">
+    <ul class="news">
+      {news.map(([d, t]) => <li><p class="label">{d}</p><p>{t}</p></li>)}
+    </ul>
+  </Section>
+</Base>

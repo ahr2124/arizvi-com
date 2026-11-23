@@ -1,0 +1,72 @@
+---
+// One piece from a course Ali taught, as students got it on LEARN: the brief on the left, its rubric(s) on the right.
+// It opens and closes (a details element), so a section reads as a list of titles first. The summary row leads with the
+// course code, then the title, when and what kind, and what is inside (brief, rubric). `body` names the text when it is
+// not a brief (the feedback form, a handout).
+// The brief is HTML converted from LEARN (or typed from the PDF and checked word for word); names of TAs and the client
+// are in [brackets]. A rubric row shows its best level in full (in the page's accent: what good looks like) and the
+// lesser levels under it, best first; a cell's own lines and lists keep their line breaks.
+// On a phone, where the brief comes first, a link at the top jumps to the rubric; every open piece ends with Close.
+// data-courses and data-rubric are for the filter on /resources (by course, and "has a rubric").
+interface Level { name: string; pts: number | null; text: string }
+interface Criterion { name: string; desc?: string; levels: Level[] }
+interface Rubric { name: string; showPoints: boolean; criteria: Criterion[]; note?: string }
+interface Props { id: string; course?: string; title: string; term: string; kind: string; tags: string[]; brief: string; rubrics: Rubric[]; note?: string; open?: boolean; body?: string }
+const { id, course = '', title, term, kind, tags, brief, rubrics, note, open = false, body = 'brief' } = Astro.props;
+const fmt = (n: number) => (Number.isInteger(n) ? String(n) : n.toFixed(1));
+const pts = (r: Rubric, l?: Level) => (r.showPoints && l?.pts != null ? ` · ${fmt(l.pts)}` : '');
+const total = (r: Rubric) => r.criteria.reduce((s, c) => s + (c.levels[0]?.pts ?? 0), 0);
+const codes = course.match(/[A-Z]{4} \d{3}/g) ?? [];
+const words = ['', 'one', 'two', 'three', 'four'];
+const cap = (s: string) => s[0].toUpperCase() + s.slice(1);
+const inside = [brief ? cap(body) : null, rubrics.length === 1 ? 'rubric' : rubrics.length > 1 ? `${words[rubrics.length]} rubrics` : null].filter(Boolean).join(' and ');
+const shownTags = tags.filter((t) => t !== 'Rubric');
+---
+<details class="res" id={id} open={open} data-courses={codes.join('|')} data-rubric={rubrics.length ? '1' : '0'}>
+  <summary>
+    <span class="res-codes">{codes.map((c) => <span class="code-chip res-code">{c}</span>)}</span>
+    <span class="res-head">
+      <span class="res-title">{title}</span>
+      <span class="res-meta">{term} · {kind}</span>
+    </span>
+    <span class="res-side">
+      <span class="res-inside">{inside}</span>
+      {shownTags.length > 0 && <span class="res-tags">{shownTags.join(' · ')}</span>}
+    </span>
+  </summary>
+  <div class={`res-body${rubrics.length ? '' : ' brief-only'}`}>
+    {brief && rubrics.length > 0 && <p class="res-jump"><a href={`#${id}-rubric`}>Jump to the {rubrics.length > 1 ? 'rubrics' : 'rubric'} <span aria-hidden="true">↓</span></a></p>}
+    {brief && (
+      <div class="res-brief">
+        <p class="label">The {body}</p>
+        <div class="brief" set:html={brief} />
+        {note && <p class="omit">{note}</p>}
+      </div>
+    )}
+    {rubrics.length > 0 && (
+      <div class="res-rubrics" id={`${id}-rubric`}>
+        {rubrics.map((r) => (
+          <div class="res-rubric">
+            <p class="label">Rubric · {r.name}{r.showPoints ? ` · ${fmt(total(r))} points` : ''}</p>
+            <ul class="rubric-list">
+              {r.criteria.map((c) => (
+                <li>
+                  {c.name && <div class="rb-head"><span class="rb-name">{c.name}</span>{r.showPoints && c.levels[0]?.pts != null && <span class="rb-pts">{fmt(c.levels[0].pts)} {c.levels[0].pts === 1 ? 'point' : 'points'}</span>}</div>}
+                  {c.desc && <p class="rb-desc">{c.desc}</p>}
+                  {c.levels[0] && <p class="rb-full"><span class="lvn top">{c.levels[0].name}{pts(r, c.levels[0])}</span> {c.levels[0].text}</p>}
+                  {c.levels.length > 1 && (
+                    <ul class="rb-levels">
+                      {c.levels.slice(1).map((l) => <li><span class="lvn">{l.name}{pts(r, l)}</span> {l.text}</li>)}
+                    </ul>
+                  )}
+                </li>
+              ))}
+            </ul>
+            {r.note && <p class="muted asg-note">{r.note}</p>}
+          </div>
+        ))}
+      </div>
+    )}
+    <p class="res-close-row"><button type="button" class="res-close" data-close>Close<span class="sr"> {title}</span> <span aria-hidden="true">↑</span></button></p>
+  </div>
+</details>

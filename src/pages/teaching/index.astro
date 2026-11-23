@@ -1,0 +1,142 @@
+---
+import Base from '../../layouts/Base.astro';
+import Section from '../../components/Section.astro';
+import Quote from '../../components/Quote.astro';
+import { featuredShort, stepComments, comments } from '../../data/students';
+// One row per course: the code, terms, title and pills on the left, and on the right what students did and how I taught
+// it (feedback Ali passed on, 11 Nov 2026: "Make each course more tangible to show how you actually teach"). Every line
+// comes from his teaching statements as he approved them (Sep-Oct 2026) or from his own words: the Rogers and SDG
+// capstones, the midterm prototype test, the Figma training, the paper exams in MSCI 543, the Python and Tableau modules
+// and the NICU paper from MSCI 630, GBDA 210 built in two weeks. The GBDA 410 line is what a student wrote about him.
+// The facts follow the CV: only MSCI 630 is a graduate course, and GBDA 402 carries no credit line (11 Nov 2026).
+const courses = [
+  { code: 'GBDA 310', title: 'Advanced User Experience Design and Research', terms: ['Fall 2023', 'Spring 2024'], facts: ['5 sections', '217 students', 'Spreadsheets, Python, and Tableau'],
+    did: 'Students ran real studies on real people from week one: contextual inquiry, cognitive task analysis, and think-aloud sessions, with qualitative and introductory quantitative methods. Students who were not engineers learned to write requirements.',
+    how: 'Students were heading into work where generative AI is part of the toolkit, so I added modules on designing for AI and designing with AI. The course also taught project management.' },
+  { code: 'GBDA 402', title: 'Undergraduate Capstone Seminar', terms: ['Winter 2022', 'Winter 2023'], facts: ['3 sections', '187 students', 'Online and in person', 'Business case modeling'],
+    did: 'Teams built working prototypes for external clients and presented to them: digital twins for Rogers one year, and projects on the Sustainable Development Goals the other. Every team had a working prototype by midterm and tested it with real users before the second half of the term.',
+    how: "I critiqued each team's work every week as its client would, and met each team on its own. The midterm graded the prototype, what the team learned from its users and what it changed, and several teams changed direction after their first test. When a cohort arrived new to Figma, I added training so the tool would not stand between them and their prototypes." },
+  { code: 'GBDA 410', title: 'Seminar in User Experience Research (Virtual Reality)', terms: ['Fall 2023'], facts: ['2 sections', '91 students'],
+    did: 'Students designed and evaluated virtual reality interactions, working in VR headsets.',
+    how: 'Before moving on from a concept, I asked the room whether it had landed, and restated it for the quieter students who would not say they were lost.' },
+  { code: 'MSCI 543', title: 'Analytics and User Experience', terms: ['Spring 2023'], facts: ['1 section', '87 students', 'Taught in Python'],
+    did: 'Students learned experimentation from the funnels and instrumentation I used in industry, including the failure modes, and built the business case in Python.',
+    how: 'When students were using AI to do the hard parts of their projects, the projects stopped showing what they knew, so I moved the course to paper exams.' },
+  { code: 'MSCI 630', title: 'Human-Computer Interaction', terms: ['Winter 2022', 'Winter 2023'], facts: ['Graduate', '2 sections', '86 students', 'Spreadsheets, Python, and Tableau'],
+    did: 'Graduate students took their own research projects through design, implementation, and evaluation. Two of them turned theirs, haptic technologies for NICU mothers, into a paper now being revised for submission to DIS 2027.',
+    how: "When a cohort's career plans leaned toward data, I added Python and Tableau modules. For the NICU project, I taught autoethnography as a method with standards: how to write yourself into the data and still defend it." },
+  { code: 'GBDA 210', title: 'Introduction to UX', terms: ['Fall 2021'], facts: ['1 section', '54 students'],
+    did: 'Each student planned and built a digital design application from first principles: one project, in milestones, on a topic of their own.',
+    how: 'I built the course in the two weeks before it started, during the pandemic, outcomes first and then the content. With each student, I picked a second skill to learn on their project.' },
+];
+// What students said, one per row, newest first (his rule for the score tables: "Start from new to old"); the email,
+// with no term, last.
+const termKey = (t?: string) => { if (!t) return -1; const [season, year] = t.split(' '); return Number(year) * 10 + ({ Winter: 1, Spring: 2, Fall: 3 } as Record<string, number>)[season]; };
+const byTerm = [...comments].sort((a, b) => termKey(b.term) - termKey(a.term));
+// The 4 steps Ali teaches by (30 Oct 2026), each in a sentence or 2 of his own, beside a student's comment that shows it.
+const steps = [
+  ['Build the course backward from the outcome.', 'The outcome is what students can do by the end of the term. So I start there and build each week backward from it.'],
+  ['Personalize within a defined structure.', 'Everyone gets the same foundations. After that, I meet students where they are.'],
+  ['Learn on real problems.', 'Students run real studies on real people from week one, and capstone teams build working prototypes for external clients.'],
+  ['Test the teaching itself.', 'I compare course designs across cohorts and carry the stronger one into the next term.'],
+];
+---
+<Base title="Teaching" pageNav description="Fourteen course sections of six courses at the University of Waterloo between 2021 and 2024, undergrad and grad, with ~700 students from nine departments in total.">
+  <header class="page-head">
+    <h1>Teaching</h1>
+    <Quote comment={featuredShort} size="big" />
+  </header>
+
+  <!-- The teaching philosophy opens the page in place of the record, which moved to What I teach (Ali, 11 Nov 2026: "The
+       opening statement should be replaced by your Teaching Philosophy"), and leads with his line (feedback he passed on
+       the same night: "Strengthen the opening statement"). It is the Why I teach of his teaching statement: the line, the
+       student's email about the think-aloud activity, the 3 things every student should keep, then the arc and his
+       classroom, as his statement's "In the classroom" puts it. -->
+  <Section label="Teaching philosophy" id="philosophy">
+    <div class="grid"><div class="span-8">
+      <p class="lead-line">I teach for <mark>the jobs my students are going to have</mark>.</p>
+      <p>What they learn with me should still be working for them years after the course. Two years after my user research course, a student wrote to tell me that the think-aloud activity we ran in class had just helped them through a job interview.</p>
+      <p>Three things should stay with every student I teach:</p>
+      <ol>
+        <li>The methods of their field, learned well enough to use on their own.</li>
+        <li>The skill of making a case from evidence and defending it to a client, a manager, or a peer who disagrees.</li>
+        <li>Ownership of their work, so that they can answer for every decision in it and say whom their data or design leaves out.</li>
+      </ol>
+      <p>I spent over a decade in industry, then completed a PhD so that I could teach. Someone sitting in on my class would find students working through problems with each other and with me, often on real situations from those years.</p>
+    </div></div>
+  </Section>
+
+  <Section label="How I teach" id="how">
+    <ol class="principles steps across">
+      {steps.map(([h, t], i) => <li><strong>{h}</strong> {t}<Quote comment={stepComments[i]} size="step" /></li>)}
+    </ol>
+    <div class="grid after-steps"><div class="span-8">
+      <p>Students who learn this way have a more grounded understanding of theory, and can apply it pragmatically. In interviews, my students can say <em>why</em> a specific analytic belongs in a feature, and their case studies show better thinking about second-order effects. All students are talented in some way. I work with them to build on their inherent talents while they learn something new.</p>
+    </div></div>
+  </Section>
+
+  <!-- The page runs the philosophy, how I teach, what I teach, then what students said (Ali, 11 Nov 2026: "The flow should be: How do I teach / What do I teach / Student's feedback"). -->
+  <Section label="What I teach" id="courses">
+    <div class="grid"><div class="span-8">
+      <p>I taught fourteen course sections of six courses at the University of Waterloo between 2021 and 2024, undergrad and grad, with ~700 students from nine departments in total. I taught in two departments and three programs, with up to four sections and 180 students in a term.</p>
+      <p>Three other faculty members have since adopted a course I built from scratch (GBDA 210).</p>
+      <p>My assignments, rubrics, and in-class activities are on <a href="/resources/">Teaching resources</a>.</p>
+    </div></div>
+    <ul class="taught">
+      {courses.map((c) => (
+        <li class="taught-row">
+          <div class="taught-id">
+            <p class="taught-code">{c.code}</p>
+            <p class="label">{c.terms.join(' · ')}</p>
+            <h3>{c.title}</h3>
+            <ul class="pills small">{c.facts.map((f) => <li>{f}</li>)}</ul>
+          </div>
+          <div class="taught-text">
+            <p class="label">What students did</p>
+            <p>{c.did}</p>
+            <p class="label">How I taught it</p>
+            <p>{c.how}</p>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </Section>
+
+  <Section label="Mentoring" id="mentoring">
+    <div class="grid"><div class="span-8">
+      <ul>
+        <li>I meet students one on one in every course, and I still mentor students from my first course, in 2021.</li>
+        <li>I supervise the way I was supervised. We meet every week, the student's question stays at the center, and the work has to end in something that runs.</li>
+      </ul>
+    </div></div>
+  </Section>
+
+  <Section label="What students said" id="students">
+    <div class="grid"><p class="span-8">From Waterloo's anonymous course evaluations and one student's email, quoted as written (some in part).</p></div>
+    <ul class="quotes rows-q">
+      {byTerm.map((c) => <li><Quote comment={c} size="row" /></li>)}
+    </ul>
+  </Section>
+</Base>
+
+<style>
+  /* The course rows: who and what on the left, what students did and how I taught it on the right. */
+  .taught { list-style: none; margin: 2rem 0 0; padding: 0; max-width: none; }
+  .taught-row { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); margin: 0; padding: 0 0 2.5rem; border-top: 2px solid #000; }
+  .taught-row + .taught-row { margin-top: 0; }
+  .taught-id { grid-column: 1 / 6; }
+  .taught-text { grid-column: 6 / 13; padding-top: 16px; }
+  .taught-code { display: inline-block; margin: 0; padding: 9px 12px 7px; background: var(--hl, #000); color: #000; font-weight: 600; font-size: clamp(1.7rem, 2.5vw, 2.3rem); letter-spacing: -0.02em; line-height: 1; }
+  .taught-id .label { margin: 14px 0 0; }
+  .taught-id h3 { margin: 6px 0 0; font-size: 1.35rem; max-width: 22ch; }
+  .taught-id .pills { margin-top: 14px; }
+  .taught-text .label { margin: 0 0 6px; }
+  .taught-text p:not(.label) { margin: 0 0 1.25rem; max-width: 62ch; }
+  .taught-text p:last-child { margin-bottom: 0; }
+  .lead-line { font-weight: 600; font-size: clamp(1.35rem, 2.4vw, 1.75rem); letter-spacing: -0.02em; line-height: 1.2; max-width: 32ch; margin: 0 0 1rem; text-wrap: balance; }
+  @media (max-width: 767px) {
+    .taught-row { grid-template-columns: minmax(0, 1fr); padding-bottom: 2rem; }
+    .taught-id, .taught-text { grid-column: 1 / -1; }
+    .taught-text { padding-top: 20px; }
+  }
+</style>

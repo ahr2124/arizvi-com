@@ -1,0 +1,226 @@
+---
+// The regression from class 2 of week 11 in ANOP 102 (/meowdle): 250 simulated artist eras, weekly streams against
+// radio spend, teen exposure and fan base, the same data as the class Sheet and the deck ("Who gets the credit?",
+// Ali, 20 Nov 2026; on Meowdle since 22 Nov, at his word: "Update class 2 first"). The 3 pills are the 3 steps the
+// class runs in LINEST: radio alone; radio and teen exposure; radio, teen exposure and fan base. Radio's slope shrinks
+// at each step (3.02, 1.99, 1.08; the recipe's 1.1), and R² climbs (0.34, 0.69, 0.96). At step 3 a slider holds fan
+// base at a level, the eras near that level stay dark, and the line for radio at that level is drawn beside the step 1
+// line, so "holding fan base constant" is something you can see (the same move as the songs widget it replaces).
+// Under the chart: every step's slopes, as LINEST gives them, and the deck's two artists (the same plan, with fan base
+// left out and put in). The coda gives the deck's three cautions and the test that would settle it.
+// Data and steps: src/data/eras250.ts, made by scripts/eras250.py.
+// A tap picks the nearest era, and another tap in the same spot steps to the next one there.
+// Without JavaScript the chart shows step 1, and both tables stay under it.
+import { eras, steps, means, corr, maxRadio } from '../data/eras250';
+
+const MAX = { radio: 12, streams: 80 };
+const left = (v: number) => (v / MAX.radio) * 100;
+const top = (v: number) => (1 - v / MAX.streams) * 100;
+const s1 = steps.step1, s2 = steps.step2, s3 = steps.step3;
+const f2 = (v: number) => v.toFixed(2);
+const keys = ['step1', 'step2', 'step3'] as const;
+const labels = { step1: 'Step 1: radio', step2: 'Step 2: add teen exposure', step3: 'Step 3: add fan base' };
+const F0 = Math.round(means.fan * 2) / 2;
+// The deck's two artists: the same plan ($1.5 million of radio, teen exposure 8.5), fan base 9.5 (Miley) and 2 (a
+// newcomer), with fan base left out (step 2) and put in (step 3).
+const plan = { radio: 15, teen: 8.5 };
+const p2 = s2.intercept + s2.radio * plan.radio + s2.teen * plan.teen;
+const p3 = (fan: number) => s3.intercept + s3.radio * plan.radio + s3.teen * plan.teen + s3.fan * fan;
+---
+<div class="demo cdemo" data-cdemo data-steps={JSON.stringify(steps)} data-means={JSON.stringify(means)} data-eras={JSON.stringify(eras)}>
+  <div class="cdemo-controls">
+    <div>
+      <p class="label" id="cdemo-m">The model</p>
+      <div class="demo-pills" role="group" aria-labelledby="cdemo-m">
+        {keys.map((k, i) => <button type="button" data-step={k} aria-pressed={i === 0 ? 'true' : 'false'}>{labels[k]}</button>)}
+      </div>
+    </div>
+    <div class="cdemo-hold" data-hold hidden>
+      <label class="label" for="cdemo-f">Hold fan base at <output data-out="f" for="cdemo-f">{F0.toFixed(1)}</output></label>
+      <input type="range" id="cdemo-f" min="0" max="12" step="0.5" value={F0} aria-valuetext={`fan base ${F0.toFixed(1)}`} />
+    </div>
+  </div>
+
+  <div class="demo-chart">
+    <p class="label">Weekly streams (millions) by radio spend ($100k) · 250 artist eras</p>
+    <div class="cdemo-plot" data-plot aria-hidden="true">
+      <svg viewBox="0 0 1000 100" preserveAspectRatio="none">
+        <line class="ghost" data-ghost x1="0" y1={top(s1.intercept)} x2="1000" y2={top(s1.intercept + s1.radio * MAX.radio)} style="display: none" />
+        <line class="fit" data-fit x1="0" y1={top(s1.intercept)} x2="1000" y2={top(s1.intercept + s1.radio * MAX.radio)} />
+      </svg>
+      {eras.map((e) => <span class="cdemo-pt" style={`left: ${left(e[3])}%; top: ${top(e[0])}%`} />)}
+      <span class="demo-y label" style={`top: ${top(80)}%`}>80</span>
+      <span class="demo-y label" style={`top: ${top(40)}%`}>40</span>
+      <span class="demo-y label" style="top: 100%">0</span>
+    </div>
+    <div class="demo-x label cdemo-x" aria-hidden="true"><span>0</span><span class="mid" style="left: 33.33%;">4</span><span class="mid" style="left: 66.67%;">8</span><span class="end">12</span></div>
+    <p class="cdemo-hover" data-hover aria-hidden="true">Point at a dot, or tap it, to see the era.</p>
+  </div>
+
+  <p class="demo-note" data-note>Step 1, radio alone: each extra $100k of radio comes with {f2(s1.radio)} million more weekly streams, and R² is {f2(s1.r2)}, so the line explains {Math.round(s1.r2 * 100)}% of the spread. Taken at face value, $5 million of radio would be {Math.round(s1.radio * 50)} million more weekly streams.</p>
+  <p class="cdemo-sr" aria-live="polite" data-live></p>
+
+  <div class="cdemo-out">
+    <p class="label" id="cdemo-t1">The slopes at each step, from LINEST</p>
+    <div class="cdemo-scroll" tabindex="0" role="region" aria-labelledby="cdemo-t1">
+      <table class="cdemo-steps">
+        <thead><tr><th scope="col"><span class="cdemo-sr">Input</span></th>{keys.map((k, i) => <th scope="col" data-col={k} class={i === 0 ? 'is-hl' : undefined}>Step {i + 1}</th>)}</tr></thead>
+        <tbody>
+          <tr><th scope="row">Radio</th><td data-col="step1" class="is-hl">{f2(s1.radio)}</td><td data-col="step2">{f2(s2.radio)}</td><td data-col="step3">{f2(s3.radio)}</td></tr>
+          <tr><th scope="row">Teen exposure</th><td data-col="step1" class="is-hl">–</td><td data-col="step2">{f2(s2.teen)}</td><td data-col="step3">{f2(s3.teen)}</td></tr>
+          <tr><th scope="row">Fan base</th><td data-col="step1" class="is-hl">–</td><td data-col="step2">–</td><td data-col="step3">{f2(s3.fan)}</td></tr>
+          <tr><th scope="row">Intercept</th><td data-col="step1" class="is-hl">{f2(s1.intercept)}</td><td data-col="step2">{f2(s2.intercept)}</td><td data-col="step3">{f2(s3.intercept)}</td></tr>
+          <tr><th scope="row">R²</th><td data-col="step1" class="is-hl">{f2(s1.r2)}</td><td data-col="step2">{f2(s2.r2)}</td><td data-col="step3">{f2(s3.r2)}</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="cdemo-fine">Rounded. The Sheet prints more digits.</p>
+  </div>
+
+  <div class="cdemo-out">
+    <p class="label" id="cdemo-t2">Same plan, two artists · predicted weekly streams (millions)</p>
+    <p class="cdemo-fine cdemo-plan">$1.5 million of radio and teen exposure 8.5, for Miley (fan base 9.5) and for a newcomer (fan base 2). The plan is already past the data: no era spent more than about ${(maxRadio / 10).toFixed(2)} million on radio.</p>
+    <div class="cdemo-scroll" tabindex="0" role="region" aria-labelledby="cdemo-t2">
+      <table class="cdemo-two">
+        <thead><tr><th scope="col"><span class="cdemo-sr">Artist</span></th><th scope="col">Fan base left out (step 2)</th><th scope="col">Fan base put in (step 3)</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Miley, fan base 9.5</th><td>{Math.round(p2)}</td><td>{Math.round(p3(9.5))}</td></tr>
+          <tr><th scope="row">Newcomer, fan base 2</th><td>{Math.round(p2)}</td><td class="is-hl">{Math.round(p3(2))}</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <p class="demo-coda">Leave fan base out, and radio takes credit for fans the artist already had: labels spend more on radio for artists who are already big (radio and fan base have a correlation of {corr.radioFan.toFixed(2)}), and those artists stream more anyway. At step 1, $5 million of radio looks like {Math.round(s1.radio * 50)} million more weekly streams; at step 3, about {Math.round(s3.radio * 50)} million, and both are a stretch, since no era spent more than about ${(maxRadio / 10).toFixed(2)} million on radio. Three reasons to be careful: these eras are simulated, built to show the idea; $5 million is over four times the most radio any era got; and we still do not know what a stream is worth. A test would settle it: give radio to some releases, hold back similar ones, and compare.</p>
+</div>
+
+<style>
+  .cdemo-controls { display: grid; grid-template-columns: minmax(0, 1fr) 15rem; gap: 16px var(--gutter); align-items: end; }
+  .cdemo-hold output { font-weight: 600; margin-left: 6px; }
+  .cdemo-plot { position: relative; height: 260px; margin: 12px 0 0 3.5rem; border-left: 1px solid #000; border-bottom: 1px solid #000; touch-action: pan-y; }
+  .cdemo-plot svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+  .cdemo-plot line { stroke-width: 2; vector-effect: non-scaling-stroke; }
+  .cdemo-plot .fit { stroke: var(--acc); }
+  .cdemo-plot .ghost { stroke: rgba(0, 0, 0, 0.45); stroke-dasharray: 6 5; }
+  .cdemo-pt { position: absolute; width: 6px; height: 6px; margin: -3px 0 0 -3px; background: var(--deep); transition: opacity 0.15s; }
+  .cdemo-pt.is-far { opacity: 0.16; }
+  .cdemo-pt.is-on { outline: 2px solid #000; outline-offset: 2px; }
+  .cdemo-hover { margin: 8px 0 0 3.5rem; min-height: 1.5em; font-size: 14px; color: rgba(0, 0, 0, 0.6); }
+  .cdemo-out { margin-top: 18px; }
+  .cdemo-out .label { margin-bottom: 6px; }
+  .cdemo-scroll { overflow-x: auto; }
+  .cdemo-scroll:focus-visible { outline: 2px solid #000; outline-offset: 2px; }
+  .cdemo-out table { border-collapse: collapse; font-size: 14px; font-variant-numeric: tabular-nums; }
+  .cdemo-out th, .cdemo-out td { padding: 5px 14px 4px 6px; border-top: 1px solid rgba(0, 0, 0, 0.2); text-align: right; }
+  .cdemo-out th[scope='row'] { text-align: left; font-weight: 400; padding-left: 0; }
+  .cdemo-out thead th { border-top: 0; border-bottom: 1px solid #000; font-weight: 600; }
+  .cdemo-out td.is-hl, .cdemo-out th.is-hl { background: var(--hl, #ccc); font-weight: 600; }
+  .cdemo-two thead th { max-width: 11rem; text-align: right; }
+  .cdemo-plan { margin: 0 0 6px; }
+  .cdemo-sr { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+  .cdemo-fine { margin: 6px 0 0; font-size: 13px; color: rgba(0, 0, 0, 0.6); }
+  @media (max-width: 767px) {
+    .cdemo-controls { grid-template-columns: minmax(0, 1fr); }
+    .cdemo-plot { height: 220px; }
+    .cdemo-pt { width: 5px; height: 5px; margin: -2.5px 0 0 -2.5px; }
+    .cdemo-out th, .cdemo-out td { padding-right: 10px; }
+  }
+</style>
+
+<script>
+  type Steps = { step1: { intercept: number; radio: number; r2: number }; step2: { intercept: number; radio: number; teen: number; r2: number }; step3: { intercept: number; radio: number; teen: number; fan: number; r2: number } };
+  const MAX = { radio: 12, streams: 80 };
+  const BAND = 0.5; // eras within half a point of the fan base held count as "about that fan base"
+  const top = (v: number) => (1 - v / MAX.streams) * 100;
+  const words = ['no', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'];
+  const tens = ['', '', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
+  // Numbers up to two digits in words (the site's rule for prose).
+  const say = (n: number) => (n < 20 ? words[n] : n < 100 ? tens[Math.floor(n / 10)] + (n % 10 ? '-' + words[n % 10] : '') : String(n));
+  const pct = (v: number) => `${Math.round(v * 100)}%`;
+  const money = (r: number) => (r < 10 ? `$${Math.round(r * 100)}k` : `$${(r / 10).toFixed(2)} million`);
+
+  document.querySelectorAll<HTMLElement>('[data-cdemo]').forEach((root) => {
+    const $ = <T extends Element>(s: string) => root.querySelector<T>(s)!;
+    const steps: Steps = JSON.parse(root.dataset.steps!);
+    const means: { teen: number; fan: number } = JSON.parse(root.dataset.means!);
+    const eras: [number, number, number, number][] = JSON.parse(root.dataset.eras!);
+    const pts = [...root.querySelectorAll<HTMLElement>('.cdemo-pt')];
+    const pills = [...root.querySelectorAll<HTMLButtonElement>('[data-step]')];
+    const slider = $<HTMLInputElement>('#cdemo-f');
+    const plot = $<HTMLElement>('[data-plot]');
+    const live = $<HTMLElement>('[data-live]');
+    const { step1: s1, step2: s2, step3: s3 } = steps;
+    let mode: 'step1' | 'step2' | 'step3' = 'step1';
+
+    const setLine = (el: SVGLineElement, a: number, b: number) => {
+      el.setAttribute('y1', String(top(a)));
+      el.setAttribute('y2', String(top(a + b * MAX.radio)));
+    };
+
+    function update() {
+      const F = Number(slider.value);
+      const held = mode === 'step3';
+      eras.forEach((e, i) => pts[i].classList.toggle('is-far', held && Math.abs(e[1] - F) > BAND));
+      // The lines: radio's line at this step (for an era of average teen exposure, and at step 3 for the fan base
+      // held), and from step 2 on, step 1's line dashed beside it.
+      const fit = $<SVGLineElement>('[data-fit]'), ghost = $<SVGLineElement>('[data-ghost]');
+      if (mode === 'step1') setLine(fit, s1.intercept, s1.radio);
+      else if (mode === 'step2') setLine(fit, s2.intercept + s2.teen * means.teen, s2.radio);
+      else setLine(fit, s3.intercept + s3.teen * means.teen + s3.fan * F, s3.radio);
+      setLine(ghost, s1.intercept, s1.radio);
+      ghost.style.display = mode === 'step1' ? 'none' : '';
+      $<HTMLElement>('[data-hold]').hidden = !held;
+      $('[data-out=f]').textContent = F.toFixed(1);
+      slider.setAttribute('aria-valuetext', `fan base ${F.toFixed(1)}`);
+      root.querySelectorAll<HTMLElement>('[data-col]').forEach((c) => c.classList.toggle('is-hl', c.dataset.col === mode));
+      const near = eras.filter((e) => Math.abs(e[1] - F) <= BAND).length;
+      const dots = near === 0 ? 'no era is within half a point of that' : near === 1 ? 'one era is within half a point of that (the dark dot)' : `${say(near)} eras are within half a point of that (the dark dots)`;
+      $('[data-note]').textContent = {
+        step1: `Step 1, radio alone: each extra $100k of radio comes with ${s1.radio.toFixed(2)} million more weekly streams, and R² is ${s1.r2.toFixed(2)}, so the line explains ${pct(s1.r2)} of the spread. Taken at face value, $5 million of radio would be ${Math.round(s1.radio * 50)} million more weekly streams.`,
+        step2: `Step 2, add teen exposure: radio's slope shrinks to ${s2.radio.toFixed(2)}. Among artist eras with the same teen exposure, each extra $100k of radio comes with about ${Math.round(s2.radio)} million more weekly streams, and R² climbs to ${s2.r2.toFixed(2)}. The solid line is radio for an era of average teen exposure; the dashed line is step 1.`,
+        step3: `Step 3, add fan base: radio's slope shrinks again, to ${s3.radio.toFixed(2)}, and R² climbs to ${s3.r2.toFixed(2)}. Among artist eras with the same teen exposure and fan base, each extra $100k of radio comes with about 1.1 million more weekly streams, the 1.1 the data were built with. The solid line is radio for a fan base of ${F.toFixed(1)}, and ${dots}. Move the slider, and the line moves up and down with the same slope. The dashed line is step 1.`,
+      }[mode];
+    }
+    // The screen-reader line follows the step and where the slider stops, so it does not read out every move.
+    const announce = () => { live.textContent = $('[data-note]').textContent ?? ''; };
+
+    pills.forEach((b) => b.addEventListener('click', () => {
+      mode = b.dataset.step as typeof mode;
+      pills.forEach((p) => p.setAttribute('aria-pressed', String(p === b)));
+      update();
+      announce();
+    }));
+    slider.addEventListener('input', update);
+    slider.addEventListener('change', announce);
+
+    // Point at a dot, or tap it, to see the era. On a touch screen the era stays until the next tap, and another tap in
+    // the same spot steps to the next era there.
+    const hover = $<HTMLElement>('[data-hover]');
+    const idle = 'Point at a dot, or tap it, to see the era.';
+    let on: HTMLElement | null = null;
+    let last = { x: -99, y: -99, list: [] as number[], at: 0 };
+    const pick = (e: PointerEvent) => {
+      const reach = (e.pointerType === 'touch' ? 22 : 14) ** 2;
+      const near = pts
+        .map((p, i) => { const r = p.getBoundingClientRect(); const dx = r.left + r.width / 2 - e.clientX, dy = r.top + r.height / 2 - e.clientY; return { i, d: dx * dx + dy * dy }; })
+        .filter((c) => c.d < reach)
+        .sort((a, b) => a.d - b.d)
+        .map((c) => c.i);
+      const again = e.type === 'pointerdown' && last.list.length > 1 && Math.hypot(e.clientX - last.x, e.clientY - last.y) < 12;
+      const list = again ? last.list : near;
+      const at = again ? (last.at + 1) % list.length : 0;
+      if (e.type === 'pointerdown') last = again ? { ...last, at } : { x: e.clientX, y: e.clientY, list, at };
+      on?.classList.remove('is-on');
+      if (!list.length) { on = null; hover.textContent = idle; return; }
+      const best = list[at];
+      on = pts[best]; on.classList.add('is-on');
+      const [st, fan, teen, radio] = eras[best];
+      const more = e.type === 'pointerdown' && list.length > 1 ? ` (${say(at + 1)} of ${say(list.length)} eras here; tap again for the next)` : '';
+      hover.textContent = `Era ${best + 1}: ${st.toFixed(1)} million weekly streams, fan base ${fan.toFixed(1)}, teen exposure ${teen.toFixed(1)}, radio ${money(radio)}${more}`;
+    };
+    plot.addEventListener('pointermove', (e) => { if (e.pointerType !== 'touch') pick(e); });
+    plot.addEventListener('pointerdown', pick);
+    plot.addEventListener('pointerleave', (e) => { if (e.pointerType === 'touch') return; on?.classList.remove('is-on'); on = null; hover.textContent = idle; });
+    update();
+  });
+</script>

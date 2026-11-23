@@ -1,0 +1,312 @@
+---
+// arizvi.com/404.html: what GitHub Pages serves for any address that is not on the site.
+// The scheme reversed, white on black, with Ruffle (Ali, 10 Nov 2026: "It looks like you lost your way. Ruffle says hi.").
+// The tagline is now Ali's 11 Nov line ("Now that you're here, toss the ball for him"), without the contraction.
+// public/media/ruffle.jpg has its edges faded to black in the file, so the photo has no frame on the black page.
+// Under it, a game of fetch (Ali, 11 Nov 2026: "can we build a tiny game on my 404 page? like a throw the boll for dog
+// game and the dog runs to catch it"): tap where the ball should land, and Ruffle (long ears, bow tie) runs for it,
+// catches it in the air if Ruffle gets there first, and brings it back. Enter or Space throws it too. Without JavaScript
+// the game stays hidden; in print it is left out. The tail is a blur while Ruffle is on the move and still when Ruffle
+// stops (Ali: "Make the tail look like a blur after you tossed the wall to make it look like a tail wag", then "The tail
+// needs to stop when the pup stops, blkur when pup in motion"), and the ears flop ("Can you also make the ears flop
+// around?").
+import Base from '../layouts/Base.astro';
+---
+<Base title="Page not found" description="This page is not on arizvi.com." noindex invert>
+  <section class="lost">
+    <div class="lost-text">
+      <h1>It looks like you lost your way.</h1>
+      <p class="tagline">Now that you are here, toss the ball for him.</p>
+      <p><a href="/">Back to the home page</a></p>
+    </div>
+    <img class="lost-photo" src="/media/ruffle.jpg" alt="Ruffle, a golden-haired dog in a red checked bow tie, sitting and looking at the camera." width="640" height="640" />
+    <div class="fetch" hidden>
+      <p class="fetch-how">Tap where you want the ball to land.</p>
+      <canvas class="fetch-field" tabindex="0" role="button" aria-label="Throw the ball for Ruffle"></canvas>
+      <p class="fetch-score label" aria-live="polite"><span class="fetch-count">Fetches: 0</span><span class="fetch-air">Caught in the air: 0</span><span class="fetch-note"></span></p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .fetch { grid-column: 1 / -1; margin-top: 2.5rem; }
+  .fetch-how { margin: 0 0 0.75rem; }
+  .fetch-field { display: block; width: 100%; height: 220px; cursor: pointer; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+  .fetch-field:focus-visible { outline: 2px solid #fff; outline-offset: 4px; }
+  .fetch-score { margin-top: 0.9rem; display: flex; flex-wrap: wrap; gap: 6px 28px; min-height: 1.4em; }
+  @media (max-width: 767px) { .fetch { margin-top: 2rem; } .fetch-field { height: 200px; } .fetch-score { min-height: 3.6em; } }
+  @media print { .fetch { display: none !important; } }
+</style>
+
+<script>
+  const wrap = document.querySelector<HTMLElement>('.fetch');
+  const cv = document.querySelector<HTMLCanvasElement>('.fetch-field');
+  const countEl = document.querySelector<HTMLElement>('.fetch-count');
+  const airEl = document.querySelector<HTMLElement>('.fetch-air');
+  const noteEl = document.querySelector<HTMLElement>('.fetch-note');
+  const ctx = cv?.getContext('2d');
+
+  if (wrap && cv && ctx && countEl && airEl && noteEl) {
+    wrap.hidden = false;
+    const calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const G = 1800; // gravity, px/s²
+    let W = 0, H = 0, s = 1, ground = 0;
+    let last = 0, raf = 0;
+    // blur: how much the tail is a blur (on the move). lift: how high it is carried (from the throw until home).
+    // calmFor: seconds Ruffle has been home and still.
+    let blur = 0, lift = 0, calmFor = 0, wagPhase = 0;
+    let fetches = 0, inAir = 0;
+
+    // Ruffle: x is the middle of the body on the ground; dir 1 faces right. The ball: rest (in front of Ruffle), air (first
+    // flight), ground (after it first lands: bouncing and rolling), mouth (on the way back).
+    const dog = { x: 0, dir: 1, state: 'idle', running: false, phase: 0, hop: 0, vh: 0, air: false, wait: 0 };
+    // The ears: two damped springs, kicked by Ruffle's starts, stops, turns, leaps and landings, and bounced by the run.
+    // a is the swing from where an ear hangs at rest (EAR_REST); more swings it back and up. The far ear is looser,
+    // and out of step with the near one.
+    const EAR_REST = 0.18;
+    const ears = [{ a: 0, w: 0, k: 240, c: 7, lag: 0 }, { a: 0, w: 0, k: 190, c: 5.5, lag: 1.3 }];
+    let lastVf = 0, lastVh = 0;
+    const ball = { x: 0, y: 0, vx: 0, vy: 0, mode: 'rest', spin: 0, landX: 0 };
+    const r = () => 7 * s;
+    const home = () => 70 * s;
+    const restX = () => home() + 68 * s;
+    const mouthX = () => dog.x + 54 * s * dog.dir;
+    const mouthY = () => ground - 48 * s - dog.hop;
+    const speed = () => Math.max(260, W * 0.46);
+
+    function size() {
+      const box = cv!.getBoundingClientRect();
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      W = box.width; H = box.height;
+      cv!.width = Math.round(W * dpr); cv!.height = Math.round(H * dpr);
+      ctx!.setTransform(dpr, 0, 0, dpr, 0, 0);
+      s = Math.max(0.72, Math.min(1.15, W / 900));
+      ground = H - 22;
+      if (dog.state === 'idle') { dog.x = home(); dog.dir = 1; }
+      if (ball.mode === 'rest') { ball.x = restX(); ball.y = ground - r(); }
+      ball.x = Math.min(ball.x, W - r());
+      dog.x = Math.min(dog.x, W - 40 * s);
+    }
+
+    function say(note: string) {
+      countEl!.textContent = `Fetches: ${fetches}`;
+      airEl!.textContent = `Caught in the air: ${inAir}`;
+      noteEl!.textContent = note;
+    }
+
+    // A throw lands where you tapped, and goes as high as you tapped.
+    function throwTo(tx: number, ty: number) {
+      if (dog.state !== 'idle' || ball.mode !== 'rest') return;
+      const x0 = ball.x, y0 = ball.y;
+      tx = Math.max(x0 + 60 * s, Math.min(W - r() - 4, tx));
+      const apex = Math.max(14, Math.min(ground - 60 * s, ty));
+      const vy0 = -Math.sqrt(2 * G * Math.max(30, y0 - apex));
+      const T = -vy0 / G + Math.sqrt(2 * Math.max(0, ground - r() - apex) / G);
+      ball.vx = (tx - x0) / T; ball.vy = vy0; ball.mode = 'air'; ball.landX = tx;
+      dog.state = 'chase'; dog.air = false; dog.wait = 0.12; // a beat before Ruffle sets off
+      say('');
+      wake();
+    }
+
+    function step(dt: number) {
+      const x0 = dog.x, h0 = dog.hop, dir0 = dog.dir;
+      // The ball.
+      if (ball.mode === 'air' || ball.mode === 'ground') {
+        ball.vy += G * dt;
+        ball.x += ball.vx * dt; ball.y += ball.vy * dt;
+        ball.spin += (ball.vx * dt) / r();
+        if (ball.x > W - r()) { ball.x = W - r(); ball.vx = -Math.abs(ball.vx) * 0.5; }
+        if (ball.x < r()) { ball.x = r(); ball.vx = Math.abs(ball.vx) * 0.5; }
+        if (ball.y >= ground - r()) {
+          ball.y = ground - r(); ball.mode = 'ground';
+          if (ball.vy > 140) { ball.vy = -ball.vy * 0.42; ball.vx *= 0.82; }
+          else { ball.vy = 0; ball.vx *= Math.max(0, 1 - 3 * dt); if (Math.abs(ball.vx) < 4) ball.vx = 0; }
+        }
+      }
+      // Ruffle.
+      dog.running = false;
+      const mouthRest = ground - 48 * s;
+      let leaping = false;
+      if (dog.state === 'chase' && dog.wait > 0) dog.wait -= dt;
+      else if (dog.state === 'chase') {
+        // While the ball is in its first flight, Ruffle runs for where it will land; after that, for the ball.
+        const aim = ball.mode === 'air' ? ball.landX : ball.x;
+        if (Math.abs(aim - dog.x) > 8 * s) dog.dir = aim > dog.x ? 1 : -1;
+        const goal = aim - 54 * s * dog.dir;
+        const d = goal - dog.x, move = speed() * dt;
+        if (Math.abs(d) > move) { dog.x += Math.sign(d) * move; dog.running = true; } else dog.x = goal;
+        // A ball coming down within reach: Ruffle leaps to meet it, and catches it in the air.
+        const dx = Math.abs(ball.x - mouthX());
+        if (ball.mode === 'air' && ball.vy > 0 && dx < 34 * s && ball.y > mouthRest - 95 * s && ball.y < mouthRest + 6 * s) {
+          leaping = true;
+          dog.hop += (Math.max(0, mouthRest - ball.y) - dog.hop) * Math.min(1, dt * 22);
+          if (Math.abs(mouthY() - ball.y) < 12 * s && dx < 28 * s) { dog.air = true; ball.mode = 'mouth'; dog.state = 'carry'; }
+        } else if (ball.mode === 'ground' && ball.y > ground - r() - 40 * s && Math.abs(ball.x - mouthX()) < 16 * s) {
+          // Otherwise Ruffle picks it up off the ground, or off a bounce.
+          dog.air = false; ball.mode = 'mouth'; dog.state = 'carry';
+        }
+      } else if (dog.state === 'carry' && dog.hop === 0) {
+        // Back home with the ball, once Ruffle has landed.
+        dog.dir = -1;
+        const d = home() - dog.x, move = speed() * 0.8 * dt;
+        if (Math.abs(d) > move) { dog.x += Math.sign(d) * move; dog.running = true; }
+        else {
+          dog.x = home(); dog.dir = 1; dog.state = 'idle';
+          ball.mode = 'rest'; ball.x = restX(); ball.y = ground - r(); ball.vx = ball.vy = 0;
+          fetches++; if (dog.air) inAir++;
+          say(dog.air ? 'Caught it in the air!' : 'Good dog!');
+        }
+      }
+      // Out of a leap, Ruffle falls back to the ground.
+      if (leaping) { if (dt > 0) dog.vh = (dog.hop - h0) / dt; }
+      else if (dog.hop > 0) { dog.vh -= G * dt; dog.hop = Math.max(0, dog.hop + dog.vh * dt); }
+      if (dog.hop === 0) dog.vh = 0;
+      if (dt > 0) flop(dt, ((dog.x - x0) / dt) * dog.dir, dog.vh, dog.dir !== dir0);
+      if (dog.running) dog.phase += dt * 16;
+      if (ball.mode === 'mouth') { ball.x = mouthX() + 5 * s * dog.dir; ball.y = mouthY() + 3 * s; }
+      // The tail: a blur while Ruffle is on the move (running or in the air), still the moment Ruffle stops.
+      const moving = dog.running || dog.hop > 0;
+      blur = moving ? Math.min(1, blur + dt * 8) : Math.max(0, blur - dt * 8);
+      lift = dog.state !== 'idle' ? Math.min(1, lift + dt * 4) : Math.max(0, lift - dt * 4);
+      calmFor = dog.state === 'idle' && ball.mode === 'rest' && dog.hop === 0 ? calmFor + dt : 0;
+      wagPhase += dt * 40;
+    }
+
+    function flop(dt: number, vf: number, vh: number, turned: boolean) {
+      const kick = (v: number) => Math.max(-6, Math.min(6, v));
+      const dvf = vf - lastVf, dvh = vh - lastVh;
+      lastVf = vf; lastVh = vh;
+      const gain = calm ? 0.35 : 1;
+      for (const e of ears) {
+        // Turning round: the ear keeps its place in the world, so it now swings through to the new back of the head.
+        if (turned) { e.a = -2 * EAR_REST - e.a; e.w = -e.w; }
+        // Setting off swings it back and stopping swings it forward; a leap presses it down, falling lifts it, and a
+        // landing flops it down again.
+        e.w += gain * (kick((9 * dvf) / speed()) - kick((0.006 * dvh) / s));
+        // On the run it streams back and bounces with each stride.
+        const target = dog.running ? 0.35 : 0;
+        const stride = dog.running ? gain * 40 * Math.sin(dog.phase + e.lag) : 0;
+        e.w += (-e.k * (e.a - target) - e.c * e.w + stride) * dt;
+        e.a += e.w * dt;
+        // It hangs from the head, so it cannot swing into the face or over the top.
+        if (EAR_REST + e.a < -0.35) { e.a = -0.35 - EAR_REST; e.w = Math.max(0, e.w); }
+        if (EAR_REST + e.a > 1.9) { e.a = 1.9 - EAR_REST; e.w = Math.min(0, e.w); }
+      }
+    }
+
+    function ellipse(x: number, y: number, rx: number, ry: number, rot = 0) {
+      ctx!.beginPath(); ctx!.ellipse(x, y, rx, ry, rot, 0, Math.PI * 2); ctx!.fill();
+    }
+
+    // Ruffle in profile, white on the black page: a spaniel's long ears, a feathered tail, and the bow tie.
+    function drawDog() {
+      const c = ctx!;
+      c.save();
+      c.translate(dog.x, ground - dog.hop);
+      c.scale(dog.dir * s, s);
+      c.fillStyle = '#fff';
+      // Legs: they swing on the run, and tuck for a leap.
+      const legs: [number, number][] = [[-24, 0], [-14, Math.PI], [14, Math.PI], [24, 0]];
+      for (const [hx, off] of legs) {
+        let a = dog.running ? Math.sin(dog.phase + off) * 0.6 : 0;
+        if (dog.hop > 4 * s) a = hx < 0 ? 0.7 : -0.7;
+        c.save(); c.translate(hx, -26); c.rotate(a);
+        c.beginPath(); if (c.roundRect) c.roundRect(-3.2, 0, 6.4, 26, 3); else c.rect(-3.2, 0, 6.4, 26); c.fill();
+        c.restore();
+      }
+      // Tail. On the move it wags too fast to see, so it is drawn as a blur: its whole swing, faint, with the tail
+      // itself moving through it. When Ruffle stops, it stops. From the throw until Ruffle is home it is carried high.
+      // Reduced motion keeps the tail itself still; the blur still shows the wag.
+      const base = -0.5 + 0.85 * lift, swing = 0.6;
+      const tail = (a: number) => { c.save(); c.translate(-32, -36); c.rotate(a); ellipse(-10, 0, 12, 4.5); c.restore(); };
+      if (blur > 0) {
+        c.globalAlpha = 0.14 * blur;
+        for (let k = 0; k < 24; k++) tail(base + swing * Math.sin((k / 24) * Math.PI * 2));
+        c.globalAlpha = 1 - 0.5 * blur;
+      }
+      tail(base + (calm ? 0 : Math.sin(wagPhase) * swing * blur));
+      c.globalAlpha = 1;
+      // The far ear, darker, behind the head; it shows when it swings out of step with the near one.
+      const ear = (x: number, y: number, a: number, shade: string) => {
+        c.save(); c.translate(x, y); c.rotate(a); c.fillStyle = shade;
+        c.beginPath(); c.moveTo(-4, 0);
+        c.bezierCurveTo(-11, 8, -10, 26, -3, 30); c.bezierCurveTo(3, 33, 9, 27, 7, 16); c.bezierCurveTo(6, 8, 4, 1, -4, 0);
+        c.fill(); c.restore();
+      };
+      ear(34, -63, EAR_REST + ears[1].a, '#8a8a8a');
+      c.fillStyle = '#fff';
+      // Body, chest and head.
+      ellipse(0, -34, 35, 14);
+      ellipse(25, -42, 12, 11, -0.6);
+      ellipse(35, -56, 13, 12.5);
+      ellipse(47, -51, 11, 7);
+      // Nose and eye.
+      c.fillStyle = '#000';
+      ellipse(57, -52, 2.8, 2.6);
+      ellipse(39, -60, 2.1, 2.1);
+      // The near ear, a shade darker than the head so it reads as an ear.
+      ear(31, -62, EAR_REST + ears[0].a, '#bdbdbd');
+      // The bow tie.
+      c.fillStyle = '#000';
+      c.beginPath(); c.moveTo(16, -43); c.lineTo(16, -33); c.lineTo(22, -38); c.closePath(); c.fill();
+      c.beginPath(); c.moveTo(28, -43); c.lineTo(28, -33); c.lineTo(22, -38); c.closePath(); c.fill();
+      ellipse(22, -38, 2, 2);
+      c.restore();
+    }
+
+    function drawBall() {
+      const c = ctx!, rr = r();
+      if (ball.mode === 'air' || ball.mode === 'ground') {
+        const k = Math.max(0.2, 1 - (ground - rr - ball.y) / 220);
+        c.fillStyle = `rgba(255, 255, 255, ${0.28 * k})`;
+        ellipse(ball.x, ground + 1, rr * 1.5 * k + 2, 2.4);
+      }
+      c.save(); c.translate(ball.x, ball.y); c.rotate(ball.spin);
+      c.fillStyle = '#fff'; ellipse(0, 0, rr, rr);
+      c.strokeStyle = '#000'; c.lineWidth = 1.3;
+      c.beginPath(); c.arc(-rr * 0.95, 0, rr * 0.75, -0.95, 0.95); c.stroke();
+      c.beginPath(); c.arc(rr * 0.95, 0, rr * 0.75, Math.PI - 0.95, Math.PI + 0.95); c.stroke();
+      c.restore();
+    }
+
+    function draw() {
+      const c = ctx!;
+      c.clearRect(0, 0, W, H);
+      c.fillStyle = '#fff';
+      c.fillRect(0, ground, W, 2);
+      drawDog(); drawBall();
+    }
+
+    function frame(now: number) {
+      const dt = last ? Math.min(0.033, (now - last) / 1000) : 0;
+      last = now;
+      step(dt); draw();
+      // Once nothing moves, the loop sleeps until the next throw (or a resize).
+      if (dog.state === 'idle' && ball.mode === 'rest' && dog.hop === 0 && calmFor > 2) { raf = 0; return; }
+      raf = requestAnimationFrame(frame);
+    }
+
+    function wake() {
+      if (!raf && !document.hidden) { last = 0; raf = requestAnimationFrame(frame); }
+    }
+
+    cv.addEventListener('click', (e) => {
+      const box = cv.getBoundingClientRect();
+      throwTo(e.clientX - box.left, e.clientY - box.top);
+    });
+    cv.addEventListener('keydown', (e) => {
+      if (e.key !== 'Enter' && e.key !== ' ') return;
+      e.preventDefault();
+      const x0 = restX() + 60 * s;
+      throwTo(x0 + Math.random() * Math.max(0, W - x0 - 20), 20 + Math.random() * (ground - 110 * s));
+    });
+    window.addEventListener('resize', () => { size(); wake(); });
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) { cancelAnimationFrame(raf); raf = 0; }
+      else wake();
+    });
+    size();
+    say('');
+    wake();
+  }
+</script>

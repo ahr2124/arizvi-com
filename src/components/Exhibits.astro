@@ -1,0 +1,38 @@
+---
+import { getCollection } from 'astro:content';
+import Cover from './Cover.astro';
+// all: every entry with a write-up instead of the featured 3. lead: the grid is the first thing on the page, so its
+// first cover is fetched straight away instead of waiting to scroll into view. cards: each path as a card the way
+// /projects shows them, its picture blurred under a sheet of white, so the colour shows through (home's Research output).
+// Each card opens its write-up under /projects (the Work page is gone: Ali, 11 Nov 2026).
+interface Props { all?: boolean; lead?: boolean; cards?: boolean }
+const { all = false, lead = false, cards = false } = Astro.props;
+const items = (await getCollection('work', ({ data, body }) => (all ? !!body?.trim() : data.featured)))
+  .sort((a, b) => a.data.order - b.data.order);
+const track = { 'research-to-company': 'Research → Company', research: 'Research', industry: 'Industry' };
+---
+{cards ? (
+<div class="cards three">
+  {items.map((e) => (
+    <a class:list={['card', { 'card-fallback': !e.data.image }]} href={`/projects/${e.id}/`}>
+      <div class="card-bg" style={`background-image:url('${e.data.image ?? '/media/mark.svg'}')`} aria-hidden="true"></div>
+      <div class="card-body">
+        <p class="label">{e.data.years} · {track[e.data.track]}</p>
+        <h3>{e.data.title}</h3>
+        <p class="card-summary">{e.data.summary}</p>
+      </div>
+    </a>
+  ))}
+</div>
+) : (
+<div class="exhibits">
+  {items.map((e, i) => (
+    <a class="item" href={`/projects/${e.id}/`}>
+      <Cover entry={e} eager={lead && i === 0} />
+      <p class="label">{e.data.years} · {track[e.data.track]}</p>
+      <h3>{e.data.title}</h3>
+      <p>{e.data.summary}</p>
+    </a>
+  ))}
+</div>
+)}
