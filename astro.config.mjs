@@ -22,7 +22,8 @@ export default defineConfig({
     // addresses land on /teaching/. To bring one back, rename its folder and take its lines out, and only at his word.
     // The Bucknell class itself is live at /meowdle (Ali, 22 Nov 2026: "ok meowdle can go live"), so /bucknell and the
     // ANOP 102 pages land there; Meowdle is ANOP 102.
-    '/tulane/': '/teaching/',
+    // /tulane/ is the class page for the Tulane campus visit (public/tulane/index.html, live since 24 Nov 2026), so it
+    // has no redirect here; the old Tulane pages stay in src/pages/_tulane, out of the build.
     '/bucknell/': '/meowdle/',
     '/bucknell/anop-102/': '/meowdle/',
     '/bucknell/anop-102/pack/': '/meowdle/',

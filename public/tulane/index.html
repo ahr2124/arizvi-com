@@ -1,0 +1,702 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>A/B testing for business goals | Ali Rizvi</title>
+<meta name="description" content="The class page for A/B testing for business goals: a donation page, two questions, a vote, the room's data, and a follow-up test to design.">
+<link rel="canonical" href="https://arizvi.com/tulane/">
+<meta name="theme-color" content="#ffffff">
+<meta name="color-scheme" content="light">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="preload" href="/fonts/CooperHewitt-Semibold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/CooperHewitt-Book.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+/* One file, like /ablookup. The class page for the Tulane campus visit: five buttons, one for each time the room
+   answers on a phone. The look follows VOICE.md: one typeface, black on white, 2px rules above sections and 1px
+   between rows, and Tulane's highlighter (#A4D9C6, pale #E3F3ED), always behind black text. The data colours are
+   the slides': Tulane green for page A and Tulane blue for page B. Answers go to a Google Sheet through its Apps
+   Script web app (ENDPOINT, near the end). */
+@font-face { font-family: 'Cooper Hewitt'; src: url('/fonts/CooperHewitt-Book.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Cooper Hewitt'; src: url('/fonts/CooperHewitt-Medium.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Cooper Hewitt'; src: url('/fonts/CooperHewitt-Semibold.woff2') format('woff2'); font-weight: 600; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Cooper Hewitt'; src: url('/fonts/CooperHewitt-Bold.woff2') format('woff2'); font-weight: 700; font-style: normal; font-display: swap; }
+:root {
+  --font: 'Cooper Hewitt', Helvetica, Arial, sans-serif;
+  --max: 1100px;
+  --pad: 20px;
+  --hl: #A4D9C6;
+  --hl-soft: #E3F3ED;
+  --a: #285C4D;
+  --b: #71C5E8;
+}
+@media (min-width: 768px) { :root { --pad: 48px; } }
+* { box-sizing: border-box; }
+html { background: #fff; color: #000; font-family: var(--font); font-weight: 400; font-size: 18px; line-height: 1.5; font-variant-numeric: tabular-nums; -webkit-font-smoothing: antialiased; -webkit-text-size-adjust: 100%; }
+body { margin: 0; }
+a { color: inherit; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.15em; }
+button, input, select, textarea { font-family: var(--font); color: #000; }
+:focus-visible { outline: 2px solid #000; outline-offset: 3px; }
+[hidden] { display: none !important; }
+.container { max-width: var(--max); margin: 0 auto; padding-left: var(--pad); padding-right: var(--pad); }
+.label { font-weight: 500; font-size: 13px; text-transform: uppercase; letter-spacing: 0.14em; line-height: 1.4; margin: 0; }
+.muted { color: rgba(0, 0, 0, 0.6); }
+.small { font-size: 15px; }
+.code { margin: 1.75rem 0 0; }
+.code a { color: inherit; }
+/* Header: the site's mark and name */
+.site-header { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 20px 0; border-bottom: 4px solid var(--hl); }
+.brand { display: inline-flex; align-items: center; gap: 12px; }
+.brand .mark-link { display: block; line-height: 0; }
+.brand .mark { width: 28px; height: 28px; display: block; }
+.wordmark { font-weight: 700; font-size: 15px; text-transform: uppercase; letter-spacing: 0.14em; line-height: 28px; text-decoration: none; position: relative; top: 1px; }
+/* Opening */
+.intro { padding-top: clamp(1.75rem, 6vw, 3.5rem); }
+h1 { font-weight: 600; font-size: clamp(2rem, 7vw, 3.6rem); letter-spacing: -0.02em; line-height: 1.05; margin: 0; max-width: 16ch; }
+mark { background: linear-gradient(transparent 56%, var(--hl) 56%); color: inherit; padding: 0 0.06em; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+.lede { margin: 1rem 0 0; max-width: 46ch; }
+/* The five buttons */
+.tiles { list-style: none; margin: 1.75rem 0 0; padding: 0; display: grid; grid-template-columns: 1fr; gap: 12px; }
+@media (min-width: 640px) { .tiles { grid-template-columns: 1fr 1fr; gap: 16px; } }
+@media (min-width: 1024px) { .tiles { grid-template-columns: 1fr 1fr 1fr; } }
+.tile { display: flex; align-items: center; gap: 16px; width: 100%; min-height: 84px; padding: 14px 16px; border: 2px solid #000; background: #fff; text-decoration: none; }
+.tile:hover { background: var(--hl-soft); }
+.tile .num { flex: none; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; background: var(--hl); font-weight: 600; font-size: 22px; }
+.tile .what { display: flex; flex-direction: column; min-width: 0; }
+.tile .name { font-weight: 600; font-size: 21px; line-height: 1.2; }
+.tile .sub { font-size: 15px; color: rgba(0, 0, 0, 0.6); }
+.tile .done { margin-left: auto; flex: none; font-weight: 500; font-size: 13px; text-transform: uppercase; letter-spacing: 0.14em; background: var(--hl); padding: 4px 10px; border-radius: 999px; }
+/* One activity at a time */
+.view { padding-top: 1rem; }
+.back { display: inline-block; padding: 10px 0; font-size: 15px; }
+.view h2 { font-weight: 600; font-size: clamp(1.7rem, 5vw, 2.4rem); line-height: 1.1; margin: 0.4rem 0 0; border-top: 2px solid #000; padding-top: 12px; }
+.question { font-size: clamp(1.25rem, 4.2vw, 1.6rem); line-height: 1.3; margin: 1rem 0 0; max-width: 30ch; }
+.say { margin: 0.75rem 0 0; max-width: 46ch; }
+.choices { display: flex; flex-direction: column; gap: 10px; margin-top: 1.25rem; max-width: 28rem; }
+.choice { font-weight: 600; font-size: 20px; line-height: 1.2; padding: 16px 18px; border: 2px solid #000; background: #fff; text-align: left; cursor: pointer; }
+.choice:hover:enabled { background: var(--hl-soft); }
+.choice[aria-pressed='true'] { background: var(--hl); }
+.choice:disabled { cursor: default; }
+.choice:disabled:not([aria-pressed='true']) { color: rgba(0, 0, 0, 0.45); border-color: rgba(0, 0, 0, 0.3); }
+.thanks { margin: 1.25rem 0 0; font-size: 20px; font-weight: 600; }
+.error { margin: 1rem 0 0; font-weight: 600; }
+.linkish { background: none; border: 0; padding: 10px 0; margin: 0.5rem 0 0; font-size: 15px; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.15em; cursor: pointer; }
+/* The room's answers, as bars */
+.bars { margin-top: 1.25rem; max-width: 34rem; border-top: 1px solid #000; padding-top: 0.75rem; }
+.bar { display: grid; grid-template-columns: 6.5rem 1fr 2.5rem; align-items: center; gap: 10px; margin: 8px 0; }
+.bar .track { height: 22px; }
+.bars.long .bar { grid-template-columns: 1fr 2.5rem; }
+.round { font-weight: 600; font-size: 13px; text-transform: uppercase; letter-spacing: 0.14em; margin: 1.75rem 0 0; }
+.bars.long .label + .bar { margin-top: 6px; }
+.bars.long .bar + .label { margin-top: 18px; }
+.bars.long .bar > span:first-child { grid-column: 1 / -1; }
+.bar .fill { height: 22px; background: var(--hl); min-width: 2px; }
+.bar .n { text-align: right; font-weight: 600; }
+/* The donation box: the same box for every phone, with one change, the gift that comes chosen */
+.donate { margin-top: 1.25rem; border: 2px solid #000; padding: 18px; max-width: 28rem; }
+.donate h3 { margin: 4px 0 14px; font-weight: 600; font-size: 24px; line-height: 1.15; }
+.seg { display: grid; grid-template-columns: 1fr 1fr; border: 2px solid #000; margin-bottom: 12px; }
+.seg button { font-weight: 600; font-size: 18px; padding: 12px; background: #fff; border: 0; cursor: pointer; }
+.seg button + button { border-left: 2px solid #000; }
+.seg button[aria-pressed='true'] { background: var(--hl); }
+.amounts { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.amt { font-weight: 600; font-size: 20px; line-height: 1; padding: 14px; border: 2px solid #000; background: #fff; cursor: pointer; }
+.amt[aria-pressed='true'] { background: var(--hl); }
+.other { display: flex; align-items: center; gap: 8px; margin-top: 10px; font-weight: 600; font-size: 20px; }
+.other input { width: 8rem; font-size: 20px; font-weight: 600; padding: 10px; border: 2px solid #000; border-radius: 0; }
+.go { display: block; width: 100%; margin-top: 14px; font-weight: 600; font-size: 20px; line-height: 1.2; padding: 16px; background: #000; color: #fff; border: 0; cursor: pointer; }
+.go:disabled { background: rgba(0, 0, 0, 0.4); cursor: default; }
+.notnow { background: none; border: 0; padding: 10px 0 0; font-size: 16px; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.15em; cursor: pointer; }
+/* The room's data */
+.datat { width: 100%; max-width: 40rem; border-collapse: collapse; margin-top: 1rem; }
+.datat th, .datat td { text-align: right; padding: 10px 0 10px 12px; border-top: 1px solid #000; }
+.datat th:first-child, .datat td:first-child { text-align: left; padding-left: 0; }
+.datat thead th { border-top: 0; font-weight: 500; font-size: 13px; text-transform: uppercase; letter-spacing: 0.14em; }
+.datat tbody td { font-weight: 600; }
+.datat tbody td:first-child { font-weight: 400; }
+.datat tr.key td { background: var(--hl-soft); }
+.chip { display: inline-block; width: 12px; height: 12px; margin-right: 6px; vertical-align: -1px; }
+.chip.a { background: var(--a); }
+.chip.b { background: var(--b); }
+.verdict { margin: 1.25rem 0 0; max-width: 40rem; font-size: 19px; }
+.stamp { margin: 0.75rem 0 0; }
+/* Button 5: the pair exercise on the farm's follow-up test */
+.cardt { width: 100%; max-width: 30rem; border-collapse: collapse; margin-top: 1rem; }
+.cardt th, .cardt td { text-align: right; padding: 8px 0 8px 12px; border-top: 1px solid #000; }
+.cardt th:first-child, .cardt td:first-child { text-align: left; padding-left: 0; }
+.cardt thead th { border-top: 0; font-weight: 500; font-size: 13px; text-transform: uppercase; letter-spacing: 0.14em; }
+.cardt.four thead th { font-size: 12px; letter-spacing: 0.08em; line-height: 1.3; vertical-align: bottom; }
+.cardt.four tbody td { font-weight: 600; vertical-align: top; }
+.cardt.four tbody td:first-child { font-weight: 400; }
+.cardt.four .gift { display: block; font-size: 15px; color: rgba(0, 0, 0, 0.6); }
+@media (min-width: 360px) { .cardt.four .gift { white-space: nowrap; } }
+.cardt.four tr.key td { background: var(--hl-soft); }
+.pick textarea { font-size: 18px; line-height: 1.4; padding: 10px; border: 2px solid #000; border-radius: 0; background: #fff; width: 100%; resize: vertical; }
+.work { margin-top: 1.5rem; max-width: 30rem; border-top: 2px solid #000; padding-top: 0.5rem; }
+.pick { display: grid; grid-template-columns: minmax(0, 1fr); gap: 6px; padding: 12px 0; border-bottom: 1px solid #000; }
+.pick select { font-size: 18px; font-weight: 600; padding: 10px; border: 2px solid #000; border-radius: 0; background: #fff; }
+.pick input { font-size: 20px; font-weight: 600; padding: 8px 10px; border: 2px solid #000; border-radius: 0; max-width: 10rem; }
+a.go.sheet { max-width: 30rem; margin-top: 0.75rem; text-align: center; text-decoration: none; box-sizing: border-box; }
+.pick .fb { font-size: 15px; margin: 0; }
+.pick .boxes { margin: 0; line-height: 1.45; }
+.ok { font-weight: 600; }
+.ok::before { content: '\2713\00a0'; }
+.send { margin-top: 12px; font-weight: 600; font-size: 20px; padding: 14px 28px; background: #000; color: #fff; border: 0; cursor: pointer; }
+.send:disabled { background: rgba(0, 0, 0, 0.4); cursor: default; }
+/* Footer: the site's black band */
+.site-footer { background: #000; color: #fff; margin-top: clamp(3.5rem, 8vw, 6rem); padding: 40px 0 32px; font-size: 15px; }
+.site-footer p { margin: 0 0 0.9em; max-width: 70ch; }
+.site-footer .home { margin: 1.5rem 0 0; }
+.site-footer .wordmark { top: 0; }
+.site-footer a:focus-visible { outline-color: #fff; }
+@media (pointer: coarse) { .back, .linkish, .notnow { padding-top: 12px; padding-bottom: 12px; } }
+@media print { .site-footer { background: none; color: #000; } }
+</style>
+</head>
+<body>
+<div class="container">
+  <header class="site-header">
+    <div class="brand">
+      <a class="mark-link" href="https://arizvi.com/attitude/" aria-label="About the mark"><img class="mark" src="/media/mark.svg" alt="" width="28" height="28"></a>
+      <a class="wordmark" href="https://arizvi.com/">Ali Rizvi</a>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- The five buttons -->
+    <section id="home" class="view">
+      <div class="intro">
+        <h1>A/B testing for <mark>business goals</mark></h1>
+        <p class="lede">Tap a button when we get to it in class. Your answers are anonymous, and they go into one sheet that we look at together.</p>
+      </div>
+      <noscript><p class="error">This page needs JavaScript to send your answers.</p></noscript>
+      <ul class="tiles">
+        <li><a class="tile" href="#give" data-tile="give"><span class="num">1</span><span class="what"><span class="name">Give to the farm</span><span class="sub">A donation page</span></span></a></li>
+        <li><a class="tile" href="#q2" data-tile="q2"><span class="num">2</span><span class="what"><span class="name">Question 1</span><span class="sub">A testable hypothesis</span></span></a></li>
+        <li><a class="tile" href="#q1" data-tile="q1"><span class="num">3</span><span class="what"><span class="name">Question 2</span><span class="sub">Between or within subjects</span></span></a></li>
+        <li><a class="tile" href="#vote" data-tile="vote"><span class="num">4</span><span class="what"><span class="name">Keep or switch?</span><span class="sub">One question, two votes</span></span></a></li>
+        <li><a class="tile" href="#card" data-tile="card"><span class="num">5</span><span class="what"><span class="name">Your turn</span><span class="sub">Design the follow-up test</span></span></a></li>
+      </ul>
+      <p class="code small muted">The room's numbers from button 1: <a href="#data">our data</a>. The workbook from class: <a href="https://docs.google.com/spreadsheets/d/1NFuywsqr0shyLmnL4z3D8pYn4JHXOsrEal9c72R42Bg/edit">the farm's workbook in Google Sheets</a> (<a href="https://docs.google.com/spreadsheets/d/1NFuywsqr0shyLmnL4z3D8pYn4JHXOsrEal9c72R42Bg/copy">make a copy</a> or <a href="https://docs.google.com/spreadsheets/d/1NFuywsqr0shyLmnL4z3D8pYn4JHXOsrEal9c72R42Bg/export?format=xlsx">download it for Excel</a>). The same steps in Python and R: <a href="https://colab.research.google.com/github/ahr2124/arizvi-com/blob/main/public/tulane/ab-test.ipynb">the farm's notebook in Google Colab</a> and <a href="/tulane/farm.csv">the farm's data</a>.</p>
+    </section>
+
+    <!-- Buttons 2 and 3: the two opening questions. The ids q1 and q2 are the class sheet's own names, so they stay as they are;
+         on the page the hypothesis quiz (q2) is button 2, Question 1, and between or within subjects (q1) is button 3, Question 2. -->
+    <section id="q1" class="view" hidden>
+      <a class="back" href="#home">Back to the five buttons</a>
+      <h2>Question 2</h2>
+      <p class="question">Could you tell when a test should be between subjects or within subjects?</p>
+      <div class="choices" data-q="q1"></div>
+      <p class="thanks" data-thanks="q1" hidden></p>
+      <p class="error" data-error="q1" hidden>That did not send. Check your connection and tap again.</p>
+      <button type="button" class="linkish" data-reveal="q1">See the room's answers</button>
+      <div class="bars" data-bars="q1" hidden></div>
+    </section>
+
+    <section id="q2" class="view" hidden>
+      <a class="back" href="#home">Back to the five buttons</a>
+      <h2>Question 1</h2>
+      <p class="question">Which is a testable hypothesis?</p>
+      <div class="choices" data-q="q2"></div>
+      <p class="thanks" data-thanks="q2" hidden></p>
+      <p class="error" data-error="q2" hidden>That did not send. Check your connection and tap again.</p>
+      <button type="button" class="linkish" data-reveal="q2">See the room's answers</button>
+      <div class="bars long" data-bars="q2" hidden></div>
+    </section>
+
+    <!-- Button 1: the room's own A/B test. Each phone gets page A or page B once, at random, and keeps it. -->
+    <section id="give" class="view" hidden>
+      <a class="back" href="#home">Back to the five buttons</a>
+      <h2>Give to the farm</h2>
+      <p class="say">Bayou Bloom Youth Farm pays New Orleans youth to grow and sell food. It is Giving Tuesday, and this is the farm's donation page. Give the way you would if it were real.</p>
+      <div class="donate" id="donate">
+        <p class="label">Bayou Bloom Youth Farm</p>
+        <h3>Support our youth crew</h3>
+        <div class="seg" role="group" aria-label="How often">
+          <button type="button" data-type="Monthly" aria-pressed="false">Monthly</button>
+          <button type="button" data-type="One-time" aria-pressed="false">One-time</button>
+        </div>
+        <div class="amounts" role="group" aria-label="Amount">
+          <button type="button" class="amt" data-amt="25" aria-pressed="false">$25</button>
+          <button type="button" class="amt" data-amt="50" aria-pressed="false">$50</button>
+          <button type="button" class="amt" data-amt="100" aria-pressed="false">$100</button>
+          <button type="button" class="amt" data-amt="other" aria-pressed="false">Other</button>
+        </div>
+        <label class="other" id="other" hidden>$ <input type="number" inputmode="numeric" min="1" max="10000" step="1" aria-label="Other amount in dollars"></label>
+        <button type="button" class="go" id="go">Give</button>
+        <button type="button" class="notnow" id="notnow">Not today</button>
+      </div>
+      <p class="small muted" id="give-note">The farm is fictional and nothing is charged. Your choice goes into the room's data.</p>
+      <p class="thanks" id="give-thanks" hidden>Thank you. Your answer is in.</p>
+      <p class="say" id="give-which" hidden></p>
+      <p class="error" id="give-error" hidden>That did not send. Check your connection and tap again.</p>
+    </section>
+
+    <!-- 4: keep page A or switch to page B, asked after the result (vote 1) and again after lifetime value (vote 2).
+         Vote 2 stays shut until a deliberate tap, so nobody spends it early. -->
+    <section id="vote" class="view" hidden>
+      <a class="back" href="#home">Back to the five buttons</a>
+      <h2>Keep or switch?</h2>
+      <p class="question">Keep page A or switch to page B?</p>
+      <p class="round">Vote 1: after the result</p>
+      <div class="choices" data-vote="1"></div>
+      <p class="thanks" data-vthanks="1" hidden></p>
+      <div data-round2>
+        <p class="round" data-label2>Vote 2: later in class</p>
+        <div data-gate>
+          <p class="small muted">The slides will ask you to vote again.</p>
+          <button type="button" class="linkish" data-open2>Open vote 2 when the slides ask</button>
+        </div>
+        <div class="choices" data-vote="2" hidden></div>
+        <p class="thanks" data-vthanks="2" hidden></p>
+      </div>
+      <p class="error" data-error="vote" hidden>That did not send. Check your connection and tap again.</p>
+      <button type="button" class="linkish" data-reveal="vote">See the room's answers</button>
+      <div class="bars long" data-bars="vote" hidden></div>
+    </section>
+
+    <!-- The room's data, from the sheet (linked under the five buttons) -->
+    <section id="data" class="view" hidden>
+      <a class="back" href="#home">Back to the five buttons</a>
+      <h2>Our data</h2>
+      <p class="say">Every phone in the room saw one donation page, chosen at random. Here is what the room chose.</p>
+      <table class="datat">
+        <thead><tr><th></th><th><span class="chip a"></span>Page&nbsp;A</th><th><span class="chip b"></span>Page&nbsp;B</th></tr></thead>
+        <tbody>
+          <tr><td>Visitors</td><td data-k="A.visitors">-</td><td data-k="B.visitors">-</td></tr>
+          <tr><td>Donors</td><td data-k="A.donors">-</td><td data-k="B.donors">-</td></tr>
+          <tr class="key"><td>Conversion rate</td><td data-k="A.conversion" data-f="pct">-</td><td data-k="B.conversion" data-f="pct">-</td></tr>
+          <tr><td>Monthly donors</td><td data-k="A.monthly">-</td><td data-k="B.monthly">-</td></tr>
+          <tr><td>One-time donors</td><td data-k="A.onetime">-</td><td data-k="B.onetime">-</td></tr>
+          <tr class="key"><td>Lifetime value per donor</td><td data-k="A.ltv" data-f="usd">-</td><td data-k="B.ltv" data-f="usd">-</td></tr>
+          <tr class="key"><td>Value per visitor</td><td data-k="A.vpv" data-f="usd">-</td><td data-k="B.vpv" data-f="usd">-</td></tr>
+        </tbody>
+      </table>
+      <p class="verdict" id="verdict">The room's numbers appear here once answers come in.</p>
+      <p class="small muted">Lifetime value uses the numbers from the slides: a monthly gift times 22 months, and a one-time gift times 1.3 gifts.</p>
+      <p class="small muted stamp" id="stamp"></p>
+    </section>
+
+    <!-- 5: the pairs exercise on the farm's follow-up test, checked on the phone. Step 2 stays shut until a deliberate
+         tap, because its table names the two pages that step 1 asks for. -->
+    <section id="card" class="view" hidden>
+      <a class="back" href="#home">Back to the five buttons</a>
+      <h2>Your turn</h2>
+      <p class="say">Page B changed two things at once: the amount, from $25 to $100, and the frequency, from monthly to once. Last December's test cannot say which one did the work. A follow-up test can.</p>
+      <p class="round">Step 1: design the follow-up test</p>
+      <table class="cardt">
+        <thead><tr><th>Preselected gift</th><th>$25</th><th>$100</th></tr></thead>
+        <tbody>
+          <tr><td>Monthly</td><td>Page A</td><td>?</td></tr>
+          <tr><td>Once</td><td>?</td><td>Page B</td></tr>
+        </tbody>
+      </table>
+      <form class="work" id="design" novalidate>
+        <div class="pick">
+          <label class="label" for="d1">1. The missing page that changes the amount only</label>
+          <select id="d1"><option value="">Choose one</option><option>$25 once</option><option>$50 a month</option><option>$100 a month</option><option>$100 once</option></select>
+          <p class="fb" data-fb="d1" aria-live="polite"></p>
+        </div>
+        <div class="pick">
+          <label class="label" for="d2">The missing page that changes the frequency only</label>
+          <select id="d2"><option value="">Choose one</option><option>$25 once</option><option>$50 a month</option><option>$100 a month</option><option>$100 once</option></select>
+          <p class="fb" data-fb="d2" aria-live="polite"></p>
+        </div>
+        <div class="pick">
+          <label class="label" for="hyp">2. Your hypothesis for one of them</label>
+          <textarea id="hyp" rows="4" placeholder="If the page preselects ..., then ..., because ..."></textarea>
+          <p class="fb muted">This stays on your phone. Paper works too.</p>
+        </div>
+        <div class="pick">
+          <label class="label" for="metric">3. Its metric</label>
+          <select id="metric"><option value="">Choose one</option><option>Conversion rate</option><option>Lifetime value per donor</option><option>Value per visitor</option></select>
+        </div>
+        <div class="pick">
+          <label class="label" for="horizon">Its time horizon</label>
+          <select id="horizon"><option value="">Choose one</option><option>By December 31</option><option>Over one year</option><option>Over three years</option></select>
+        </div>
+        <button type="submit" class="send">Check</button>
+      </form>
+      <div data-step2>
+        <p class="round" data-label-s2>Step 2: later in class</p>
+        <div data-gate-s2>
+          <p class="small muted">The slides will ask you to read the results.</p>
+          <button type="button" class="linkish" data-open-s2>Open step 2 when the slides ask</button>
+        </div>
+        <div data-results hidden>
+          <p class="say">The farm ran all four pages, with 2,800 visitors on each. Pages A and B repeat last December.</p>
+          <table class="cardt four">
+            <thead><tr><th>Page</th><th>Conversion rate</th><th>Lifetime value per donor</th><th>Value per visitor</th></tr></thead>
+            <tbody>
+              <tr><td>A<span class="gift">$25 a month</span></td><td>8.0%</td><td>$355</td><td>$28.40</td></tr>
+              <tr><td>B<span class="gift">$100 once</span></td><td>12.0%</td><td>$175</td><td>$21.00</td></tr>
+              <tr><td>C<span class="gift">$25 once</span></td><td>14.0%</td><td>$80</td><td>$11.20</td></tr>
+              <tr><td>D<span class="gift">$100 a month</span></td><td>4.5%</td><td>$590</td><td>$26.55</td></tr>
+            </tbody>
+          </table>
+          <p class="small muted">Every row and both tests are on the Your turn tab of the class workbook.</p>
+          <a class="go sheet" href="https://docs.google.com/spreadsheets/d/1NFuywsqr0shyLmnL4z3D8pYn4JHXOsrEal9c72R42Bg/edit#gid=56001" target="_blank" rel="noopener">Open the Your turn tab</a>
+          <p class="small muted">Excel instead? <a href="https://docs.google.com/spreadsheets/d/1NFuywsqr0shyLmnL4z3D8pYn4JHXOsrEal9c72R42Bg/export?format=xlsx">Download the workbook</a>.</p>
+          <form class="work" id="work" novalidate>
+            <div class="pick">
+              <label class="label" for="r1">1. What raised conversion?</label>
+              <select id="r1"><option value="">Choose one</option><option>The amount</option><option>The frequency</option><option>Both of them</option></select>
+              <p class="fb" data-fb="r1" aria-live="polite"></p>
+            </div>
+            <div class="pick">
+              <label class="label" for="r2">2. Page D on the matrix</label>
+              <p class="small muted boxes">Clear win: more people, each worth more.<br>The trap: more people, each worth less.<br>The loyal few: fewer people, each worth more.<br>Clear loss: fewer people, each worth less.</p>
+              <select id="r2"><option value="">Choose one</option><option>Clear win</option><option>The trap</option><option>The loyal few</option><option>Clear loss</option></select>
+              <p class="fb" data-fb="r2" aria-live="polite"></p>
+            </div>
+            <div class="pick">
+              <label class="label" for="r3">3. Value per visitor decides. Which page do you keep?</label>
+              <select id="r3"><option value="">Choose one</option><option>Page A</option><option>Page B</option><option>Page C</option><option>Page D</option></select>
+              <p class="fb" data-fb="r3" aria-live="polite"></p>
+            </div>
+            <button type="submit" class="send">Check</button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>The farm is fictional, and its numbers are simulated for class. Answers are anonymous.</p>
+    <p class="home"><a class="wordmark" href="https://arizvi.com/">arizvi.com</a></p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  // The Apps Script web app on the class sheet: the "Tulane class page" project, deployed 22 Nov 2026 to run as Ali,
+  // open to anyone. Left empty, the page still works, and answers stay on the phone.
+  var ENDPOINT = 'https://script.google.com/macros/s/AKfycbzeOcoIA7pEmmXaOUefElwE5W7z1XURHbdJNeMCJz4XcjnKTF_ET65VHZCCTcowKMWSfg/exec';
+  var ANSWERS = ['Yes', 'Roughly', 'Not yet'];
+  // q2, shown as Question 1, is a quick quiz. The same three statements are in the class sheet's script and its Our numbers tab.
+  var CHOICES = { q1: ANSWERS, q2: ['Our new donation page is better.', 'Preselecting $100 once will get more visitors to give.', 'Donors should give monthly.'] };
+
+  var store = {
+    get: function (k) { try { return window.localStorage.getItem('tulane.' + k); } catch (e) { return null; } },
+    set: function (k, v) { try { window.localStorage.setItem('tulane.' + k, v); } catch (e) {} }
+  };
+  var visitor = store.get('visitor');
+  if (!visitor) {
+    visitor = Math.random().toString(36).slice(2, 10) + Date.now().toString(36).slice(-4);
+    store.set('visitor', visitor);
+  }
+  // The coin flip, once per phone, kept so a refresh shows the same page.
+  var page = store.get('page');
+  if (page !== 'A' && page !== 'B') {
+    page = Math.random() < 0.5 ? 'A' : 'B';
+    store.set('page', page);
+  }
+
+  function send(data) {
+    data.visitor = visitor;
+    if (!ENDPOINT) return Promise.resolve(true);
+    return fetch(ENDPOINT, {
+      method: 'POST', mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(data)
+    }).then(function () { return true; }, function () { return false; });
+  }
+  function load() {
+    if (!ENDPOINT) return Promise.resolve(null);
+    return fetch(ENDPOINT + (ENDPOINT.indexOf('?') < 0 ? '?' : '&') + 't=' + Date.now(), { cache: 'no-store' })
+      .then(function (r) { return r.json(); })
+      .catch(function () { return null; });
+  }
+
+  // One view at a time, from the address
+  var VIEWS = ['home', 'q1', 'q2', 'give', 'vote', 'data', 'card'];
+  var timer = null;
+  function stop() { if (timer) { clearInterval(timer); timer = null; } }
+  function every(fn) { stop(); fn(); timer = setInterval(fn, 5000); }
+  function show() {
+    var id = (window.location.hash || '#home').slice(1);
+    if (id === 'reset') {
+      // After a practice run: forget this phone's page, answers and Done marks, then start again
+      try {
+        for (var i = window.localStorage.length - 1; i >= 0; i--) {
+          var key = window.localStorage.key(i);
+          if (key && key.indexOf('tulane.') === 0) window.localStorage.removeItem(key);
+        }
+      } catch (e) {}
+      window.location.replace(window.location.pathname);
+      return;
+    }
+    if (VIEWS.indexOf(id) < 0) id = 'home';
+    VIEWS.forEach(function (v) { document.getElementById(v).hidden = v !== id; });
+    window.scrollTo(0, 0);
+    stop();
+    if (id === 'home') marks();
+    if ((id === 'q1' || id === 'q2') && store.get(id)) reveal(id);
+    if (id === 'vote' && store.get('vote1')) revealVotes();
+    if (id === 'data') every(function () { load().then(drawData); });
+  }
+  function marks() {
+    var done = { q1: store.get('q1'), q2: store.get('q2'), give: store.get('gave'), vote: store.get('vote2'), card: store.get('card') };
+    Array.prototype.forEach.call(document.querySelectorAll('[data-tile]'), function (t) {
+      var old = t.querySelector('.done');
+      if (old) old.parentNode.removeChild(old);
+      if (done[t.getAttribute('data-tile')]) {
+        var s = document.createElement('span');
+        s.className = 'done';
+        s.textContent = 'Done';
+        t.appendChild(s);
+      }
+    });
+  }
+
+  // 1 and 2
+  ['q1', 'q2'].forEach(function (q) {
+    var box = document.querySelector('[data-q="' + q + '"]');
+    CHOICES[q].forEach(function (a) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'choice';
+      b.textContent = a;
+      b.setAttribute('aria-pressed', 'false');
+      b.addEventListener('click', function () { answer(q, a); });
+      box.appendChild(b);
+    });
+    lockChoices(q);
+    document.querySelector('[data-reveal="' + q + '"]').addEventListener('click', function () { reveal(q); });
+  });
+  function lockChoices(q) {
+    var mine = store.get(q);
+    Array.prototype.forEach.call(document.querySelectorAll('[data-q="' + q + '"] .choice'), function (b) {
+      b.setAttribute('aria-pressed', String(b.textContent === mine));
+      b.disabled = !!mine;
+    });
+    var t = document.querySelector('[data-thanks="' + q + '"]');
+    if (mine) { t.textContent = 'Thank you. You answered: ' + mine.replace(/\.$/, '') + '.'; t.hidden = false; }
+  }
+  function answer(q, a) {
+    if (store.get(q)) return;
+    var err = document.querySelector('[data-error="' + q + '"]');
+    err.hidden = true;
+    send({ activity: q, answer: a }).then(function (ok) {
+      if (!ok) { err.hidden = false; return; }
+      store.set(q, a);
+      lockChoices(q);
+      setTimeout(function () { reveal(q); }, 1200);
+    });
+  }
+  function reveal(q) {
+    var bars = document.querySelector('[data-bars="' + q + '"]');
+    bars.hidden = false;
+    every(function () {
+      load().then(function (d) {
+        var c = d && d[q] ? d[q] : null;
+        var total = 0;
+        CHOICES[q].forEach(function (a) { total += c ? Number(c[a]) || 0 : 0; });
+        bars.innerHTML = '<p class="label">The room so far' + (c ? ' (' + total + ')' : '') + '</p>' + CHOICES[q].map(function (a) {
+          var n = c ? Number(c[a]) || 0 : 0;
+          var w = total ? Math.round(n / total * 100) : 0;
+          return '<div class="bar"><span>' + a + '</span><span class="track"><span class="fill" style="display:block;width:' + w + '%"></span></span><span class="n">' + (c ? n : '-') + '</span></div>';
+        }).join('') + (c ? '' : '<p class="small muted">The room\'s answers appear here once the class sheet is connected.</p>');
+      });
+    });
+  }
+
+  // 4: keep page A or switch to page B, asked after the result (vote 1) and again after lifetime value (vote 2)
+  var VOTES = ['Keep page A', 'Switch to page B'];
+  [1, 2].forEach(function (r) {
+    var box = document.querySelector('[data-vote="' + r + '"]');
+    VOTES.forEach(function (a) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'choice';
+      b.textContent = a;
+      b.setAttribute('aria-pressed', 'false');
+      b.addEventListener('click', function () { castVote(r, a); });
+      box.appendChild(b);
+    });
+  });
+  document.querySelector('[data-reveal="vote"]').addEventListener('click', function () { revealVotes(); });
+  document.querySelector('[data-open2]').addEventListener('click', function () { store.set('vote2open', 'yes'); lockVotes(); });
+  lockVotes();
+  function lockVotes() {
+    [1, 2].forEach(function (r) {
+      var mine = store.get('vote' + r);
+      Array.prototype.forEach.call(document.querySelectorAll('[data-vote="' + r + '"] .choice'), function (b) {
+        b.setAttribute('aria-pressed', String(b.textContent === mine));
+        b.disabled = !!mine;
+      });
+      var t = document.querySelector('[data-vthanks="' + r + '"]');
+      if (mine) { t.textContent = 'Thank you. Vote ' + r + ': ' + mine + '.'; t.hidden = false; }
+    });
+    var open2 = !!store.get('vote2open') || !!store.get('vote2');
+    document.querySelector('[data-gate]').hidden = open2;
+    document.querySelector('[data-vote="2"]').hidden = !open2;
+    document.querySelector('[data-label2]').textContent = open2 ? 'Vote 2' : 'Vote 2: later in class';
+  }
+  function castVote(r, a) {
+    if (store.get('vote' + r)) return;
+    var err = document.querySelector('[data-error="vote"]');
+    err.hidden = true;
+    send({ activity: 'vote', round: r, answer: a }).then(function (ok) {
+      if (!ok) { err.hidden = false; return; }
+      store.set('vote' + r, a);
+      lockVotes();
+      setTimeout(revealVotes, 1200);
+    });
+  }
+  function revealVotes() {
+    var bars = document.querySelector('[data-bars="vote"]');
+    bars.hidden = false;
+    every(function () {
+      load().then(function (d) {
+        var v = d && d.vote ? d.vote : null;
+        bars.innerHTML = [1, 2].map(function (r) {
+          var c = v ? v[r] : null;
+          var total = 0;
+          VOTES.forEach(function (a) { total += c ? Number(c[a]) || 0 : 0; });
+          return '<p class="label">Vote ' + r + (c ? ' (' + total + ')' : '') + '</p>' + VOTES.map(function (a) {
+            var n = c ? Number(c[a]) || 0 : 0;
+            var w = total ? Math.round(n / total * 100) : 0;
+            return '<div class="bar"><span>' + a + '</span><span class="track"><span class="fill" style="display:block;width:' + w + '%"></span></span><span class="n">' + (c ? n : '-') + '</span></div>';
+          }).join('');
+        }).join('') + (v ? '' : '<p class="small muted">The room\'s answers appear here once the class sheet is connected.</p>');
+      });
+    });
+  }
+
+  // 3: the donation page. Page A comes with $25 a month chosen; page B with $100 once. Everything else is the same.
+  var chosen = { type: page === 'A' ? 'Monthly' : 'One-time', amt: page === 'A' ? '25' : '100' };
+  var donate = document.getElementById('donate');
+  var other = document.getElementById('other');
+  var otherInput = other.querySelector('input');
+  var go = document.getElementById('go');
+  function drawDonate() {
+    Array.prototype.forEach.call(donate.querySelectorAll('[data-type]'), function (b) {
+      b.setAttribute('aria-pressed', String(b.getAttribute('data-type') === chosen.type));
+    });
+    Array.prototype.forEach.call(donate.querySelectorAll('[data-amt]'), function (b) {
+      b.setAttribute('aria-pressed', String(b.getAttribute('data-amt') === chosen.amt));
+    });
+    other.hidden = chosen.amt !== 'other';
+    var dollars = chosen.amt === 'other' ? Math.round(Number(otherInput.value) || 0) : Number(chosen.amt);
+    go.disabled = !(dollars >= 1 && dollars <= 10000);
+    go.textContent = dollars >= 1 ? 'Give $' + dollars + (chosen.type === 'Monthly' ? ' a month' : '') : 'Give';
+  }
+  Array.prototype.forEach.call(donate.querySelectorAll('[data-type]'), function (b) {
+    b.addEventListener('click', function () { chosen.type = b.getAttribute('data-type'); drawDonate(); });
+  });
+  Array.prototype.forEach.call(donate.querySelectorAll('[data-amt]'), function (b) {
+    b.addEventListener('click', function () {
+      chosen.amt = b.getAttribute('data-amt');
+      drawDonate();
+      if (chosen.amt === 'other') otherInput.focus();
+    });
+  });
+  otherInput.addEventListener('input', drawDonate);
+  function gave(choice) {
+    if (store.get('gave')) return;
+    var err = document.getElementById('give-error');
+    err.hidden = true;
+    var data = { activity: 'give', page: page, gave: choice !== null };
+    if (choice) { data.type = choice.type; data.amount = choice.amount; }
+    send(data).then(function (ok) {
+      if (!ok) { err.hidden = false; return; }
+      store.set('gave', choice ? choice.type + ' $' + choice.amount : 'Not today');
+      afterGive();
+    });
+  }
+  function afterGive() {
+    donate.hidden = true;
+    document.getElementById('give-note').hidden = true;
+    document.getElementById('give-thanks').hidden = false;
+    var w = document.getElementById('give-which');
+    w.textContent = 'You saw page ' + page + '. Keep that to yourself until the slides get there.';
+    w.hidden = false;
+  }
+  go.addEventListener('click', function () {
+    var dollars = chosen.amt === 'other' ? Math.round(Number(otherInput.value) || 0) : Number(chosen.amt);
+    if (dollars >= 1 && dollars <= 10000) gave({ type: chosen.type, amount: dollars });
+  });
+  document.getElementById('notnow').addEventListener('click', function () { gave(null); });
+  if (store.get('gave')) afterGive(); else drawDonate();
+
+  // 4: the room's data
+  function fmt(v, f) {
+    if (v === '' || v === null || v === undefined || isNaN(Number(v))) return '-';
+    v = Number(v);
+    if (f === 'pct') return (v * 100).toFixed(1) + '%';
+    if (f === 'usd') return '$' + v.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    return String(Math.round(v));
+  }
+  function drawData(d) {
+    if (!d || !d.A) return;
+    Array.prototype.forEach.call(document.querySelectorAll('#data [data-k]'), function (td) {
+      var k = td.getAttribute('data-k').split('.');
+      td.textContent = fmt(d[k[0]][k[1]], td.getAttribute('data-f'));
+    });
+    var t = d.test || {};
+    var n = (Number(d.A.visitors) || 0) + (Number(d.B.visitors) || 0);
+    var v = document.getElementById('verdict');
+    if (!n) {
+      v.textContent = 'The room\'s numbers appear here once answers come in.';
+    } else if (!Number(t.se)) {
+      v.textContent = 'Not enough answers on both pages yet to test the gap in conversion.';
+    } else {
+      var gap = Number(t.gap) * 100;
+      var p = Number(t.p);
+      v.textContent = 'Gap in conversion, page B minus page A: ' + (gap >= 0 ? '+' : '') + gap.toFixed(1) + ' points (p = ' + p.toFixed(2) + '). ' +
+        (p < 0.05 ? 'A gap this size would be rare by chance.'
+                  : 'With this few people, a gap this size is common by chance. That is why the farm ran its test on 2,800 visitors a page.');
+    }
+    var now = new Date();
+    document.getElementById('stamp').textContent = 'Updated ' + now.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit', second: '2-digit' }) + '. It refreshes every few seconds.';
+  }
+
+  // 5: the farm's follow-up test. Step 1 designs it; step 2 reads its results. Nothing here is sent: the answers are
+  // checked on the phone, and the hypothesis stays there.
+  function say(key, good, hint) {
+    var p = document.querySelector('[data-fb="' + key + '"]');
+    p.className = 'fb' + (good ? ' ok' : '');
+    p.textContent = good ? 'Right' : hint;
+    return good;
+  }
+  // The design step's fields come back after a refresh
+  ['d1', 'd2', 'hyp', 'metric', 'horizon'].forEach(function (id) {
+    var el = document.getElementById(id);
+    var kept = store.get('turn.' + id);
+    if (kept) el.value = kept;
+    el.addEventListener(el.tagName === 'TEXTAREA' ? 'input' : 'change', function () { store.set('turn.' + id, el.value); });
+  });
+  document.getElementById('design').addEventListener('submit', function (e) {
+    e.preventDefault();
+    say('d1', document.getElementById('d1').value === '$100 a month', 'Page A preselects $25 a month. Change the amount and keep the frequency.');
+    say('d2', document.getElementById('d2').value === '$25 once', 'Page A preselects $25 a month. Change the frequency and keep the amount.');
+  });
+  function lockStep2() {
+    var open = !!store.get('turn.open') || !!store.get('card');
+    document.querySelector('[data-gate-s2]').hidden = open;
+    document.querySelector('[data-results]').hidden = !open;
+    document.querySelector('[data-label-s2]').textContent = open ? 'Step 2: read the results' : 'Step 2: later in class';
+  }
+  document.querySelector('[data-open-s2]').addEventListener('click', function () { store.set('turn.open', 'yes'); lockStep2(); });
+  lockStep2();
+  document.getElementById('work').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var all = [
+      say('r1', document.getElementById('r1').value === 'The frequency', 'Page C changes the frequency only, and page D changes the amount only. Compare each with page A.'),
+      say('r2', document.getElementById('r2').value === 'The loyal few', 'Page D has lower conversion than page A and a higher lifetime value per donor. Which box is that?'),
+      say('r3', document.getElementById('r3').value === 'Page A', 'Which page has the highest value per visitor?')
+    ];
+    if (all.every(Boolean)) store.set('card', 'yes');
+  });
+
+  window.addEventListener('hashchange', show);
+  show();
+})();
+</script>
+</body>
+</html>
