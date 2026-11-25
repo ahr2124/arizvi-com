@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
 <title>A/B testing for business goals | Ali Rizvi</title>
-<meta name="description" content="The class page for A/B testing for business goals: a donation page, two questions, a vote, the room's data, and a follow-up test to design.">
+<meta name="description" content="The class page for A/B testing for business goals: a donation page, a vote, the room's data, and a follow-up test to design.">
 <link rel="canonical" href="https://arizvi.com/tulane/">
 <meta name="theme-color" content="#ffffff">
 <meta name="color-scheme" content="light">
@@ -14,7 +14,7 @@
 <link rel="preload" href="/fonts/CooperHewitt-Semibold.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/CooperHewitt-Book.woff2" as="font" type="font/woff2" crossorigin>
 <style>
-/* One file, like /ablookup. The class page for the Tulane campus visit: five buttons, one for each time the room
+/* One file, like /ablookup. The class page for the Tulane campus visit: three buttons, one for each time the room
    answers on a phone. The look follows VOICE.md: one typeface, black on white, 2px rules above sections and 1px
    between rows, and Tulane's highlighter (#A4D9C6, pale #E3F3ED), always behind black text. The data colours are
    the slides': Tulane green for page A and Tulane blue for page B. Answers go to a Google Sheet through its Apps
@@ -57,7 +57,7 @@ button, input, select, textarea { font-family: var(--font); color: #000; }
 h1 { font-weight: 600; font-size: clamp(2rem, 7vw, 3.6rem); letter-spacing: -0.02em; line-height: 1.05; margin: 0; max-width: 16ch; }
 mark { background: linear-gradient(transparent 56%, var(--hl) 56%); color: inherit; padding: 0 0.06em; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
 .lede { margin: 1rem 0 0; max-width: 46ch; }
-/* The five buttons */
+/* The three buttons */
 .tiles { list-style: none; margin: 1.75rem 0 0; padding: 0; display: grid; grid-template-columns: 1fr; gap: 12px; }
 @media (min-width: 640px) { .tiles { grid-template-columns: 1fr 1fr; gap: 16px; } }
 @media (min-width: 1024px) { .tiles { grid-template-columns: 1fr 1fr 1fr; } }
@@ -122,7 +122,7 @@ mark { background: linear-gradient(transparent 56%, var(--hl) 56%); color: inher
 .chip.b { background: var(--b); }
 .verdict { margin: 1.25rem 0 0; max-width: 40rem; font-size: 19px; }
 .stamp { margin: 0.75rem 0 0; }
-/* Button 5: the pair exercise on the farm's follow-up test */
+/* Button 3: the pair exercise on the farm's follow-up test */
 .cardt { width: 100%; max-width: 30rem; border-collapse: collapse; margin-top: 1rem; }
 .cardt th, .cardt td { text-align: right; padding: 8px 0 8px 12px; border-top: 1px solid #000; }
 .cardt th:first-child, .cardt td:first-child { text-align: left; padding-left: 0; }
@@ -165,7 +165,7 @@ a.go.sheet { max-width: 30rem; margin-top: 0.75rem; text-align: center; text-dec
   </header>
 
   <main id="main">
-    <!-- The five buttons -->
+    <!-- The three buttons -->
     <section id="home" class="view">
       <div class="intro">
         <h1>A/B testing for <mark>business goals</mark></h1>
@@ -174,41 +174,15 @@ a.go.sheet { max-width: 30rem; margin-top: 0.75rem; text-align: center; text-dec
       <noscript><p class="error">This page needs JavaScript to send your answers.</p></noscript>
       <ul class="tiles">
         <li><a class="tile" href="#give" data-tile="give"><span class="num">1</span><span class="what"><span class="name">Give to the farm</span><span class="sub">A donation page</span></span></a></li>
-        <li><a class="tile" href="#q2" data-tile="q2"><span class="num">2</span><span class="what"><span class="name">Question 1</span><span class="sub">A testable hypothesis</span></span></a></li>
-        <li><a class="tile" href="#q1" data-tile="q1"><span class="num">3</span><span class="what"><span class="name">Question 2</span><span class="sub">Between or within subjects</span></span></a></li>
-        <li><a class="tile" href="#vote" data-tile="vote"><span class="num">4</span><span class="what"><span class="name">Keep or switch?</span><span class="sub">One question, two votes</span></span></a></li>
-        <li><a class="tile" href="#card" data-tile="card"><span class="num">5</span><span class="what"><span class="name">Your turn</span><span class="sub">Design the follow-up test</span></span></a></li>
+        <li><a class="tile" href="#vote" data-tile="vote"><span class="num">2</span><span class="what"><span class="name">Keep or switch?</span><span class="sub">One question, two votes</span></span></a></li>
+        <li><a class="tile" href="#card" data-tile="card"><span class="num">3</span><span class="what"><span class="name">Your turn</span><span class="sub">Design the follow-up test</span></span></a></li>
       </ul>
       <p class="code small muted">The room's numbers from button 1: <a href="#data">our data</a>. The workbook from class: <a href="https://docs.google.com/spreadsheets/d/1NFuywsqr0shyLmnL4z3D8pYn4JHXOsrEal9c72R42Bg/edit">the farm's workbook in Google Sheets</a> (<a href="https://docs.google.com/spreadsheets/d/1NFuywsqr0shyLmnL4z3D8pYn4JHXOsrEal9c72R42Bg/copy">make a copy</a> or <a href="https://docs.google.com/spreadsheets/d/1NFuywsqr0shyLmnL4z3D8pYn4JHXOsrEal9c72R42Bg/export?format=xlsx">download it for Excel</a>). The farm's rows as a file: <a href="/tulane/farm.csv">the farm's data</a>.</p>
     </section>
 
-    <!-- Buttons 2 and 3: the two opening questions. The ids q1 and q2 are the class sheet's own names, so they stay as they are;
-         on the page the hypothesis quiz (q2) is button 2, Question 1, and between or within subjects (q1) is button 3, Question 2. -->
-    <section id="q1" class="view" hidden>
-      <a class="back" href="#home">Back to the five buttons</a>
-      <h2>Question 2</h2>
-      <p class="question">Could you tell when a test should be between subjects or within subjects?</p>
-      <div class="choices" data-q="q1"></div>
-      <p class="thanks" data-thanks="q1" hidden></p>
-      <p class="error" data-error="q1" hidden>That did not send. Check your connection and tap again.</p>
-      <button type="button" class="linkish" data-reveal="q1">See the room's answers</button>
-      <div class="bars" data-bars="q1" hidden></div>
-    </section>
-
-    <section id="q2" class="view" hidden>
-      <a class="back" href="#home">Back to the five buttons</a>
-      <h2>Question 1</h2>
-      <p class="question">Which is a testable hypothesis?</p>
-      <div class="choices" data-q="q2"></div>
-      <p class="thanks" data-thanks="q2" hidden></p>
-      <p class="error" data-error="q2" hidden>That did not send. Check your connection and tap again.</p>
-      <button type="button" class="linkish" data-reveal="q2">See the room's answers</button>
-      <div class="bars long" data-bars="q2" hidden></div>
-    </section>
-
     <!-- Button 1: the room's own A/B test. Each phone gets page A or page B once, at random, and keeps it. -->
     <section id="give" class="view" hidden>
-      <a class="back" href="#home">Back to the five buttons</a>
+      <a class="back" href="#home">Back to the three buttons</a>
       <h2>Give to the farm</h2>
       <p class="say">Bayou Bloom Youth Farm pays New Orleans youth to grow and sell food. It is Giving Tuesday, and this is the farm's donation page. Give the way you would if it were real.</p>
       <div class="donate" id="donate">
@@ -234,10 +208,10 @@ a.go.sheet { max-width: 30rem; margin-top: 0.75rem; text-align: center; text-dec
       <p class="error" id="give-error" hidden>That did not send. Check your connection and tap again.</p>
     </section>
 
-    <!-- 4: keep page A or switch to page B, asked after the result (vote 1) and again after lifetime value (vote 2).
+    <!-- Button 2: keep page A or switch to page B, asked after the result (vote 1) and again after lifetime value (vote 2).
          Vote 2 stays shut until a deliberate tap, so nobody spends it early. -->
     <section id="vote" class="view" hidden>
-      <a class="back" href="#home">Back to the five buttons</a>
+      <a class="back" href="#home">Back to the three buttons</a>
       <h2>Keep or switch?</h2>
       <p class="question">Keep page A or switch to page B?</p>
       <p class="round">Vote 1: after the result</p>
@@ -257,9 +231,9 @@ a.go.sheet { max-width: 30rem; margin-top: 0.75rem; text-align: center; text-dec
       <div class="bars long" data-bars="vote" hidden></div>
     </section>
 
-    <!-- The room's data, from the sheet (linked under the five buttons) -->
+    <!-- The room's data, from the sheet (linked under the three buttons) -->
     <section id="data" class="view" hidden>
-      <a class="back" href="#home">Back to the five buttons</a>
+      <a class="back" href="#home">Back to the three buttons</a>
       <h2>Our data</h2>
       <p class="say">Every phone in the room saw one donation page, chosen at random. Here is what the room chose.</p>
       <table class="datat">
@@ -279,10 +253,10 @@ a.go.sheet { max-width: 30rem; margin-top: 0.75rem; text-align: center; text-dec
       <p class="small muted stamp" id="stamp"></p>
     </section>
 
-    <!-- 5: the pairs exercise on the farm's follow-up test, checked on the phone. Step 2 stays shut until a deliberate
+    <!-- Button 3: the pairs exercise on the farm's follow-up test, checked on the phone. Step 2 stays shut until a deliberate
          tap, because its table names the two pages that step 1 asks for. -->
     <section id="card" class="view" hidden>
-      <a class="back" href="#home">Back to the five buttons</a>
+      <a class="back" href="#home">Back to the three buttons</a>
       <h2>Your turn</h2>
       <p class="say">Page B changed two things at once: the amount, from $25 to $100, and the frequency, from monthly to once. Last December's test cannot say which one did the work. A follow-up test can.</p>
       <p class="round">Step 1: design the follow-up test</p>
@@ -376,9 +350,6 @@ a.go.sheet { max-width: 30rem; margin-top: 0.75rem; text-align: center; text-dec
   // The Apps Script web app on the class sheet: the "Tulane class page" project, deployed 22 Nov 2026 to run as Ali,
   // open to anyone. Left empty, the page still works, and answers stay on the phone.
   var ENDPOINT = 'https://script.google.com/macros/s/AKfycbzeOcoIA7pEmmXaOUefElwE5W7z1XURHbdJNeMCJz4XcjnKTF_ET65VHZCCTcowKMWSfg/exec';
-  var ANSWERS = ['Yes', 'Roughly', 'Not yet'];
-  // q2, shown as Question 1, is a quick quiz. The same three statements are in the class sheet's script and its Our numbers tab.
-  var CHOICES = { q1: ANSWERS, q2: ['Our new donation page is better.', 'Preselecting $100 once will get more visitors to give.', 'Donors should give monthly.'] };
 
   var store = {
     get: function (k) { try { return window.localStorage.getItem('tulane.' + k); } catch (e) { return null; } },
@@ -413,7 +384,7 @@ a.go.sheet { max-width: 30rem; margin-top: 0.75rem; text-align: center; text-dec
   }
 
   // One view at a time, from the address
-  var VIEWS = ['home', 'q1', 'q2', 'give', 'vote', 'data', 'card'];
+  var VIEWS = ['home', 'give', 'vote', 'data', 'card'];
   var timer = null;
   function stop() { if (timer) { clearInterval(timer); timer = null; } }
   function every(fn) { stop(); fn(); timer = setInterval(fn, 5000); }
@@ -435,12 +406,11 @@ a.go.sheet { max-width: 30rem; margin-top: 0.75rem; text-align: center; text-dec
     window.scrollTo(0, 0);
     stop();
     if (id === 'home') marks();
-    if ((id === 'q1' || id === 'q2') && store.get(id)) reveal(id);
     if (id === 'vote' && store.get('vote1')) revealVotes();
     if (id === 'data') every(function () { load().then(drawData); });
   }
   function marks() {
-    var done = { q1: store.get('q1'), q2: store.get('q2'), give: store.get('gave'), vote: store.get('vote2'), card: store.get('card') };
+    var done = { give: store.get('gave'), vote: store.get('vote2'), card: store.get('card') };
     Array.prototype.forEach.call(document.querySelectorAll('[data-tile]'), function (t) {
       var old = t.querySelector('.done');
       if (old) old.parentNode.removeChild(old);
@@ -453,59 +423,7 @@ a.go.sheet { max-width: 30rem; margin-top: 0.75rem; text-align: center; text-dec
     });
   }
 
-  // 1 and 2
-  ['q1', 'q2'].forEach(function (q) {
-    var box = document.querySelector('[data-q="' + q + '"]');
-    CHOICES[q].forEach(function (a) {
-      var b = document.createElement('button');
-      b.type = 'button';
-      b.className = 'choice';
-      b.textContent = a;
-      b.setAttribute('aria-pressed', 'false');
-      b.addEventListener('click', function () { answer(q, a); });
-      box.appendChild(b);
-    });
-    lockChoices(q);
-    document.querySelector('[data-reveal="' + q + '"]').addEventListener('click', function () { reveal(q); });
-  });
-  function lockChoices(q) {
-    var mine = store.get(q);
-    Array.prototype.forEach.call(document.querySelectorAll('[data-q="' + q + '"] .choice'), function (b) {
-      b.setAttribute('aria-pressed', String(b.textContent === mine));
-      b.disabled = !!mine;
-    });
-    var t = document.querySelector('[data-thanks="' + q + '"]');
-    if (mine) { t.textContent = 'Thank you. You answered: ' + mine.replace(/\.$/, '') + '.'; t.hidden = false; }
-  }
-  function answer(q, a) {
-    if (store.get(q)) return;
-    var err = document.querySelector('[data-error="' + q + '"]');
-    err.hidden = true;
-    send({ activity: q, answer: a }).then(function (ok) {
-      if (!ok) { err.hidden = false; return; }
-      store.set(q, a);
-      lockChoices(q);
-      setTimeout(function () { reveal(q); }, 1200);
-    });
-  }
-  function reveal(q) {
-    var bars = document.querySelector('[data-bars="' + q + '"]');
-    bars.hidden = false;
-    every(function () {
-      load().then(function (d) {
-        var c = d && d[q] ? d[q] : null;
-        var total = 0;
-        CHOICES[q].forEach(function (a) { total += c ? Number(c[a]) || 0 : 0; });
-        bars.innerHTML = '<p class="label">The room so far' + (c ? ' (' + total + ')' : '') + '</p>' + CHOICES[q].map(function (a) {
-          var n = c ? Number(c[a]) || 0 : 0;
-          var w = total ? Math.round(n / total * 100) : 0;
-          return '<div class="bar"><span>' + a + '</span><span class="track"><span class="fill" style="display:block;width:' + w + '%"></span></span><span class="n">' + (c ? n : '-') + '</span></div>';
-        }).join('') + (c ? '' : '<p class="small muted">The room\'s answers appear here once the class sheet is connected.</p>');
-      });
-    });
-  }
-
-  // 4: keep page A or switch to page B, asked after the result (vote 1) and again after lifetime value (vote 2)
+  // Button 2: keep page A or switch to page B, asked after the result (vote 1) and again after lifetime value (vote 2)
   var VOTES = ['Keep page A', 'Switch to page B'];
   [1, 2].forEach(function (r) {
     var box = document.querySelector('[data-vote="' + r + '"]');
@@ -624,7 +542,7 @@ a.go.sheet { max-width: 30rem; margin-top: 0.75rem; text-align: center; text-dec
   document.getElementById('notnow').addEventListener('click', function () { gave(null); });
   if (store.get('gave')) afterGive(); else drawDonate();
 
-  // 4: the room's data
+  // The room's data
   function fmt(v, f) {
     if (v === '' || v === null || v === undefined || isNaN(Number(v))) return '-';
     v = Number(v);
@@ -656,7 +574,7 @@ a.go.sheet { max-width: 30rem; margin-top: 0.75rem; text-align: center; text-dec
     document.getElementById('stamp').textContent = 'Updated ' + now.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit', second: '2-digit' }) + '. It refreshes every few seconds.';
   }
 
-  // 5: the farm's follow-up test. Step 1 designs it; step 2 reads its results. Nothing here is sent: the answers are
+  // Button 3: the farm's follow-up test. Step 1 designs it; step 2 reads its results. Nothing here is sent: the answers are
   // checked on the phone, and the hypothesis stays there.
   function say(key, good, hint) {
     var p = document.querySelector('[data-fb="' + key + '"]');
