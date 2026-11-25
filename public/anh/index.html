@@ -1,0 +1,1894 @@
+<!doctype html>
+<html lang="en-CA">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>GMAT tracker</title>
+<meta name="theme-color" content="#ffffff">
+<meta name="color-scheme" content="light">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="GMAT">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232F5FE8'/%3E%3Cpath d='M22 14h20v36l-10-8-10 8z' fill='%23FFC2DA'/%3E%3C/svg%3E">
+<link rel="preload" href="/fonts/CooperHewitt-Book.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/CooperHewitt-Semibold.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+/* /anh: Anh's GMAT tracker. One file, like the site's other tool pages. Cooper Hewitt comes from the site's /fonts/.
+   Her colours are blue, pink and white: white ground, deep blue ink for text and rules, blue for where you are and for
+   right answers, pink for bookmarks, wrong answers and what to do more of. Colour fills sit behind blue ink or carry white
+   text on the strong blue; text itself is never pink or light blue. */
+@font-face { font-family: 'Cooper Hewitt'; src: url('/fonts/CooperHewitt-Book.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Cooper Hewitt'; src: url('/fonts/CooperHewitt-Medium.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Cooper Hewitt'; src: url('/fonts/CooperHewitt-Semibold.woff2') format('woff2'); font-weight: 600; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Cooper Hewitt'; src: url('/fonts/CooperHewitt-Bold.woff2') format('woff2'); font-weight: 700; font-style: normal; font-display: swap; }
+
+:root {
+  --font: 'Cooper Hewitt', Helvetica, Arial, sans-serif;
+  --ink: #13214A;
+  --ink-2: #4B5679;
+  --ink-3: #8790AC;
+  --rule: #DCE2EF;
+  --rule-2: #EEF1F8;
+  --bg: #FFFFFF;
+  --blue: #2F5FE8;
+  --blue-hl: #BCD0FF;
+  --blue-soft: #EBF1FF;
+  --pink: #F0609E;
+  --pink-hl: #FFC2DA;
+  --pink-soft: #FFEEF5;
+  --pad: 18px;
+  --col: 760px;
+  --radius: 14px;
+}
+@media (min-width: 720px) { :root { --pad: 32px; } }
+
+* { box-sizing: border-box; }
+html { background: var(--bg); color: var(--ink); font-family: var(--font); font-size: 17px; line-height: 1.45; -webkit-font-smoothing: antialiased; -webkit-text-size-adjust: 100%; }
+body { margin: 0; min-height: 100vh; }
+button, input, select, textarea { font: inherit; color: inherit; }
+a { color: inherit; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.16em; }
+:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+[hidden] { display: none !important; }
+.num { font-variant-numeric: tabular-nums; }
+.wrap { max-width: var(--col); margin: 0 auto; padding: 0 var(--pad) 120px; }
+.label { font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.12em; line-height: 1.4; margin: 0; color: var(--ink); }
+.muted { color: var(--ink-2); }
+.small { font-size: 14px; }
+.tiny { font-size: 12.5px; }
+h1 { font-size: 30px; line-height: 1.12; letter-spacing: -0.02em; font-weight: 600; margin: 0; }
+h2 { font-size: 21px; line-height: 1.2; letter-spacing: -0.01em; font-weight: 600; margin: 0; }
+h3 { font-size: 17px; font-weight: 600; margin: 0; }
+p { margin: 0.4em 0; }
+.mark-b { background: linear-gradient(transparent 55%, var(--blue-hl) 55%); padding: 0 0.08em; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+.mark-p { background: linear-gradient(transparent 55%, var(--pink-hl) 55%); padding: 0 0.08em; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+
+/* Header and nav */
+.top { position: sticky; top: 0; z-index: 20; background: rgba(255,255,255,0.96); backdrop-filter: saturate(1.4) blur(8px); -webkit-backdrop-filter: saturate(1.4) blur(8px); border-bottom: 4px solid var(--blue-hl); }
+.top-in { max-width: var(--col); margin: 0 auto; padding: 12px var(--pad) 0; }
+.brand-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+.brand svg { flex: none; }
+.brand b { font-weight: 600; font-size: 18px; letter-spacing: -0.01em; }
+.brand span { font-size: 13px; color: var(--ink-2); }
+.sync { display: inline-flex; align-items: center; gap: 7px; font-size: 13px; color: var(--ink-2); white-space: nowrap; }
+.sync i { width: 9px; height: 9px; border-radius: 50%; background: var(--blue); display: inline-block; }
+.sync[data-s='saving'] i { background: var(--blue-hl); }
+.sync[data-s='offline'] i { background: var(--pink); }
+.nav { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; padding: 10px 0 10px; margin: 0 calc(var(--pad) * -1); padding-left: var(--pad); padding-right: var(--pad); }
+.nav::-webkit-scrollbar { display: none; }
+.nav a { flex: none; text-decoration: none; font-size: 15px; padding: 6px 13px; border-radius: 999px; border: 1px solid var(--rule); white-space: nowrap; }
+.nav a[aria-current='page'] { background: var(--blue-hl); border-color: var(--blue-hl); font-weight: 600; }
+.nav a .count { font-size: 12px; color: var(--ink-2); margin-left: 4px; }
+
+/* Sections, rows, cards */
+.sec { border-top: 2px solid var(--ink); margin-top: 30px; padding-top: 12px; }
+.sec-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 10px; }
+.page-head { padding: 26px 0 4px; }
+.page-head p { color: var(--ink-2); margin-top: 6px; }
+.rows { list-style: none; margin: 0; padding: 0; }
+.rows > li { border-top: 1px solid var(--rule); padding: 12px 0; }
+.rows > li:first-child { border-top: 0; }
+.row-link { display: flex; align-items: center; gap: 12px; text-decoration: none; width: 100%; background: none; border: 0; padding: 0; text-align: left; cursor: pointer; }
+.row-main { flex: 1; min-width: 0; }
+.row-main .t { font-weight: 600; }
+.row-main .s { display: block; font-size: 14px; color: var(--ink-2); overflow: hidden; text-overflow: ellipsis; }
+.row-side { text-align: right; flex: none; }
+.card { border: 1px solid var(--rule); border-radius: var(--radius); padding: 16px; background: #fff; }
+.card.blue { background: var(--blue-soft); border-color: var(--blue-soft); }
+.card.pink { background: var(--pink-soft); border-color: var(--pink-soft); }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.grid3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.stat .v { font-size: clamp(22px, 6.4vw, 30px); font-weight: 600; letter-spacing: -0.02em; line-height: 1.1; }
+.stat .k { font-size: 13px; color: var(--ink-2); }
+.empty { color: var(--ink-2); padding: 18px 0; }
+
+/* Buttons and chips: pills are the one rounded element */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 0 18px; border-radius: 999px; border: 1.5px solid var(--ink); background: #fff; cursor: pointer; font-weight: 600; font-size: 16px; text-decoration: none; white-space: nowrap; -webkit-tap-highlight-color: transparent; }
+.btn:disabled { opacity: 0.38; cursor: not-allowed; }
+.btn.primary { background: var(--blue); border-color: var(--blue); color: #fff; }
+.btn.soft { background: var(--blue-soft); border-color: var(--blue-soft); }
+.btn.pinky { background: var(--pink-hl); border-color: var(--pink-hl); }
+.btn.ghost { border-color: transparent; background: transparent; }
+.btn.big { min-height: 56px; font-size: 18px; padding: 0 26px; }
+.btn.wide { width: 100%; }
+.btn.sm { min-height: 36px; font-size: 14px; padding: 0 13px; border-width: 1px; }
+.btns { display: flex; flex-wrap: wrap; gap: 10px; }
+.chip { display: inline-flex; align-items: center; gap: 6px; min-height: 36px; padding: 0 13px; border-radius: 999px; border: 1px solid var(--rule); background: #fff; cursor: pointer; font-size: 15px; white-space: nowrap; -webkit-tap-highlight-color: transparent; }
+.chip.on { background: var(--blue-hl); border-color: var(--blue-hl); font-weight: 600; }
+.chip.pk.on { background: var(--pink-hl); border-color: var(--pink-hl); }
+.chip:disabled { opacity: 0.4; cursor: not-allowed; }
+.chips { display: flex; flex-wrap: wrap; gap: 7px; }
+.seg { display: inline-flex; border: 1.5px solid var(--ink); border-radius: 999px; padding: 3px; gap: 3px; flex-wrap: wrap; }
+.seg button { border: 0; background: transparent; border-radius: 999px; padding: 8px 14px; cursor: pointer; font-weight: 500; font-size: 15px; }
+.seg button.on { background: var(--blue); color: #fff; font-weight: 600; }
+
+/* Forms */
+.field { margin: 16px 0; }
+.field > label, .field > .label { display: block; margin-bottom: 7px; }
+.input, select.input, textarea.input { width: 100%; min-height: 46px; border: 1.5px solid var(--rule); border-radius: 12px; padding: 10px 13px; background: #fff; font-size: 16px; }
+.input:focus { border-color: var(--blue); outline: none; box-shadow: 0 0 0 3px var(--blue-soft); }
+textarea.input { min-height: 96px; resize: vertical; line-height: 1.45; }
+.hint { font-size: 13.5px; color: var(--ink-2); margin-top: 6px; }
+.stepper { display: inline-flex; align-items: center; gap: 4px; border: 1.5px solid var(--ink); border-radius: 999px; padding: 3px; }
+.stepper button { width: 38px; height: 38px; border-radius: 50%; border: 0; background: var(--blue-soft); font-size: 20px; cursor: pointer; }
+.stepper output { min-width: 44px; text-align: center; font-weight: 600; font-size: 18px; }
+.switch { display: inline-flex; align-items: center; gap: 10px; cursor: pointer; }
+.switch input { width: 46px; height: 28px; appearance: none; -webkit-appearance: none; background: var(--rule); border-radius: 999px; position: relative; cursor: pointer; transition: background .15s; margin: 0; flex: none; }
+.switch input::after { content: ''; position: absolute; top: 3px; left: 3px; width: 22px; height: 22px; border-radius: 50%; background: #fff; transition: transform .15s; box-shadow: 0 1px 2px rgba(19,33,74,.25); }
+.switch input:checked { background: var(--blue); }
+.switch input:checked::after { transform: translateX(18px); }
+
+/* Sign in */
+.signin { max-width: 420px; margin: 12vh auto 0; padding: 0 var(--pad); }
+.signin h1 { margin: 18px 0 8px; }
+.err { color: var(--ink); background: var(--pink-soft); border-left: 4px solid var(--pink); padding: 8px 12px; border-radius: 0 10px 10px 0; font-size: 15px; margin: 10px 0; }
+.note { background: var(--blue-soft); border-left: 4px solid var(--blue); padding: 9px 12px; border-radius: 0 10px 10px 0; font-size: 15px; margin: 12px 0; }
+
+/* Runner */
+.run-top { position: sticky; top: 0; z-index: 20; background: rgba(255,255,255,0.97); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border-bottom: 1px solid var(--rule); }
+.run-top .in { max-width: var(--col); margin: 0 auto; padding: 8px var(--pad) 10px; }
+.run-bar { display: flex; align-items: center; gap: 10px; }
+.run-bar .what { flex: 1; min-width: 0; font-size: 14px; color: var(--ink-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.icon-btn { width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--rule); background: #fff; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; flex: none; }
+.icon-btn svg { width: 18px; height: 18px; }
+.clock { display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; margin-top: 4px; }
+.clock .big { font-size: 46px; font-weight: 600; letter-spacing: -0.03em; line-height: 1; font-variant-numeric: tabular-nums; }
+.clock .big.over { background: linear-gradient(transparent 58%, var(--pink-hl) 58%); }
+.clock .sub { font-size: 13px; color: var(--ink-2); }
+.pace { text-align: right; font-size: 14px; }
+.pace b { display: inline-block; padding: 2px 9px; border-radius: 999px; background: var(--blue-soft); font-weight: 600; }
+.pace b.behind { background: var(--pink-hl); }
+.tbar { height: 6px; background: var(--rule-2); border-radius: 999px; margin-top: 8px; overflow: hidden; position: relative; }
+.tbar i { position: absolute; left: 0; top: 0; bottom: 0; background: var(--blue); border-radius: 999px; }
+.tbar.over i { background: var(--pink); }
+.qstrip { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; padding: 10px 0 2px; scroll-behavior: smooth; }
+.qstrip::-webkit-scrollbar { display: none; }
+.qchip { flex: none; position: relative; width: 38px; height: 38px; border-radius: 50%; border: 1.5px solid var(--rule); background: #fff; font-size: 14px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; font-variant-numeric: tabular-nums; }
+.qchip.ans { background: var(--blue-soft); border-color: var(--blue-soft); }
+.qchip.cur { background: var(--blue); border-color: var(--blue); color: #fff; }
+.qchip.bm::after { content: ''; position: absolute; top: -3px; right: -1px; width: 11px; height: 14px; background: var(--pink); clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 72%, 0 100%); }
+.qchip:disabled { cursor: default; }
+.qcard { padding-top: 18px; }
+.qhead { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.qnum { font-size: 24px; font-weight: 600; letter-spacing: -0.02em; }
+.qtime { display: flex; align-items: center; gap: 10px; margin: 10px 0 4px; font-size: 14px; color: var(--ink-2); }
+.qtime .bar { flex: 1; height: 8px; border-radius: 999px; background: var(--rule-2); position: relative; overflow: hidden; }
+.qtime .bar i { position: absolute; left: 0; top: 0; bottom: 0; background: var(--blue); }
+.qtime .bar u { position: absolute; top: 0; bottom: 0; background: var(--pink); text-decoration: none; }
+.qtime .bar s { position: absolute; top: -2px; bottom: -2px; width: 2px; background: var(--ink); text-decoration: none; }
+.opts { display: flex; gap: 10px; justify-content: space-between; margin: 18px 0 10px; }
+.opt { flex: 1; max-width: 74px; aspect-ratio: 1; border-radius: 50%; border: 2px solid var(--ink); background: #fff; font-size: 22px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; -webkit-tap-highlight-color: transparent; transition: background .1s, color .1s; }
+.opt.on { background: var(--blue); border-color: var(--blue); color: #fff; }
+.opt.key { box-shadow: 0 0 0 4px var(--blue-hl); }
+.opt:disabled { opacity: .35; cursor: not-allowed; }
+.mp { margin: 14px 0; }
+.mp-row { display: flex; align-items: center; gap: 10px; padding: 7px 0; border-top: 1px solid var(--rule-2); }
+.mp-row:first-child { border-top: 0; }
+.mp-row .lab { width: 82px; font-size: 14px; color: var(--ink-2); flex: none; }
+.mp-row .opts2 { display: flex; gap: 7px; flex-wrap: wrap; }
+.mini { min-width: 46px; height: 42px; border-radius: 999px; border: 1.5px solid var(--ink); background: #fff; font-weight: 600; cursor: pointer; padding: 0 12px; }
+.mini.on { background: var(--blue); border-color: var(--blue); color: #fff; }
+.mini:disabled { opacity: .35; cursor: not-allowed; }
+.tools { display: flex; flex-wrap: wrap; gap: 8px; margin: 6px 0 4px; }
+.passage { border: 1px solid var(--rule); border-radius: var(--radius); padding: 14px 16px; margin: 12px 0; line-height: 1.65; font-size: 17px; white-space: pre-wrap; }
+.passage .w { cursor: pointer; border-radius: 3px; }
+.passage .w:hover { background: var(--blue-soft); }
+.passage .w.seen { background: linear-gradient(transparent 62%, var(--pink-hl) 62%); }
+.run-foot { position: sticky; bottom: 0; background: rgba(255,255,255,0.97); border-top: 1px solid var(--rule); padding: 10px 0 calc(10px + env(safe-area-inset-bottom)); margin-top: 22px; z-index: 10; }
+.run-foot .in { display: flex; gap: 10px; }
+.run-foot .btn { flex: 1; }
+.banner { border-radius: var(--radius); padding: 12px 14px; margin: 12px 0; }
+.banner.pink { background: var(--pink-soft); }
+.banner.blue { background: var(--blue-soft); }
+.banner .btns { margin-top: 8px; }
+.review-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(64px, 1fr)); gap: 8px; margin: 14px 0; }
+.rq { position: relative; border: 1.5px solid var(--rule); border-radius: 14px; padding: 8px 6px; text-align: center; background: #fff; cursor: pointer; }
+.rq b { display: block; font-size: 18px; }
+.rq span { font-size: 13px; color: var(--ink-2); }
+.rq.bm::after { content: ''; position: absolute; top: -3px; right: 8px; width: 11px; height: 15px; background: var(--pink); clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 72%, 0 100%); }
+.rq.empty { border-style: dashed; }
+.paused-veil { position: fixed; inset: 0; z-index: 40; background: rgba(255,255,255,0.97); display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 14px; text-align: center; padding: 24px; }
+.paused-veil .big { font-size: 54px; font-weight: 600; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+
+/* Marking and results */
+.mrow { border-top: 1px solid var(--rule); padding: 12px 0; }
+.mrow-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.mrow-head .n { font-weight: 600; width: 46px; }
+.res { display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 50%; font-weight: 700; font-size: 15px; flex: none; }
+.res.r { background: var(--blue); color: #fff; }
+.res.w { background: var(--pink-hl); color: var(--ink); }
+.res.u { border: 1.5px dashed var(--ink-3); color: var(--ink-3); }
+.kv { display: flex; gap: 18px; flex-wrap: wrap; font-size: 14px; color: var(--ink-2); margin-top: 6px; }
+.kv b { color: var(--ink); font-weight: 600; }
+.score { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; }
+.score .v { font-size: 56px; font-weight: 600; letter-spacing: -0.03em; line-height: 1; }
+.facts { list-style: none; margin: 10px 0 0; padding: 0; }
+.facts li { padding: 7px 0 7px 18px; position: relative; border-top: 1px solid var(--rule-2); }
+.facts li:first-child { border-top: 0; }
+.facts li::before { content: ''; position: absolute; left: 0; top: 15px; width: 8px; height: 8px; border-radius: 50%; background: var(--blue); }
+.facts li.pk::before { background: var(--pink); }
+
+/* Charts */
+.chart { width: 100%; max-width: 100%; height: auto; display: block; overflow: visible; }
+.chart text { font-family: var(--font); fill: var(--ink-2); font-size: 12px; }
+.chart .grid { stroke: var(--rule-2); stroke-width: 1; }
+.chart .axis { stroke: var(--rule); stroke-width: 1; }
+.legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: 13px; color: var(--ink-2); margin: 6px 0 0; }
+.legend i { display: inline-block; width: 11px; height: 11px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+.tip { position: fixed; z-index: 60; pointer-events: none; background: var(--ink); color: #fff; font-size: 13px; padding: 7px 10px; border-radius: 10px; max-width: 240px; line-height: 1.35; transform: translate(-50%, calc(-100% - 10px)); }
+.hbar { height: 10px; border-radius: 999px; background: var(--rule-2); position: relative; overflow: hidden; min-width: 60px; }
+.hbar i { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 999px; background: var(--blue); }
+.hbar.pk i { background: var(--pink); }
+.hbar s { position: absolute; top: -2px; bottom: -2px; width: 2px; background: var(--ink); }
+
+/* Topics table */
+.ttab { width: 100%; border-collapse: collapse; font-size: 15px; }
+.ttab th { text-align: left; font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; padding: 6px 8px 8px 0; border-bottom: 2px solid var(--ink); white-space: nowrap; }
+.ttab td { padding: 10px 8px 10px 0; border-bottom: 1px solid var(--rule); vertical-align: middle; }
+.ttab td.n, .ttab th.n { text-align: right; font-variant-numeric: tabular-nums; }
+.ttab .bars { width: 34%; }
+.ttab tr.grp td { border-bottom: 0; padding-top: 22px; font-weight: 600; }
+.ttab tr.click { cursor: pointer; }
+.ttab tr.click:hover td { background: var(--rule-2); }
+.st { display: inline-block; font-size: 12px; padding: 2px 9px; border-radius: 999px; border: 1px solid var(--rule); white-space: nowrap; cursor: pointer; background: #fff; }
+.st[data-v='learning'] { background: var(--pink-soft); border-color: var(--pink-hl); }
+.st[data-v='practising'] { background: var(--blue-soft); border-color: var(--blue-hl); }
+.st[data-v='confident'] { background: var(--blue-hl); border-color: var(--blue-hl); font-weight: 600; }
+@media (max-width: 600px) { .ttab .hide-sm { display: none; } .ttab .bars { width: 40%; } }
+
+/* Do more */
+.domore { list-style: none; margin: 0; padding: 0; counter-reset: dm; }
+.domore li { display: flex; gap: 12px; align-items: flex-start; padding: 12px 0; border-top: 1px solid var(--rule); }
+.domore li:first-child { border-top: 0; }
+.domore li::before { counter-increment: dm; content: counter(dm); flex: none; width: 28px; height: 28px; border-radius: 50%; background: var(--pink-hl); display: inline-flex; align-items: center; justify-content: center; font-weight: 600; font-size: 14px; }
+.domore .what { flex: 1; min-width: 0; }
+.domore .why { font-size: 14px; color: var(--ink-2); }
+
+/* Lookup sheet */
+.sheet-bg { position: fixed; inset: 0; background: rgba(19,33,74,0.28); z-index: 50; }
+.sheet { position: fixed; left: 0; right: 0; bottom: 0; z-index: 51; background: #fff; border-radius: 22px 22px 0 0; max-height: 86vh; overflow-y: auto; padding: 10px var(--pad) calc(22px + env(safe-area-inset-bottom)); box-shadow: 0 -6px 30px rgba(19,33,74,0.18); }
+@media (min-width: 900px) { .sheet-bg { display: none; } .sheet { left: auto; right: 24px; bottom: 24px; top: auto; width: 420px; border-radius: 22px; max-height: calc(100vh - 48px); } }
+.sheet .grab { width: 42px; height: 5px; border-radius: 999px; background: var(--rule); margin: 2px auto 10px; }
+.lk-form { display: flex; gap: 8px; }
+.lk-form .input { flex: 1; }
+.entry { margin-top: 14px; }
+.entry .hw { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.entry .hw b { font-size: 26px; font-weight: 600; letter-spacing: -0.01em; }
+.entry .vi { font-size: 19px; margin: 6px 0 4px; }
+.entry .vi span { background: var(--pink-soft); padding: 1px 8px; border-radius: 8px; margin-right: 6px; display: inline-block; margin-bottom: 4px; }
+.entry .pos { margin-top: 12px; }
+.entry ol { margin: 4px 0 0; padding-left: 20px; }
+.entry li { margin: 4px 0; }
+.entry .ex { color: var(--ink-2); font-size: 14.5px; }
+.entry .ctx { font-size: 14.5px; color: var(--ink-2); border-left: 3px solid var(--pink-hl); padding-left: 10px; margin: 8px 0; }
+.links { display: flex; flex-wrap: wrap; gap: 8px 14px; font-size: 14px; margin-top: 12px; }
+.spin { display: inline-block; width: 18px; height: 18px; border: 2.5px solid var(--blue-hl); border-top-color: var(--blue); border-radius: 50%; animation: spin .8s linear infinite; vertical-align: -3px; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.fab { position: fixed; right: 16px; bottom: calc(86px + env(safe-area-inset-bottom)); z-index: 15; }
+
+/* Words */
+.wrow .w { font-weight: 600; font-size: 18px; }
+.wrow .vi { background: var(--pink-soft); border-radius: 6px; padding: 0 6px; }
+.flash { text-align: center; padding: 34px 18px; border: 1px solid var(--rule); border-radius: 22px; margin: 16px 0; }
+.flash .w { font-size: 38px; font-weight: 600; letter-spacing: -0.02em; }
+
+/* Confirm and toast */
+.confirm { border: 1.5px solid var(--ink); border-radius: var(--radius); padding: 14px; margin: 12px 0; background: #fff; }
+.toast { position: fixed; left: 50%; bottom: calc(24px + env(safe-area-inset-bottom)); transform: translateX(-50%); background: var(--ink); color: #fff; padding: 10px 16px; border-radius: 999px; font-size: 15px; z-index: 70; max-width: calc(100vw - 32px); text-align: center; }
+
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; scroll-behavior: auto !important; } }
+@media print { .top, .nav, .run-top, .run-foot, .fab { display: none !important; } }
+</style>
+</head>
+<body>
+<div id="app" aria-live="polite"></div>
+<div id="layer"></div>
+<script>
+'use strict';
+// Anh's GMAT tracker. Everything she does is kept in this browser first (IndexedDB), then sent to the storage API on
+// Netlify (anh-api/ in the arizvi-com repo), so it survives a closed tab, a lost connection or a new device.
+const API = window.ANH_API || 'https://delicate-douhua-bf9bf7.netlify.app/api';
+
+/* ---------- The GMAT, as the tracker uses it ---------- */
+// Sections and timing are the GMAT's own (mba.com): 21, 23 and 20 questions, 45 minutes each.
+const SEC = {
+  Q: { name: 'Quantitative Reasoning', short: 'Quant', n: 21, min: 45, types: ['PS'] },
+  V: { name: 'Verbal Reasoning', short: 'Verbal', n: 23, min: 45, types: ['CR', 'RC'] },
+  DI: { name: 'Data Insights', short: 'Data Insights', n: 20, min: 45, types: ['DS', 'MSR', 'TA', 'GI', 'TPA'] },
+};
+const SEC_ORDER = ['Q', 'V', 'DI'];
+const paceMs = (sec) => (SEC[sec].min * 60000) / SEC[sec].n; // the pace the real section gives you
+// fmt: how an answer is given. abc = one of A to E, yn = three Yes/No rows, two5/two6 = two picks from A-E or A-F.
+const TYPE = {
+  PS: { name: 'Problem Solving', sec: 'Q', fmt: 'abc', grp: 'quant' },
+  CR: { name: 'Critical Reasoning', sec: 'V', fmt: 'abc', grp: 'cr' },
+  RC: { name: 'Reading Comprehension', sec: 'V', fmt: 'abc', grp: 'rc' },
+  DS: { name: 'Data Sufficiency', sec: 'DI', fmt: 'abc', grp: 'quant' },
+  MSR: { name: 'Multi-Source Reasoning', sec: 'DI', fmt: 'abc', grp: null },
+  TA: { name: 'Table Analysis', sec: 'DI', fmt: 'yn', grp: null },
+  GI: { name: 'Graphics Interpretation', sec: 'DI', fmt: 'two5', grp: null },
+  TPA: { name: 'Two-Part Analysis', sec: 'DI', fmt: 'two6', grp: null },
+};
+const TYPE_ORDER = ['PS', 'CR', 'RC', 'DS', 'MSR', 'TA', 'GI', 'TPA'];
+const GROUPS = {
+  quant: { name: 'Maths topics', note: 'Problem Solving and Data Sufficiency', items: [
+    ['num', 'Number properties'], ['pct', 'Fractions, decimals and percents'], ['ratio', 'Ratios and proportions'],
+    ['exp', 'Exponents and roots'], ['alg', 'Algebra and equations'], ['ineq', 'Inequalities and absolute value'],
+    ['func', 'Functions and sequences'], ['rate', 'Rates, speed and work'], ['mix', 'Mixtures, interest and profit'],
+    ['stat', 'Statistics'], ['sets', 'Sets and overlapping groups'], ['prob', 'Counting and probability'],
+    ['logic', 'Logic (no maths)'] ] },
+  cr: { name: 'Critical Reasoning', note: 'question types', items: [
+    ['assume', 'Assumption'], ['strengthen', 'Strengthen'], ['weaken', 'Weaken'], ['evaluate', 'Evaluate'],
+    ['infer', 'Inference'], ['paradox', 'Explain a paradox'], ['role', 'Boldface and role'], ['flaw', 'Flaw'],
+    ['complete', 'Complete the argument'] ] },
+  rc: { name: 'Reading Comprehension', note: 'question types', items: [
+    ['main', 'Main idea'], ['detail', 'Detail'], ['rcinfer', 'Inference'], ['purpose', 'Purpose of a part'],
+    ['apply', 'Application'], ['tone', 'Tone and attitude'], ['rceval', 'Strengthen or weaken'] ] },
+};
+const TOPIC = {}; // id -> { name, grp }
+for (const [g, def] of Object.entries(GROUPS)) for (const [id, name] of def.items) TOPIC[id] = { name, grp: g };
+const REASONS = [
+  ['concept', 'Concept', 'Did not know how to do it'], ['misread', 'Misread', 'Misread the question'],
+  ['careless', 'Careless', 'Careless slip'], ['trap', 'Trap answer', 'Fell for a trap answer'],
+  ['time', 'Time', 'Ran short of time'], ['vocab', 'Vocabulary', 'Did not know a word'], ['guess', 'Guess', 'Guessed'],
+];
+const REASON = Object.fromEntries(REASONS.map(([id, short, long]) => [id, { short, long }]));
+const SOURCES = ['GMAT Official Guide', 'Official Guide Verbal Review', 'Official Guide Quantitative Review',
+  'Official Guide Data Insights Review', 'GMAT Official Practice Questions', 'GMAT Club', 'Target Test Prep', 'e-GMAT', 'Manhattan Prep'];
+const EXAMS = ['Official Practice Exam 1', 'Official Practice Exam 2', 'Official Practice Exam 3', 'Official Practice Exam 4',
+  'Official Practice Exam 5', 'Official Practice Exam 6', 'Target Test Prep mock', 'e-GMAT mock', 'Manhattan Prep mock', 'GMAT Club mock'];
+const STATUS = [['new', 'Not started'], ['learning', 'Learning'], ['practising', 'Practising'], ['confident', 'Confident']];
+
+/* ---------- Small helpers ---------- */
+const $ = (sel, el = document) => el.querySelector(sel);
+const $$ = (sel, el = document) => [...el.querySelectorAll(sel)];
+const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+const sum = (a) => a.reduce((x, y) => x + y, 0);
+const avg = (a) => (a.length ? sum(a) / a.length : 0);
+const pct = (r, n) => (n ? Math.round((100 * r) / n) : 0);
+function mmss(ms, { sign = false } = {}) {
+  const neg = ms < 0; let s = Math.round(Math.abs(ms) / 1000);
+  const h = Math.floor(s / 3600); s -= h * 3600; const m = Math.floor(s / 60); s -= m * 60;
+  const t = h ? `${h}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}` : `${m}:${String(s).padStart(2, '0')}`;
+  return (neg ? '-' : sign ? '+' : '') + t;
+}
+function dur(ms) { return ms < 60000 ? `${Math.max(1, Math.round(ms / 1000))} sec` : minutes(ms); }
+function minutes(ms) { const m = Math.round(ms / 60000); return m < 60 ? `${m} min` : `${Math.floor(m / 60)} h ${m % 60} min`; }
+const DAY = 86400000;
+function localDate(t = Date.now()) { const d = new Date(t); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; }
+function parseLocalDate(s) { const [y, m, d] = String(s).split('-').map(Number); return new Date(y, (m || 1) - 1, d || 1).getTime(); }
+function niceDate(t, { year = false } = {}) {
+  const d = new Date(t);
+  return d.toLocaleDateString('en-CA', { weekday: 'short', day: 'numeric', month: 'short', ...(year ? { year: 'numeric' } : {}) });
+}
+function ago(t) {
+  if (!t) return 'never';
+  const days = Math.floor((parseLocalDate(localDate()) - parseLocalDate(localDate(t))) / DAY);
+  if (days <= 0) return 'today'; if (days === 1) return 'yesterday'; if (days < 14) return `${days} days ago`;
+  if (days < 60) return `${Math.round(days / 7)} weeks ago`; return `${Math.round(days / 30)} months ago`;
+}
+const plural = (n, one, many = one + 's') => `${n} ${n === 1 ? one : many}`;
+let toastTimer;
+function toast(msg) {
+  let el = $('#toast'); if (!el) { el = document.createElement('div'); el.id = 'toast'; el.className = 'toast'; el.setAttribute('role', 'status'); document.body.appendChild(el); }
+  el.textContent = msg; el.hidden = false; clearTimeout(toastTimer); toastTimer = setTimeout(() => { el.hidden = true; }, 2600);
+}
+function setting(k) { const s = get('m/settings') || {}; return s[k] ?? DEFAULTS[k]; }
+const DEFAULTS = { showVi: true, setSize: 10, target: null, testDate: null, name: 'Ánh' };
+
+/* ---------- Local store (IndexedDB) ---------- */
+const idb = {
+  db: null,
+  open() {
+    return new Promise((resolve) => {
+      if (!('indexedDB' in window)) return resolve(false);
+      const req = indexedDB.open('anh-gmat', 1);
+      req.onupgradeneeded = () => req.result.createObjectStore('kv', { keyPath: 'key' });
+      req.onsuccess = () => { this.db = req.result; resolve(true); };
+      req.onerror = () => resolve(false);
+      req.onblocked = () => resolve(false);
+    });
+  },
+  tx(mode, fn) {
+    if (!this.db) return Promise.resolve(null);
+    return new Promise((resolve, reject) => {
+      const t = this.db.transaction('kv', mode); const st = t.objectStore('kv'); let out = null;
+      const r = fn(st); if (r) r.onsuccess = () => { out = r.result; };
+      t.oncomplete = () => resolve(out); t.onerror = () => reject(t.error); t.onabort = () => reject(t.error);
+    });
+  },
+  all() { return this.tx('readonly', (st) => st.getAll()); },
+  put(rec) { return this.tx('readwrite', (st) => st.put(rec)).catch(() => null); },
+  del(key) { return this.tx('readwrite', (st) => st.delete(key)).catch(() => null); },
+  clear() { return this.tx('readwrite', (st) => st.clear()).catch(() => null); },
+};
+
+/* ---------- Data: in memory, mirrored to IndexedDB, synced to the API ---------- */
+const DB = { items: new Map(), meta: new Map() }; // meta: key -> { etag, dirty, del, rev }
+const get = (key) => DB.items.get(key);
+const all = (prefix) => [...DB.items.entries()].filter(([k]) => k.startsWith(prefix)).map(([, v]) => v);
+function saveLocal(key) {
+  const m = DB.meta.get(key) || {}; const data = DB.items.get(key);
+  return idb.put({ key, data: data ?? null, etag: m.etag ?? null, dirty: !!m.dirty, del: !!m.del, rev: m.rev || 0 });
+}
+function put(key, data, when = 'soon') {
+  if (data && typeof data === 'object') data.updated = Date.now();
+  DB.items.set(key, data);
+  const m = DB.meta.get(key) || { etag: null, rev: 0 };
+  m.dirty = true; m.del = false; m.rev = (m.rev || 0) + 1; DB.meta.set(key, m);
+  saveLocal(key);
+  if (when === 'now') flush(); else if (when === 'soon') scheduleFlush(1200); else scheduleFlush(15000);
+}
+function remove(key) {
+  DB.items.delete(key);
+  const m = DB.meta.get(key);
+  if ((!m || !m.etag) && !flushing) { DB.meta.delete(key); idb.del(key); return; } // never reached the server
+  const mm = m || { etag: null, rev: 0 }; DB.meta.set(key, mm);
+  mm.dirty = true; mm.del = true; mm.rev = (mm.rev || 0) + 1; saveLocal(key); scheduleFlush(600);
+}
+const wordKey = (w) => 'w/' + encodeURIComponent(w.toLowerCase()).slice(0, 220);
+
+let PASS = localStorage.getItem('anh-pass') || '';
+async function api(path, opts = {}) {
+  const res = await fetch(API + path, { ...opts, headers: { Authorization: 'Bearer ' + PASS, 'Content-Type': 'application/json' }, keepalive: !!opts.keepalive });
+  if (res.status === 401) { const e = new Error('passcode'); e.code = 401; throw e; }
+  if (!res.ok) throw new Error('HTTP ' + res.status);
+  return res.json();
+}
+
+let flushTimer = null, flushing = false, retryMs = 0, syncState = 'saved';
+function setSync(s) {
+  syncState = s;
+  const el = $('#sync'); if (!el) return;
+  el.dataset.s = s;
+  el.querySelector('span').textContent = s === 'saving' ? 'Saving' : s === 'offline' ? 'Offline, kept on this device' : 'Saved';
+}
+function scheduleFlush(ms) { clearTimeout(flushTimer); flushTimer = setTimeout(flush, ms); }
+async function flush({ keepalive = false } = {}) {
+  if (!PASS) return;
+  if (flushing) { scheduleFlush(800); return; }
+  const dirty = [...DB.meta.entries()].filter(([, m]) => m.dirty);
+  if (!dirty.length) { setSync('saved'); return; }
+  flushing = true; setSync('saving');
+  const items = [], del = [], revs = new Map(); let size = 0;
+  for (const [key, m] of dirty) {
+    if (m.del) del.push(key);
+    else {
+      const data = DB.items.get(key); const len = JSON.stringify(data ?? null).length;
+      if (items.length && size + len > (keepalive ? 60000 : 2_500_000)) continue;
+      items.push({ key, data: data ?? null }); size += len;
+    }
+    revs.set(key, m.rev);
+  }
+  try {
+    const res = await api('/put', { method: 'POST', body: JSON.stringify({ items, del }), keepalive });
+    for (const it of res.items || []) {
+      const m = DB.meta.get(it.key); if (!m) continue;
+      m.etag = it.etag || m.etag;
+      if (m.rev === revs.get(it.key)) m.dirty = false;
+      saveLocal(it.key);
+    }
+    for (const key of res.deleted || []) {
+      const m = DB.meta.get(key);
+      if (m && m.del && m.rev === revs.get(key)) { DB.meta.delete(key); idb.del(key); }
+    }
+    retryMs = 0; flushing = false;
+    if ([...DB.meta.values()].some((m) => m.dirty)) scheduleFlush(300); else setSync('saved');
+  } catch (e) {
+    flushing = false;
+    if (e.code === 401) { lock('The passcode has changed. Sign in again.'); return; }
+    setSync('offline'); retryMs = Math.min(retryMs ? retryMs * 2 : 3000, 60000); scheduleFlush(retryMs);
+  }
+}
+let pulling = null, lastPull = 0;
+function pull() {
+  if (pulling) return pulling;
+  pulling = (async () => {
+    try {
+      const list = await api('/list');
+      const server = new Map((list.items || []).map((i) => [i.key, i.etag]));
+      const need = [];
+      for (const [key, etag] of server) { const m = DB.meta.get(key); if (!m || (!m.dirty && m.etag !== etag)) need.push(key); }
+      let changed = false;
+      for (const [key, m] of [...DB.meta.entries()]) {
+        if (!server.has(key) && !m.dirty && m.etag) { DB.meta.delete(key); DB.items.delete(key); idb.del(key); changed = true; }
+      }
+      for (let i = 0; i < need.length; i += 100) {
+        let batch = need.slice(i, i + 100);
+        while (batch.length) {
+          const r = await api('/get', { method: 'POST', body: JSON.stringify({ keys: batch }) });
+          for (const it of r.items || []) {
+            if (it.missing) continue;
+            const m = DB.meta.get(it.key); if (m && m.dirty) continue;
+            DB.items.set(it.key, it.data); DB.meta.set(it.key, { etag: server.get(it.key) || it.etag || null, dirty: false, del: false, rev: 0 });
+            saveLocal(it.key); changed = true;
+          }
+          batch = r.rest || [];
+        }
+      }
+      lastPull = Date.now();
+      if (syncState === 'offline') setSync([...DB.meta.values()].some((m) => m.dirty) ? 'saving' : 'saved');
+      if ([...DB.meta.values()].some((m) => m.dirty)) scheduleFlush(200);
+      return changed;
+    } catch (e) {
+      if (e.code === 401) { lock('The passcode has changed. Sign in again.'); return false; }
+      setSync('offline'); return false;
+    } finally { pulling = null; }
+  })();
+  return pulling;
+}
+async function loadLocal() {
+  const ok = await idb.open();
+  if (!ok) return;
+  const recs = (await idb.all()) || [];
+  for (const r of recs) {
+    if (!r.del) DB.items.set(r.key, r.data);
+    DB.meta.set(r.key, { etag: r.etag, dirty: r.dirty, del: r.del, rev: r.rev || 0 });
+  }
+}
+// The passcode stopped working: ask for it again but keep everything on this device, and send it once she is back in.
+function lock(message) {
+  PASS = ''; localStorage.removeItem('anh-pass'); signinMessage = message || ''; render();
+}
+// Settings > Sign out: send what is left, then clear this device.
+async function signOutDevice() {
+  await flush();
+  PASS = ''; localStorage.removeItem('anh-pass');
+  DB.items.clear(); DB.meta.clear(); await idb.clear();
+  signinMessage = 'Signed out of this device.'; location.hash = '#/'; render();
+}
+let signinMessage = '';
+
+/* ---------- Practice sessions: questions, answers and the clock ---------- */
+// A session is a timed GMAT section (real timing, Review & Edit with 3 changes) or a practice set (any length, free to
+// move around). Its clock counts only while it runs, and the time goes to whichever question is open.
+const fmtOf = (type) => (type ? TYPE[type].fmt : 'abc');
+function newQ(s, i) {
+  const type = s.defType || (SEC[s.sec].types.length === 1 ? SEC[s.sec].types[0] : null);
+  return { n: s.start + i, type, topic: s.defTopic || null, fmt: fmtOf(type), ans: null, first: null, hist: [], ms: 0, msRev: 0,
+    visits: 0, bm: false, guess: false, note: '', text: '', key: null, res: null, why: null, take: '', words: [], redo: [], bmDone: false };
+}
+function newSession(o) {
+  const s = { id: uid(), v: 1, created: Date.now(), sec: o.sec, mode: o.mode, rules: !!o.rules, limit: o.limit || null,
+    source: (o.source || '').trim(), start: o.start || 1, defType: o.type || null, defTopic: o.topic || null,
+    status: 'running', phase: 'first', cur: 0, edits: 3, endedBy: null, revMs: 0, timeUpSeen: false, ended: null,
+    clock: { run: false, since: null, used: 0, hb: Date.now(), pauses: [], pausedAt: null } };
+  s.qs = Array.from({ length: o.count }, (_, i) => newQ(s, i));
+  s.qs[0].visits = 1;
+  return s;
+}
+const sKey = (s) => 's/' + s.id;
+const used = (s) => s.clock.used + (s.clock.run ? Math.max(0, Date.now() - s.clock.since) : 0);
+const qUsed = (s, i) => s.qs[i].ms + (s.clock.run && s.cur === i ? Math.max(0, Date.now() - s.clock.since) : 0);
+function commit(s, at = Date.now()) {
+  if (!s.clock.run) return;
+  const d = Math.max(0, at - s.clock.since);
+  s.clock.used += d; s.clock.since = at; s.clock.hb = at;
+  const q = s.qs[s.cur];
+  if (q) { q.ms += d; if (s.phase === 'review') q.msRev += d; }
+  if (s.phase === 'review') s.revMs += d;
+}
+function startClock(s) {
+  const now = Date.now();
+  if (s.clock.pausedAt) { s.clock.pauses.push({ at: s.clock.used, ms: Math.max(0, now - s.clock.pausedAt) }); s.clock.pausedAt = null; }
+  s.clock.run = true; s.clock.since = now; s.clock.hb = now;
+}
+function stopClock(s) { commit(s); s.clock.run = false; s.clock.since = null; s.clock.pausedAt = Date.now(); }
+function leaveQ(s) { const q = s.qs[s.cur]; if (q && q.first == null && q.ans != null && s.phase === 'first') q.first = q.ans; }
+function goTo(s, i) {
+  commit(s); leaveQ(s); settleEdit(s); s.cur = i;
+  if (i >= 0 && s.qs[i]) { s.qs[i].visits++; if (s.rules && s.phase === 'review') s.revSnap = { i, a: s.qs[i].ans }; }
+}
+// When the page was closed (or the phone slept) for more than 10 minutes, stop the clock where it last ticked.
+function recover(s) {
+  if (s.status !== 'running' || !s.clock.run) return;
+  const gap = Date.now() - (s.clock.hb || s.clock.since);
+  if (gap > 10 * 60000) {
+    commit(s, Math.max(s.clock.since, s.clock.hb || s.clock.since));
+    s.clock.run = false; s.clock.since = null; s.clock.pausedAt = s.clock.hb; s.away = { from: s.clock.hb, ms: gap };
+  }
+}
+function countAway(s) {
+  if (!s.away) return;
+  s.clock.used += s.away.ms; const q = s.qs[s.cur]; if (q) { q.ms += s.away.ms; if (s.phase === 'review') q.msRev += s.away.ms; }
+  if (s.phase === 'review') s.revMs += s.away.ms;
+  s.clock.pausedAt = null; s.away = null;
+}
+const complete = (fmt, a) => {
+  if (a == null) return false;
+  if (fmt === 'abc') return /^[A-E]$/.test(a);
+  if (fmt === 'yn') return /^[YN]{3}$/.test(a);
+  return /^[A-F]{2}$/.test(a);
+};
+function showAns(fmt, a) {
+  if (a == null || a === '') return '-';
+  if (fmt === 'yn') return a.split('').map((c) => (c === 'Y' ? 'Yes' : c === 'N' ? 'No' : '?')).join(' · ');
+  if (fmt === 'two5' || fmt === 'two6') return a.split('').map((c) => (c === '-' ? '?' : c)).join(' · ');
+  return a;
+}
+// Review & Edit (GMAT rules): opening a question there and leaving it with a different answer uses one of the 3 changes,
+// however many times the choice moved while it was open. Returns false when no changes are left.
+function setAnswer(s, i, value) {
+  const q = s.qs[i];
+  if (q.ans === value) return true;
+  if (s.rules && s.phase === 'review' && s.edits <= 0) return false;
+  commit(s);
+  q.ans = value; q.hist.push({ a: value, t: s.clock.used, r: s.phase === 'review' });
+  return true;
+}
+function settleEdit(s) {
+  const snap = s.revSnap; s.revSnap = null;
+  if (!snap || !s.rules || s.phase !== 'review') return;
+  const q = s.qs[snap.i];
+  if (q && q.ans !== snap.a) { s.edits = Math.max(0, s.edits - 1); q.edited = (q.edited || 0) + 1; }
+}
+const pendingEdit = (s) => !!(s.revSnap && s.qs[s.revSnap.i] && s.qs[s.revSnap.i].ans !== s.revSnap.a);
+function endSection(s, by) {
+  commit(s); leaveQ(s); settleEdit(s);
+  s.clock.run = false; s.clock.since = null; s.clock.pausedAt = null;
+  s.status = 'marking'; s.endedBy = by; s.ended = Date.now();
+}
+function answeredCount(s) { return s.qs.filter((q) => complete(q.fmt, q.ans)).length; }
+function sessionTitle(s) {
+  const base = s.mode === 'gmat' ? `${SEC[s.sec].short} section` : `${SEC[s.sec].short} set`;
+  return s.source ? `${base} · ${s.source}` : base;
+}
+function sessionScore(s) {
+  const marked = s.qs.filter((q) => q.res);
+  return { r: marked.filter((q) => q.res === 'r').length, n: marked.length, of: s.qs.length };
+}
+function questionLabel(s, q) { return s.source ? `${s.source} #${q.n}` : `Question ${q.n}`; }
+
+/* ---------- Everything she has answered, flattened for the trackers ---------- */
+function questionRows() {
+  const rows = [];
+  for (const s of all('s/')) {
+    if (s.status !== 'done' && s.status !== 'marking') continue;
+    const when = s.ended || s.created;
+    s.qs.forEach((q, i) => {
+      rows.push({ s, q, i, sid: s.id, when, sec: s.sec, type: q.type, topic: q.topic, res: q.res, ms: q.ms, answered: complete(q.fmt, q.ans),
+        guess: q.guess, bm: q.bm, why: q.why, pace: s.mode === 'set' && s.limit ? s.limit / s.qs.length : paceMs(s.sec) });
+    });
+  }
+  return rows;
+}
+function statsFor(rows) {
+  const marked = rows.filter((r) => r.res);
+  const timed = rows.filter((r) => r.answered && r.ms > 0);
+  const right = marked.filter((r) => r.res === 'r').length;
+  const avgMs = avg(timed.map((r) => r.ms));
+  const paceAvg = avg(timed.map((r) => r.pace)) || 0;
+  return { n: marked.length, right, acc: marked.length ? right / marked.length : null, done: rows.filter((r) => r.answered).length,
+    avgMs, pace: paceAvg, slowN: timed.filter((r) => r.ms > r.pace * 1.5).length, timedN: timed.length,
+    last: rows.length ? Math.max(...rows.map((r) => r.when)) : null, wrong: marked.length - right,
+    guessRight: marked.filter((r) => r.res === 'r' && r.guess).length };
+}
+function sectionOfTopic(id) { const g = TOPIC[id]?.grp; return g === 'cr' || g === 'rc' ? 'V' : g === 'quant' ? 'Q' : null; }
+
+/* ---------- What to do more of ---------- */
+// Ranks question types and topics by how much more practice is likely to pay off: accuracy below her own average for
+// that section, slower than the real pace, not practised lately, or not practised at all. Plain reasons come with each.
+function recommendations(limit = 5) {
+  const rows = questionRows();
+  const out = [];
+  const secStats = Object.fromEntries(SEC_ORDER.map((sec) => [sec, statsFor(rows.filter((r) => r.sec === sec))]));
+  const baseAcc = (sec) => (secStats[sec].n >= 8 ? secStats[sec].acc : 0.7);
+  const now = Date.now();
+  const consider = (kind, id, name, sec, rs, practice) => {
+    const st = statsFor(rs);
+    const reasons = []; let score = 0;
+    if (st.n >= 3) {
+      const gap = baseAcc(sec) - st.acc;
+      if (gap > 0.05) { score += gap * 100; reasons.push(`${st.right} of ${st.n} right (${pct(st.right, st.n)}%), against ${Math.round(baseAcc(sec) * 100)}% across ${SEC[sec].short}`); }
+    }
+    if (st.timedN >= 3 && st.pace) {
+      const slow = st.avgMs / st.pace - 1;
+      if (slow > 0.15) { score += slow * 45; reasons.push(`${mmss(st.avgMs)} a question, ${mmss(st.avgMs - st.pace)} over the ${mmss(st.pace)} pace`); }
+    }
+    if (st.n >= 3 && st.last && now - st.last > 14 * DAY && score > 0) { score += 6; reasons.push(`last practised ${ago(st.last)}`); }
+    if (!rs.length) {
+      const base = kind === 'type' ? 14 : 5;
+      score += base; reasons.push('not practised yet');
+    } else if (st.n > 0 && st.n < 3 && st.wrong >= 2) { score += 10; reasons.push(`${st.wrong} of ${st.n} wrong so far`); }
+    if (score > 0) out.push({ kind, id, name, sec, score, why: reasons.join('; '), practice, st });
+  };
+  for (const t of TYPE_ORDER) consider('type', t, TYPE[t].name, TYPE[t].sec, rows.filter((r) => r.type === t), { sec: TYPE[t].sec, type: t });
+  for (const [id, def] of Object.entries(TOPIC)) {
+    const sec = sectionOfTopic(id); const rs = rows.filter((r) => r.topic === id);
+    const type = def.grp === 'cr' ? 'CR' : def.grp === 'rc' ? 'RC' : id === 'logic' ? 'DS' : 'PS';
+    if (!rs.length) continue; // untouched topics show in the topics tracker rather than here
+    consider('topic', id, def.name, sec, rs, { sec: TYPE[type].sec, type, topic: id });
+  }
+  const exams = all('e/').filter((e) => e.total).sort((a, b) => (a.date < b.date ? 1 : -1));
+  if (exams.length) {
+    const e = exams[0]; const secs = [['Q', e.q], ['V', e.v], ['DI', e.di]].filter(([, v]) => v);
+    if (secs.length === 3) {
+      secs.sort((a, b) => a[1] - b[1]);
+      if (secs[1][1] - secs[0][1] >= 2) out.push({ kind: 'section', id: secs[0][0], name: `Timed ${SEC[secs[0][0]].short} sections`, sec: secs[0][0], score: 12 + (secs[1][1] - secs[0][1]) * 2,
+        why: `lowest section on ${e.name || 'your last practice exam'} (${secs[0][1]}, against ${secs[1][1]} and ${secs[2][1]})`, practice: { sec: secs[0][0], mode: 'gmat' } });
+    }
+  }
+  out.sort((a, b) => b.score - a.score);
+  // Keep a topic and its own question type from both taking a place when they say the same thing.
+  const picked = [];
+  for (const r of out) { if (picked.length >= limit) break; if (picked.some((p) => p.id === r.id)) continue; picked.push(r); }
+  return picked;
+}
+function practiceHash(p, count) {
+  const q = new URLSearchParams(); q.set('sec', p.sec); if (p.type) q.set('type', p.type); if (p.topic) q.set('topic', p.topic);
+  if (p.mode) q.set('mode', p.mode); if (count) q.set('count', count);
+  return '#/new?' + q.toString();
+}
+
+/* ---------- Looking up words ---------- */
+// English from the Free Dictionary API (dictionaryapi.dev, built on Wiktionary) and Vietnamese from MyMemory. Both are
+// called from her browser. Every word she looks up is saved with the sentence it came from.
+function cleanWord(raw) {
+  return String(raw || '').replace(/[’‘]/g, "'").replace(/^[^A-Za-z]+|[^A-Za-z]+$/g, '').replace(/\s+/g, ' ').trim().toLowerCase().slice(0, 60);
+}
+async function fetchJSON(url, ms = 9000) {
+  const ctl = new AbortController(); const timer = setTimeout(() => ctl.abort(), ms);
+  try { const r = await fetch(url, { signal: ctl.signal }); if (!r.ok) return { status: r.status }; return { data: await r.json() }; }
+  catch (error) { return { error }; } finally { clearTimeout(timer); }
+}
+// Forms to try when a word is not in the dictionary as written: undermines -> undermine, implied -> imply.
+function baseForms(w) {
+  const c = [w];
+  if (w.includes(' ')) return c;
+  const cut = (n, add = '') => c.push(w.slice(0, -n) + add);
+  if (w.endsWith('ies')) cut(3, 'y'); if (w.endsWith('s') && !w.endsWith('ss')) cut(1); if (w.endsWith('es')) cut(2);
+  if (w.endsWith('ied')) cut(3, 'y'); if (w.endsWith('ed')) { cut(2); cut(1); if (w.length > 5 && w.at(-3) === w.at(-4)) cut(3); }
+  if (w.endsWith('ing')) { cut(3); cut(3, 'e'); if (w.length > 6 && w.at(-4) === w.at(-5)) cut(4); }
+  if (w.endsWith('ily')) cut(3, 'y'); else if (w.endsWith('ly')) cut(2);
+  return [...new Set(c)].filter((x) => x.length >= 2);
+}
+async function english(w) {
+  for (const form of baseForms(w)) {
+    const r = await fetchJSON('https://api.dictionaryapi.dev/api/v2/entries/en/' + encodeURIComponent(form));
+    if (Array.isArray(r.data) && r.data.length) return { head: form, entries: r.data };
+    if (r.error || (r.status && r.status !== 404)) return { error: true };
+  }
+  return { none: true };
+}
+function shapeEnglish(entries) {
+  const senses = new Map(); let phon = '', audio = ''; const syn = new Set();
+  for (const e of entries) {
+    phon = phon || e.phonetic || (e.phonetics || []).find((p) => p.text)?.text || '';
+    if (!audio) {
+      const ps = (e.phonetics || []).filter((p) => p.audio);
+      audio = (ps.find((p) => /-us\.mp3$/.test(p.audio)) || ps.find((p) => /-uk\.mp3$/.test(p.audio)) || ps[0] || {}).audio || '';
+    }
+    for (const m of e.meanings || []) {
+      const list = senses.get(m.partOfSpeech) || [];
+      for (const d of m.definitions || []) {
+        if (list.length < 3 && d.definition) list.push({ d: d.definition, ex: d.example || '' });
+        (d.synonyms || []).forEach((x) => syn.add(x));
+      }
+      (m.synonyms || []).forEach((x) => syn.add(x));
+      senses.set(m.partOfSpeech, list);
+    }
+  }
+  return { phon, audio, senses: [...senses.entries()].map(([pos, defs]) => ({ pos, defs })).slice(0, 4), syn: [...syn].slice(0, 8) };
+}
+async function vietnamese(w) {
+  const r = await fetchJSON('https://api.mymemory.translated.net/get?q=' + encodeURIComponent(w) + '&langpair=en|vi');
+  const rd = r.data && r.data.responseData;
+  if (!rd) return null;
+  const main = String(rd.translatedText || '').trim();
+  if (/MYMEMORY WARNING|QUOTA|INVALID/i.test(main)) return null;
+  const list = [main];
+  for (const m of r.data.matches || []) if (m.translation && (m.quality == null || Number(m.quality) >= 50)) list.push(String(m.translation).trim());
+  const seen = new Set(); const out = [];
+  for (const t of list) { const k = t.toLowerCase(); if (!t || k === w || seen.has(k) || t.length > 60) continue; seen.add(k); out.push(t); }
+  return out.slice(0, 4);
+}
+// Looks a word up, saves it to her words (with the sentence it came from) and returns the saved entry.
+async function lookUp(raw, ctx) {
+  const w = cleanWord(raw); if (!w) return null;
+  let entry = get(wordKey(w));
+  if (!entry || !entry.fetched) {
+    const wantVi = setting('showVi');
+    const [en, vi] = await Promise.all([english(w), wantVi ? vietnamese(w) : Promise.resolve(null)]);
+    const head = en.head || w;
+    const prev = get(wordKey(head)) || entry || {};
+    entry = { ...prev, w: head, asked: w, vi: vi && vi.length ? vi : prev.vi || [], ...(en.entries ? shapeEnglish(en.entries) : {}),
+      notFound: !!en.none, fetched: !en.error && (vi !== null || !wantVi), ctx: prev.ctx || [], n: prev.n || 0,
+      first: prev.first || Date.now(), known: !!prev.known };
+  }
+  entry.n = (entry.n || 0) + 1; entry.last = Date.now();
+  if (ctx && ctx.s) { entry.ctx = [{ ...ctx, at: Date.now() }, ...(entry.ctx || []).filter((c) => c.s !== ctx.s)].slice(0, 5); }
+  put(wordKey(entry.w), entry);
+  return entry;
+}
+function sentenceAround(text, index) {
+  const before = text.slice(0, index); const after = text.slice(index);
+  const a = Math.max(before.lastIndexOf('. '), before.lastIndexOf('? '), before.lastIndexOf('! '), before.lastIndexOf('\n'));
+  const bRel = after.search(/[.?!](\s|$)|\n/);
+  const s = text.slice(a < 0 ? 0 : a + 1, bRel < 0 ? text.length : index + bRel + 1).trim();
+  return s.length > 320 ? s.slice(0, 317) + '...' : s;
+}
+function entryHTML(e, { compact = false } = {}) {
+  if (!e) return '';
+  const vi = setting('showVi') && e.vi && e.vi.length ? `<div class="vi" lang="vi">${e.vi.map((v) => `<span>${esc(v)}</span>`).join('')}</div>` : '';
+  const audio = e.audio ? `<button class="icon-btn" data-act="say" data-src="${esc(e.audio)}" aria-label="Hear it">${ICON.sound}</button>` : '';
+  const senses = (e.senses || []).map((s) => `<div class="pos"><p class="label">${esc(s.pos)}</p><ol>${s.defs.map((d) => `<li>${esc(d.d)}${d.ex ? `<div class="ex">"${esc(d.ex)}"</div>` : ''}</li>`).join('')}</ol></div>`).join('');
+  const none = e.notFound ? `<p class="muted">The dictionary has no entry for this word${e.vi && e.vi.length ? ', so only the Vietnamese is shown' : ''}.</p>` : '';
+  const offline = !e.fetched && !(e.senses || []).length && !(e.vi || []).length ? `<p class="err">Could not reach the dictionary. The word is saved, so it will load next time.</p>` : '';
+  const syn = !compact && e.syn && e.syn.length ? `<p class="small muted" style="margin-top:10px">Similar: ${e.syn.map(esc).join(', ')}</p>` : '';
+  const ctx = !compact && e.ctx && e.ctx.length ? `<div class="ctx">${esc(e.ctx[0].s)}</div>` : '';
+  const w = encodeURIComponent(e.w);
+  return `<div class="entry">
+    <div class="hw"><b>${esc(e.w)}</b>${e.phon ? `<span class="muted">${esc(e.phon)}</span>` : ''}${audio}</div>
+    ${vi}${none}${offline}${ctx}${senses}${syn}
+    <div class="links"><a href="https://dictionary.cambridge.org/dictionary/english-vietnamese/${w}" target="_blank" rel="noopener">Cambridge English-Vietnamese</a><a href="https://www.oxfordlearnersdictionaries.com/search/english/?q=${w}" target="_blank" rel="noopener">Oxford Learner's</a><a href="https://translate.google.com/?sl=en&tl=vi&text=${w}" target="_blank" rel="noopener">Google Translate</a></div>
+    <div class="btns" style="margin-top:12px"><button class="chip ${e.known ? 'on' : ''}" data-act="known" data-key="${esc(wordKey(e.w))}">${e.known ? 'Known' : 'Mark as known'}</button></div>
+  </div>`;
+}
+
+/* The lookup sheet: opens over any page, and over a running question */
+const LK = { open: false, q: '', busy: false, entry: null, ctx: null };
+function openLookup(word = '', ctx = null) {
+  LK.open = true; LK.q = word; LK.ctx = ctx; LK.ctxWord = cleanWord(word); LK.entry = null; renderSheet();
+  if (word) runLookup(word, ctx); else setTimeout(() => $('#lk-in')?.focus(), 60);
+}
+function closeLookup() { LK.open = false; $('#layer').innerHTML = ''; }
+async function runLookup(word, ctx) {
+  LK.q = word; LK.busy = true; LK.entry = null; renderSheet();
+  const e = await lookUp(word, ctx);
+  LK.busy = false; LK.entry = e;
+  const s = currentSession();
+  if (e && s && s.status === 'running' && s.cur >= 0) {
+    const q = s.qs[s.cur]; const k = wordKey(e.w);
+    if (!q.words.includes(k)) { q.words.push(k); put(sKey(s), s, 'later'); }
+  }
+  if (LK.open) renderSheet();
+  if (route().name === 'words') renderMain();
+}
+function renderSheet() {
+  if (!LK.open) return;
+  const recent = all('w/').sort((a, b) => (b.last || 0) - (a.last || 0)).slice(0, 6);
+  $('#layer').innerHTML = `<div class="sheet-bg" data-act="lk-close"></div>
+  <section class="sheet" role="dialog" aria-label="Look up a word">
+    <div class="grab"></div>
+    <div class="sec-head"><p class="label">Look up a word</p><button class="icon-btn" data-act="lk-close" aria-label="Close">${ICON.close}</button></div>
+    <form class="lk-form" data-form="lookup"><input id="lk-in" class="input" name="w" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Type a word" value="${esc(LK.q)}"><button class="btn primary">Look up</button></form>
+    ${LK.busy ? `<p class="muted" style="margin-top:16px"><span class="spin"></span> Looking up "${esc(LK.q)}"</p>` : ''}
+    ${LK.entry ? entryHTML(LK.entry) : ''}
+    ${!LK.busy && !LK.entry && recent.length ? `<p class="label" style="margin-top:18px">Recent</p><div class="chips" style="margin-top:8px">${recent.map((w) => `<button class="chip" data-act="lk-word" data-w="${esc(w.w)}">${esc(w.w)}</button>`).join('')}</div>` : ''}
+  </section>`;
+}
+
+/* ---------- Icons ---------- */
+const ICON = {
+  back: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>',
+  pause: '<svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1.2"/><rect x="14" y="5" width="4" height="14" rx="1.2"/></svg>',
+  play: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.4-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5z"/></svg>',
+  close: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>',
+  look: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6"/><path d="M15 15l5 5"/></svg>',
+  sound: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10v4h4l5 4V6L8 10H4z" fill="currentColor"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg>',
+  ribbon: '<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M6 3h12v18l-6-4.6L6 21z" fill="#F0609E"/></svg>',
+  ribbonOff: '<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M6 3h12v18l-6-4.6L6 21z" fill="none" stroke="#13214A" stroke-width="1.8" stroke-linejoin="round"/></svg>',
+  logo: '<svg width="30" height="30" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="16" fill="#2F5FE8"/><path d="M22 14h20v36l-10-8-10 8z" fill="#FFC2DA"/></svg>',
+};
+
+/* ---------- Routing ---------- */
+function route() {
+  const h = location.hash.replace(/^#\/?/, '');
+  const [path, qs] = h.split('?');
+  const parts = path.split('/').filter(Boolean);
+  const params = new URLSearchParams(qs || '');
+  if (!parts.length) return { name: 'home', params };
+  if (parts[0] === 's' && parts[1]) return { name: 'session', id: parts[1], params };
+  if (parts[0] === 'e' && parts[1]) return { name: 'exam', id: parts[1], params };
+  return { name: parts[0], params };
+}
+function currentSession() { const r = route(); return r.name === 'session' ? get('s/' + r.id) : null; }
+function activeSession() { return all('s/').filter((s) => s.status === 'running').sort((a, b) => b.created - a.created)[0] || null; }
+
+function render() {
+  if (!PASS) { renderSignin(); return; }
+  const r = route();
+  if (r.name === 'session') { renderSession(r); return; }
+  document.title = 'GMAT tracker';
+  $('#app').innerHTML = header(r) + `<main class="wrap" id="main">${view(r)}</main>`;
+  afterRender(r);
+}
+function renderMain() {
+  if (!PASS) return;
+  const r = route();
+  if (r.name === 'session') { renderSession(r); return; }
+  const m = $('#main'); if (!m) { render(); return; }
+  const y = window.scrollY; m.innerHTML = view(r); afterRender(r); window.scrollTo(0, y);
+}
+function view(r) {
+  switch (r.name) {
+    case 'home': return homeView();
+    case 'new': return newView(r);
+    case 'words': return wordsView(r);
+    case 'topics': return topicsView(r);
+    case 'exams': return examsView(r);
+    case 'exam': return examForm(r);
+    case 'mistakes': return mistakesView(r);
+    case 'bookmarks': return bookmarksView(r);
+    case 'log': return logView(r);
+    case 'settings': return settingsView(r);
+    default: return `<p class="empty">Nothing here. <a href="#/">Go home</a></p>`;
+  }
+}
+function afterRender(r) {
+  setSync(syncState);
+  if (r.name === 'topics' || r.name === 'exams' || r.name === 'session') bindTips();
+}
+function header(r) {
+  const mistakes = openMistakes().length, marks = openBookmarks().length, words = all('w/').filter((w) => !w.known).length;
+  const link = (name, href, label, count) => `<a href="${href}"${r.name === name || (name === 'exams' && r.name === 'exam') ? ' aria-current="page"' : ''}>${label}${count ? `<span class="count">${count}</span>` : ''}</a>`;
+  return `<header class="top"><div class="top-in">
+    <div class="brand-row"><a class="brand" href="#/">${ICON.logo}<b>GMAT</b><span>${esc(setting('name'))}</span></a>
+    <span class="sync" id="sync" data-s="${syncState}"><i></i><span>Saved</span></span></div>
+    <nav class="nav" aria-label="Sections">${link('home', '#/', 'Home')}${link('new', '#/new', 'Practise')}${link('topics', '#/topics', 'Topics')}${link('exams', '#/exams', 'Exams')}${link('mistakes', '#/mistakes', 'Mistakes', mistakes)}${link('bookmarks', '#/bookmarks', 'Bookmarks', marks)}${link('words', '#/words', 'Words', words)}${link('log', '#/log', 'Log')}${link('settings', '#/settings', 'Settings')}</nav>
+  </div></header>`;
+}
+
+/* ---------- Sign in ---------- */
+function renderSignin() {
+  document.title = 'GMAT tracker';
+  $('#app').innerHTML = `<main class="signin">
+    ${ICON.logo.replace('width="30" height="30"', 'width="54" height="54"')}
+    <h1>GMAT tracker</h1>
+    <p class="muted">Practice sets with a GMAT clock, bookmarks, word lookup, and a record of everything, saved as you go.</p>
+    ${signinMessage ? `<p class="note">${esc(signinMessage)}</p>` : ''}
+    <form data-form="signin" style="margin-top:18px">
+      <div class="field"><label class="label" for="pass">Passcode</label>
+      <input id="pass" name="pass" class="input" type="password" autocomplete="current-password" autocapitalize="off" spellcheck="false" required></div>
+      <p class="err" id="signin-err" hidden></p>
+      <button class="btn primary big wide">Sign in</button>
+    </form>
+    <p class="hint" style="margin-top:14px">Ali has the passcode. This device remembers it.</p>
+  </main>`;
+  setTimeout(() => $('#pass')?.focus(), 50);
+}
+async function trySignin(form) {
+  const pass = form.pass.value.trim(); const err = $('#signin-err'); const btn = form.querySelector('button');
+  if (!pass) return;
+  btn.disabled = true; btn.textContent = 'Checking';
+  PASS = pass;
+  try {
+    await api('/ping');
+    localStorage.setItem('anh-pass', pass); signinMessage = '';
+    render(); await pull(); renderMain(); flush();
+  } catch (e) {
+    PASS = '';
+    err.hidden = false; err.textContent = e.code === 401 ? 'That passcode did not work.' : 'Could not reach the server. Check the connection and try again.';
+    btn.disabled = false; btn.textContent = 'Sign in';
+  }
+}
+
+/* ---------- Home ---------- */
+function testLine() {
+  const td = setting('testDate'), target = setting('target');
+  const bits = [];
+  if (td) {
+    const days = Math.round((parseLocalDate(td) - parseLocalDate(localDate())) / DAY);
+    bits.push(days > 0 ? `Test day is ${niceDate(parseLocalDate(td), { year: true })}, <span class="mark-p">${plural(days, 'day')} to go</span>` : days === 0 ? '<span class="mark-p">Test day is today. Good luck!</span>' : `Test day was ${niceDate(parseLocalDate(td), { year: true })}`);
+  }
+  if (target) bits.push(`target ${target}`);
+  const ex = latestExam(); if (ex) bits.push(`last practice exam ${ex.total}`);
+  if (!bits.length) return `<a href="#/settings">Add your test date and target score</a> to see the countdown.`;
+  return bits.join(' · ');
+}
+function homeView() {
+  const act = activeSession();
+  const toMark = all('s/').filter((s) => s.status === 'marking').sort((a, b) => b.ended - a.ended);
+  const recs = recommendations(3);
+  const week = weekStats();
+  const recent = all('s/').filter((s) => s.status !== 'running').sort((a, b) => (b.ended || b.created) - (a.ended || a.created)).slice(0, 4);
+  const bms = openBookmarks().length, mis = openMistakes().length, wds = all('w/').filter((w) => !w.known).length;
+  return `<div class="page-head"><h1>Chào ${esc(setting('name'))}</h1><p>${testLine()}</p></div>
+  ${act ? `<div class="card blue" style="margin-top:18px"><p class="label">In progress</p><h3 style="margin:4px 0 2px">${esc(sessionTitle(act))}</h3>
+    <p class="small muted">Question ${act.cur >= 0 ? act.cur + 1 : '-'} of ${act.qs.length} · ${mmss(used(act))} used${act.limit ? ` of ${mmss(act.limit)}` : ''} · the clock is paused</p>
+    <div class="btns" style="margin-top:10px"><a class="btn primary" href="#/s/${act.id}">Resume</a></div></div>` : ''}
+  ${toMark.length ? `<div class="card pink" style="margin-top:12px"><p class="label">To mark</p>
+    ${toMark.slice(0, 3).map((s) => `<a class="row-link" style="margin-top:8px" href="#/s/${s.id}"><span class="row-main"><span class="t">${esc(sessionTitle(s))}</span><span class="s"> · ${niceDate(s.ended)}</span></span><span class="btn sm">Mark</span></a>`).join('')}</div>` : ''}
+  <div class="btns" style="margin-top:20px"><a class="btn primary big" href="#/new">Start practising</a><button class="btn big" data-act="lookup">${ICON.look}<span>Look up a word</span></button></div>
+  <section class="sec"><div class="sec-head"><h2>Do more of this</h2><a class="small" href="#/topics">All topics</a></div>
+    ${recs.length ? recList(recs) : `<p class="empty">After a few practice sets, this lists the question types and topics where more practice will pay off most.</p>`}
+  </section>
+  <section class="sec"><div class="sec-head"><h2>This week</h2><span class="small muted">since ${niceDate(weekStart())}</span></div>
+    <div class="grid3">
+      <div class="stat"><div class="v">${week.qs}</div><div class="k">questions</div></div>
+      <div class="stat"><div class="v">${week.ms ? minutes(week.ms) : '0 min'}</div><div class="k">practising</div></div>
+      <div class="stat"><div class="v">${week.n ? pct(week.r, week.n) + '%' : '-'}</div><div class="k">right${week.n ? ` (${week.r} of ${week.n})` : ''}</div></div>
+    </div>
+    ${weeksChart()}
+  </section>
+  <section class="sec"><div class="sec-head"><h2>Waiting for you</h2></div>
+    <ul class="rows">
+      <li><a class="row-link" href="#/bookmarks"><span class="row-main"><span class="t">Bookmarked questions</span><span class="s">to look at again</span></span><span class="row-side"><b>${bms}</b></span></a></li>
+      <li><a class="row-link" href="#/mistakes"><span class="row-main"><span class="t">Mistakes to redo</span><span class="s">wrong or guessed, not redone yet</span></span><span class="row-side"><b>${mis}</b></span></a></li>
+      <li><a class="row-link" href="#/words"><span class="row-main"><span class="t">Words to learn</span><span class="s">looked up, not marked as known</span></span><span class="row-side"><b>${wds}</b></span></a></li>
+    </ul>
+  </section>
+  ${recent.length ? `<section class="sec"><div class="sec-head"><h2>Recent practice</h2><a class="small" href="#/log">Log</a></div><ul class="rows">${recent.map(logRow).join('')}</ul></section>` : ''}`;
+}
+function recList(recs) {
+  return `<ol class="domore">${recs.map((x) => `<li><div class="what"><b>${esc(x.name)}</b> <span class="small muted">${x.kind === 'topic' ? GROUPS[TOPIC[x.id].grp].name : x.kind === 'type' ? SEC[x.sec].short : 'Practice exams'}</span><div class="why">${esc(x.why)}</div></div><a class="btn sm" href="${practiceHash(x.practice, x.practice.mode === 'gmat' ? 0 : 10)}">Practise</a></li>`).join('')}</ol>`;
+}
+function weekStart(t = Date.now()) { const d = new Date(t); const dow = (d.getDay() + 6) % 7; return parseLocalDate(localDate(t)) - dow * DAY; }
+function weekStats(from = weekStart(), to = from + 7 * DAY) {
+  const rows = questionRows().filter((r) => r.when >= from && r.when < to);
+  const ms = sum(all('s/').filter((s) => (s.ended || s.created) >= from && (s.ended || s.created) < to).map((s) => used(s)));
+  const marked = rows.filter((r) => r.res);
+  return { qs: rows.filter((r) => r.answered).length, ms, n: marked.length, r: marked.filter((r) => r.res === 'r').length };
+}
+function logRow(s) {
+  const sc = sessionScore(s);
+  const right = s.status === 'marking' ? '<span class="btn sm">Mark</span>' : sc.n ? `<b>${sc.r}/${sc.n}</b><div class="tiny muted">${pct(sc.r, sc.n)}%</div>` : '<span class="muted small">not marked</span>';
+  return `<li><a class="row-link" href="#/s/${s.id}"><span class="row-main"><span class="t">${esc(sessionTitle(s))}</span><div class="s">${niceDate(s.ended || s.created)} · ${s.qs.length} questions · ${mmss(used(s))}</div></span><span class="row-side">${right}</span></a></li>`;
+}
+
+/* ---------- New practice ---------- */
+let NEWF = null;
+function newDefaults(r) {
+  const last = JSON.parse(localStorage.getItem('anh-last-new') || '{}');
+  const p = r.params;
+  const sec = SEC[p.get('sec')] ? p.get('sec') : last.sec || 'V';
+  const type = TYPE[p.get('type')] && TYPE[p.get('type')].sec === sec ? p.get('type') : null;
+  return { sec, mode: p.get('mode') === 'gmat' ? 'gmat' : p.get('sec') ? 'set' : last.mode || 'set', count: Number(p.get('count')) || setting('setSize'),
+    timing: last.timing || 'pace', minutes: last.minutes || 20, type, topic: TOPIC[p.get('topic')] ? p.get('topic') : null,
+    source: last.source || '', start: 1, rules: true };
+}
+function newView(r) {
+  if (!NEWF || r.params.toString() !== NEWF._from) { NEWF = newDefaults(r); NEWF._from = r.params.toString(); }
+  const f = NEWF, sec = SEC[f.sec];
+  const types = sec.types;
+  const fixedType = types.length === 1 ? types[0] : null;
+  const type = fixedType || f.type;
+  const grp = type ? TYPE[type].grp : null;
+  const count = f.mode === 'gmat' ? sec.n : f.count;
+  const limit = f.mode === 'gmat' ? sec.min * 60000 : f.timing === 'pace' ? Math.round(paceMs(f.sec) * count) : f.timing === 'custom' ? f.minutes * 60000 : null;
+  const sources = [...new Set([...all('s/').map((s) => s.source).filter(Boolean), ...SOURCES])];
+  return `<div class="page-head"><h1>Practise</h1><p>Do the questions from your book or website and answer them here. The tracker keeps the time, your answers and your bookmarks.</p></div>
+  <form data-form="new" novalidate>
+  <div class="field"><span class="label">Section</span><div class="seg" style="margin-top:8px">${SEC_ORDER.map((k) => `<button type="button" class="${f.sec === k ? 'on' : ''}" data-act="nf" data-k="sec" data-v="${k}">${SEC[k].short}</button>`).join('')}</div></div>
+  <div class="field"><span class="label">Kind</span><div class="seg" style="margin-top:8px">
+    <button type="button" class="${f.mode === 'set' ? 'on' : ''}" data-act="nf" data-k="mode" data-v="set">Practice set</button>
+    <button type="button" class="${f.mode === 'gmat' ? 'on' : ''}" data-act="nf" data-k="mode" data-v="gmat">Timed section</button></div>
+    <p class="hint">${f.mode === 'gmat' ? `Like the real test: ${sec.n} questions in ${sec.min} minutes, in order. Bookmark as you go, then review and change up to 3 answers at the end.` : 'Any number of questions. Move back and forth freely.'}</p></div>
+  ${f.mode === 'set' ? `<div class="field"><span class="label">Questions</span><div style="margin-top:8px" class="stepper"><button type="button" data-act="nf-count" data-d="-1" aria-label="Fewer">-</button><output class="num">${f.count}</output><button type="button" data-act="nf-count" data-d="1" aria-label="More">+</button></div></div>
+  <div class="field"><span class="label">Time</span><div class="seg" style="margin-top:8px">
+    <button type="button" class="${f.timing === 'pace' ? 'on' : ''}" data-act="nf" data-k="timing" data-v="pace">GMAT pace</button>
+    <button type="button" class="${f.timing === 'custom' ? 'on' : ''}" data-act="nf" data-k="timing" data-v="custom">My limit</button>
+    <button type="button" class="${f.timing === 'none' ? 'on' : ''}" data-act="nf" data-k="timing" data-v="none">No limit</button></div>
+    ${f.timing === 'custom' ? `<div style="margin-top:10px;display:flex;align-items:center;gap:10px"><input class="input" style="width:110px" type="number" min="1" max="240" name="minutes" value="${f.minutes}" data-on="nf-min"><span>minutes</span></div>` : ''}
+    <p class="hint">${f.timing === 'pace' ? `${mmss(paceMs(f.sec))} a question, the real ${sec.short} pace: ${mmss(limit)} for ${f.count}.` : f.timing === 'none' ? 'The clock counts up. Each question is still timed against the GMAT pace.' : ''}</p></div>` : ''}
+  ${fixedType ? '' : `<div class="field"><span class="label">Question type</span><div class="chips" style="margin-top:8px"><button type="button" class="chip ${!f.type ? 'on' : ''}" data-act="nf" data-k="type" data-v="">Mixed</button>${types.map((t) => `<button type="button" class="chip ${f.type === t ? 'on' : ''}" data-act="nf" data-k="type" data-v="${t}">${TYPE[t].name}</button>`).join('')}</div><p class="hint">Mixed: you pick the type on each question as you go.</p></div>`}
+  ${grp ? `<div class="field"><span class="label">Topic <span class="muted" style="text-transform:none;letter-spacing:0;font-weight:400">(optional)</span></span><div class="chips" style="margin-top:8px"><button type="button" class="chip ${!f.topic ? 'on' : ''}" data-act="nf" data-k="topic" data-v="">Any</button>${GROUPS[grp].items.filter(([id]) => !(id === 'logic' && type === 'PS')).map(([id, n]) => `<button type="button" class="chip ${f.topic === id ? 'on' : ''}" data-act="nf" data-k="topic" data-v="${id}">${n}</button>`).join('')}</div></div>` : ''}
+  <div class="field"><label class="label" for="nf-source">Where the questions are from</label><input id="nf-source" class="input" name="source" list="sources" value="${esc(f.source)}" placeholder="e.g. Official Guide Verbal Review" data-on="nf-text" data-k="source"><datalist id="sources">${sources.map((s) => `<option value="${esc(s)}">`).join('')}</datalist></div>
+  <div class="field"><label class="label" for="nf-start">First question number</label><input id="nf-start" class="input" style="width:140px" type="number" min="1" name="start" value="${f.start}" data-on="nf-num" data-k="start"><p class="hint">The book's number for the first question, so your bookmarks and mistakes point back to it.</p></div>
+  ${f.mode === 'gmat' ? `<div class="field"><label class="switch"><input type="checkbox" ${f.rules ? 'checked' : ''} data-on="nf-rules"> Test rules: no going back, and only 3 answer changes at the end</label></div>` : ''}
+  <div class="card blue" style="margin-top:20px"><p class="label">Ready</p><p style="margin:6px 0 0"><b>${count} ${SEC[f.sec].short} questions</b>${type ? ` · ${TYPE[type].name}` : ''}${f.topic ? ` · ${TOPIC[f.topic].name}` : ''} · ${limit ? `${mmss(limit)} on the clock` : 'no time limit'}</p></div>
+  <div class="btns" style="margin-top:16px"><button class="btn primary big wide">Start the clock</button></div>
+  </form>`;
+}
+function startNew() {
+  const f = NEWF; const sec = SEC[f.sec];
+  const count = f.mode === 'gmat' ? sec.n : clamp(f.count, 1, 80);
+  const limit = f.mode === 'gmat' ? sec.min * 60000 : f.timing === 'pace' ? Math.round(paceMs(f.sec) * count) : f.timing === 'custom' ? clamp(f.minutes, 1, 600) * 60000 : null;
+  const type = sec.types.length === 1 ? sec.types[0] : f.type;
+  const s = newSession({ sec: f.sec, mode: f.mode, rules: f.mode === 'gmat' && f.rules, limit, count, source: f.source, start: clamp(Number(f.start) || 1, 1, 9999), type, topic: f.topic });
+  startClock(s);
+  put(sKey(s), s, 'now');
+  localStorage.setItem('anh-last-new', JSON.stringify({ sec: f.sec, mode: f.mode, timing: f.timing, minutes: f.minutes, source: f.source }));
+  NEWF = null;
+  location.hash = '#/s/' + s.id;
+}
+
+/* ---------- The practice screen ---------- */
+const UI = { picker: false, note: false, edit: false, confirmEnd: false, delConfirm: false };
+function qPace(s) { return s.mode === 'set' && s.limit ? s.limit / s.qs.length : paceMs(s.sec); }
+function renderSession(r) {
+  const s = get('s/' + r.id);
+  if (!s) { $('#app').innerHTML = header(r) + `<main class="wrap"><p class="empty">This practice set is not on this device yet. <a href="#/">Go home</a></p></main>`; return; }
+  if (s.status === 'running') { renderRunner(s); return; }
+  document.title = sessionTitle(s);
+  $('#app').innerHTML = header(r) + `<main class="wrap" id="main">${s.status === 'marking' ? markingView(s) : resultsView(s)}</main>`;
+  afterRender(r);
+}
+function answerInput(s, i, field) {
+  const q = s.qs[i]; const val = q[field] || ''; const locked = field === 'ans' && s.rules && s.phase === 'review' && s.edits <= 0;
+  const act = field === 'ans' ? 'ans' : 'key';
+  if (q.fmt === 'abc') {
+    return `<div class="opts" role="group" aria-label="Answer">${'ABCDE'.split('').map((L) => `<button class="opt ${val === L ? 'on' : ''} ${field === 'ans' && q.key === L && s.status !== 'running' ? 'key' : ''}" data-act="${act}" data-i="${i}" data-v="${L}" ${locked && val !== L ? 'disabled' : ''} aria-pressed="${val === L}">${L}</button>`).join('')}</div>`;
+  }
+  if (q.fmt === 'yn') {
+    const cur = (val || '---').padEnd(3, '-');
+    return `<div class="mp">${[0, 1, 2].map((row) => `<div class="mp-row"><span class="lab">Row ${row + 1}</span><span class="opts2">${['Y', 'N'].map((c) => `<button class="mini ${cur[row] === c ? 'on' : ''}" data-act="${act}-part" data-i="${i}" data-p="${row}" data-v="${c}" ${locked ? 'disabled' : ''}>${c === 'Y' ? 'Yes' : 'No'}</button>`).join('')}</span></div>`).join('')}<p class="hint">Yes or No, True or False, or whichever pair the table uses.</p></div>`;
+  }
+  const letters = q.fmt === 'two6' ? 'ABCDEF' : 'ABCDE';
+  const names = q.type === 'TPA' ? ['Column 1', 'Column 2'] : ['Blank 1', 'Blank 2'];
+  const cur = (val || '--').padEnd(2, '-');
+  return `<div class="mp">${[0, 1].map((p) => `<div class="mp-row"><span class="lab">${names[p]}</span><span class="opts2">${letters.split('').map((L) => `<button class="mini ${cur[p] === L ? 'on' : ''}" data-act="${act}-part" data-i="${i}" data-p="${p}" data-v="${L}" ${locked ? 'disabled' : ''}>${L}</button>`).join('')}</span></div>`).join('')}</div>`;
+}
+function typePicker(s, i) {
+  const q = s.qs[i]; const types = SEC[s.sec].types;
+  const grp = q.type ? TYPE[q.type].grp : null;
+  return `<div class="card" style="margin:12px 0">
+    ${types.length > 1 ? `<p class="label">Type</p><div class="chips" style="margin:8px 0 12px">${types.map((t) => `<button class="chip ${q.type === t ? 'on' : ''}" data-act="q-type" data-i="${i}" data-v="${t}">${TYPE[t].name}</button>`).join('')}</div>` : ''}
+    ${grp ? `<p class="label">Topic</p><div class="chips" style="margin-top:8px">${GROUPS[grp].items.filter(([id]) => !(id === 'logic' && q.type === 'PS')).map(([id, n]) => `<button class="chip ${q.topic === id ? 'on' : ''}" data-act="q-topic" data-i="${i}" data-v="${id}">${n}</button>`).join('')}</div>` : ''}
+    ${q.type === 'MSR' ? `<p class="label" style="margin-top:12px">Answer format</p><div class="chips" style="margin-top:8px"><button class="chip ${q.fmt === 'abc' ? 'on' : ''}" data-act="q-fmt" data-i="${i}" data-v="abc">A to E</button><button class="chip ${q.fmt === 'yn' ? 'on' : ''}" data-act="q-fmt" data-i="${i}" data-v="yn">Yes / No rows</button></div>` : ''}
+    <div class="btns" style="margin-top:12px"><button class="btn sm" data-act="picker">Done</button></div></div>`;
+}
+function passageHTML(text, words) {
+  const seen = new Set((words || []).map((k) => decodeURIComponent(k.slice(2))));
+  let out = ''; let last = 0;
+  for (const m of text.matchAll(/[A-Za-z][A-Za-z'’-]*[A-Za-z]|[A-Za-z]/g)) {
+    out += esc(text.slice(last, m.index));
+    const w = m[0]; const lw = cleanWord(w);
+    out += `<span class="w${seen.has(lw) ? ' seen' : ''}" data-act="w" data-i="${m.index}">${esc(w)}</span>`;
+    last = m.index + w.length;
+  }
+  return out + esc(text.slice(last));
+}
+function questionCard(s) {
+  const i = s.cur, q = s.qs[i];
+  const inReview = s.rules && s.phase === 'review';
+  const tag = q.type ? `${q.type}${q.topic ? ' · ' + TOPIC[q.topic].name : ''}` : 'Pick type';
+  const editNote = inReview ? `<p class="note">${s.edits > 0 ? `${pendingEdit(s) ? 'This change uses 1 of your' : 'You can change'} ${plural(s.edits, 'more answer', 'more answers')}${pendingEdit(s) ? ` (${s.edits} left now)` : ''}.` : 'You have used all 3 changes, so answers are locked.'}</p>` : '';
+  return `<section class="qcard">
+    <div class="qhead"><div><span class="qnum">Question ${i + 1}</span> <span class="muted small">of ${s.qs.length}${s.start !== 1 || s.source ? ` · #${q.n}` : ''}</span></div>
+      <button class="chip ${q.type ? '' : 'pk on'}" data-act="picker">${esc(tag)}</button></div>
+    ${UI.picker ? typePicker(s, i) : ''}
+    <div class="qtime"><span><b class="num" id="qclk">${mmss(qUsed(s, i))}</b> on this one</span><span class="bar" aria-hidden="true"><i id="qbar-i"></i><u id="qbar-u"></u><s style="left:50%"></s></span><span class="num">pace ${mmss(qPace(s))}</span></div>
+    ${editNote}
+    ${answerInput(s, i, 'ans')}
+    <div class="tools">
+      <button class="chip ${q.bm ? 'pk on' : ''}" data-act="bm" aria-pressed="${q.bm}">${q.bm ? ICON.ribbon : ICON.ribbonOff}<span>${q.bm ? 'Bookmarked' : 'Bookmark'}</span></button>
+      <button class="chip ${q.guess ? 'on' : ''}" data-act="guess" aria-pressed="${q.guess}">${q.guess ? 'Guessed' : 'I guessed'}</button>
+      <button class="chip ${q.note ? 'on' : ''}" data-act="note">Note</button>
+      <button class="chip" data-act="lookup">${ICON.look.replace('<svg', '<svg width="15" height="15"')}<span>Look up</span></button>
+    </div>
+    ${UI.note || q.note ? `<textarea class="input" style="margin-top:8px;min-height:70px" placeholder="Anything to remember about this question" data-on="q-note">${esc(q.note)}</textarea>` : ''}
+    ${q.text && !UI.editText ? `<div class="passage" id="passage">${passageHTML(q.text, q.words)}</div><div class="btns"><button class="btn sm ghost" data-act="text-edit">Edit the text</button><span class="small muted" style="align-self:center">Tap any word to look it up</span></div>`
+      : `<details style="margin-top:12px" ${UI.editText || UI.textDraft ? 'open' : ''}><summary class="small" style="cursor:pointer">Paste the question to look up its words</summary>
+        <textarea class="input" style="margin-top:8px" placeholder="Paste the passage or question" data-on="q-text-draft">${esc(UI.textDraft || '')}</textarea>
+        <div class="btns" style="margin-top:8px"><button class="btn sm soft" data-act="text-save">Use this text</button>${UI.editText ? '<button class="btn sm ghost" data-act="text-cancel">Cancel</button>' : ''}</div></details>`}
+  </section>`;
+}
+function reviewGrid(s) {
+  const unanswered = s.qs.filter((q) => !complete(q.fmt, q.ans)).length;
+  return `<section style="padding-top:18px"><h2>Review and edit</h2>
+    <p class="muted">Open any question to look at it again. You can change ${plural(s.edits, 'more answer', 'more answers')}. The clock is still running.</p>
+    <div class="chips" style="margin-top:12px"><button class="chip ${UI.bmOnly ? 'on' : ''}" data-act="bm-only">Bookmarked only</button></div>
+    <div class="review-grid">${s.qs.map((q, i) => (UI.bmOnly && !q.bm ? '' : `<button class="rq ${q.bm ? 'bm' : ''} ${complete(q.fmt, q.ans) ? '' : 'empty'}" data-act="open-q" data-i="${i}"><b>${i + 1}</b><span>${esc(showAns(q.fmt, q.ans))}</span></button>`)).join('')}</div>
+    ${unanswered ? `<p class="small muted">${plural(unanswered, 'question')} without an answer.</p>` : ''}
+  </section>`;
+}
+function renderRunner(s) {
+  document.title = (s.clock.run ? '' : 'Paused · ') + sessionTitle(s);
+  const inReview = s.rules && s.phase === 'review';
+  const last = s.cur === s.qs.length - 1;
+  const q = s.qs[s.cur];
+  const canNext = !s.rules || !q || complete(q.fmt, q.ans);
+  let foot = '';
+  if (inReview && s.cur === -1) foot = `<button class="btn primary big" data-act="end-ask">End section</button>`;
+  else if (inReview) foot = `<button class="btn big" data-act="to-grid">${ICON.back}<span>Back to review</span></button>`;
+  else if (s.rules) foot = `<button class="btn primary big" data-act="next" ${canNext ? '' : 'disabled'}>${last ? 'Finish and review' : 'Next'}</button>`;
+  else foot = `<button class="btn big" data-act="prev" ${s.cur === 0 ? 'disabled' : ''}>Back</button><button class="btn primary big" data-act="${last ? 'end-ask' : 'next'}">${last ? 'Finish' : 'Next'}</button>`;
+  const strip = s.qs.map((qq, i) => `<button class="qchip ${complete(qq.fmt, qq.ans) ? 'ans' : ''} ${i === s.cur ? 'cur' : ''} ${qq.bm ? 'bm' : ''}" data-act="open-q" data-i="${i}" ${s.rules && !inReview ? 'disabled' : ''} aria-label="Question ${i + 1}${qq.bm ? ', bookmarked' : ''}">${i + 1}</button>`).join('');
+  const timeUp = s.limit && s.timeUpSeen && !s.timeUpAck && !s.rules ? `<div class="banner pink"><b>Time is up for this set.</b> Keep going and the extra time is counted as overtime, or finish now.<div class="btns"><button class="btn sm" data-act="end-now">Finish now</button><button class="btn sm ghost" data-act="dismiss-timeup">Keep going</button></div></div>` : '';
+  const away = s.away ? `<div class="banner blue">The clock stopped at ${new Date(s.away.from).toLocaleTimeString('en-CA', { hour: 'numeric', minute: '2-digit' })} when this page closed, so ${dur(s.away.ms)} were not counted.<div class="btns"><button class="btn sm" data-act="count-away">Count that time</button><button class="btn sm ghost" data-act="drop-away">Leave it out</button></div></div>` : '';
+  const confirm = UI.confirmEnd ? endConfirm(s) : '';
+  $('#app').innerHTML = `<div class="run-top"><div class="in">
+      <div class="run-bar"><button class="icon-btn" data-act="run-exit" aria-label="Leave and pause">${ICON.back}</button>
+        <div class="what">${esc(SEC[s.sec].short)}${s.source ? ' · ' + esc(s.source) : ''}${inReview ? ' · review' : ''}</div>
+        ${inReview && s.cur === -1 ? '' : '<button class="btn sm" data-act="end-ask">End</button>'}
+        <button class="icon-btn" data-act="lookup" aria-label="Look up a word">${ICON.look}</button>
+        <button class="icon-btn" data-act="pause" aria-label="Pause">${ICON.pause}</button></div>
+      <div class="clock"><div><div class="big" id="clk">0:00</div><div class="sub" id="clk-sub"></div></div><div class="pace" id="pace"></div></div>
+      ${s.limit ? '<div class="tbar" id="tbar"><i></i></div>' : ''}
+      <div class="qstrip" id="qstrip">${strip}</div>
+    </div></div>
+    <main class="wrap" id="main" style="padding-bottom:0">${away}${timeUp}${confirm}${inReview && s.cur === -1 ? reviewGrid(s) : questionCard(s)}
+      <div class="run-foot"><div class="in">${foot}</div></div></main>
+    ${!s.clock.run && !s.away ? `<div class="paused-veil"><p class="label">Paused</p><div class="big">${mmss(used(s))}</div><p class="muted">${s.limit ? `${mmss(Math.max(0, s.limit - used(s)))} left. ` : ''}The real test has no pause, but practice can.</p><button class="btn primary big" data-act="resume">${ICON.play}<span>Resume</span></button><a class="btn ghost" href="#/" data-act="run-exit">Leave for now</a></div>` : ''}`;
+  const chip = $('#qstrip .qchip.cur'); if (chip) chip.scrollIntoView({ block: 'nearest', inline: 'center' });
+  tick(true);
+}
+function endConfirm(s) {
+  const blank = s.qs.filter((q) => !complete(q.fmt, q.ans)).length;
+  return `<div class="confirm"><b>End ${s.mode === 'gmat' ? 'the section' : 'this set'} now?</b><p class="small muted">${blank ? `${plural(blank, 'question')} without an answer will count as wrong. ` : ''}Next you can mark your answers.</p>
+    <div class="btns"><button class="btn sm primary" data-act="end-now">End it</button><button class="btn sm ghost" data-act="end-cancel">Keep going</button></div></div>`;
+}
+
+/* The clock: redrawn four times a second, saved on this device every 5 seconds and to the server every 30 */
+let tickTimer = null, lastLocalSave = 0, lastServerSave = 0, wakeLock = null;
+function tick(force) {
+  const s = currentSession();
+  if (!s || s.status !== 'running') return;
+  const now = Date.now();
+  if (s.clock.run) s.clock.hb = now;
+  const u = used(s);
+  const clk = $('#clk'); if (!clk) return;
+  if (s.limit) {
+    const left = s.limit - u;
+    clk.textContent = left >= 0 ? mmss(left) : mmss(-left, { sign: true });
+    clk.classList.toggle('over', left < 0);
+    $('#clk-sub').textContent = left >= 0 ? `left of ${mmss(s.limit)}` : 'over time';
+    const bar = $('#tbar'); if (bar) { bar.classList.toggle('over', left < 0); bar.firstElementChild.style.width = clamp((u / s.limit) * 100, 0, 100) + '%'; }
+  } else { clk.textContent = mmss(u); $('#clk-sub').textContent = 'used, no limit'; }
+  const pace = qPace(s);
+  const pe = $('#pace');
+  if (pe) {
+    if (s.phase === 'review') pe.innerHTML = `<b>${plural(s.edits, 'change')} left</b>`;
+    else {
+      const delta = u - s.cur * pace;
+      pe.innerHTML = Math.abs(delta) < 20000 && delta < pace ? '<b>On pace</b>' : delta > pace ? `<b class="behind">${mmss(delta - pace)} behind</b>` : delta < 0 ? `<b>${mmss(-delta)} ahead</b>` : '<b>On pace</b>';
+      pe.insertAdjacentHTML('beforeend', `<div class="tiny muted" style="margin-top:4px">${answeredCount(s)} of ${s.qs.length} answered</div>`);
+    }
+  }
+  if (s.cur >= 0) {
+    const qms = qUsed(s, s.cur);
+    const qc = $('#qclk'); if (qc) qc.textContent = mmss(qms);
+    const share = clamp(qms / (pace * 2), 0, 1); const half = 0.5;
+    const i = $('#qbar-i'), o = $('#qbar-u');
+    if (i && o) { i.style.width = Math.min(share, half) * 100 + '%'; o.style.left = half * 100 + '%'; o.style.width = Math.max(0, share - half) * 100 + '%'; }
+  }
+  if (s.clock.run && s.limit && u >= s.limit) {
+    if (s.rules) { endSection(s, 'time'); put(sKey(s), s, 'now'); toast('Time is up.'); releaseWake(); renderMain(); return; }
+    if (!s.timeUpSeen) { s.timeUpSeen = true; put(sKey(s), s, 'soon'); renderRunner(s); return; }
+  }
+  if (now - lastLocalSave > 5000) { lastLocalSave = now; saveLocal(sKey(s)); }
+  if (s.clock.run && now - lastServerSave > 30000) { lastServerSave = now; commit(s); put(sKey(s), s, 'soon'); }
+}
+async function holdWake() { try { if ('wakeLock' in navigator && !wakeLock && document.visibilityState === 'visible') { wakeLock = await navigator.wakeLock.request('screen'); wakeLock.addEventListener('release', () => { wakeLock = null; }); } } catch { wakeLock = null; } }
+function releaseWake() { try { wakeLock && wakeLock.release(); } catch {} wakeLock = null; }
+function pauseSession(s) { if (!s || !s.clock.run) return; stopClock(s); put(sKey(s), s, 'now'); releaseWake(); }
+function resumeSession(s) { if (!s || s.clock.run || s.status !== 'running') return; startClock(s); put(sKey(s), s, 'soon'); holdWake(); }
+
+/* ---------- Marking ---------- */
+function parseKey(text, s) {
+  let toks = text.trim().toUpperCase().split(/[\s,;|/]+/).map((t) => t.replace(/^\(?\d+[.):-]?/, '').replace(/[^A-FYN]/g, '')).filter(Boolean);
+  if (toks.length === 1 && toks[0].length === s.qs.length && s.qs.every((q) => q.fmt === 'abc')) toks = toks[0].split('');
+  let filled = 0;
+  s.qs.forEach((q, i) => {
+    const t = toks[i]; if (!t) return;
+    if (complete(q.fmt, t)) { q.key = t; filled++; }
+  });
+  return filled;
+}
+function markQ(q) { if (q.key && complete(q.fmt, q.key)) q.res = q.ans === q.key ? 'r' : 'w'; }
+function markingView(s) {
+  const sc = sessionScore(s);
+  return `<div class="page-head"><p class="label">${esc(sessionTitle(s))}</p><h1>Mark your answers</h1>
+    <p>${s.endedBy === 'time' ? 'Time ran out. ' : ''}Enter the correct answers to see what you got right. You can come back and do this later.</p></div>
+  <section class="sec"><p class="label">Paste the answer key</p>
+    <form class="lk-form" data-form="key" style="margin-top:8px"><input class="input" name="key" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="B D A C E or BDACE or 1.B 2.D"><button class="btn soft">Fill in</button></form>
+    <p class="hint">In order, one answer per question. For Data Insights tables use YNY (Yes, No, Yes), and for two-part answers two letters, like BD. Or set each answer below.</p></section>
+  <section class="sec"><div class="sec-head"><h2>${sc.n ? `${sc.r} of ${sc.n} right so far` : 'Questions'}</h2><span class="small muted">${s.qs.length} questions</span></div>
+    ${s.qs.map((q, i) => markRow(s, q, i)).join('')}</section>
+  <div class="btns" style="margin-top:20px"><button class="btn primary big" data-act="mark-done">Save results</button><a class="btn big ghost" href="#/">Do it later</a></div>
+  <div style="margin-top:30px">${UI.delConfirm ? delConfirmBox() : `<button class="btn sm ghost" data-act="del-ask">Delete this set</button>`}</div>`;
+}
+function markRow(s, q, i) {
+  const res = q.res === 'r' ? '<span class="res r" aria-label="right">✓</span>' : q.res === 'w' ? '<span class="res w" aria-label="wrong">✗</span>' : '<span class="res u" aria-label="not marked">?</span>';
+  const showWhy = q.res === 'w' || (q.res === 'r' && q.guess);
+  const grp = q.type ? TYPE[q.type].grp : null;
+  return `<div class="mrow" id="m-${i}">
+    <div class="mrow-head"><span class="n num">#${q.n}</span>${res}<span>Yours <b>${esc(showAns(q.fmt, q.ans))}</b></span>${q.key ? `<span>Correct <b>${esc(showAns(q.fmt, q.key))}</b></span>` : ''}<span class="muted small num">${mmss(q.ms)}</span>${q.bm ? ICON.ribbon : ''}${q.guess ? '<span class="small muted">guessed</span>' : ''}</div>
+    <div style="margin-top:6px">${answerInput(s, i, 'key').replace('class="opts"', 'class="opts" style="margin:8px 0;max-width:420px"')}</div>
+    <div class="chips"><button class="chip ${q.res === 'r' ? 'on' : ''}" data-act="res" data-i="${i}" data-v="r">Right</button><button class="chip ${q.res === 'w' ? 'pk on' : ''}" data-act="res" data-i="${i}" data-v="w">Wrong</button>
+      ${SEC[s.sec].types.length > 1 ? SEC[s.sec].types.map((t) => `<button class="chip ${q.type === t ? 'on' : ''}" data-act="m-type" data-i="${i}" data-v="${t}">${t}</button>`).join('') : ''}</div>
+    ${grp ? `<details style="margin-top:8px" ${!q.topic && q.res === 'w' ? 'open' : ''}><summary class="small" style="cursor:pointer">Topic: ${q.topic ? esc(TOPIC[q.topic].name) : 'not set'}</summary><div class="chips" style="margin-top:8px">${GROUPS[grp].items.filter(([id]) => !(id === 'logic' && q.type === 'PS')).map(([id, n]) => `<button class="chip ${q.topic === id ? 'on' : ''}" data-act="m-topic" data-i="${i}" data-v="${id}">${n}</button>`).join('')}</div></details>` : ''}
+    ${showWhy ? `<div style="margin-top:10px"><p class="label">Why</p><div class="chips" style="margin-top:6px">${REASONS.map(([id, short, long]) => `<button class="chip ${q.why === id ? 'pk on' : ''}" data-act="why" data-i="${i}" data-v="${id}" title="${esc(long)}">${short}</button>`).join('')}</div>
+      <input class="input" style="margin-top:8px" placeholder="What to do next time" value="${esc(q.take)}" data-on="take" data-i="${i}"></div>` : ''}
+  </div>`;
+}
+function delConfirmBox() {
+  return `<div class="confirm"><b>Delete this set?</b><p class="small muted">Its answers and times go from every device. This cannot be undone.</p><div class="btns"><button class="btn sm" data-act="del-yes">Delete</button><button class="btn sm ghost" data-act="del-no">Keep it</button></div></div>`;
+}
+
+/* ---------- Results ---------- */
+function resultsView(s) {
+  const sc = sessionScore(s); const u = used(s); const pace = qPace(s);
+  const answered = s.qs.filter((q) => complete(q.fmt, q.ans));
+  const right = s.qs.filter((q) => q.res === 'r'), wrong = s.qs.filter((q) => q.res === 'w');
+  const facts = [];
+  if (right.length && wrong.length) facts.push([`Right answers took ${mmss(avg(right.map((q) => q.ms)))} on average, wrong ones ${mmss(avg(wrong.map((q) => q.ms)))}.`, avg(wrong.map((q) => q.ms)) > avg(right.map((q) => q.ms)) * 1.25]);
+  const slow = s.qs.filter((q) => q.ms > pace * 1.5);
+  if (slow.length) facts.push([`${plural(slow.length, 'question')} took more than ${mmss(pace * 1.5)} (one and a half times the pace)${slow.some((q) => q.res) ? `, and ${slow.filter((q) => q.res === 'r').length} of them came out right` : ''}.`, true]);
+  if (s.limit) facts.push([u <= s.limit ? `Finished with ${mmss(s.limit - u)} to spare.` : `Went ${mmss(u - s.limit)} over the time limit.`, u > s.limit]);
+  if (s.rules) {
+    const edited = s.qs.filter((q) => q.edited);
+    const fixed = edited.filter((q) => q.res === 'r' && q.first && q.key && q.first !== q.key).length, broke = edited.filter((q) => q.res === 'w' && q.first === q.key).length;
+    facts.push([edited.length ? `Used ${plural(edited.length, 'change')} in review: ${fixed} turned a wrong answer right${broke ? `, ${broke} turned a right answer wrong` : ''}.` : 'No answers changed in review.', broke > 0]);
+    if (s.revMs) facts.push([`Spent ${mmss(s.revMs)} reviewing.`, false]);
+  }
+  const bms = s.qs.filter((q) => q.bm);
+  if (bms.length) facts.push([`Bookmarked ${plural(bms.length, 'question')}${bms.some((q) => q.res) ? `, ${bms.filter((q) => q.res === 'r').length} right` : ''}.`, false]);
+  const guessed = s.qs.filter((q) => q.guess);
+  if (guessed.length) facts.push([`Guessed ${guessed.length}${guessed.some((q) => q.res) ? `, ${guessed.filter((q) => q.res === 'r').length} right` : ''}.`, false]);
+  const words = new Set(s.qs.flatMap((q) => q.words));
+  if (words.size) facts.push([`Looked up ${plural(words.size, 'word')}: ${[...words].slice(0, 8).map((k) => esc(decodeURIComponent(k.slice(2)))).join(', ')}.`, false]);
+  if (s.clock.pauses.length) facts.push([`Paused ${plural(s.clock.pauses.length, 'time')} for ${dur(sum(s.clock.pauses.map((p) => p.ms)))} in total, not counted.`, false]);
+  return `<div class="page-head"><p class="label">${niceDate(s.ended || s.created)} · ${esc(sessionTitle(s))}</p>
+    <div class="score" style="margin-top:10px"><span class="v">${sc.n ? `${sc.r}/${sc.n}` : '-'}</span><span>${sc.n ? `<span class="mark-b">${pct(sc.r, sc.n)}% right</span>` : 'not marked'}</span></div>
+    <p class="muted" style="margin-top:8px">${mmss(u)} used${s.limit ? ` of ${mmss(s.limit)}` : ''} · ${mmss(answered.length ? u / Math.max(1, answered.length) : 0)} a question against a ${mmss(pace)} pace</p></div>
+  <section class="sec"><div class="sec-head"><h2>Time on each question</h2></div>${paceChart(s)}</section>
+  ${facts.length ? `<section class="sec"><h2>What stands out</h2><ul class="facts">${facts.map(([t, pk]) => `<li class="${pk ? 'pk' : ''}">${t}</li>`).join('')}</ul></section>` : ''}
+  <section class="sec"><div class="sec-head"><h2>Questions</h2></div><ul class="rows">${s.qs.map((q, i) => resultRow(s, q, i)).join('')}</ul></section>
+  <div class="btns" style="margin-top:20px"><button class="btn" data-act="re-mark">Change the marking</button><a class="btn primary" href="#/new">Practise again</a></div>
+  <div style="margin-top:30px">${UI.delConfirm ? delConfirmBox() : `<button class="btn sm ghost" data-act="del-ask">Delete this set</button>`}</div>`;
+}
+function resultRow(s, q, i) {
+  const res = q.res === 'r' ? '<span class="res r">✓</span>' : q.res === 'w' ? '<span class="res w">✗</span>' : '<span class="res u">?</span>';
+  const bits = [q.type ? TYPE[q.type].name : null, q.topic ? TOPIC[q.topic].name : null, q.why ? REASON[q.why].long : null].filter(Boolean);
+  return `<li><details><summary class="row-link" style="list-style:none">${res}<span class="row-main"><span class="t">#${q.n} · ${esc(showAns(q.fmt, q.ans))}${q.key && q.res === 'w' ? ` <span class="muted">(correct ${esc(showAns(q.fmt, q.key))})</span>` : ''}</span><div class="s">${esc(bits.join(' · ') || 'no type set')}</div></span><span class="row-side num">${mmss(q.ms)} ${q.bm ? ICON.ribbon : ''}</span></summary>
+    <div class="kv">${q.first && q.first !== q.ans ? `<span>First answer <b>${esc(showAns(q.fmt, q.first))}</b></span>` : ''}${q.msRev ? `<span>Review <b>${mmss(q.msRev)}</b></span>` : ''}<span>Visits <b>${q.visits || 1}</b></span>${q.guess ? '<span><b>Guessed</b></span>' : ''}</div>
+    ${q.take ? `<p class="small" style="margin-top:6px"><b>Next time:</b> ${esc(q.take)}</p>` : ''}${q.note ? `<p class="small">${esc(q.note)}</p>` : ''}
+    ${q.words.length ? `<p class="small muted">Words: ${q.words.map((k) => esc(decodeURIComponent(k.slice(2)))).join(', ')}</p>` : ''}
+    ${q.text ? `<div class="passage small" style="font-size:15px">${esc(q.text)}</div>` : ''}</details></li>`;
+}
+
+/* ---------- Charts (hand-drawn SVG, thin marks, hover for detail) ---------- */
+const C = { blue: '#2F5FE8', pink: '#F0609E', grey: '#C3C9DA', ink: '#13214A', ink2: '#4B5679', rule: '#EEF1F8' };
+// Charts are drawn at the width they will show at, so their text stays at its real size on a phone.
+function chartW() { const vw = window.innerWidth || 390; const pad = vw >= 720 ? 32 : 18; return clamp(Math.min(vw, 760 + 2 * pad) - 2 * pad, 280, 760); }
+function barPath(x, y, w, base, r = 4) {
+  const h = base - y; if (h <= 0) return '';
+  const rr = Math.min(r, w / 2, h);
+  return `M${x},${base}V${y + rr}Q${x},${y} ${x + rr},${y}H${x + w - rr}Q${x + w},${y} ${x + w},${y + rr}V${base}Z`;
+}
+function paceChart(s) {
+  const N = s.qs.length, W = chartW(), H = 230, L = 40, R = 12, T = 22, B = 26;
+  const pw = W - L - R, ph = H - T - B, base = T + ph;
+  const pace = qPace(s);
+  const maxMs = Math.max(pace * 1.6, ...s.qs.map((q) => q.ms));
+  const step = maxMs > 8 * 60000 ? 120000 : 60000; const yMax = Math.ceil(maxMs / step) * step;
+  const y = (ms) => base - (ms / yMax) * ph;
+  const slot = pw / N, bw = Math.min(24, slot * 0.64);
+  let g = '';
+  for (let t = 0; t <= yMax; t += step) g += `<line class="grid" x1="${L}" x2="${W - R}" y1="${y(t)}" y2="${y(t)}"/><text x="${L - 8}" y="${y(t) + 4}" text-anchor="end">${t ? mmss(t) : '0'}</text>`;
+  const every = Math.max(1, Math.ceil(N / Math.max(4, Math.floor(pw / 30))));
+  let bars = '';
+  s.qs.forEach((q, i) => {
+    const x = L + i * slot + (slot - bw) / 2;
+    const col = q.res === 'r' ? C.blue : q.res === 'w' ? C.pink : C.grey;
+    if (q.ms > 0) bars += `<path d="${barPath(x, y(q.ms), bw, base)}" fill="${col}"/>`;
+    if (q.bm) bars += `<path d="M${x + bw / 2 - 4},${y(q.ms) - 13}h8v10l-4,-3l-4,3z" fill="${C.ink}"/>`;
+    if ((i + 1) % every === 0 || i === 0) bars += `<text x="${x + bw / 2}" y="${H - 8}" text-anchor="middle">${i + 1}</text>`;
+    const tipTxt = `Question ${i + 1} (#${q.n}) · ${mmss(q.ms)} · ${q.res === 'r' ? 'right' : q.res === 'w' ? 'wrong' : 'not marked'}${q.type ? ' · ' + q.type : ''}${q.topic ? ' ' + TOPIC[q.topic].name : ''}${q.bm ? ' · bookmarked' : ''}`;
+    bars += `<rect x="${L + i * slot}" y="${T - 14}" width="${slot}" height="${ph + 14}" fill="transparent" data-tip="${esc(tipTxt)}"/>`;
+  });
+  const py = y(pace);
+  const paceLine = `<line x1="${L}" x2="${W - R}" y1="${py}" y2="${py}" stroke="${C.ink2}" stroke-width="1"/><text x="${W - R}" y="${py - 6}" text-anchor="end" style="fill:${C.ink}">pace ${mmss(pace)}</text>`;
+  const table = `<details class="small" style="margin-top:8px"><summary style="cursor:pointer" class="muted">As a table</summary><table class="ttab" style="margin-top:6px"><tr><th>Question</th><th class="n">Time</th><th>Result</th></tr>${s.qs.map((q, i) => `<tr><td>${i + 1} (#${q.n})</td><td class="n">${mmss(q.ms)}</td><td>${q.res === 'r' ? 'Right' : q.res === 'w' ? 'Wrong' : '-'}${q.bm ? ', bookmarked' : ''}</td></tr>`).join('')}</table></details>`;
+  return `<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="Time on each question against the pace">${g}<line class="axis" x1="${L}" x2="${W - R}" y1="${base}" y2="${base}"/>${paceLine}${bars}</svg>
+    <div class="legend"><span><i style="background:${C.blue}"></i>Right</span><span><i style="background:${C.pink}"></i>Wrong</span><span><i style="background:${C.grey}"></i>Not marked</span><span><svg width="10" height="12" style="vertical-align:-1px;margin-right:6px"><path d="M1,0h8v11l-4,-3l-4,3z" fill="${C.ink}"/></svg>Bookmarked</span><span><i style="height:2px;width:14px;background:${C.ink2};border-radius:0;vertical-align:3px"></i>Pace</span></div>${table}`;
+}
+function weeksChart() {
+  const weeks = []; let start = weekStart();
+  for (let k = 7; k >= 0; k--) { const from = start - k * 7 * DAY; weeks.push({ from, ...weekStats(from, from + 7 * DAY) }); }
+  if (!weeks.some((w) => w.qs)) return '';
+  const W = chartW(), H = 140, L = 6, R = 6, T = 24, B = 24, pw = W - L - R, ph = H - T - B, base = T + ph;
+  const max = Math.max(...weeks.map((w) => w.qs), 10);
+  const slot = pw / weeks.length, bw = Math.min(24, slot * 0.5);
+  let out = '';
+  weeks.forEach((w, i) => {
+    const x = L + i * slot + (slot - bw) / 2, yy = base - (w.qs / max) * ph;
+    const cur = i === weeks.length - 1;
+    if (w.qs) out += `<path d="${barPath(x, yy, bw, base)}" fill="${cur ? C.blue : '#9DB5F7'}"/>`;
+    if (w.qs && (cur || w.qs === Math.max(...weeks.map((v) => v.qs)))) out += `<text x="${x + bw / 2}" y="${yy - 6}" text-anchor="middle" style="fill:${C.ink}">${w.qs}</text>`;
+    if (slot >= 52 || i % 2 === 1) out += `<text x="${x + bw / 2}" y="${H - 6}" text-anchor="middle">${new Date(w.from).toLocaleDateString('en-CA', { month: 'short', day: 'numeric' })}</text>`;
+    out += `<rect x="${L + i * slot}" y="${T - 16}" width="${slot}" height="${ph + 16}" fill="transparent" data-tip="${esc(`Week of ${niceDate(w.from)} · ${w.qs} questions · ${minutes(w.ms)}${w.n ? ` · ${pct(w.r, w.n)}% right` : ''}`)}"/>`;
+  });
+  return `<p class="small muted" style="margin:16px 0 0">Questions answered each week</p><svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="Questions answered each week"><line class="axis" x1="${L}" x2="${W - R}" y1="${base}" y2="${base}"/>${out}</svg>`;
+}
+let tipEl = null, tipTimer = null;
+// Hover shows the detail with a mouse. On a touch screen only chart marks show it (rows open instead), for a few seconds.
+function bindTips() {
+  if (bindTips.done) return; bindTips.done = true;
+  const hide = () => { if (tipEl) tipEl.hidden = true; };
+  const show = (e) => {
+    const t = e.target.closest && e.target.closest('[data-tip]');
+    if (!t || (e.pointerType !== 'mouse' && !t.closest('.chart'))) { hide(); return; }
+    if (!tipEl) { tipEl = document.createElement('div'); tipEl.className = 'tip'; tipEl.setAttribute('role', 'tooltip'); document.body.appendChild(tipEl); }
+    tipEl.textContent = t.getAttribute('data-tip'); tipEl.hidden = false;
+    const r = t.getBoundingClientRect();
+    tipEl.style.left = clamp(r.left + r.width / 2, 130, window.innerWidth - 130) + 'px'; tipEl.style.top = Math.max(r.top + 14, 60) + 'px';
+    clearTimeout(tipTimer); if (e.pointerType !== 'mouse') tipTimer = setTimeout(hide, 2500);
+  };
+  document.addEventListener('pointerover', (e) => { if (e.pointerType === 'mouse') show(e); });
+  document.addEventListener('pointerdown', show);
+  document.addEventListener('scroll', hide, { passive: true });
+  window.addEventListener('hashchange', hide);
+}
+
+/* ---------- Words ---------- */
+function wordsView() {
+  const f = UI.wf || 'learn'; const q = (UI.wq || '').toLowerCase();
+  let words = all('w/').sort((a, b) => (b.last || 0) - (a.last || 0));
+  const counts = { learn: words.filter((w) => !w.known).length, known: words.filter((w) => w.known).length, all: words.length };
+  if (f === 'learn') words = words.filter((w) => !w.known); else if (f === 'known') words = words.filter((w) => w.known);
+  if (q) words = words.filter((w) => w.w.includes(q) || (w.vi || []).some((v) => v.toLowerCase().includes(q)));
+  if (UI.flash) return flashView();
+  return `<div class="page-head"><h1>Words</h1><p>Every word you look up is kept here with the sentence it came from.</p></div>
+  <form class="lk-form" data-form="lookup-page" style="margin-top:14px"><input class="input" name="w" placeholder="Look up or search your words" value="${esc(UI.wq || '')}" data-on="wq" autocomplete="off" autocapitalize="off" spellcheck="false"><button class="btn primary">Look up</button></form>
+  <div class="chips" style="margin-top:14px">${[['learn', 'To learn'], ['known', 'Known'], ['all', 'All']].map(([k, n]) => `<button class="chip ${f === k ? 'on' : ''}" data-act="wf" data-v="${k}">${n} <span class="muted">${counts[k]}</span></button>`).join('')}
+    ${counts.learn ? `<button class="chip pk on" data-act="flash-start" style="margin-left:auto">Practise ${Math.min(10, counts.learn)} words</button>` : ''}</div>
+  ${words.length ? `<ul class="rows" style="margin-top:8px">${words.map((w) => `<li class="wrow"><details><summary class="row-link" style="list-style:none"><span class="row-main"><span class="w">${esc(w.w)}</span> ${setting('showVi') && w.vi && w.vi[0] ? `<span class="vi" lang="vi">${esc(w.vi[0])}</span>` : ''}<div class="s">${esc((w.senses && w.senses[0] && w.senses[0].defs[0] && w.senses[0].defs[0].d) || (w.ctx && w.ctx[0] && w.ctx[0].s) || '')}</div></span><span class="row-side tiny muted">${w.n > 1 ? `${w.n} times<br>` : ''}${ago(w.last)}</span></summary>
+    ${entryHTML(w)}${(w.ctx || []).length > 1 ? `<p class="label" style="margin-top:12px">Also seen in</p>${w.ctx.slice(1).map((c) => `<div class="entry"><div class="ctx">${esc(c.s)}</div></div>`).join('')}` : ''}
+    <div class="btns" style="margin-top:8px">${!w.fetched ? `<button class="btn sm" data-act="lk-word" data-w="${esc(w.w)}">Try the dictionary again</button>` : ''}<button class="btn sm ghost" data-act="w-del" data-key="${esc(wordKey(w.w))}">Remove</button></div></details></li>`).join('')}</ul>`
+    : `<p class="empty">${counts.all ? 'No words here.' : 'No words yet. Look one up here, or tap a word in a question you paste while practising.'}</p>`}`;
+}
+function flashView() {
+  const fl = UI.flash; const key = fl.list[fl.i];
+  if (!key) {
+    return `<div class="page-head"><h1>Done</h1><p>${fl.knew} of ${fl.list.length} known. Words you know twice in a row move to Known.</p></div><div class="btns"><button class="btn primary" data-act="flash-start">Another round</button><button class="btn" data-act="flash-stop">Back to words</button></div>`;
+  }
+  const w = get(key);
+  return `<div class="page-head"><p class="label">Word ${fl.i + 1} of ${fl.list.length}</p></div>
+  <div class="flash"><div class="w">${esc(w.w)}</div>${w.phon ? `<p class="muted">${esc(w.phon)}</p>` : ''}
+    ${w.ctx && w.ctx[0] ? `<p class="small muted" style="max-width:520px;margin:12px auto 0">${esc(w.ctx[0].s)}</p>` : ''}
+    ${fl.show ? `<div style="text-align:left;max-width:520px;margin:16px auto 0">${entryHTML(w, { compact: true })}</div>` : `<div class="btns" style="justify-content:center;margin-top:20px"><button class="btn primary big" data-act="flash-show">Show the meaning</button></div>`}</div>
+  ${fl.show ? `<div class="btns" style="justify-content:center"><button class="btn big" data-act="flash-ans" data-v="0">Not yet</button><button class="btn primary big" data-act="flash-ans" data-v="1">Knew it</button></div>` : ''}
+  <div class="btns" style="justify-content:center;margin-top:20px"><button class="btn sm ghost" data-act="flash-stop">Stop</button></div>`;
+}
+
+/* ---------- Bookmarks and mistakes ---------- */
+function openBookmarks() {
+  const out = [];
+  for (const s of all('s/')) { if (s.status === 'running') continue; s.qs.forEach((q, i) => { if (q.bm && !q.bmDone) out.push({ s, q, i }); }); }
+  return out.sort((a, b) => (b.s.ended || b.s.created) - (a.s.ended || a.s.created));
+}
+const lastRedo = (q) => (q.redo && q.redo.length ? q.redo[q.redo.length - 1].res : null);
+function isMistake(q) { return q.res === 'w' || (q.res === 'r' && q.guess); }
+function openMistakes() {
+  const out = [];
+  for (const s of all('s/')) { if (s.status !== 'done') continue; s.qs.forEach((q, i) => { if (isMistake(q) && lastRedo(q) !== 'r') out.push({ s, q, i }); }); }
+  return out;
+}
+function qBlock(s, q, i, extra = '') {
+  const bits = [SEC[s.sec].short, q.type ? TYPE[q.type].name : null, q.topic ? TOPIC[q.topic].name : null].filter(Boolean).join(' · ');
+  return `<li><div class="row-main"><span class="t">${esc(questionLabel(s, q))}</span> ${q.res === 'r' ? '<span class="res r" style="width:22px;height:22px;font-size:12px">✓</span>' : q.res === 'w' ? '<span class="res w" style="width:22px;height:22px;font-size:12px">✗</span>' : ''}
+    <div class="s">${esc(bits)} · ${niceDate(s.ended || s.created)}</div>
+    <div class="kv"><span>Yours <b>${esc(showAns(q.fmt, q.ans))}</b></span>${q.key ? `<span>Correct <b>${esc(showAns(q.fmt, q.key))}</b></span>` : ''}<span>Time <b class="num">${mmss(q.ms)}</b></span>${q.why ? `<span>Why <b>${esc(REASON[q.why].short)}</b></span>` : ''}${q.guess ? '<span><b>Guessed</b></span>' : ''}${q.redo && q.redo.length ? `<span>Redone <b>${q.redo.length}x</b>, last ${lastRedo(q) === 'r' ? 'right' : 'wrong'}</span>` : ''}</div>
+    ${q.take ? `<p class="small" style="margin-top:6px"><b>Next time:</b> ${esc(q.take)}</p>` : ''}${q.note ? `<p class="small muted">${esc(q.note)}</p>` : ''}
+    ${q.text ? `<details style="margin-top:6px"><summary class="small" style="cursor:pointer">The question</summary><div class="passage" style="font-size:15px">${esc(q.text)}</div></details>` : ''}
+    <div class="btns" style="margin-top:8px">${extra}<a class="btn sm ghost" href="#/s/${s.id}">Open the set</a></div></div></li>`;
+}
+function bookmarksView() {
+  const showDone = !!UI.bmDone;
+  const list = [];
+  for (const s of all('s/')) { if (s.status === 'running') continue; s.qs.forEach((q, i) => { if (q.bm && (showDone ? q.bmDone : !q.bmDone)) list.push({ s, q, i }); }); }
+  list.sort((a, b) => (b.s.ended || b.s.created) - (a.s.ended || a.s.created));
+  return `<div class="page-head"><h1>Bookmarks</h1><p>Questions you bookmarked while practising. Look at each one again, then mark it done.</p></div>
+  <div class="chips" style="margin-top:14px"><button class="chip ${!showDone ? 'on' : ''}" data-act="bm-tab" data-v="">To look at</button><button class="chip ${showDone ? 'on' : ''}" data-act="bm-tab" data-v="1">Done</button></div>
+  ${list.length ? `<ul class="rows" style="margin-top:10px">${list.map(({ s, q, i }) => qBlock(s, q, i, showDone ? `<button class="btn sm" data-act="bm-done" data-s="${s.id}" data-i="${i}" data-v="0">Back to the list</button>` : `<button class="btn sm soft" data-act="bm-done" data-s="${s.id}" data-i="${i}" data-v="1">Done</button>`)).join('')}</ul>` : `<p class="empty">${showDone ? 'Nothing marked done yet.' : 'No bookmarks waiting. Bookmark a question while practising and it shows up here.'}</p>`}`;
+}
+function mistakesView() {
+  const f = UI.mf || { sec: '', why: '', open: true };
+  const all_ = [];
+  for (const s of all('s/')) { if (s.status !== 'done') continue; s.qs.forEach((q, i) => { if (isMistake(q)) all_.push({ s, q, i }); }); }
+  let list = all_.filter((m) => (!f.sec || m.s.sec === f.sec) && (!f.why || m.q.why === f.why) && (!f.open || lastRedo(m.q) !== 'r'));
+  list.sort((a, b) => (b.s.ended || 0) - (a.s.ended || 0));
+  const byWhy = REASONS.map(([id, short]) => [id, short, all_.filter((m) => m.q.why === id).length]).filter((x) => x[2]);
+  const maxWhy = Math.max(1, ...byWhy.map((x) => x[2]));
+  const untagged = all_.filter((m) => !m.q.why).length;
+  return `<div class="page-head"><h1>Mistakes</h1><p>Every question you got wrong, or got right by guessing. Redo each one, and when you get it right it leaves the list.</p></div>
+  ${byWhy.length ? `<section class="sec"><div class="sec-head"><h2>Why they went wrong</h2><span class="small muted">${all_.length} in all${untagged ? `, ${untagged} without a reason` : ''}</span></div>
+    <table class="ttab">${byWhy.sort((a, b) => b[2] - a[2]).map(([id, short, n]) => `<tr><td style="width:34%">${short}</td><td class="bars"><div class="hbar pk"><i style="width:${(n / maxWhy) * 100}%"></i></div></td><td class="n">${n}</td></tr>`).join('')}</table></section>` : ''}
+  <section class="sec">
+  <div class="chips"><button class="chip ${f.open ? 'on' : ''}" data-act="mf" data-k="open" data-v="1">To redo</button><button class="chip ${!f.open ? 'on' : ''}" data-act="mf" data-k="open" data-v="">All</button>
+    <span style="width:8px"></span>${[['', 'All sections'], ...SEC_ORDER.map((k) => [k, SEC[k].short])].map(([k, n]) => `<button class="chip ${f.sec === k ? 'on' : ''}" data-act="mf" data-k="sec" data-v="${k}">${n}</button>`).join('')}</div>
+  <div class="chips" style="margin-top:8px">${[['', 'Any reason'], ...REASONS.map(([id, s]) => [id, s])].map(([k, n]) => `<button class="chip ${f.why === k ? 'pk on' : ''}" data-act="mf" data-k="why" data-v="${k}">${n}</button>`).join('')}</div>
+  ${list.length ? `<ul class="rows" style="margin-top:10px">${list.map(({ s, q, i }) => qBlock(s, q, i, `<button class="btn sm soft" data-act="redo" data-s="${s.id}" data-i="${i}" data-v="r">Redid it: right</button><button class="btn sm" data-act="redo" data-s="${s.id}" data-i="${i}" data-v="w">Still wrong</button>`)).join('')}</ul>` : `<p class="empty">${all_.length ? 'Nothing matches.' : 'No mistakes yet. They show up here once a practice set is marked.'}</p>`}
+  </section>`;
+}
+
+/* ---------- Practice log ---------- */
+function logView() {
+  const f = UI.lf || '';
+  const list = all('s/').filter((s) => !f || s.sec === f).sort((a, b) => (b.ended || b.created) - (a.ended || a.created));
+  const rows = questionRows().filter((r) => !f || r.sec === f);
+  const st = statsFor(rows);
+  return `<div class="page-head"><h1>Practice log</h1><p>Every practice set and timed section.</p></div>
+  <div class="chips" style="margin-top:14px">${[['', 'All'], ...SEC_ORDER.map((k) => [k, SEC[k].short])].map(([k, n]) => `<button class="chip ${f === k ? 'on' : ''}" data-act="lf" data-v="${k}">${n}</button>`).join('')}</div>
+  <div class="grid3" style="margin-top:16px"><div class="stat"><div class="v">${list.length}</div><div class="k">sets</div></div><div class="stat"><div class="v">${st.done}</div><div class="k">questions</div></div><div class="stat"><div class="v">${st.n ? pct(st.right, st.n) + '%' : '-'}</div><div class="k">right</div></div></div>
+  ${list.length ? `<ul class="rows" style="margin-top:14px">${list.map((s) => (s.status === 'running' ? `<li><a class="row-link" href="#/s/${s.id}"><span class="row-main"><span class="t">${esc(sessionTitle(s))}</span><div class="s">in progress · ${mmss(used(s))}</div></span><span class="btn sm">Resume</span></a></li>` : logRow(s))).join('')}</ul>` : '<p class="empty">Nothing yet.</p>'}`;
+}
+
+/* ---------- Topics tracker ---------- */
+function topicStatus(id) { return (get('t/' + id) || {}).status || 'new'; }
+function topicsView() {
+  const f = UI.tf || '';
+  const rows = questionRows();
+  const recIds = new Set(recommendations(6).map((r) => r.id));
+  const typeRows = TYPE_ORDER.filter((t) => !f || TYPE[t].sec === f);
+  const groups = Object.keys(GROUPS).filter((g) => !f || (g === 'quant' ? f === 'Q' || f === 'DI' : f === 'V'));
+  const line = (kind, id, name, rs, pace, sec) => {
+    const st = statsFor(rs); const open = UI.topicOpen === kind + id;
+    const accBar = st.n ? `<div class="hbar ${st.acc < 0.6 ? 'pk' : ''}"><i style="width:${Math.round(st.acc * 100)}%"></i></div>` : '';
+    const over = st.timedN && st.avgMs > pace;
+    const timeBar = st.timedN ? `<div class="hbar ${over ? 'pk' : ''}" style="margin-top:6px"><i style="width:${clamp((st.avgMs / (pace * 2)) * 100, 2, 100)}%"></i><s style="left:50%"></s></div>` : '';
+    const status = kind === 'topic' ? `<button class="st" data-act="t-status" data-id="${id}" data-v="${topicStatus(id)}" title="Tap to change">${STATUS.find(([k]) => k === topicStatus(id))[1]}</button>` : '';
+    const tip = `${name}: ${st.done} answered${st.n ? `, ${st.right} of ${st.n} right` : ''}${st.timedN ? `, ${mmss(st.avgMs)} a question against a ${mmss(pace)} pace` : ''}`;
+    return `<tr class="click" data-act="t-open" data-id="${kind + id}" data-tip="${esc(tip)}"><td>${recIds.has(id) ? `<span class="mark-p">${esc(name)}</span>` : esc(name)} ${status}</td>
+      <td class="n">${st.done || '<span class="muted">0</span>'}</td>
+      <td class="bars">${st.n ? `<div style="display:flex;align-items:center;gap:8px"><div style="flex:1">${accBar}${timeBar}</div></div>` : st.timedN ? timeBar : '<span class="muted small">-</span>'}</td>
+      <td class="n">${st.n ? pct(st.right, st.n) + '%' : '-'}<div class="tiny muted">${st.timedN ? mmss(st.avgMs) : ''}</div></td>
+      <td class="hide-sm small muted">${st.last ? ago(st.last) : ''}</td></tr>
+      ${open ? `<tr><td colspan="5" style="background:var(--rule-2);padding:12px">${topicDetail(kind, id, name, rs, sec, pace)}</td></tr>` : ''}`;
+  };
+  const head = '<tr><th>Topic</th><th class="n">Done</th><th>Right and time</th><th class="n">Right</th><th class="hide-sm">Last</th></tr>';
+  return `<div class="page-head"><h1>Topics</h1><p>How each question type and topic is going. The top bar is how many you get right; the bottom bar is your average time, with the line at the real pace. Highlighted ones are worth doing more of.</p></div>
+  <div class="chips" style="margin-top:14px">${[['', 'All'], ...SEC_ORDER.map((k) => [k, SEC[k].short])].map(([k, n]) => `<button class="chip ${f === k ? 'on' : ''}" data-act="tf" data-v="${k}">${n}</button>`).join('')}</div>
+  <section class="sec"><h2>Question types</h2><table class="ttab" style="margin-top:8px">${head}${typeRows.map((t) => line('type', t, TYPE[t].name, rows.filter((r) => r.type === t), paceMs(TYPE[t].sec), TYPE[t].sec)).join('')}</table></section>
+  ${groups.map((g) => {
+    const sec = g === 'quant' ? 'Q' : 'V';
+    const items = GROUPS[g].items;
+    const counts = Object.fromEntries(STATUS.map(([k]) => [k, items.filter(([id]) => topicStatus(id) === k).length]));
+    return `<section class="sec"><div class="sec-head"><h2>${GROUPS[g].name}</h2><span class="small muted">${counts.confident} confident · ${counts.practising} practising · ${counts.learning} learning</span></div>
+      <table class="ttab" style="margin-top:8px">${head}${items.map(([id, n]) => line('topic', id, n, rows.filter((r) => r.topic === id), g === 'quant' ? avg(rows.filter((r) => r.topic === id).map((r) => r.pace)) || paceMs(sec) : paceMs('V'), sec)).join('')}</table></section>`;
+  }).join('')}
+  <p class="hint" style="margin-top:16px">Status is yours to set: tap it to move a topic from Not started to Learning, Practising and Confident.</p>`;
+}
+function topicDetail(kind, id, name, rs, sec, pace) {
+  const recent = rs.filter((r) => r.res).sort((a, b) => b.when - a.when).slice(0, 12);
+  const whys = REASONS.map(([k, short]) => [short, rs.filter((r) => r.q.why === k).length]).filter((x) => x[1]);
+  const note = kind === 'topic' ? (get('t/' + id) || {}).note || '' : '';
+  const practice = kind === 'type' ? { sec: TYPE[id].sec, type: id } : { sec: sectionOfTopic(id) === 'V' ? 'V' : 'Q', type: TOPIC[id].grp === 'cr' ? 'CR' : TOPIC[id].grp === 'rc' ? 'RC' : id === 'logic' ? 'DS' : 'PS', topic: id };
+  if (practice.type === 'DS') practice.sec = 'DI';
+  return `<div><b>${esc(name)}</b>
+    ${recent.length ? `<div style="display:flex;gap:5px;flex-wrap:wrap;margin:8px 0" aria-label="Most recent first">${recent.map((r) => `<span class="res ${r.res}" style="width:22px;height:22px;font-size:11px" title="${esc(questionLabel(r.s, r.q))} · ${mmss(r.ms)}">${r.res === 'r' ? '✓' : '✗'}</span>`).join('')}</div><p class="tiny muted">Latest first.</p>` : '<p class="small muted">Nothing marked yet.</p>'}
+    ${whys.length ? `<p class="small" style="margin-top:6px">Mistakes: ${whys.map(([s, n]) => `${s} ${n}`).join(' · ')}</p>` : ''}
+    ${kind === 'topic' ? `<textarea class="input" style="margin-top:8px;min-height:60px;background:#fff" placeholder="Notes: formulas, traps, what the book says" data-on="t-note" data-id="${id}">${esc(note)}</textarea>` : ''}
+    <div class="btns" style="margin-top:10px"><a class="btn sm primary" href="${practiceHash(practice, 10)}">Practise 10</a></div></div>`;
+}
+
+/* ---------- Exam tracker ---------- */
+function examsSorted() { return all('e/').filter((e) => e.total).sort((a, b) => (a.date < b.date ? -1 : a.date > b.date ? 1 : (a.created || 0) - (b.created || 0))); }
+function latestExam() { const ex = examsSorted(); return ex[ex.length - 1] || null; }
+function examChart(exams, target) {
+  if (!exams.length) return '';
+  const W = chartW(), H = 240, L = 40, R = 76, T = 22, B = 30, pw = W - L - R, ph = H - T - B, base = T + ph;
+  const vals = exams.map((e) => e.total).concat(target ? [target] : []);
+  const lo = Math.max(205, Math.floor((Math.min(...vals) - 30) / 50) * 50), hi = Math.min(805, Math.ceil((Math.max(...vals) + 30) / 50) * 50);
+  const y = (v) => base - ((v - lo) / (hi - lo || 1)) * ph;
+  const x = (i) => (exams.length === 1 ? L + pw / 2 : L + (i / (exams.length - 1)) * pw);
+  let g = '';
+  for (let v = lo; v <= hi; v += 50) g += `<line class="grid" x1="${L}" x2="${L + pw}" y1="${y(v)}" y2="${y(v)}"/><text x="${L - 8}" y="${y(v) + 4}" text-anchor="end">${v}</text>`;
+  const tline = target ? `<line x1="${L}" x2="${L + pw}" y1="${y(target)}" y2="${y(target)}" stroke="${C.pink}" stroke-width="2"/><text x="${L + pw + 6}" y="${y(target) + 4}" style="fill:${C.ink}">target ${target}</text>` : '';
+  const pts = exams.map((e, i) => `${x(i)},${y(e.total)}`).join(' ');
+  const line = exams.length > 1 ? `<polyline points="${pts}" fill="none" stroke="${C.blue}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>` : '';
+  const dots = exams.map((e, i) => `<circle cx="${x(i)}" cy="${y(e.total)}" r="5" fill="${C.blue}" stroke="#fff" stroke-width="2"/><circle cx="${x(i)}" cy="${y(e.total)}" r="16" fill="transparent" data-tip="${esc(`${e.name || 'Practice exam'} · ${niceDate(parseLocalDate(e.date))} · ${e.total} (Q ${e.q || '-'}, V ${e.v || '-'}, DI ${e.di || '-'})`)}"/>`).join('');
+  const lastE = exams[exams.length - 1];
+  const lab = `<text x="${x(exams.length - 1)}" y="${y(lastE.total) - 12}" text-anchor="middle" style="fill:${C.ink};font-weight:600;font-size:12px">${lastE.total}</text>`;
+  const xl = exams.map((e, i) => (exams.length <= 8 || i % Math.ceil(exams.length / 8) === 0 || i === exams.length - 1 ? `<text x="${x(i)}" y="${H - 8}" text-anchor="middle">${new Date(parseLocalDate(e.date)).toLocaleDateString('en-CA', { month: 'short', day: 'numeric' })}</text>` : '')).join('');
+  return `<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="Practice exam scores over time">${g}${tline}${line}${dots}${lab}${xl}</svg>
+    <div class="legend"><span><i style="background:${C.blue};border-radius:50%"></i>Total score</span>${target ? `<span><i style="height:2px;width:14px;background:${C.pink};border-radius:0;vertical-align:3px"></i>Target</span>` : ''}</div>`;
+}
+function examsView() {
+  const exams = examsSorted(); const target = setting('target');
+  const lastE = exams[exams.length - 1]; const best = exams.reduce((m, e) => (!m || e.total > m.total ? e : m), null);
+  const secAvg = (k) => { const v = exams.slice(-3).map((e) => e[k]).filter(Boolean); return v.length ? Math.round(avg(v)) : null; };
+  return `<div class="page-head"><h1>Practice exams</h1><p>Log each full practice exam to see your scores move toward the target.</p></div>
+  <div class="btns" style="margin-top:14px"><a class="btn primary" href="#/e/new">Log a practice exam</a></div>
+  ${exams.length ? `<div class="grid3" style="margin-top:20px">
+      <div class="stat"><div class="v">${lastE.total}</div><div class="k">latest${exams.length > 1 ? ` (${lastE.total - exams[exams.length - 2].total >= 0 ? '+' : ''}${lastE.total - exams[exams.length - 2].total})` : ''}</div></div>
+      <div class="stat"><div class="v">${best.total}</div><div class="k">best</div></div>
+      <div class="stat"><div class="v">${target ? (target - lastE.total > 0 ? target - lastE.total : 'Met') : '-'}</div><div class="k">${target ? (target - lastE.total > 0 ? `to reach ${target}` : `target ${target}`) : '<a href="#/settings">set a target</a>'}</div></div></div>
+    <section class="sec"><h2>Total score</h2>${examChart(exams, target)}</section>
+    <section class="sec"><div class="sec-head"><h2>Sections</h2><span class="small muted">average of the last ${Math.min(3, exams.length)}</span></div>
+      <table class="ttab">${SEC_ORDER.map((k) => { const v = secAvg(k.toLowerCase()); return `<tr><td style="width:40%">${SEC[k].name}</td><td class="bars">${v ? `<div class="hbar"><i style="width:${((v - 60) / 30) * 100}%"></i></div>` : ''}</td><td class="n">${v || '-'}</td></tr>`; }).join('')}</table>
+      <p class="hint">Each section is scored 60 to 90, and the total 205 to 805.</p></section>
+    <section class="sec"><h2>All exams</h2><ul class="rows">${exams.slice().reverse().map((e) => `<li><a class="row-link" href="#/e/${e.id}"><span class="row-main"><span class="t">${esc(e.name || 'Practice exam')}</span><div class="s">${niceDate(parseLocalDate(e.date), { year: true })} · Q ${e.q || '-'} · V ${e.v || '-'} · DI ${e.di || '-'}${(e.short || []).length ? ` · ran short of time in ${e.short.map((k) => SEC[k].short).join(', ')}` : ''}</div></span><span class="row-side"><b style="font-size:22px">${e.total}</b></span></a></li>`).join('')}</ul></section>`
+    : '<p class="empty">No practice exams yet. The official ones are on mba.com, with 6 full exams in all.</p>'}`;
+}
+let EXF = null;
+function examForm(r) {
+  const isNew = r.id === 'new';
+  if (!EXF || EXF._id !== r.id) {
+    const e = isNew ? { id: uid(), date: localDate(), name: EXAMS[Math.min(5, all('e/').length)], total: '', q: '', v: '', di: '', order: '', short: [], notes: '' } : { ...(get('e/' + r.id) || {}) };
+    if (!e.id) return `<p class="empty">This exam is not here. <a href="#/exams">Back to exams</a></p>`;
+    EXF = { ...e, short: [...(e.short || [])], _id: r.id, _err: '' };
+  }
+  const f = EXF;
+  const names = [...new Set([...EXAMS, ...all('e/').map((e) => e.name).filter(Boolean)])];
+  const orders = ['QVD', 'QDV', 'VQD', 'VDQ', 'DQV', 'DVQ'];
+  const ordName = (o) => o.split('').map((c) => ({ Q: 'Quant', V: 'Verbal', D: 'Data Insights' }[c])).join(', ');
+  return `<div class="page-head"><p class="label"><a href="#/exams">Practice exams</a></p><h1>${isNew ? 'Log a practice exam' : 'Practice exam'}</h1></div>
+  <form data-form="exam" novalidate>
+    <div class="field"><label class="label" for="ex-name">Which exam</label><input id="ex-name" class="input" name="name" list="exnames" value="${esc(f.name || '')}" data-on="ex" data-k="name"><datalist id="exnames">${names.map((n) => `<option value="${esc(n)}">`).join('')}</datalist></div>
+    <div class="field"><label class="label" for="ex-date">Date</label><input id="ex-date" class="input" style="max-width:220px" type="date" name="date" value="${esc(f.date)}" data-on="ex" data-k="date"></div>
+    <div class="field"><label class="label" for="ex-total">Total score</label><input id="ex-total" class="input" style="max-width:160px" type="number" inputmode="numeric" min="205" max="805" step="10" name="total" value="${esc(f.total)}" placeholder="205 to 805" data-on="ex" data-k="total"></div>
+    <div class="grid3">${[['q', 'Quant'], ['v', 'Verbal'], ['di', 'Data Insights']].map(([k, n]) => `<div class="field" style="margin:0"><label class="label" for="ex-${k}">${n}</label><input id="ex-${k}" class="input" type="number" inputmode="numeric" min="60" max="90" name="${k}" value="${esc(f[k])}" placeholder="60 to 90" data-on="ex" data-k="${k}"></div>`).join('')}</div>
+    <div class="field"><label class="label" for="ex-order">Section order</label><select id="ex-order" class="input" style="max-width:340px" name="order" data-on="ex" data-k="order"><option value="">Not noted</option>${orders.map((o) => `<option value="${o}" ${f.order === o ? 'selected' : ''}>${ordName(o)}</option>`).join('')}</select></div>
+    <div class="field"><span class="label">Ran short of time in</span><div class="chips" style="margin-top:8px">${SEC_ORDER.map((k) => `<button type="button" class="chip ${f.short.includes(k) ? 'pk on' : ''}" data-act="ex-short" data-v="${k}">${SEC[k].short}</button>`).join('')}</div></div>
+    <div class="field"><label class="label" for="ex-notes">Notes</label><textarea id="ex-notes" class="input" name="notes" placeholder="What went well, what did not, what the score report said" data-on="ex" data-k="notes">${esc(f.notes || '')}</textarea></div>
+    ${f._err ? `<p class="err">${esc(f._err)}</p>` : ''}
+    <div class="btns"><button class="btn primary big">Save</button><a class="btn big ghost" href="#/exams">Cancel</a></div>
+  </form>
+  ${!isNew ? `<div style="margin-top:30px">${UI.exDel ? `<div class="confirm"><b>Delete this exam?</b><div class="btns" style="margin-top:8px"><button class="btn sm" data-act="ex-del-yes">Delete</button><button class="btn sm ghost" data-act="ex-del-no">Keep it</button></div></div>` : '<button class="btn sm ghost" data-act="ex-del">Delete this exam</button>'}</div>` : ''}`;
+}
+function saveExam() {
+  const f = EXF; const num = (v) => (v === '' || v == null ? null : Number(v));
+  const total = num(f.total), q = num(f.q), v = num(f.v), di = num(f.di);
+  if (!total || total < 205 || total > 805 || total % 10 !== 5) { f._err = 'The total is between 205 and 805 and ends in 5 (like 615).'; renderMain(); return; }
+  for (const [n, x] of [['Quant', q], ['Verbal', v], ['Data Insights', di]]) if (x != null && (x < 60 || x > 90)) { f._err = `${n} is scored 60 to 90.`; renderMain(); return; }
+  if (!f.date) { f._err = 'Add the date.'; renderMain(); return; }
+  const prev = get('e/' + f.id) || {};
+  put('e/' + f.id, { id: f.id, created: prev.created || Date.now(), date: f.date, name: (f.name || '').trim(), total, q, v, di, order: f.order || '', short: f.short, notes: f.notes || '' }, 'now');
+  EXF = null; location.hash = '#/exams'; toast('Saved');
+}
+
+/* ---------- Settings ---------- */
+function settingsView() {
+  const s = get('m/settings') || {};
+  const unsynced = [...DB.meta.values()].filter((m) => m.dirty).length;
+  return `<div class="page-head"><h1>Settings</h1></div>
+  <form data-form="settings" novalidate>
+    <div class="field"><label class="label" for="st-name">Name</label><input id="st-name" class="input" style="max-width:260px" name="name" value="${esc(s.name ?? DEFAULTS.name)}"></div>
+    <div class="grid2"><div class="field"><label class="label" for="st-date">Test date</label><input id="st-date" class="input" type="date" name="testDate" value="${esc(s.testDate || '')}"></div>
+    <div class="field"><label class="label" for="st-target">Target score</label><input id="st-target" class="input" type="number" inputmode="numeric" min="205" max="805" step="10" name="target" value="${esc(s.target || '')}" placeholder="like 655"></div></div>
+    <div class="field"><label class="label" for="st-size">Usual practice set size</label><input id="st-size" class="input" style="max-width:120px" type="number" min="1" max="60" name="setSize" value="${esc(s.setSize || DEFAULTS.setSize)}"></div>
+    <div class="field"><label class="switch"><input type="checkbox" name="showVi" ${(s.showVi ?? true) ? 'checked' : ''}> Show Vietnamese meanings when looking up words</label></div>
+    <div class="btns"><button class="btn primary">Save settings</button></div>
+  </form>
+  <section class="sec"><h2>Your data</h2>
+    <p class="muted">Everything is kept on this device and saved to the tracker's storage on Netlify, so it is there on any device you sign in on.${unsynced ? ` ${plural(unsynced, 'change')} still waiting to be sent.` : ''}</p>
+    <div class="btns" style="margin-top:10px"><button class="btn" data-act="export">Download a copy (JSON)</button><button class="btn ghost" data-act="sync-now">Sync now</button></div></section>
+  <section class="sec"><h2>This device</h2><p class="muted">Signing out removes the tracker's data from this device only. It stays saved online.</p>
+    <div class="btns" style="margin-top:10px">${UI.outConfirm ? `<button class="btn" data-act="signout-yes">Sign out now</button><button class="btn ghost" data-act="signout-no">Stay signed in</button>` : '<button class="btn" data-act="signout">Sign out</button>'}</div></section>`;
+}
+
+/* ---------- Actions ---------- */
+function resetQuestionUI() { UI.picker = false; UI.note = false; UI.editText = false; UI.textDraft = ''; }
+function saveS(s, when = 'soon') { put(sKey(s), s, when); }
+const A = {
+  // anywhere
+  lookup: () => openLookup('', null),
+  'lk-close': () => closeLookup(),
+  'lk-word': (el) => { if (!LK.open) openLookup(el.dataset.w, null); else runLookup(el.dataset.w, null); },
+  known: (el) => { const e = get(el.dataset.key); if (!e) return; e.known = !e.known; if (!e.known) e.knew = 0; put(el.dataset.key, e); if (LK.open) { LK.entry = e; renderSheet(); } if (route().name === 'words') renderMain(); },
+  say: (el) => { try { new Audio(el.dataset.src).play(); } catch {} },
+  // new practice
+  nf: (el) => { NEWF[el.dataset.k] = el.dataset.v || null; if (el.dataset.k === 'sec') { NEWF.type = null; NEWF.topic = null; } if (el.dataset.k === 'type') NEWF.topic = null; renderMain(); },
+  'nf-count': (el) => { NEWF.count = clamp(NEWF.count + Number(el.dataset.d), 1, 80); renderMain(); },
+  // practice screen
+  ans: (el) => { const s = currentSession(); if (!s) return; if (!setAnswer(s, +el.dataset.i, el.dataset.v)) { toast('No answer changes left.'); return; } saveS(s); renderRunner(s); },
+  'ans-part': (el) => {
+    const s = currentSession(); if (!s) return; const i = +el.dataset.i, q = s.qs[i]; const len = q.fmt === 'yn' ? 3 : 2;
+    const cur = (q.ans || '').padEnd(len, '-').slice(0, len).split(''); cur[+el.dataset.p] = el.dataset.v;
+    if (!setAnswer(s, i, cur.join(''))) { toast('No answer changes left.'); return; } saveS(s); renderRunner(s);
+  },
+  next: () => {
+    const s = currentSession(); if (!s) return; const q = s.qs[s.cur];
+    if (s.rules && !complete(q.fmt, q.ans)) { toast('Pick an answer to go on. The test does not let you skip.'); return; }
+    resetQuestionUI();
+    if (s.cur === s.qs.length - 1) {
+      if (s.rules) { goTo(s, -1); s.phase = 'review'; saveS(s, 'now'); renderRunner(s); window.scrollTo(0, 0); return; }
+      UI.confirmEnd = true; renderRunner(s); return;
+    }
+    goTo(s, s.cur + 1); saveS(s); renderRunner(s); window.scrollTo(0, 0);
+  },
+  prev: () => { const s = currentSession(); if (!s || s.cur <= 0 || s.rules) return; resetQuestionUI(); goTo(s, s.cur - 1); saveS(s); renderRunner(s); window.scrollTo(0, 0); },
+  'open-q': (el) => { const s = currentSession(); if (!s) return; if (s.rules && s.phase !== 'review') return; resetQuestionUI(); goTo(s, +el.dataset.i); saveS(s); renderRunner(s); window.scrollTo(0, 0); },
+  'to-grid': () => { const s = currentSession(); if (!s) return; resetQuestionUI(); goTo(s, -1); saveS(s); renderRunner(s); window.scrollTo(0, 0); },
+  'bm-only': () => { UI.bmOnly = !UI.bmOnly; renderRunner(currentSession()); },
+  'end-ask': () => { UI.confirmEnd = true; renderRunner(currentSession()); window.scrollTo(0, 0); },
+  'end-cancel': () => { UI.confirmEnd = false; renderRunner(currentSession()); },
+  'end-now': () => { const s = currentSession(); if (!s) return; endSection(s, 'finish'); UI.confirmEnd = false; releaseWake(); saveS(s, 'now'); renderMain(); window.scrollTo(0, 0); },
+  'dismiss-timeup': () => { const s = currentSession(); s.timeUpAck = true; saveS(s); renderRunner(s); },
+  pause: () => { const s = currentSession(); pauseSession(s); renderRunner(s); },
+  resume: () => { const s = currentSession(); resumeSession(s); renderRunner(s); },
+  'run-exit': (el, e) => { e && e.preventDefault(); const s = currentSession(); pauseSession(s); location.hash = '#/'; },
+  'count-away': () => { const s = currentSession(); countAway(s); startClock(s); saveS(s, 'now'); holdWake(); renderRunner(s); },
+  'drop-away': () => { const s = currentSession(); s.away = null; saveS(s); renderRunner(s); },
+  bm: () => { const s = currentSession(); const q = s.qs[s.cur]; q.bm = !q.bm; if (q.bm) q.bmDone = false; saveS(s); renderRunner(s); },
+  guess: () => { const s = currentSession(); const q = s.qs[s.cur]; q.guess = !q.guess; saveS(s); renderRunner(s); },
+  note: () => { UI.note = !UI.note; renderRunner(currentSession()); },
+  picker: () => { UI.picker = !UI.picker; renderRunner(currentSession()); },
+  'q-type': (el) => { const s = currentSession(); const q = s.qs[+el.dataset.i]; const t = el.dataset.v; if (q.type !== t) { q.type = t; const f = fmtOf(t); if (q.fmt !== f && !(t === 'MSR' && q.fmt === 'yn')) { q.fmt = f; q.ans = complete(f, q.ans) ? q.ans : null; } if (q.topic && TOPIC[q.topic].grp !== TYPE[t].grp) q.topic = null; } saveS(s); renderRunner(s); },
+  'q-topic': (el) => { const s = currentSession(); const q = s.qs[+el.dataset.i]; q.topic = q.topic === el.dataset.v ? null : el.dataset.v; saveS(s); renderRunner(s); },
+  'q-fmt': (el) => { const s = currentSession(); const q = s.qs[+el.dataset.i]; if (q.fmt !== el.dataset.v) { q.fmt = el.dataset.v; q.ans = null; } saveS(s); renderRunner(s); },
+  'text-save': () => { const s = currentSession(); const q = s.qs[s.cur]; q.text = (UI.textDraft || '').trim().slice(0, 20000); UI.editText = false; UI.textDraft = ''; saveS(s); renderRunner(s); },
+  'text-edit': () => { const s = currentSession(); UI.editText = true; UI.textDraft = s.qs[s.cur].text; UI.textOpen = true; renderRunner(s); },
+  'text-cancel': () => { UI.editText = false; UI.textDraft = ''; renderRunner(currentSession()); },
+  w: (el) => { const s = currentSession(); const q = s.qs[s.cur]; const idx = +el.dataset.i; openLookup(el.textContent, { s: sentenceAround(q.text, idx), sid: s.id, q: q.n, src: s.source }); },
+  // marking
+  key: (el) => { const s = currentSession(); const q = s.qs[+el.dataset.i]; q.key = q.key === el.dataset.v ? null : el.dataset.v; if (q.key) markQ(q); else q.res = null; saveS(s); renderMain(); },
+  'key-part': (el) => {
+    const s = currentSession(); const q = s.qs[+el.dataset.i]; const len = q.fmt === 'yn' ? 3 : 2;
+    const cur = (q.key || '').padEnd(len, '-').slice(0, len).split(''); cur[+el.dataset.p] = el.dataset.v; q.key = cur.join('');
+    if (complete(q.fmt, q.key)) markQ(q); saveS(s); renderMain();
+  },
+  res: (el) => { const s = currentSession(); const q = s.qs[+el.dataset.i]; q.res = q.res === el.dataset.v ? null : el.dataset.v; saveS(s); renderMain(); },
+  'm-type': (el) => { const s = currentSession(); const q = s.qs[+el.dataset.i]; const t = el.dataset.v; if (q.type !== t) { q.type = t; if (q.topic && TOPIC[q.topic].grp !== TYPE[t].grp) q.topic = null; } saveS(s); renderMain(); },
+  'm-topic': (el) => { const s = currentSession(); const q = s.qs[+el.dataset.i]; q.topic = q.topic === el.dataset.v ? null : el.dataset.v; saveS(s); renderMain(); },
+  why: (el) => { const s = currentSession(); const q = s.qs[+el.dataset.i]; q.why = q.why === el.dataset.v ? null : el.dataset.v; saveS(s); renderMain(); },
+  'mark-done': () => { const s = currentSession(); s.status = 'done'; s.marked = Date.now(); saveS(s, 'now'); renderMain(); window.scrollTo(0, 0); },
+  're-mark': () => { const s = currentSession(); s.status = 'marking'; saveS(s); renderMain(); window.scrollTo(0, 0); },
+  'del-ask': () => { UI.delConfirm = true; renderMain(); },
+  'del-no': () => { UI.delConfirm = false; renderMain(); },
+  'del-yes': () => { const s = currentSession(); UI.delConfirm = false; if (s) remove(sKey(s)); toast('Deleted'); location.hash = '#/log'; },
+  // words
+  wf: (el) => { UI.wf = el.dataset.v; renderMain(); },
+  'w-del': (el) => { remove(el.dataset.key); renderMain(); },
+  'flash-start': () => {
+    const pool = all('w/').filter((w) => !w.known).sort((a, b) => (a.knew || 0) - (b.knew || 0) || (a.lastFlash || 0) - (b.lastFlash || 0));
+    UI.flash = { list: pool.slice(0, 10).map((w) => wordKey(w.w)), i: 0, show: false, knew: 0 }; renderMain(); window.scrollTo(0, 0);
+  },
+  'flash-show': () => { UI.flash.show = true; renderMain(); },
+  'flash-ans': (el) => {
+    const fl = UI.flash; const key = fl.list[fl.i]; const w = get(key);
+    if (w) { if (el.dataset.v === '1') { w.knew = (w.knew || 0) + 1; fl.knew++; if (w.knew >= 2) w.known = true; } else w.knew = 0; w.lastFlash = Date.now(); put(key, w, 'later'); }
+    fl.i++; fl.show = false; renderMain();
+  },
+  'flash-stop': () => { UI.flash = null; renderMain(); },
+  // bookmarks, mistakes, log, topics
+  'bm-tab': (el) => { UI.bmDone = !!el.dataset.v; renderMain(); },
+  'bm-done': (el) => { const s = get('s/' + el.dataset.s); if (!s) return; s.qs[+el.dataset.i].bmDone = el.dataset.v === '1'; saveS(s); renderMain(); },
+  mf: (el) => { UI.mf = { ...(UI.mf || { sec: '', why: '', open: true }) }; const k = el.dataset.k; UI.mf[k] = k === 'open' ? !!el.dataset.v : el.dataset.v; renderMain(); },
+  redo: (el) => { const s = get('s/' + el.dataset.s); if (!s) return; const q = s.qs[+el.dataset.i]; q.redo = [...(q.redo || []), { at: Date.now(), res: el.dataset.v }]; saveS(s); toast(el.dataset.v === 'r' ? 'Nice. It leaves the list.' : 'Kept on the list.'); renderMain(); },
+  lf: (el) => { UI.lf = el.dataset.v; renderMain(); },
+  tf: (el) => { UI.tf = el.dataset.v; UI.topicOpen = null; renderMain(); },
+  't-open': (el) => { UI.topicOpen = UI.topicOpen === el.dataset.id ? null : el.dataset.id; renderMain(); },
+  't-status': (el, e) => {
+    e && e.stopPropagation(); const id = el.dataset.id; const order = STATUS.map(([k]) => k);
+    const next = order[(order.indexOf(topicStatus(id)) + 1) % order.length];
+    put('t/' + id, { ...(get('t/' + id) || {}), id, status: next }); renderMain();
+  },
+  // exams
+  'ex-short': (el) => { const k = el.dataset.v; EXF.short = EXF.short.includes(k) ? EXF.short.filter((x) => x !== k) : [...EXF.short, k]; renderMain(); },
+  'ex-del': () => { UI.exDel = true; renderMain(); },
+  'ex-del-no': () => { UI.exDel = false; renderMain(); },
+  'ex-del-yes': () => { remove('e/' + EXF.id); EXF = null; UI.exDel = false; toast('Deleted'); location.hash = '#/exams'; },
+  // settings
+  export: () => {
+    const data = {}; for (const [k, v] of DB.items) data[k] = v;
+    const blob = new Blob([JSON.stringify({ exported: new Date().toISOString(), data }, null, 1)], { type: 'application/json' });
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `gmat-tracker-${localDate()}.json`; document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+  },
+  'sync-now': async () => { await flush(); const ch = await pull(); renderMain(); toast(syncState === 'offline' ? 'Offline. Kept on this device.' : ch ? 'Updated' : 'Up to date'); },
+  signout: () => { UI.outConfirm = true; renderMain(); },
+  'signout-no': () => { UI.outConfirm = false; renderMain(); },
+  'signout-yes': () => { UI.outConfirm = false; signOutDevice(); },
+};
+document.addEventListener('click', (e) => {
+  const el = e.target.closest('[data-act]'); if (!el) return;
+  const fn = A[el.dataset.act]; if (!fn) return;
+  if (el.tagName === 'A' && el.dataset.act !== 'run-exit') return; // plain links navigate
+  e.preventDefault(); fn(el, e);
+});
+
+/* Typing */
+let typingSave = null;
+const ON = {
+  'nf-min': (el) => { NEWF.minutes = clamp(Number(el.value) || 1, 1, 600); },
+  'nf-text': (el) => { NEWF[el.dataset.k] = el.value; },
+  'nf-num': (el) => { NEWF[el.dataset.k] = el.value; },
+  'nf-rules': (el) => { NEWF.rules = el.checked; },
+  'q-note': (el) => { const s = currentSession(); if (!s) return; s.qs[s.cur].note = el.value; clearTimeout(typingSave); typingSave = setTimeout(() => saveS(s, 'soon'), 800); },
+  'q-text-draft': (el) => { UI.textDraft = el.value; },
+  take: (el) => { const s = currentSession(); if (!s) return; s.qs[+el.dataset.i].take = el.value; clearTimeout(typingSave); typingSave = setTimeout(() => saveS(s, 'soon'), 800); },
+  wq: (el) => { UI.wq = el.value; clearTimeout(typingSave); typingSave = setTimeout(() => { const pos = el.selectionStart; renderMain(); const n = $('[data-on="wq"]'); if (n) { n.focus(); try { n.setSelectionRange(pos, pos); } catch {} } }, 250); },
+  't-note': (el) => { const id = el.dataset.id; clearTimeout(typingSave); const v = el.value; typingSave = setTimeout(() => put('t/' + id, { ...(get('t/' + id) || {}), id, note: v }), 700); },
+  ex: (el) => { EXF[el.dataset.k] = el.value; },
+};
+document.addEventListener('input', (e) => { const el = e.target.closest('[data-on]'); if (el && ON[el.dataset.on]) ON[el.dataset.on](el, e); });
+document.addEventListener('change', (e) => {
+  const el = e.target.closest('[data-on]'); if (!el) return;
+  if (el.dataset.on === 'nf-min' || el.dataset.on === 'nf-rules') { ON[el.dataset.on](el); renderMain(); }
+});
+
+/* Forms */
+const FORMS = {
+  signin: (f) => trySignin(f),
+  lookup: (f) => { const w = f.w.value.trim(); if (w) runLookup(w, LK.ctx && LK.ctxWord === cleanWord(w) ? LK.ctx : null); },
+  'lookup-page': (f) => { const w = f.w.value.trim(); if (w) openLookup(w, null); },
+  new: () => startNew(),
+  key: (f) => { const s = currentSession(); const n = parseKey(f.key.value, s); s.qs.forEach(markQ); saveS(s); renderMain(); toast(n ? `Filled in ${plural(n, 'answer')}` : 'Could not read that key'); },
+  exam: () => saveExam(),
+  settings: (f) => {
+    const target = Number(f.target.value) || null;
+    if (target && (target < 205 || target > 805)) { toast('A GMAT score is between 205 and 805.'); return; }
+    put('m/settings', { ...(get('m/settings') || {}), name: f.name.value.trim() || DEFAULTS.name, testDate: f.testDate.value || null, target,
+      setSize: clamp(Number(f.setSize.value) || DEFAULTS.setSize, 1, 60), showVi: f.showVi.checked }, 'now');
+    toast('Saved'); render();
+  },
+};
+document.addEventListener('submit', (e) => { const f = e.target.closest('form[data-form]'); if (!f) return; e.preventDefault(); FORMS[f.dataset.form]?.(f); });
+
+/* Keyboard, on the practice screen */
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && LK.open) { closeLookup(); return; }
+  const s = currentSession();
+  if (!s || s.status !== 'running' || LK.open || e.metaKey || e.ctrlKey || e.altKey) return;
+  if (/^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement?.tagName || '')) return;
+  const k = e.key.toLowerCase();
+  if (!s.clock.run) { if (k === 'p' || k === 'enter') { e.preventDefault(); A.resume(); } return; }
+  const q = s.qs[s.cur];
+  if (q && q.fmt === 'abc' && /^[a-e1-5]$/.test(k)) { e.preventDefault(); const v = /\d/.test(k) ? 'ABCDE'[Number(k) - 1] : k.toUpperCase(); if (!setAnswer(s, s.cur, v)) toast('No answer changes left.'); else { saveS(s); renderRunner(s); } return; }
+  if (k === 'enter' || k === 'arrowright') { e.preventDefault(); if (s.cur >= 0) A.next(); return; }
+  if (k === 'arrowleft') { e.preventDefault(); A.prev(); return; }
+  if (k === 'm' && q) { e.preventDefault(); A.bm(); return; }
+  if (k === 'g' && q) { e.preventDefault(); A.guess(); return; }
+  if (k === 'p') { e.preventDefault(); A.pause(); return; }
+  if (k === '/') { e.preventDefault(); A.lookup(); }
+});
+
+/* Moving between pages: leaving a running practice screen pauses its clock */
+let prevRoute = route();
+window.addEventListener('hashchange', () => {
+  const r = route();
+  if (prevRoute.name === 'session' && !(r.name === 'session' && r.id === prevRoute.id)) {
+    const s = get('s/' + prevRoute.id); if (s && s.status === 'running') pauseSession(s);
+  }
+  if (r.name !== prevRoute.name || r.id !== prevRoute.id) {
+    resetQuestionUI(); UI.delConfirm = false; UI.confirmEnd = false; UI.topicOpen = null; UI.exDel = false; UI.outConfirm = false; UI.bmOnly = false;
+    if (r.name !== 'words') UI.flash = null;
+    if (r.name !== 'exam') EXF = null;
+  }
+  prevRoute = r; closeLookup(); render(); window.scrollTo(0, 0);
+  if (r.name === 'session') { const s = get('s/' + r.id); if (s && s.status === 'running' && s.clock.run) holdWake(); }
+});
+document.addEventListener('visibilitychange', () => {
+  const s = currentSession();
+  if (document.visibilityState === 'hidden') {
+    if (s && s.status === 'running') { s.clock.hb = Date.now(); saveLocal(sKey(s)); }
+    flush({ keepalive: true });
+  } else {
+    if (s && s.status === 'running' && s.clock.run) holdWake();
+    if (PASS && Date.now() - lastPull > 60000) pull().then((changed) => { if (changed && !(s && s.status === 'running')) renderMain(); });
+  }
+});
+window.addEventListener('pagehide', () => { const s = currentSession(); if (s && s.status === 'running') { commit(s); saveLocal(sKey(s)); } flush({ keepalive: true }); });
+window.addEventListener('online', () => flush());
+
+/* Start */
+(async function init() {
+  await loadLocal();
+  // A set left running: on its own page the clock carries on (unless the page was closed for over 10 minutes);
+  // opened anywhere else, it stops where it last ticked.
+  const r0 = route();
+  for (const s of all('s/')) {
+    if (s.status !== 'running') continue;
+    if (r0.name === 'session' && r0.id === s.id) recover(s);
+    else if (s.clock.run) { commit(s, Math.max(s.clock.since, s.clock.hb || s.clock.since)); s.clock.run = false; s.clock.since = null; s.clock.pausedAt = s.clock.hb; saveLocal(sKey(s)); }
+  }
+  render();
+  setInterval(tick, 250);
+  if (PASS) {
+    const changed = await pull();
+    if (changed) renderMain();
+    flush();
+    const s = currentSession(); if (s && s.status === 'running' && s.clock.run) holdWake();
+  }
+})();
+
+</script>
+</body>
+</html>
