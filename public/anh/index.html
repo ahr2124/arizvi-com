@@ -471,17 +471,18 @@ async function flush({ keepalive = false } = {}) {
   if (flushing) { scheduleFlush(800); return; }
   const dirty = [...DB.meta.entries()].filter(([, m]) => m.dirty);
   if (!dirty.length) { setSync('saved'); return; }
-  flushing = true; setSync('saving');
+  flushing = true; if (!keepalive) setSync('saving');
   const items = [], del = [], revs = new Map(); let size = 0;
   for (const [key, m] of dirty) {
     if (m.del) del.push(key);
     else {
       const data = DB.items.get(key); const len = JSON.stringify(data ?? null).length;
-      if (items.length && size + len > (keepalive ? 60000 : 2_500_000)) continue;
+      if (size + len > (keepalive ? 60000 : 2_500_000) && (items.length || keepalive)) continue; // a page closing can only send about 64 KB
       items.push({ key, data: data ?? null }); size += len;
     }
     revs.set(key, m.rev);
   }
+  if (!items.length && !del.length) { flushing = false; return; }
   try {
     const res = await api('/put', { method: 'POST', body: JSON.stringify({ items, del }), keepalive });
     for (const it of res.items || []) {
@@ -801,7 +802,13 @@ async function vietnamese(w) {
   const list = [main];
   for (const m of r.data.matches || []) if (m.translation && (m.quality == null || Number(m.quality) >= 50)) list.push(String(m.translation).trim());
   const seen = new Set(); const out = [];
-  for (const t of list) { const k = t.toLowerCase(); if (!t || k === w || seen.has(k) || t.length > 60) continue; seen.add(k); out.push(t); }
+  for (const raw of list) {
+    // MyMemory sometimes adds a question mark or a capital to a one-word gloss: "Mỏng manh?" -> "mỏng manh"
+    let t = raw.replace(/[\s?!.,;:]+$/u, '').trim();
+    if (t.split(/\s+/).length <= 4) t = t.charAt(0).toLocaleLowerCase('vi') + t.slice(1);
+    const k = t.toLocaleLowerCase('vi');
+    if (!t || k === w || seen.has(k) || t.length > 60) continue; seen.add(k); out.push(t);
+  }
   return out.slice(0, 4);
 }
 // Looks a word up, saves it to her words (with the sentence it came from) and returns the saved entry.
@@ -1238,12 +1245,13 @@ function tick(force) {
     $('#clk-sub').textContent = left >= 0 ? `left of ${mmss(s.limit)}` : 'over time';
     const bar = $('#tbar'); if (bar) { bar.classList.toggle('over', left < 0); bar.firstElementChild.style.width = clamp((u / s.limit) * 100, 0, 100) + '%'; }
   } else { clk.textContent = mmss(u); $('#clk-sub').textContent = 'used, no limit'; }
-  const pace = qPace(s);
+  const pace = qPace(s); const q0 = s.cur >= 0 ? s.qs[s.cur] : null;
   const pe = $('#pace');
   if (pe) {
     if (s.phase === 'review') pe.innerHTML = `<b>${plural(s.edits, 'change')} left</b>`;
     else {
-      const delta = u - s.cur * pace;
+      const done = answeredCount(s) - (q0 && complete(q0.fmt, q0.ans) ? 1 : 0); // answered before the open one
+      const delta = u - done * pace;
       pe.innerHTML = Math.abs(delta) < 20000 && delta < pace ? '<b>On pace</b>' : delta > pace ? `<b class="behind">${mmss(delta - pace)} behind</b>` : delta < 0 ? `<b>${mmss(-delta)} ahead</b>` : '<b>On pace</b>';
       pe.insertAdjacentHTML('beforeend', `<div class="tiny muted" style="margin-top:4px">${answeredCount(s)} of ${s.qs.length} answered</div>`);
     }
@@ -1256,7 +1264,12 @@ function tick(force) {
     if (i && o) { i.style.width = Math.min(share, half) * 100 + '%'; o.style.left = half * 100 + '%'; o.style.width = Math.max(0, share - half) * 100 + '%'; }
   }
   if (s.clock.run && s.limit && u >= s.limit) {
-    if (s.rules) { endSection(s, 'time'); put(sKey(s), s, 'now'); toast('Time is up.'); releaseWake(); renderMain(); return; }
+    if (s.rules) {
+      // A hidden tab may only notice a minute late: end the section at exactly 45:00.
+      commit(s); const extra = Math.max(0, s.clock.used - s.limit); const q = s.qs[s.cur];
+      s.clock.used -= extra; if (q) { q.ms = Math.max(0, q.ms - extra); if (s.phase === 'review') q.msRev = Math.max(0, q.msRev - extra); } if (s.phase === 'review') s.revMs = Math.max(0, s.revMs - extra);
+      endSection(s, 'time'); put(sKey(s), s, 'now'); toast('Time is up.'); releaseWake(); renderMain(); return;
+    }
     if (!s.timeUpSeen) { s.timeUpSeen = true; put(sKey(s), s, 'soon'); renderRunner(s); return; }
   }
   if (now - lastLocalSave > 5000) { lastLocalSave = now; saveLocal(sKey(s)); }
