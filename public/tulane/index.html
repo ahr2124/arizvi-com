@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
 <title>A/B testing for business goals | Ali Rizvi</title>
-<meta name="description" content="The class page for A/B testing for business goals: a donation page, a vote, the room's data, and a follow-up test to design.">
+<meta name="description" content="The class page for A/B testing for business goals: a donation page, a vote, the room's data, and the same test split by device.">
 <link rel="canonical" href="https://arizvi.com/tulane/">
 <meta name="theme-color" content="#ffffff">
 <meta name="color-scheme" content="light">
@@ -122,7 +122,7 @@ mark { background: linear-gradient(transparent 56%, var(--hl) 56%); color: inher
 .chip.b { background: var(--b); }
 .verdict { margin: 1.25rem 0 0; max-width: 40rem; font-size: 19px; }
 .stamp { margin: 0.75rem 0 0; }
-/* Button 3: the pair exercise on the farm's follow-up test */
+/* Button 3: the pair exercise on the device split */
 .cardt { width: 100%; max-width: 30rem; border-collapse: collapse; margin-top: 1rem; }
 .cardt th, .cardt td { text-align: right; padding: 8px 0 8px 12px; border-top: 1px solid #000; }
 .cardt th:first-child, .cardt td:first-child { text-align: left; padding-left: 0; }
@@ -175,7 +175,7 @@ a.go.sheet { max-width: 30rem; margin-top: 0.75rem; text-align: center; text-dec
       <ul class="tiles">
         <li><a class="tile" href="#give" data-tile="give"><span class="num">1</span><span class="what"><span class="name">Give to the farm</span><span class="sub">A donation page</span></span></a></li>
         <li><a class="tile" href="#vote" data-tile="vote"><span class="num">2</span><span class="what"><span class="name">Keep or switch?</span><span class="sub">One question, two votes</span></span></a></li>
-        <li><a class="tile" href="#card" data-tile="card"><span class="num">3</span><span class="what"><span class="name">Your turn</span><span class="sub">Design the follow-up test</span></span></a></li>
+        <li><a class="tile" href="#card" data-tile="card"><span class="num">3</span><span class="what"><span class="name">Your turn</span><span class="sub">Test it by device</span></span></a></li>
       </ul>
       <p class="code small muted">The room's numbers from button 1: <a href="#data">our data</a>. The workbook from class: <a href="https://docs.google.com/spreadsheets/d/1NFuywsqr0shyLmnL4z3D8pYn4JHXOsrEal9c72R42Bg/edit">the farm's workbook in Google Sheets</a> (<a href="https://docs.google.com/spreadsheets/d/1NFuywsqr0shyLmnL4z3D8pYn4JHXOsrEal9c72R42Bg/copy">make a copy</a> or <a href="https://docs.google.com/spreadsheets/d/1NFuywsqr0shyLmnL4z3D8pYn4JHXOsrEal9c72R42Bg/export?format=xlsx">download it for Excel</a>). The farm's rows as a file: <a href="/tulane/farm.csv">the farm's data</a>.</p>
     </section>
@@ -253,87 +253,33 @@ a.go.sheet { max-width: 30rem; margin-top: 0.75rem; text-align: center; text-dec
       <p class="small muted stamp" id="stamp"></p>
     </section>
 
-    <!-- Button 3: the pairs exercise on the farm's follow-up test, checked on the phone. Step 2 stays shut until a deliberate
-         tap, because its table names the two pages that step 1 asks for. -->
+    <!-- Button 3: the pairs exercise on the device split, checked on the phone. Nothing here is sent. -->
     <section id="card" class="view" hidden>
       <a class="back" href="#home">Back to the three buttons</a>
       <h2>Your turn</h2>
-      <p class="say">Page B changed two things at once: the amount, from $25 to $100, and the frequency, from monthly to once. Last December's test cannot say which one did the work. A follow-up test can.</p>
-      <p class="round">Step 1: design the follow-up test</p>
-      <table class="cardt">
-        <thead><tr><th>Preselected gift</th><th>$25</th><th>$100</th></tr></thead>
-        <tbody>
-          <tr><td>Monthly</td><td>Page A</td><td>?</td></tr>
-          <tr><td>Once</td><td>?</td><td>Page B</td></tr>
-        </tbody>
-      </table>
-      <form class="work" id="design" novalidate>
+      <p class="say">Page A won across all 5,600 visitors. Giving Tuesday emails get opened on phones, so the farm planned one more cut before the test: the same visitors, split by device.</p>
+      <p class="round">Three minutes, in pairs</p>
+      <p class="small muted">The Your turn tab of the class workbook has the same 5,600 visitors, each tagged Mobile or Desktop.</p>
+      <a class="go sheet" href="https://docs.google.com/spreadsheets/d/1NFuywsqr0shyLmnL4z3D8pYn4JHXOsrEal9c72R42Bg/edit#gid=56001" target="_blank" rel="noopener">Open the Your turn tab</a>
+      <p class="small muted">Excel instead? <a href="https://docs.google.com/spreadsheets/d/1NFuywsqr0shyLmnL4z3D8pYn4JHXOsrEal9c72R42Bg/export?format=xlsx">Download the workbook</a>.</p>
+      <form class="work" id="work" novalidate>
         <div class="pick">
-          <label class="label" for="d1">1. The missing page that changes the amount only</label>
-          <select id="d1"><option value="">Choose one</option><option>$25 once</option><option>$50 a month</option><option>$100 a month</option><option>$100 once</option></select>
-          <p class="fb" data-fb="d1" aria-live="polite"></p>
+          <label class="label" for="t1">1. Pick the test for value per visitor among mobile visitors</label>
+          <select id="t1"><option value="">Choose one</option><option>CHISQ.TEST</option><option>T.TEST</option></select>
+          <p class="fb" data-fb="t1" aria-live="polite"></p>
         </div>
         <div class="pick">
-          <label class="label" for="d2">The missing page that changes the frequency only</label>
-          <select id="d2"><option value="">Choose one</option><option>$25 once</option><option>$50 a month</option><option>$100 a month</option><option>$100 once</option></select>
-          <p class="fb" data-fb="d2" aria-live="polite"></p>
+          <label class="label" for="t2">2. Work out the gap. Which page is worth more per mobile visitor?</label>
+          <select id="t2"><option value="">Choose one</option><option>Page A</option><option>Page B</option><option>Too close to call</option></select>
+          <p class="fb" data-fb="t2" aria-live="polite"></p>
         </div>
         <div class="pick">
-          <label class="label" for="hyp">2. Your hypothesis for one of them</label>
-          <textarea id="hyp" rows="4" placeholder="If the page preselects ..., then ..., because ..."></textarea>
-          <p class="fb muted">This stays on your phone. Paper works too.</p>
-        </div>
-        <div class="pick">
-          <label class="label" for="metric">3. Its metric</label>
-          <select id="metric"><option value="">Choose one</option><option>Conversion rate</option><option>Lifetime value per donor</option><option>Value per visitor</option></select>
-        </div>
-        <div class="pick">
-          <label class="label" for="horizon">Its time horizon</label>
-          <select id="horizon"><option value="">Choose one</option><option>By December 31</option><option>Over one year</option><option>Over three years</option></select>
+          <label class="label" for="t3">3. Make the call for next December</label>
+          <select id="t3"><option value="">Choose one</option><option>Page A for everyone</option><option>Page B for everyone</option><option>A on desktop, B on mobile</option></select>
+          <p class="fb" data-fb="t3" aria-live="polite"></p>
         </div>
         <button type="submit" class="send">Check</button>
       </form>
-      <div data-step2>
-        <p class="round" data-label-s2>Step 2: later in class</p>
-        <div data-gate-s2>
-          <p class="small muted">The slides will ask you to read the results.</p>
-          <button type="button" class="linkish" data-open-s2>Open step 2 when the slides ask</button>
-        </div>
-        <div data-results hidden>
-          <p class="say">The farm ran all four pages, with 2,800 visitors on each. Pages A and B repeat last December.</p>
-          <table class="cardt four">
-            <thead><tr><th>Page</th><th>Conversion rate</th><th>Lifetime value per donor</th><th>Value per visitor</th></tr></thead>
-            <tbody>
-              <tr><td>A<span class="gift">$25 a month</span></td><td>8.0%</td><td>$355</td><td>$28.40</td></tr>
-              <tr><td>B<span class="gift">$100 once</span></td><td>12.0%</td><td>$175</td><td>$21.00</td></tr>
-              <tr><td>C<span class="gift">$25 once</span></td><td>14.0%</td><td>$80</td><td>$11.20</td></tr>
-              <tr><td>D<span class="gift">$100 a month</span></td><td>4.5%</td><td>$590</td><td>$26.55</td></tr>
-            </tbody>
-          </table>
-          <p class="small muted">Every row and both tests are on the Your turn tab of the class workbook.</p>
-          <a class="go sheet" href="https://docs.google.com/spreadsheets/d/1NFuywsqr0shyLmnL4z3D8pYn4JHXOsrEal9c72R42Bg/edit#gid=56001" target="_blank" rel="noopener">Open the Your turn tab</a>
-          <p class="small muted">Excel instead? <a href="https://docs.google.com/spreadsheets/d/1NFuywsqr0shyLmnL4z3D8pYn4JHXOsrEal9c72R42Bg/export?format=xlsx">Download the workbook</a>.</p>
-          <form class="work" id="work" novalidate>
-            <div class="pick">
-              <label class="label" for="r1">1. What raised conversion?</label>
-              <select id="r1"><option value="">Choose one</option><option>The amount</option><option>The frequency</option><option>Both of them</option></select>
-              <p class="fb" data-fb="r1" aria-live="polite"></p>
-            </div>
-            <div class="pick">
-              <label class="label" for="r2">2. Page D on the matrix</label>
-              <p class="small muted boxes">Clear win: more people, each worth more.<br>The trap: more people, each worth less.<br>The loyal few: fewer people, each worth more.<br>Clear loss: fewer people, each worth less.</p>
-              <select id="r2"><option value="">Choose one</option><option>Clear win</option><option>The trap</option><option>The loyal few</option><option>Clear loss</option></select>
-              <p class="fb" data-fb="r2" aria-live="polite"></p>
-            </div>
-            <div class="pick">
-              <label class="label" for="r3">3. Value per visitor decides. Which page do you keep?</label>
-              <select id="r3"><option value="">Choose one</option><option>Page A</option><option>Page B</option><option>Page C</option><option>Page D</option></select>
-              <p class="fb" data-fb="r3" aria-live="polite"></p>
-            </div>
-            <button type="submit" class="send">Check</button>
-          </form>
-        </div>
-      </div>
     </section>
   </main>
 </div>
@@ -574,40 +520,26 @@ a.go.sheet { max-width: 30rem; margin-top: 0.75rem; text-align: center; text-dec
     document.getElementById('stamp').textContent = 'Updated ' + now.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit', second: '2-digit' }) + '. It refreshes every few seconds.';
   }
 
-  // Button 3: the farm's follow-up test. Step 1 designs it; step 2 reads its results. Nothing here is sent: the answers are
-  // checked on the phone, and the hypothesis stays there.
+  // Button 3: the same test split by device. Nothing here is sent: the three answers are checked on the phone.
   function say(key, good, hint) {
     var p = document.querySelector('[data-fb="' + key + '"]');
     p.className = 'fb' + (good ? ' ok' : '');
     p.textContent = good ? 'Right' : hint;
     return good;
   }
-  // The design step's fields come back after a refresh
-  ['d1', 'd2', 'hyp', 'metric', 'horizon'].forEach(function (id) {
+  // The three answers come back after a refresh
+  ['t1', 't2', 't3'].forEach(function (id) {
     var el = document.getElementById(id);
     var kept = store.get('turn.' + id);
     if (kept) el.value = kept;
-    el.addEventListener(el.tagName === 'TEXTAREA' ? 'input' : 'change', function () { store.set('turn.' + id, el.value); });
+    el.addEventListener('change', function () { store.set('turn.' + id, el.value); });
   });
-  document.getElementById('design').addEventListener('submit', function (e) {
-    e.preventDefault();
-    say('d1', document.getElementById('d1').value === '$100 a month', 'Page A preselects $25 a month. Change the amount and keep the frequency.');
-    say('d2', document.getElementById('d2').value === '$25 once', 'Page A preselects $25 a month. Change the frequency and keep the amount.');
-  });
-  function lockStep2() {
-    var open = !!store.get('turn.open') || !!store.get('card');
-    document.querySelector('[data-gate-s2]').hidden = open;
-    document.querySelector('[data-results]').hidden = !open;
-    document.querySelector('[data-label-s2]').textContent = open ? 'Step 2: read the results' : 'Step 2: later in class';
-  }
-  document.querySelector('[data-open-s2]').addEventListener('click', function () { store.set('turn.open', 'yes'); lockStep2(); });
-  lockStep2();
   document.getElementById('work').addEventListener('submit', function (e) {
     e.preventDefault();
     var all = [
-      say('r1', document.getElementById('r1').value === 'The frequency', 'Page C changes the frequency only, and page D changes the amount only. Compare each with page A.'),
-      say('r2', document.getElementById('r2').value === 'The loyal few', 'Page D has lower conversion than page A and a higher lifetime value per donor. Which box is that?'),
-      say('r3', document.getElementById('r3').value === 'Page A', 'Which page has the highest value per visitor?')
+      say('t1', document.getElementById('t1').value === 'T.TEST', 'Value per visitor is an average of dollar amounts. Which test compares two averages?'),
+      say('t2', document.getElementById('t2').value === 'Page B', 'On the Your turn tab, compare the two pages for mobile visitors only, and read the p-value.'),
+      say('t3', document.getElementById('t3').value === 'A on desktop, B on mobile', 'Each device has its own winner, and the farm planned this split before the test.')
     ];
     if (all.every(Boolean)) store.set('card', 'yes');
   });
