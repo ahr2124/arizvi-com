@@ -1,0 +1,9 @@
+{
+  "name": "anh-api",
+  "private": true,
+  "type": "module",
+  "description": "Storage for the GMAT tracker at arizvi.com/anh (Netlify Functions on Netlify Blobs)",
+  "dependencies": {
+    "@netlify/blobs": "^11.1.11"
+  }
+}
